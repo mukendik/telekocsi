@@ -2,6 +2,7 @@ package com.alma.telekocsi;
 
 import com.alma.telekocsi.dao.itineraire.ItineraireTestDAO;
 import com.alma.telekocsi.dao.profil.ProfilTestDAO;
+import com.alma.telekocsi.dao.trajet.TrajetTestDAO;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ public class Transport extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        testItineraire();
+        testTrajet();
         
         setContentView(R.layout.main);
     }
@@ -22,7 +23,7 @@ public class Transport extends Activity {
     	// TODO Auto-generated method stub
     	super.onRestart();
     	
-    	testItineraire();
+    	testTrajet();
     }
 
     
@@ -44,5 +45,14 @@ public class Transport extends Activity {
         itineraireTest.insert();
         itineraireTest.insert();
         itineraireTest.getList();    	
+    }
+    
+    private void testTrajet() {
+    	
+        TrajetTestDAO trajetTest = new TrajetTestDAO();
+        trajetTest.clear();
+        trajetTest.insert();
+        trajetTest.insert();
+        trajetTest.getList();    	
     }
 }

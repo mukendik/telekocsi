@@ -62,4 +62,12 @@ public class GAE {
 	public static String getItineraireEndPoint() {
 		return getURL("/itineraire");
 	}
+	
+	public static String getTrajetEndPoint() {
+		return getURL("/trajet");
+	}
+
+	public static String getTrajetLigneEndPoint() {
+		return getURL("/trajet/ligne");
+	}
 }
