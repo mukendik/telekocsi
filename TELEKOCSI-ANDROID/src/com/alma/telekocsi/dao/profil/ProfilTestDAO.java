@@ -1,12 +1,17 @@
 package com.alma.telekocsi.dao.profil;
 
-public class ProfilTest {
+import java.util.List;
 
-	ProfilConsumer consumer;
+import android.util.Log;
+
+public class ProfilTestDAO {
+
+	ProfilDAO consumer;
 	
-	public ProfilTest() {
-		consumer = new ProfilConsumer(new ProfilTestAdapter());
+	public ProfilTestDAO() {
+		consumer = new ProfilDAO();
 	}
+	
 	
 	public void insert() {	
 		
@@ -32,22 +37,28 @@ public class ProfilTest {
 		profil.setTypeProfil("C");
 		profil.setTypeProfilHabituel("C");
 		profil.setVehicule("207");		
-		consumer.insert(profil);
+		profil = consumer.insert(profil);
+		
+		Log.i(ProfilTestDAO.class.getSimpleName(), "insert : " + profil);
 	}
 	
 	
 	public void getList() {
-		consumer.getList();
+		List<Profil> list = consumer.getList();
+		for (Profil profil : list)
+			Log.i(ProfilTestDAO.class.getSimpleName(), "list : " + profil.toString());
 	}
 	
 	
 	public void login() {
-		consumer.login("pepito", "alma");
+		Profil profil = consumer.login("pepito", "alma");
+		Log.i(ProfilTestDAO.class.getSimpleName(), "login : " + profil);
 	}
 
 	
 	public void clear() {
-		consumer.clear();
+		Integer nb = consumer.clear();
+		Log.i(ProfilTestDAO.class.getSimpleName(), "clear : " + nb);
 	}
 	
 }

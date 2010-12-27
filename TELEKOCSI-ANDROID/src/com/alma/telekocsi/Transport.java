@@ -1,6 +1,7 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.dao.profil.ProfilTest;
+import com.alma.telekocsi.dao.itineraire.ItineraireTestDAO;
+import com.alma.telekocsi.dao.profil.ProfilTestDAO;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,12 +12,7 @@ public class Transport extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        ProfilTest profilTest = new ProfilTest();
-        profilTest.clear();
-        profilTest.insert();
-        profilTest.insert();
-        profilTest.getList();
-        profilTest.login();        
+        testItineraire();
         
         setContentView(R.layout.main);
     }
@@ -26,11 +22,27 @@ public class Transport extends Activity {
     	// TODO Auto-generated method stub
     	super.onRestart();
     	
-        ProfilTest profilTest = new ProfilTest();
+    	testItineraire();
+    }
+
+    
+    private void testProfil() {
+    	
+        ProfilTestDAO profilTest = new ProfilTestDAO();
         profilTest.clear();
         profilTest.insert();
         profilTest.insert();
         profilTest.getList();
-        profilTest.login();     	
+        profilTest.login();
+    }
+    
+    
+    private void testItineraire() {
+    	
+        ItineraireTestDAO itineraireTest = new ItineraireTestDAO();
+        itineraireTest.clear();
+        itineraireTest.insert();
+        itineraireTest.insert();
+        itineraireTest.getList();    	
     }
 }

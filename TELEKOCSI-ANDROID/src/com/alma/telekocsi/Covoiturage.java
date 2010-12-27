@@ -3,23 +3,15 @@ package com.alma.telekocsi;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -35,10 +27,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
-import org.json.*;
-
-import com.alma.telekocsi.dao.profil.ProfilTest;
 
 
 public class Covoiturage extends Activity implements AdapterView.OnItemSelectedListener {
@@ -62,13 +50,6 @@ public class Covoiturage extends Activity implements AdapterView.OnItemSelectedL
          * Partie transports trouvés
          */
         //setContentView(R.layout.transports);
-        
-        ProfilTest profilTest = new ProfilTest();
-        profilTest.clear();
-        profilTest.insert();
-        profilTest.insert();
-        profilTest.getList();
-        profilTest.login();
         
         String result = resultatGAPJSON();
         
