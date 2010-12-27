@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -120,6 +121,22 @@ public class LocalisationService {
 		em.getTransaction().commit();
 		
 		return id;
+	}
+	
+	/**
+	 * Supprime tous les localisations
+	 * @return nbre de localisations supprimées
+	 */
+	@DELETE
+	@Path("/clear")
+	public int clear() {
+		
+		log.info("Suppression de toutes les localisations");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM Localisation");
+		int result = query.executeUpdate();
+		return result;
 	}
 
 	/**

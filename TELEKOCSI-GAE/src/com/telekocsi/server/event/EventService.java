@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -123,6 +124,22 @@ public class EventService {
 		em.getTransaction().commit();
 		
 		return id;
+	}
+	
+	/**
+	 * Supprime tous les events
+	 * @return nbre d'events supprimés
+	 */
+	@DELETE
+	@Path("/clear")
+	public int clear() {
+		
+		log.info("Suppression de tous les events");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM Event");
+		int result = query.executeUpdate();
+		return result;
 	}
 
 	/**
