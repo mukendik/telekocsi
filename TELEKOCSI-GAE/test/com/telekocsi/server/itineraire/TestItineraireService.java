@@ -30,6 +30,7 @@ public class TestItineraireService {
 	private void run() {
 		
 		insert();
+		insert();
 		update();
 		chargeEntity();
 		delete();
@@ -91,7 +92,6 @@ public class TestItineraireService {
 		
 		System.out.println("Itineraire récupéré : " + itineraire);
 	}
-	
 	
 	public void delete() {
 		/* Test de suppression d'un itineraire */

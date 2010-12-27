@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -104,6 +105,25 @@ public class ItineraireService {
 		return itineraires;
 	}
 
+	
+	/**
+	 * Recuperation de la liste des Itineraires pour un profil
+	 * @return liste des itineraires
+	 */
+	@GET
+	@Path("/profil/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Itineraire> list(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des itineraires pour le profil : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT i FROM Itineraire i where i.idProfil=:param");
+		query.setParameter("param", idProfil);
+		List<Itineraire> itineraires = query.getResultList();
+		return itineraires;
+	}
+	
 	/**
 	 * Supprime un itineraire par son id
 	 * @param Id de l'itineraire a suprimer
@@ -128,6 +148,22 @@ public class ItineraireService {
 		
 		return id;
 	}
+	
+	/**
+	 * Supprime tous les itineraires
+	 * @return nbre d'itineraires supprimés
+	 */
+	@DELETE
+	@Path("/clear")
+	public int clear() {
+		
+		log.info("Suppression de tous les itineraires");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM Itineraire");
+		int result = query.executeUpdate();
+		return result;
+	}	
 
 	/**
 	 * Ajoute un itineraire
