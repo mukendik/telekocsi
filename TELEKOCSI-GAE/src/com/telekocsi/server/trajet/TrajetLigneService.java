@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -96,7 +97,27 @@ public class TrajetLigneService {
 		
 		return trajetLignes;
 	}
+	
+	
+	/**
+	 * Recuperation des lignes pour un trajet
+	 * @return liste des lignes associees au trajet
+	 */
+	@GET
+	@Path("/trajet/{idTrajet}")
+	@SuppressWarnings("unchecked")
+	public List<TrajetLigne> list(@PathParam("idTrajet") String idTrajet) {
+		
+		log.info("Recuperation des lignes pour le trajet : " + idTrajet);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT tl FROM TrajetLigne tl where tl.idTrajet=:param");
+		query.setParameter("param", idTrajet);
+		List<TrajetLigne> trajetLignes = query.getResultList();
+		return trajetLignes;
+	}
 
+	
 	/**
 	 * Supprime un trajetLigne par son id
 	 * @param id du trajetLigne a supprimer
@@ -121,6 +142,24 @@ public class TrajetLigneService {
 		
 		return id;
 	}
+	
+	
+	/**
+	 * Supprime toutes les lignes trajets
+	 * @return nbre de lignes trajets supprimées
+	 */
+	@DELETE
+	@Path("/clear")
+	public int clear() {
+		
+		log.info("Suppression de toutes les lignes trajets");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM TrajetLigne");
+		int result = query.executeUpdate();
+		return result;
+	}
+	
 
 	/**
 	 * Ajoute un trajetLigne

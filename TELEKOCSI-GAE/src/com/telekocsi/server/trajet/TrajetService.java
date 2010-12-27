@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -106,6 +107,25 @@ public class TrajetService {
 		
 		return trajets;
 	}
+	
+	/**
+	 * Recuperation de la liste des Itineraires pour un profil
+	 * @return liste des itineraires
+	 */
+	@GET
+	@Path("/profil/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Trajet> list(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param");
+		query.setParameter("param", idProfil);
+		List<Trajet> trajets = query.getResultList();
+		return trajets;
+	}
+	
 
 	/**
 	 * Supprime un trajet par son id
@@ -130,6 +150,22 @@ public class TrajetService {
 		em.getTransaction().commit();
 		
 		return id;
+	}
+	
+	/**
+	 * Supprime tous les trajets
+	 * @return nbre de trajets supprimés
+	 */
+	@DELETE
+	@Path("/clear")
+	public int clear() {
+		
+		log.info("Suppression de tous les trajets");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM Trajet");
+		int result = query.executeUpdate();
+		return result;
 	}
 
 	/**
