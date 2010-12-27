@@ -25,6 +25,8 @@ public class TrajetTestDAO {
 	public TrajetTestDAO() {
 		profilDAO = new ProfilDAO();
 		itineraireDAO = new ItineraireDAO();
+		trajetDAO = new TrajetDAO();
+		trajetLigneDAO = new TrajetLigneDAO();
 		
 		profilConducteur = new Profil();
 		profilConducteur.setNom("BELIN");
@@ -113,7 +115,8 @@ public class TrajetTestDAO {
 		trajet.setVariableDepart(itineraire.getVariableDepart());
 		trajet.setDateTrajet("26/12/2010");
 		trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
-		trajetDAO.insert(trajet);
+		trajet = trajetDAO.insert(trajet);
+		Log.i(TrajetTestDAO.class.getSimpleName(), "insert trajet : " + trajet);
 		
 		TrajetLigne trajetLigne = new TrajetLigne();
 		trajetLigne.setIdProfilPassager(profilPassager.getId());
@@ -121,13 +124,15 @@ public class TrajetTestDAO {
 		trajetLigne.setNbrePoint(2);
 		trajetLigne.setPlaceOccupee(1);
 		trajetLigne = trajetLigneDAO.insert(trajetLigne);
+		Log.i(TrajetTestDAO.class.getSimpleName(), "insert ligne trajet : " + trajetLigne);
 		
 		trajetLigne = new TrajetLigne();
 		trajetLigne.setIdProfilPassager(profilPassager.getId());
 		trajetLigne.setIdTrajet(trajet.getId());
 		trajetLigne.setNbrePoint(3);
 		trajetLigne.setPlaceOccupee(1);
-		trajetLigneDAO.insert(trajetLigne);
+		trajetLigne = trajetLigneDAO.insert(trajetLigne);
+		Log.i(TrajetTestDAO.class.getSimpleName(), "insert ligne trajet : " + trajetLigne);
 	}
 	
 	
@@ -141,7 +146,7 @@ public class TrajetTestDAO {
 			int cpt2 = 0;
 			List<TrajetLigne> listLignes = trajetLigneDAO.getList(trajet.getId());
 			for (TrajetLigne trajetLigne : listLignes) {
-				Log.i(TrajetTestDAO.class.getSimpleName(), "ligne (" + (++cpt2) + ") : " + trajetLigne.toString());
+				Log.i(TrajetTestDAO.class.getSimpleName(), "ligne trajet (" + (++cpt2) + ") : " + trajetLigne.toString());
 			}
 		}
 	}
