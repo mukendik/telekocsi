@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, covoiturage!</string>
+    <string name="app_name">covoiturage</string>
+    
+    <string name="paiement">Paiement et évaluation</string>
+	<string name="retour">Retour</string>
+	<string name="annuler">Annuler</string>
+	<string name="nbPointEchange">Nombre de points à échanger :</string>
+	<string name="nbPoints">3 points</string>
+	<string name="passager">Du passager :</string>
+	<string name="conducteur">Au conducteur :</string>
+	<string name="depart">Départ :</string>
+	<string name="arrivee">Arrivée :</string>
+	<string name="le">Le :</string>
+	<string name="pour">Pour :</string>
+	<string name="place">place</string>
+	<string name="validerTransaction">Valider la transaction</string>
+	<string name="avis">Laisser une appréciation :</string>
+	<string name="commentaire">Commentaire :</string>
+	<string name="rechTransport">Recherche transport</string>
+	<string name="identTrajet">Identification du trajet :</string>
+	<string name="heure">Heure :</string>
+	<string name="jours">Jours :</string>
+	<string name="autoroute">Autoroute :</string>
+	<string name="dateTrajet">Date du trajet :</string>
+	<string name="rechercher">Rechercher</string>
+	<string name="transportfind">Transports trouvés</string>
+	<string name="resultats">10 résultats</string>
+	<string name="page">Page : 1/5</string>
+	<string name="newsearch">Nouvelle recherche</string>
+	<string name="quit">Quitter</string>
+	
+	<color name="black">#000000</color>
+	<color name="entete">#e9e9e9</color>
+	<color name="fond">#97d7fb</color>
+	<color name="fondBtn">#4bc2f3</color>
+	<color name="white">#ffffff</color>
+	<color name="txtEntete">#a9a9a9</color>
+	<color name="fondPanel">#d0effc</color>
+	<color name="txtInfo">#4fc416</color>
+	<color name="txtGroupe">#84b441</color>
+	<color name="panelAction">#535252</color>
+    
+</resources>
