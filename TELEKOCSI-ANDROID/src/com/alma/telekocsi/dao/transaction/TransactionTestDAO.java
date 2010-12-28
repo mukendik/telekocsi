@@ -122,7 +122,7 @@ public class TransactionTestDAO {
 		trajet = trajetDAO.insert(trajet);
 		Log.i(TransactionTestDAO.class.getSimpleName(), "insert trajet : " + trajet);
 		
-		TrajetLigne trajetLigne = new TrajetLigne();
+		trajetLigne = new TrajetLigne();
 		trajetLigne.setIdProfilPassager(profilPassager.getId());
 		trajetLigne.setIdTrajet(trajet.getId());
 		trajetLigne.setNbrePoint(2);
