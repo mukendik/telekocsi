@@ -78,4 +78,8 @@ public class GAE {
 	public static String getAvisEndPoint() {
 		return getURL("/avis");
 	}
+	
+	public static String getEventEndPoint() {
+		return getURL("/event");
+	}
 }

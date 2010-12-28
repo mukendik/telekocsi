@@ -1,5 +1,7 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.avis.AvisTestDAO;
+import com.alma.telekocsi.dao.event.EventTestDAO;
 import com.alma.telekocsi.dao.itineraire.ItineraireTestDAO;
 import com.alma.telekocsi.dao.profil.ProfilTestDAO;
 import com.alma.telekocsi.dao.trajet.TrajetTestDAO;
@@ -14,7 +16,7 @@ public class Transport extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        testTransaction();
+        testEvent();
         
         setContentView(R.layout.main);
     }
@@ -24,7 +26,7 @@ public class Transport extends Activity {
     	// TODO Auto-generated method stub
     	super.onRestart();
     	
-    	testTransaction();
+    	testEvent();
     }
 
     
@@ -64,5 +66,23 @@ public class Transport extends Activity {
         transactionTest.insert();
         transactionTest.insert();
         transactionTest.getList();    	
-    }    
+    }
+    
+    private void testAvis() {
+    	
+        AvisTestDAO avisTest = new AvisTestDAO();
+        avisTest.clear();
+        avisTest.insert();
+        avisTest.insert();
+        avisTest.getList();    	
+    }
+    
+    private void testEvent() {
+    	
+        EventTestDAO eventTest = new EventTestDAO();
+        eventTest.clear();
+        eventTest.insert();
+        eventTest.insert();
+        eventTest.getList();    	
+    }     
 }
