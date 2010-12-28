@@ -1,4 +1,4 @@
-package com.alma.telekocsi;
+package com.alma.telekocsi.test;
 
 import com.alma.telekocsi.dao.avis.AvisTestDAO;
 import com.alma.telekocsi.dao.event.EventTestDAO;
@@ -11,20 +11,18 @@ import com.alma.telekocsi.dao.transaction.TransactionTestDAO;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class Transport extends Activity {
+public class TestDataAccessUI extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         testLocalisation();
-        
-        setContentView(R.layout.main);
+        finish();
     }
     
     @Override
     protected void onRestart() {
-    	// TODO Auto-generated method stub
     	super.onRestart();
     	
     	testLocalisation();

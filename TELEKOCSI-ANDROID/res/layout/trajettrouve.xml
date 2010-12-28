@@ -742,6 +742,7 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content"
     			android:text="@string/newsearch"
+    			android:id="@+id/btTTNewSearch"
     			android:textColor="@color/black"
     			android:layout_marginTop="5px"
    				/>
@@ -750,6 +751,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/quit"
+				android:id="@+id/btTTQuit"
     			android:textColor="@color/black"
     			android:layout_marginTop="5px"
     			/>
