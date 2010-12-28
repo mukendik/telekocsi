@@ -1,6 +1,13 @@
 package com.alma.telekocsi.dao.trajet;
 
 
+/**
+ * @author ALMA
+ * 
+ * Contrairement a l'itineraire, le trajet represente l'action
+ * liee a l'itineraire (pour une date precise, ....)
+ *
+ */
 public class Trajet {
 
 	private String id;

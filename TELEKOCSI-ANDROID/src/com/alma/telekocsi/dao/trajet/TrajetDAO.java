@@ -26,7 +26,7 @@ public class TrajetDAO {
 	
 	
 	/**
-	 * Recuperation d'une liste de Trajets
+	 * Pour la recuperation d'une liste de Trajets
 	 */
 	private class GetListTask extends AbstractTask<List<Trajet>>  {
 
@@ -43,8 +43,7 @@ public class TrajetDAO {
 	
 	
 	/**
-	 * Recuperation d'un trajet
-	 * deja reference localement
+	 * Pour la recuperation d'un trajet
 	 */
 	private class GetFicheTask extends AbstractTask<Trajet> {
 
@@ -59,8 +58,7 @@ public class TrajetDAO {
 	
 	
 	/**
-	 * Suppression d'un trajet
-	 * reference localement
+	 * Pour la Suppression d'un trajet
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,8 +73,7 @@ public class TrajetDAO {
 
 	
 	/**
-	 * Suppression de tous les trajets
-	 * reference localement
+	 * Pour la Suppression de plusieurs trajets
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -93,7 +90,7 @@ public class TrajetDAO {
 	
 	
     /**
-     * Creation d'un trajet
+     * Creation d'un trajet dans la BDD
      * @param Trajet
      */
     public Trajet insert(Trajet trajet) {
@@ -114,6 +111,11 @@ public class TrajetDAO {
     }
 
     
+    /**
+     * Modification du trajet dans la BDD
+     * @param trajet a modifier dans la BDD
+     * @return trajet provenant de la BDD apres modif
+     */
     public Trajet update(Trajet trajet) { 	
 
     	// creation d'une requete de type POST
@@ -135,8 +137,9 @@ public class TrajetDAO {
     
     
     /**
-     * Action Supprimer
-     * @param Trajet
+     * Suppression d'un trajet dans la BDD
+     * @param Trajet a supprimer
+     * @return id du trajet supprime
      */
     public String delete(Trajet trajet) {
     	// envoi d'une requete DELETE au serveur
@@ -147,8 +150,7 @@ public class TrajetDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Trajet
+     * Suppression de tous les trajets dans la BDD
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
@@ -158,6 +160,11 @@ public class TrajetDAO {
     }    
     
     
+    /**
+     * Recupere la liste des trajets associes a un profil
+     * @param idProfil
+     * @return
+     */
     public List<Trajet> getList(String idProfil) {
     	// recuperation de tous les trajets
 		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil));

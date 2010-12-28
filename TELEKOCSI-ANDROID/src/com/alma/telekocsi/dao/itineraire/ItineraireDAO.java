@@ -26,7 +26,7 @@ public class ItineraireDAO {
 	
 	
 	/**
-	 * Recuperation d'une liste de Itineraires
+	 * Pour la récuperation d'une liste d'Itineraires
 	 */
 	private class GetListTask extends AbstractTask<List<Itineraire>>  {
 
@@ -43,8 +43,7 @@ public class ItineraireDAO {
 	
 	
 	/**
-	 * Recuperation d'un itineraire
-	 * deja reference localement
+	 * Pour la recuperation d'un itineraire
 	 */
 	private class GetFicheTask extends AbstractTask<Itineraire> {
 
@@ -59,8 +58,7 @@ public class ItineraireDAO {
 	
 	
 	/**
-	 * Suppression d'un itineraire
-	 * reference localement
+	 * Pour la suppression d'un itineraire
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,8 +73,7 @@ public class ItineraireDAO {
 
 	
 	/**
-	 * Suppression de tous les itineraires
-	 * reference localement
+	 * Pour la suppression de plusieurs itineraires
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -93,7 +90,7 @@ public class ItineraireDAO {
 	
 	
     /**
-     * Creation d'un itineraire
+     * Creation d'un itineraire dans la BDD
      * @param Itineraire
      */
     public Itineraire insert(Itineraire itineraire) {
@@ -114,6 +111,11 @@ public class ItineraireDAO {
     }
 
     
+    /**
+     * Modification de l'itineraire dans la BDD
+     * @param itineraire
+     * @return itineraire provenant de la BDD apres maj
+     */
     public Itineraire update(Itineraire itineraire) { 	
 
     	// creation d'une requete de type POST
@@ -135,8 +137,8 @@ public class ItineraireDAO {
     
     
     /**
-     * Action Supprimer
-     * @param Itineraire
+     * Suppression d'un itineraire
+     * @param Itineraire a supprimer de la BDD
      */
     public String delete(Itineraire itineraire) {
     	// envoi d'une requete DELETE au serveur
@@ -147,8 +149,7 @@ public class ItineraireDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Itineraire
+     * Suppression de tous les itineraires de la BDD
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
@@ -158,6 +159,11 @@ public class ItineraireDAO {
     }    
     
     
+    /**
+     * Recuperation des itineraires associes a un profil
+     * @param idProfil identifiant du profil
+     * @return liste des itineraires du profil
+     */
     public List<Itineraire> getList(String idProfil) {
     	// recuperation de tous les itineraires
 		return (new GetListTask()).execute(new HttpGet(GAE.getItineraireEndPoint() + "/profil/" + idProfil));

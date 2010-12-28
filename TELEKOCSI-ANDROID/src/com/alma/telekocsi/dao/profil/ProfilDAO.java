@@ -26,7 +26,7 @@ public class ProfilDAO {
 	
 	
 	/**
-	 * Recuperation d'une liste de Profils
+	 * Pour la recuperation d'une liste de Profils
 	 */
 	private class GetListTask extends AbstractTask<List<Profil>>  {
 
@@ -43,8 +43,7 @@ public class ProfilDAO {
 	
 	
 	/**
-	 * Recuperation d'un profil
-	 * deja reference localement
+	 * Pour la recuperation d'un profil
 	 */
 	private class GetFicheTask extends AbstractTask<Profil> {
 
@@ -59,8 +58,7 @@ public class ProfilDAO {
 	
 	
 	/**
-	 * Suppression d'un profil
-	 * reference localement
+	 * Pour la suppression d'un profil
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,8 +73,7 @@ public class ProfilDAO {
 
 	
 	/**
-	 * Suppression de tous les profils
-	 * reference localement
+	 * Pour la suppression de plusieurs profils
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -93,7 +90,7 @@ public class ProfilDAO {
 	
 	
     /**
-     * Creation d'un profil
+     * Creation d'un profil dans la BDD
      * @param Profil
      */
     public Profil insert(Profil profil) {
@@ -114,6 +111,11 @@ public class ProfilDAO {
     }
 
     
+    /**
+     * Actualisation du profil dans la BDD
+     * @param profil
+     * @return profil actualise provenant de la BDD
+     */
     public Profil update(Profil profil) { 	
 
     	// creation d'une requete de type POST
@@ -135,7 +137,7 @@ public class ProfilDAO {
     
     
     /**
-     * Action Supprimer
+     * Suppression d'un profil
      * @param Profil
      */
     public String delete(Profil profil) {
@@ -147,8 +149,7 @@ public class ProfilDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Profil
+     * Suppression de tous les profils de la base
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
@@ -158,14 +159,35 @@ public class ProfilDAO {
     }    
     
     
+    /**
+     * Recuperation de tous les profils existants
+     * @return liste des profils
+     */
     public List<Profil> getList() {
-    	// recuperation de tous les profils
-		return (new GetListTask()).execute(new HttpGet(GAE.getProfilEndPoint()));
+
+    	return (new GetListTask()).execute(new HttpGet(GAE.getProfilEndPoint()));
+    }
+
+    
+    /**
+     * Recuperation d'un profil a partir de son id
+     * @param idProfil
+     * @return
+     */
+    public Profil getProfil(String idProfil) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getProfilEndPoint() + "/" + idProfil));
     }
     
     
+    /**
+     * Recuperation du profil lie au pseudo + password
+     * @param pseudo pseudo
+     * @param passWord mot de passe
+     * @return profil associe
+     */
     public Profil login(String pseudo, String passWord) {
-    	// Recuperation du profil lie au pseudo + password
+    	
 		return (new GetFicheTask()).execute(new HttpGet(GAE.getProfilEndPoint() + "/login/" + pseudo + "/" + passWord));
     }
 }

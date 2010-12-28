@@ -1,6 +1,12 @@
 package com.alma.telekocsi.dao.itineraire;
 
 
+/**
+ * @author ALMA
+ * 
+ * Represente juste un chemin entre un point de depart 
+ * et un point d'arrivee.
+ */
 public class Itineraire {
 
 	private String id;
