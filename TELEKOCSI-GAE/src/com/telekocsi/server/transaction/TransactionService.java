@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import com.sun.jersey.api.NotFoundException;
 import com.telekocsi.server.util.Tools;
 
+
 @Path("/transaction")
 @Produces("application/json")
 @Consumes("application/json")
@@ -99,6 +100,43 @@ public class TransactionService {
 		
 		return transactions;
 	}
+	
+	/**
+	 * Recuperation de la liste des transactions pour un profil conducteur (to)
+	 * @return liste des transactions
+	 */
+	@GET
+	@Path("/profil/conducteur/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Transaction> listTo(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des transactions pour le profil conducteur : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT t FROM Transaction t where t.idProfilConducteur=:param");
+		query.setParameter("param", idProfil);
+		List<Transaction> transactions = query.getResultList();
+		return transactions;
+	}
+
+	/**
+	 * Recuperation de la liste des transactions pour un profil passager (from)
+	 * @return liste des transactions
+	 */
+	@GET
+	@Path("/profil/passager/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Transaction> listFrom(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des transactions pour le profil passager : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT t FROM Transaction t where t.idProfilPassager=:param");
+		query.setParameter("param", idProfil);
+		List<Transaction> transactions = query.getResultList();
+		return transactions;
+	}	
+	
 
 	/**
 	 * Supprime un transaction par son id
