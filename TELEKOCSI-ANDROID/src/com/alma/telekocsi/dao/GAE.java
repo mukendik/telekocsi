@@ -70,4 +70,8 @@ public class GAE {
 	public static String getTrajetLigneEndPoint() {
 		return getURL("/trajet/ligne");
 	}
+	
+	public static String getTransactionEndPoint() {
+		return getURL("/transaction");
+	}
 }

@@ -3,6 +3,7 @@ package com.alma.telekocsi;
 import com.alma.telekocsi.dao.itineraire.ItineraireTestDAO;
 import com.alma.telekocsi.dao.profil.ProfilTestDAO;
 import com.alma.telekocsi.dao.trajet.TrajetTestDAO;
+import com.alma.telekocsi.dao.transaction.TransactionTestDAO;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ public class Transport extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        testTrajet();
+        testTransaction();
         
         setContentView(R.layout.main);
     }
@@ -23,7 +24,7 @@ public class Transport extends Activity {
     	// TODO Auto-generated method stub
     	super.onRestart();
     	
-    	testTrajet();
+    	testTransaction();
     }
 
     
@@ -55,4 +56,13 @@ public class Transport extends Activity {
         trajetTest.insert();
         trajetTest.getList();    	
     }
+    
+    private void testTransaction() {
+    	
+        TransactionTestDAO transactionTest = new TransactionTestDAO();
+        transactionTest.clear();
+        transactionTest.insert();
+        transactionTest.insert();
+        transactionTest.getList();    	
+    }    
 }
