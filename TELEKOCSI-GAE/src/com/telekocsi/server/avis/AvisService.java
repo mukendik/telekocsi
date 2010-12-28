@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import com.sun.jersey.api.NotFoundException;
 import com.telekocsi.server.util.Tools;
 
+
 @Path("/avis")
 @Produces("application/json")
 @Consumes("application/json")
@@ -101,7 +102,43 @@ public class AvisService {
 		
 		return listAvis;
 	}
+	
+	/**
+	 * Recuperation de la liste des avis pour un profil (from)
+	 * @return liste des avis
+	 */
+	@GET
+	@Path("/profil/from/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Avis> listFrom(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des profils pour le profil from : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT a FROM Avis a where a.idProfilFrom=:param");
+		query.setParameter("param", idProfil);
+		List<Avis> listAvis = query.getResultList();
+		return listAvis;
+	}
 
+	/**
+	 * Recuperation de la liste des avis pour un profil (to)
+	 * @return liste des avis
+	 */
+	@GET
+	@Path("/profil/to/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Avis> listTo(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des profils pour le profil to : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT a FROM Avis a where a.idProfilTo=:param");
+		query.setParameter("param", idProfil);
+		List<Avis> listAvis = query.getResultList();
+		return listAvis;
+	}	
+	
 	/**
 	 * Supprime un avis par son id
 	 * @param id du avis a supprimer
