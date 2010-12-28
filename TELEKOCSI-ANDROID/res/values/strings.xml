@@ -18,14 +18,14 @@
 	<string name="validerTransaction">Valider la transaction</string>
 	<string name="avis">Laisser une appréciation :</string>
 	<string name="commentaire">Commentaire :</string>
-	<string name="rechTransport">Recherche transport</string>
+	<string name="rechTrajet">Recherche trajet</string>
 	<string name="identTrajet">Identification du trajet :</string>
 	<string name="heure">Heure :</string>
 	<string name="jours">Jours :</string>
 	<string name="autoroute">Autoroute :</string>
 	<string name="dateTrajet">Date du trajet :</string>
 	<string name="rechercher">Rechercher</string>
-	<string name="transportfind">Transports trouvés</string>
+	<string name="trajetfind">Trajets trouvés</string>
 	<string name="resultats">10 résultats</string>
 	<string name="page">Page : 1/5</string>
 	<string name="newsearch">Nouvelle recherche</string>
