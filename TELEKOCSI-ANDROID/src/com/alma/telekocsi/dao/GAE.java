@@ -74,4 +74,8 @@ public class GAE {
 	public static String getTransactionEndPoint() {
 		return getURL("/transaction");
 	}
+	
+	public static String getAvisEndPoint() {
+		return getURL("/avis");
+	}
 }
