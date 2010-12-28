@@ -90,9 +90,10 @@ public class Transport extends Activity {
     private void testLocalisation() {
     	
         LocalisationTestDAO localisationTest = new LocalisationTestDAO();
+        localisationTest.clearAll();
+        localisationTest.insert();
+        localisationTest.insert();
+        localisationTest.getList();
         localisationTest.clear();
-        localisationTest.insert();
-        localisationTest.insert();
-        localisationTest.getList();    	
-    }     
+    }
 }

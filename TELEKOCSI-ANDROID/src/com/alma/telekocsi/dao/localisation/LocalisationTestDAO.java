@@ -69,8 +69,18 @@ public class LocalisationTestDAO {
 	}
 
 	
+	/*
+	 * Doit etre appele pendant la session courante sinon le profil sera different
+	 * et il n'y aura pas de suppression
+	 */
 	public void clear() {
 		Integer nb = localisationDAO.clear(profil.getId());
+		Log.i(LocalisationTestDAO.class.getSimpleName(), "clear localisations : " + nb);
+	}
+	
+	
+	public void clearAll() {
+		Integer nb = localisationDAO.clear();
 		Log.i(LocalisationTestDAO.class.getSimpleName(), "clear localisations : " + nb);
 	}
 	
