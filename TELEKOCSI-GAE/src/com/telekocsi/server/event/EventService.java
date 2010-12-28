@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import com.sun.jersey.api.NotFoundException;
 import com.telekocsi.server.util.Tools;
 
+
 @Path("/event")
 @Produces("application/json")
 @Consumes("application/json")
@@ -100,6 +101,44 @@ public class EventService {
 		
 		return listEvents;
 	}
+	
+	/**
+	 * Recuperation de la liste des events pour un profil (from)
+	 * @return liste des events
+	 */
+	@GET
+	@Path("/profil/from/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Event> listFrom(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des events pour le profil from : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT e FROM Event e where e.idProfilFrom=:param");
+		query.setParameter("param", idProfil);
+		List<Event> listEvents = query.getResultList();
+		return listEvents;
+	}
+
+	
+	/**
+	 * Recuperation de la liste des events pour un profil (to)
+	 * @return liste des events
+	 */
+	@GET
+	@Path("/profil/to/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Event> listTo(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des events pour le profil to : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT e FROM Event e where e.idProfilTo=:param");
+		query.setParameter("param", idProfil);
+		List<Event> listEvents = query.getResultList();
+		return listEvents;
+	}
+	
 
 	/**
 	 * Supprime un event par son id
