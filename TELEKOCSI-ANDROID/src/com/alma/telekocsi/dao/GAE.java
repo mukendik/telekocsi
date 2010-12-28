@@ -82,4 +82,8 @@ public class GAE {
 	public static String getEventEndPoint() {
 		return getURL("/event");
 	}
+	
+	public static String getLocalisationEndPoint() {
+		return getURL("/localisation");
+	}
 }
