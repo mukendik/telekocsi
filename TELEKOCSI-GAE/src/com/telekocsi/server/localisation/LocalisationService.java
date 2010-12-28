@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import com.sun.jersey.api.NotFoundException;
 import com.telekocsi.server.util.Tools;
 
+
 @Path("/localisation")
 @Produces("application/json")
 @Consumes("application/json")
@@ -97,10 +98,28 @@ public class LocalisationService {
 		
 		return localisations;
 	}
+	
+	/**
+	 * Recuperation de la liste des localisations pour un profil
+	 * @return liste des localisations
+	 */
+	@GET
+	@Path("/profil/{idProfil}")
+	@SuppressWarnings("unchecked")
+	public List<Localisation> list(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Recuperation des localisations pour le profil : " + idProfil);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT l FROM Localisation l where l.idProfil=:param");
+		query.setParameter("param", idProfil);
+		List<Localisation> listLocalisations = query.getResultList();
+		return listLocalisations;
+	}
 
 	/**
-	 * Supprime un localisation par son id
-	 * @param id du localisation a supprimer
+	 * Supprime une localisation par son id
+	 * @param id de la localisation a supprimer
 	 * @return id localisation supprime
 	 */
 	@DELETE
@@ -122,6 +141,23 @@ public class LocalisationService {
 		
 		return id;
 	}
+
+	/**
+	 * Supprime toutes les localisations pour un profil
+	 * @return nbre de localisations supprimées
+	 */
+	@DELETE
+	@Path("/clear/{idProfil}")
+	public int clear(@PathParam("idProfil") String idProfil) {
+		
+		log.info("Suppression de toutes les localisations pour un profil");
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("DELETE FROM Localisation l where l.idProfil=:param");
+		query.setParameter("param", idProfil);
+		int result = query.executeUpdate();
+		return result;
+	}	
 	
 	/**
 	 * Supprime tous les localisations
