@@ -19,7 +19,7 @@ public class GAE {
 	static {
 		HttpParams params = new BasicHttpParams();
 		HttpProtocolParams.setContentCharset(params, "UTF-8");
-		httpClient.setParams(params); 
+		httpClient.setParams(params);
 	}
 	
 	private static final Gson gson = new Gson();
