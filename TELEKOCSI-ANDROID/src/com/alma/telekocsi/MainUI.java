@@ -1,5 +1,7 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.init.LoadData;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.Button;
 public class MainUI extends Activity {
     
 	OnClickListener onClickListener = null;
+	Button btLoadData;
 	Button btRechTrajet;
 	Button btTransaction;
 	Button btQuitter;
@@ -22,6 +25,9 @@ public class MainUI extends Activity {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
+
+        btLoadData = (Button)findViewById(R.id.btMainLoadData);
+        btLoadData.setOnClickListener(getOnClickListener());
         
         btRechTrajet = (Button)findViewById(R.id.btMainTrajetRecherche);
         btRechTrajet.setOnClickListener(getOnClickListener());
@@ -55,8 +61,9 @@ public class MainUI extends Activity {
 						goRechercheTrajet();
 					} else if (v == btTransaction) {
 						goTransaction();
+					} else if (v == btLoadData) {
+						loadData();
 					}
-						
 				}
 			};
     	}
@@ -73,5 +80,11 @@ public class MainUI extends Activity {
     public void goTransaction() {
         Intent intent = new Intent(this, Transaction.class);
         startActivity(intent);
+    }
+    
+    
+    public void loadData() {
+    	LoadData loadData = new LoadData();
+    	loadData.load();
     }
 }

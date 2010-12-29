@@ -73,7 +73,7 @@ public class TrajetDAO {
 
 	
 	/**
-	 * Pour la Suppression de plusieurs trajets
+	 * Pour connaitre le nombre de trajets traites
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -168,6 +168,18 @@ public class TrajetDAO {
     public List<Trajet> getList(String idProfil) {
     	// recuperation de tous les trajets
 		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil));
+    }
+    
+    
+    /**
+     * Generation automatique des trajets habituels des conducteurs pour une date
+     * @param date au format dd/MM/yyyy
+     * @return nb de trajets generes
+     */
+    public int generate(String date) {
+    	// recuperation de tous les trajets
+    	String dateRef = date.replaceAll("/", "-"); // Non supporte sinon change le chemin http !
+		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/generate/" + dateRef));
     }
     
 }
