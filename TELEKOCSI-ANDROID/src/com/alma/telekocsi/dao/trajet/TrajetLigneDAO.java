@@ -40,6 +40,23 @@ public class TrajetLigneDAO {
 			return trajetLignes;
 		}
 	};
+
+	
+	/**
+	 * Recuperation la liste des id des passagers
+	 */
+	private class GetListIdTask extends AbstractTask<List<String>>  {
+
+		protected List<String> handleJson(final InputStream in) {
+			
+			final Type collectionType = new TypeToken<List<String>>(){}.getType();
+			List<String> listId = null;
+			synchronized (lock) {
+				listId = GAE.getGson().fromJson(new InputStreamReader(in), collectionType);
+			}
+			return listId;
+		}
+	};
 	
 	
 	/**
@@ -180,6 +197,15 @@ public class TrajetLigneDAO {
     public List<TrajetLigne> getList(String idTrajet) {
     	// recuperation de tous les trajetLignes
 		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/trajet/" + idTrajet));
+    }
+
+    /**
+     * Recuperation la liste des passagers (id) integres au trajet
+     * @param idTrajet identifiant du trajet
+     * @return Liste des id des passagers
+     */
+    public List<String> getListPassagers(String idTrajet) {
+		return (new GetListIdTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/passagers/" + idTrajet));
     }
     
 }

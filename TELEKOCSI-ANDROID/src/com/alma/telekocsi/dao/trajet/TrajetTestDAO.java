@@ -20,6 +20,7 @@ public class TrajetTestDAO {
 	Profil profilConducteur;
 	Profil profilPassager;
 	Itineraire itineraire;
+	Trajet trajet;
 	
 	
 	public TrajetTestDAO() {
@@ -100,7 +101,7 @@ public class TrajetTestDAO {
 	
 	public void insert() {	
 		
-		Trajet trajet = new Trajet();
+		trajet = new Trajet();
 		trajet.setAutoroute(itineraire.isAutoroute());
 		trajet.setCommentaire(itineraire.getCommentaire());
 		trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
@@ -134,6 +135,16 @@ public class TrajetTestDAO {
 		trajetLigne = trajetLigneDAO.insert(trajetLigne);
 		Log.i(TrajetTestDAO.class.getSimpleName(), "insert ligne trajet : " + trajetLigne);
 	}
+
+	
+	public void getListIdPassagers() {
+		List<String> listPassagers = trajetLigneDAO.getListPassagers(trajet.getId());
+		int cpt1 = 0;
+		Log.i(TrajetTestDAO.class.getSimpleName(), "id des passagers : ");
+		for (String id : listPassagers) {
+			Log.i(TrajetTestDAO.class.getSimpleName(), "Id passager (" + (++cpt1) + ") : " + id);
+		}
+	}	
 	
 	
 	public void getList() {
