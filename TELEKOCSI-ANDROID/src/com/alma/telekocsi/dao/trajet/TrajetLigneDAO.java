@@ -26,7 +26,7 @@ public class TrajetLigneDAO {
 	
 	
 	/**
-	 * Recuperation d'une liste de TrajetLignes
+	 * Recuperation d'une liste de lignes de Trajet
 	 */
 	private class GetListTask extends AbstractTask<List<TrajetLigne>>  {
 
@@ -43,8 +43,7 @@ public class TrajetLigneDAO {
 	
 	
 	/**
-	 * Recuperation d'un trajetLigne
-	 * deja reference localement
+	 * Recuperation d'une fiche
 	 */
 	private class GetFicheTask extends AbstractTask<TrajetLigne> {
 
@@ -59,8 +58,7 @@ public class TrajetLigneDAO {
 	
 	
 	/**
-	 * Suppression d'un trajetLigne
-	 * reference localement
+	 * Id de la fiche traitee
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,8 +73,7 @@ public class TrajetLigneDAO {
 
 	
 	/**
-	 * Suppression de tous les trajetLignes
-	 * reference localement
+	 * Nbre de fiches traitees
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -93,8 +90,9 @@ public class TrajetLigneDAO {
 	
 	
     /**
-     * Creation d'un trajetLigne
-     * @param TrajetLigne
+     * Creation d'une ligne de trajet dans la BDD
+     * @param TrajetLigne a creer
+     * @return ligne de trajet inseree dans la base
      */
     public TrajetLigne insert(TrajetLigne trajetLigne) {
 
@@ -114,6 +112,11 @@ public class TrajetLigneDAO {
     }
 
     
+    /**
+     * Modification d'une ligne de trajet
+     * @param trajetLigne a modifier dans la BDD
+     * @return ligne de trajet memorisee dans la BDD
+     */
     public TrajetLigne update(TrajetLigne trajetLigne) { 	
 
     	// creation d'une requete de type POST
@@ -135,8 +138,9 @@ public class TrajetLigneDAO {
     
     
     /**
-     * Action Supprimer
-     * @param TrajetLigne
+     * Suppression d'une ligne de trajet dans la BDD
+     * @param TrajetLigne a supprimer
+     * @return id de la ligne de trajet supprimee
      */
     public String delete(TrajetLigne trajetLigne) {
     	// envoi d'une requete DELETE au serveur
@@ -147,17 +151,32 @@ public class TrajetLigneDAO {
 
     
     /**
-     * Action Supprimer
-     * @param TrajetLigne
+     * Suppression de toutes les lignes de trajet
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
     	// sur l'URL pour supprimer tous les TrajetLignes
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getTrajetLigneEndPoint() + "/clear"));
-    }    
+    }
     
     
+    /**
+     * Recuperation d'une ligne de trajet a partir de son id
+     * @param idTrajetLigne
+     * @return TrajetLigne
+     */
+    public TrajetLigne getTrajetLigne(String idTrajetLigne) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/" + idTrajetLigne));
+    }
+    
+    
+    /**
+     * Recuperation des lignes associees a un trajet
+     * @param idTrajet identifiant du trajet
+     * @return Liste des lignes
+     */
     public List<TrajetLigne> getList(String idTrajet) {
     	// recuperation de tous les trajetLignes
 		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/trajet/" + idTrajet));

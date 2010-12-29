@@ -43,8 +43,7 @@ public class TransactionDAO {
 	
 	
 	/**
-	 * Recuperation d'une transaction
-	 * deja reference localement
+	 * Recuperation d'une fiche
 	 */
 	private class GetFicheTask extends AbstractTask<Transaction> {
 
@@ -59,8 +58,7 @@ public class TransactionDAO {
 	
 	
 	/**
-	 * Suppression d'une transaction
-	 * reference localement
+	 * Id de la fiche traitee
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,7 +73,7 @@ public class TransactionDAO {
 
 	
 	/**
-	 * Suppression de toutes les transactions
+	 * Nombre de fiches traitees
 	 * reference localement
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
@@ -93,8 +91,9 @@ public class TransactionDAO {
 	
 	
     /**
-     * Creation d'un transaction
+     * Creation d'une transaction dans la BDD distante
      * @param Transaction
+     * @return Transaction inseree dans la BDD
      */
     public Transaction insert(Transaction transaction) {
 
@@ -114,6 +113,11 @@ public class TransactionDAO {
     }
 
     
+    /**
+     * Modification d'une transaction dans la BDD distante
+     * @param transaction a reporter dans la BDD
+     * @return transaction modifiee provenant de la BDD
+     */
     public Transaction update(Transaction transaction) { 	
 
     	// creation d'une requete de type POST
@@ -135,8 +139,9 @@ public class TransactionDAO {
     
     
     /**
-     * Action Supprimer
-     * @param Transaction
+     * Suppression d'une transaction dans la BDD distante
+     * @param Transaction a supprimer
+     * @return id de la transaction supprimee
      */
     public String delete(Transaction transaction) {
     	// envoi d'une requete DELETE au serveur
@@ -147,23 +152,43 @@ public class TransactionDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Transaction
+     * Suppression des transactions dans la BDD distante
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
     	// sur l'URL pour supprimer tous les Transactions
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getTransactionEndPoint() + "/clear"));
-    }    
+    }
     
     
+    /**
+     * Recuperation d'une transaction a partir de son id
+     * @param idTransaction
+     * @return transaction
+     */
+    public Transaction getTransaction(String idTransaction) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getTransactionEndPoint() + "/" + idTransaction));
+    }
+    
+    
+    /**
+     * Liste des transactions pour un profil passager
+     * @param idProfil passager
+     * @return liste des transations payees
+     */
     public List<Transaction> getListPassager(String idProfil) {
     	// recuperation des transactions from
 		return (new GetListTask()).execute(new HttpGet(GAE.getTransactionEndPoint() + "/profil/passager/" + idProfil));
     }
 
     
+    /**
+     * Liste des transactions pour un profil conducteur
+     * @param idProfil conducteur
+     * @return Liste des transactions dont il beneficie
+     */
     public List<Transaction> getListConducteur(String idProfil) {
     	// recuperation des transactions to
 		return (new GetListTask()).execute(new HttpGet(GAE.getTransactionEndPoint() + "/profil/conducteur/" + idProfil));

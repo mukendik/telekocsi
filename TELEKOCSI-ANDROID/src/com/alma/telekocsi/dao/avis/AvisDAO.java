@@ -44,7 +44,6 @@ public class AvisDAO {
 	
 	/**
 	 * Recuperation d'un avis
-	 * deja reference localement
 	 */
 	private class GetFicheTask extends AbstractTask<Avis> {
 
@@ -59,8 +58,7 @@ public class AvisDAO {
 	
 	
 	/**
-	 * Suppression d'un avis
-	 * reference localement
+	 * Recupere l'id de l'avis traite 
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -75,8 +73,7 @@ public class AvisDAO {
 
 	
 	/**
-	 * Suppression de tous les avis
-	 * reference localement
+	 * Retourne le nbre d'avis traites
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -93,8 +90,9 @@ public class AvisDAO {
 	
 	
     /**
-     * Creation d'un avis
-     * @param Avis
+     * Creation d'un avis dans la BDD
+     * @param Avis a inserer
+     * @return avis insere dans la BDD
      */
     public Avis insert(Avis avis) {
 
@@ -114,6 +112,11 @@ public class AvisDAO {
     }
 
     
+    /**
+     * Modification d'un avis dans la BDD
+     * @param avis a modifier
+     * @return avis modifie recupere de la BDD
+     */
     public Avis update(Avis avis) { 	
 
     	// creation d'une requete de type POST
@@ -135,8 +138,9 @@ public class AvisDAO {
     
     
     /**
-     * Action Supprimer
-     * @param Avis
+     * Suppressino d'un avis en BDD
+     * @param Avis a supprimer
+     * @return id de l'avis supprime
      */
     public String delete(Avis avis) {
     	// envoi d'une requete DELETE au serveur
@@ -147,8 +151,8 @@ public class AvisDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Avis
+     * Suppression de tous les avis de la BDD
+     * @return nombre d'avis supprimes
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
@@ -157,13 +161,33 @@ public class AvisDAO {
 				GAE.getAvisEndPoint() + "/clear"));
     }    
     
-    
-    public List<Avis> getListFrom(String idProfil) {
-    	// recuperation des avis from
-		return (new GetListTask()).execute(new HttpGet(GAE.getAvisEndPoint() + "/profil/from/" + idProfil));
+
+    /**
+     * Recuperation d'un avis a partir de son id
+     * @param idAvis
+     * @return Avis
+     */
+    public Avis getAvis(String idAvis) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getAvisEndPoint() + "/" + idAvis));
     }
 
+
+    /**
+     * Liste des avis deposes par un profil
+     * @param idProfil id du profil ayant depose les avis 
+     * @return liste des avis
+     */
+    public List<Avis> getListFrom(String idProfil) {
+		return (new GetListTask()).execute(new HttpGet(GAE.getAvisEndPoint() + "/profil/from/" + idProfil));
+    }
     
+    
+    /**
+     * Recupere une liste d'avis a destination d'un profil
+     * @param idProfil profils concerne par les avis
+     * @return liste des avis
+     */
     public List<Avis> getListTo(String idProfil) {
     	// recuperation des avis to
 		return (new GetListTask()).execute(new HttpGet(GAE.getAvisEndPoint() + "/profil/to/" + idProfil));

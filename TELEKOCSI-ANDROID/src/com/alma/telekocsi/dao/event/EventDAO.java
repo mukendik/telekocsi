@@ -17,6 +17,7 @@ import com.alma.telekocsi.dao.AbstractTask;
 import com.alma.telekocsi.dao.GAE;
 import com.google.gson.reflect.TypeToken;
 
+
 public class EventDAO {
 	
 	public EventDAO() {
@@ -42,7 +43,6 @@ public class EventDAO {
 	
 	/**
 	 * Recuperation d'un event
-	 * deja reference localement
 	 */
 	private class GetFicheTask extends AbstractTask<Event> {
 
@@ -57,8 +57,7 @@ public class EventDAO {
 	
 	
 	/**
-	 * Suppression d'un event
-	 * reference localement
+	 * Retourne l'id de l'event traite
 	 */
 	private class GetIdTask extends AbstractTask<String> {
 
@@ -73,8 +72,7 @@ public class EventDAO {
 
 	
 	/**
-	 * Suppression de tous les event
-	 * reference localement
+	 * Retour le nombre d'events traites
 	 */
 	private class GetNbFicheTask extends AbstractTask<Integer> {
 
@@ -91,8 +89,9 @@ public class EventDAO {
 	
 	
     /**
-     * Creation d'un event
-     * @param Event
+     * Creation d'un event dans la BDD
+     * @param Event a inserer
+     * @return event insere dans la BDD
      */
     public Event insert(Event event) {
 
@@ -112,6 +111,11 @@ public class EventDAO {
     }
 
     
+    /**
+     * Modification d'un event dans la BDD
+     * @param event event a modifier
+     * @return event modifie dans la BDD
+     */
     public Event update(Event event) { 	
 
     	// creation d'une requete de type POST
@@ -133,8 +137,9 @@ public class EventDAO {
     
     
     /**
-     * Action Supprimer
-     * @param Event
+     * Suppression d'un event dans la BDD
+     * @param Event a supprimer
+     * @return id de l'event supprime
      */
     public String delete(Event event) {
     	// envoi d'une requete DELETE au serveur
@@ -145,23 +150,44 @@ public class EventDAO {
 
     
     /**
-     * Action Supprimer
-     * @param Event
+     * Suppression de tous les events de la BDD
+     * @return Nombre d'events supprimes
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
     	// sur l'URL pour supprimer tous les Events
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getEventEndPoint() + "/clear"));
+    }
+    
+    
+    /**
+     * Recuperation d'un event a partir de son id
+     * @param idEvent
+     * @return Event
+     */
+    public Event getEvent(String idEvent) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getEventEndPoint() + "/" + idEvent));
     }    
     
     
+    /**
+     * Liste des events crees par un profil (origine : from)
+     * @param idProfil id du profil a l'origine de l'event
+     * @return Liste des events 
+     */
     public List<Event> getListFrom(String idProfil) {
     	// recuperation des event from
 		return (new GetListTask()).execute(new HttpGet(GAE.getEventEndPoint() + "/profil/from/" + idProfil));
     }
 
     
+    /**
+     * Liste des evenements pour un destinataire (to)
+     * @param idProfil id du profil destinataire
+     * @return liste des events
+     */
     public List<Event> getListTo(String idProfil) {
     	// recuperation des event to
 		return (new GetListTask()).execute(new HttpGet(GAE.getEventEndPoint() + "/profil/to/" + idProfil));

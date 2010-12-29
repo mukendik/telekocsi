@@ -157,7 +157,18 @@ public class TrajetDAO {
     	// sur l'URL pour supprimer tous les Trajets
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getTrajetEndPoint() + "/clear"));
-    }    
+    }
+    
+    
+    /**
+     * Recuperation d'un trajet a partir de son id
+     * @param idTrajet
+     * @return trajet
+     */
+    public Trajet getTrajet(String idTrajet) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/" + idTrajet));
+    }
     
     
     /**

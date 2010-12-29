@@ -92,6 +92,7 @@ public class ProfilDAO {
     /**
      * Creation d'un profil dans la BDD
      * @param Profil
+     * @return profil insere dans la BDD
      */
     public Profil insert(Profil profil) {
 
@@ -139,6 +140,7 @@ public class ProfilDAO {
     /**
      * Suppression d'un profil
      * @param Profil
+     * @return id du profil supprime
      */
     public String delete(Profil profil) {
     	// envoi d'une requete DELETE au serveur
@@ -172,7 +174,7 @@ public class ProfilDAO {
     /**
      * Recuperation d'un profil a partir de son id
      * @param idProfil
-     * @return
+     * @return profil
      */
     public Profil getProfil(String idProfil) {
     	

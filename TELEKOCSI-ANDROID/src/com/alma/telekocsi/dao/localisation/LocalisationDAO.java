@@ -94,7 +94,8 @@ public class LocalisationDAO {
 	
     /**
      * Creation d'une localisation
-     * @param Localisation
+     * @param Localisation a inserer
+     * @return Localisation inseree dans la BDD
      */
     public Localisation insert(Localisation localisation) {
 
@@ -114,6 +115,11 @@ public class LocalisationDAO {
     }
 
     
+    /**
+     * Modification de la localisation dans la BDD
+     * @param localisation a reporter dans la BDD
+     * @return localisation memorisee dans la BDD
+     */
     public Localisation update(Localisation localisation) { 	
 
     	// creation d'une requete de type POST
@@ -137,6 +143,7 @@ public class LocalisationDAO {
     /**
      * Action Supprimer
      * @param Localisation
+     * @return id de la localisation supprimee
      */
     public String delete(Localisation localisation) {
     	// envoi d'une requete DELETE au serveur
@@ -165,9 +172,27 @@ public class LocalisationDAO {
     	// sur l'URL pour supprimer tous les Localisations
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getLocalisationEndPoint() + "/clear"));
-    }    
+    }
     
     
+    /**
+     * Recuperation d'une localisation a partir de son id
+     * @param idLocalisation
+     * @return Localisation
+     */
+    public Localisation getLocalisation(String idLocalisation) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getLocalisationEndPoint() + "/" + idLocalisation));
+    }     
+    
+    
+    /**
+     * Recupere les localisations liees a un profil
+     * Normalement, une seule
+     * 
+     * @param idProfil
+     * @return liste des localisations
+     */
     public List<Localisation> getList(String idProfil) {
     	// recuperation des localisations liees a un profil
 		return (new GetListTask()).execute(new HttpGet(GAE.getLocalisationEndPoint() + "/profil/" + idProfil));

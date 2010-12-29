@@ -139,6 +139,7 @@ public class ItineraireDAO {
     /**
      * Suppression d'un itineraire
      * @param Itineraire a supprimer de la BDD
+     * @return id de l'itineraire supprime dans la BDD
      */
     public String delete(Itineraire itineraire) {
     	// envoi d'une requete DELETE au serveur
@@ -150,6 +151,7 @@ public class ItineraireDAO {
     
     /**
      * Suppression de tous les itineraires de la BDD
+     * @return Nombre d'itineraires supprimes
      */
     public Integer clear() {
     	// envoi d'une requete DELETE au serveur
