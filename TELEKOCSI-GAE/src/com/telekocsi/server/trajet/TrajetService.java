@@ -2,7 +2,6 @@ package com.telekocsi.server.trajet;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -116,7 +115,7 @@ public class TrajetService {
 	}
 	
 	/**
-	 * Recuperation de la liste des Itineraires pour un profil
+	 * Recuperation de la liste des Trajets pour un profil
 	 * @return liste des itineraires
 	 */
 	@GET
@@ -258,5 +257,6 @@ public class TrajetService {
 			}
 		}		
 		return cpt;
-	}
+	}	
+	
 }

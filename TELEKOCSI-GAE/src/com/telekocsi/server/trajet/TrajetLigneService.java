@@ -177,4 +177,21 @@ public class TrajetLigneService {
 		
 		return trajetLigne;
 	}
+	
+	/**
+	 * Recuperation de la liste des id passagers pour un itineraire
+	 * @return liste des passager integres dans un trajet
+	 */
+	@GET
+	@Path("/passagers/{idTrajet}")
+	public List<String> getPassagers(@PathParam("idTrajet") String idTrajet) {
+		
+		log.info("Recuperation des id des passagers pour le trajet : " + idTrajet);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT tl.idProfilPassager FROM TrajetLigne tl where tl.idTrajet=:param");
+		query.setParameter("param", idTrajet);
+		List<String> idProfils = query.getResultList();
+		return idProfils;
+	}
 }
