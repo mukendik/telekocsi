@@ -195,6 +195,7 @@ public class TrajetService {
 	
 	/**
 	 * Generation automatique des trajets habituels des conducteurs pour une date
+	 * Attention : date au format dd-MM-yyyy
 	 * @return Nombre de trajets generes
 	 */
 	@GET
@@ -204,11 +205,11 @@ public class TrajetService {
 		log.info("Generation des trajets habituels pour le : " + dateRef);
 
 		int cpt = 0;
-		
+		String dateTrav = dateRef.replaceAll("-", "/");
 		SimpleDateFormat s1 = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = null;
 		try {
-			date = s1.parse(dateRef);
+			date = s1.parse(dateTrav);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return -1;
@@ -248,7 +249,7 @@ public class TrajetService {
 						trajet.setIdProfilConducteur(itineraire.getIdProfil());
 						trajet.setIdItineraire(itineraire.getId());
 						trajet.setVariableDepart(itineraire.getVariableDepart());
-						trajet.setDateTrajet(dateRef);
+						trajet.setDateTrajet(dateTrav);
 						trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
 						add(trajet);
 						cpt++;
