@@ -200,22 +200,22 @@ public class TrajetService {
 	 */
 	@GET
 	@Path("/generate/{date}")
-	public Integer generate(@PathParam("id") String dateRef) {
+	public Integer generate(@PathParam("date") String date) {
 
-		log.info("Generation des trajets habituels pour le : " + dateRef);
+		log.info("Generation des trajets habituels pour le : " + date);
 
 		int cpt = 0;
-		String dateTrav = dateRef.replaceAll("-", "/");
+		String dateTrav = date.replaceAll("-", "/");
 		SimpleDateFormat s1 = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = null;
+		Date dateRef = null;
 		try {
-			date = s1.parse(dateTrav);
+			dateRef = s1.parse(dateTrav);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return -1;
 		}
 		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.setTime(date);
+		calendar.setTime(dateRef);
 		int jour = calendar.get(calendar.DAY_OF_WEEK) - 2;
 		if (jour < 0) 
 			jour = 6;
