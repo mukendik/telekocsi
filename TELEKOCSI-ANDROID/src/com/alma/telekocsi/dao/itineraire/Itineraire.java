@@ -133,6 +133,17 @@ public class Itineraire {
 	public String toString() {
 		
 		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(getLieuDepart());
+		stringBuilder.append(" -> ");
+		stringBuilder.append(getLieuDestination());
+		
+		return stringBuilder.toString();
+	}
+	
+	
+	public String toStringDetail() {
+		
+		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Id : " + getId());
 		stringBuilder.append("; Commentaire : " + getCommentaire());
 		stringBuilder.append("; Frequence trajet : " + getFrequenceTrajet());

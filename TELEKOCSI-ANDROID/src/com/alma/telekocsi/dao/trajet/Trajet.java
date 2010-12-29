@@ -158,9 +158,20 @@ public class Trajet {
 				&& this.id != null 
 				&& this.id.equals(((Trajet) o).getId());
 	}
-	
+
 	@Override
 	public String toString() {
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(getLieuDepart());
+		stringBuilder.append(" -> ");
+		stringBuilder.append(getLieuDestination());
+		
+		return stringBuilder.toString();
+	}
+	
+	
+	public String toStringDetail() {
 		
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Id : " + getId());

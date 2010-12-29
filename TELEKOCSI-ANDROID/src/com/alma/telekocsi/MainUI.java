@@ -42,7 +42,6 @@ public class MainUI extends Activity {
     
     @Override
     protected void onRestart() {
-    	// TODO Auto-generated method stub
     	super.onRestart();
     }
     

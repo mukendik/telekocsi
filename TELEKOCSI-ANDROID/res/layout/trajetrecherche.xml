@@ -111,10 +111,10 @@
    					/>   
 
 	    		<TextView
-	    			android:id="@+id/tvDepart"
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="Les Herbiers"
+	    			android:id="@+id/tvTRVilleDepart"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	    			android:layout_marginTop="1px"
@@ -139,6 +139,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="7h10"
+	    			android:id="@+id/tvTRHeureDepart"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -147,6 +148,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="+/- 5mn"
+	    			android:id="@+id/tvTRVariableDepart"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="25px"
 	   				/>
@@ -167,11 +169,11 @@
     				android:layout_marginLeft="5px"
    					/>   
 
-	    		<TextView  
-	    			android:id="@+id/tvArrivee"
+	    		<TextView
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="Nantes"
+	    			android:id="@+id/tvTRVilleArrivee"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -196,6 +198,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="L M M J V - -"
+	    			android:id="@+id/tvTRJours"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -220,6 +223,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="non"
+	    			android:id="@+id/tvTRAutoroute"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
