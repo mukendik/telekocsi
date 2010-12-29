@@ -1,10 +1,13 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.GAE;
+import com.alma.telekocsi.init.DataContext;
 import com.alma.telekocsi.init.LoadData;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -41,6 +44,24 @@ public class MainUI extends Activity {
         
         btMap = (Button)findViewById(R.id.btGoogleMap);
         btMap.setOnClickListener(getOnClickListener());
+    }
+    
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	
+    	Thread threadInitHttpClient = new Thread(new Runnable() {
+    		@Override
+    		public void run() {
+    			Log.i(MainUI.class.getSimpleName(), "Debut initialisation http client en thread");
+    			GAE.getHttpClient();
+    			GAE.getGson();
+    			DataContext.getCurrentProfil();
+    			Log.i(MainUI.class.getSimpleName(), "Fin initialisation http client en thread");
+    		}
+    	});
+    	threadInitHttpClient.start();
     }
     
     

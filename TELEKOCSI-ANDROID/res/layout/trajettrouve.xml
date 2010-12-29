@@ -78,14 +78,14 @@
    					/>   
 
 	    		<TextView
-	    			android:id="@+id/tvDepart"
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="Les Herbiers"
+	    			android:id="@+id/tvTTVilleDepart"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	    			android:layout_marginTop="1px"
-	   				/>									
+	   				/>
    			</LinearLayout>
 
    			<LinearLayout
@@ -102,11 +102,11 @@
     				android:layout_marginLeft="5px"
    					/>   
 
-	    		<TextView  
-	    			android:id="@+id/tvArrivee"
+	    		<TextView
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="Nantes"
+	    			android:id="@+id/tvTTVilleArrivee"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -131,6 +131,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="Lundi 15 novembre 2010"
+	    			android:id="@+id/tvTTDate"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -148,6 +149,7 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content" 
     			android:text="@string/resultats"
+    			android:id="@+id/tvTTResultat"
     			android:textColor="@color/white"
     			android:background="@color/txtGroupe"
     			android:layout_marginLeft="5px"
@@ -157,6 +159,7 @@
    				
     		<ImageButton
     			android:src="@drawable/previous"
+    			android:id="@+id/ibTTPrevious"
     			android:layout_width="24px"
     			android:layout_height="24px"
     			android:background="@color/fond"
@@ -165,7 +168,7 @@
     			/>   			 
 
 	   		<TextView
-	   			android:id="@+id/tvDepart"
+	   			android:id="@+id/tvTTPage"
 	   			android:layout_width="wrap_content" 
 	   			android:layout_height="wrap_content" 
 	   			android:text="@string/page"
@@ -176,6 +179,7 @@
 				
 			<ImageButton
     			android:src="@drawable/next"
+    			android:id="@+id/ibTTNext"
     			android:layout_width="24px"
     			android:layout_height="24px"
     			android:background="@color/fond"

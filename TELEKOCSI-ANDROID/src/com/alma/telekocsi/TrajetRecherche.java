@@ -12,6 +12,7 @@ import com.alma.telekocsi.util.LocalDate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,10 +36,7 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 	TextView tvVariableDepart;
 	TextView tvJours;
 	TextView tvAutoroute;
-	/*
-	String[] dates = {"Lundi 15/11/2010",
-			"Mardi 16/11/2010",
-			"Mercredi 17/11/2010"};*/
+
 	LocalDate[] dates = new LocalDate[10];
 	
 	
@@ -157,8 +155,10 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 
 	public List<Itineraire> getItineraires() {
 		
+		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
 		ItineraireDAO itineraireDAO = new ItineraireDAO();
 		List<Itineraire> itineraires = itineraireDAO.getList(DataContext.getCurrentProfil().getId());
+		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets");
 		return itineraires;
 	}
 	
