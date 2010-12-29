@@ -1,5 +1,10 @@
 package com.telekocsi.server.trajet;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -15,6 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.sun.jersey.api.NotFoundException;
+import com.telekocsi.server.itineraire.Itineraire;
+import com.telekocsi.server.profil.Profil;
 import com.telekocsi.server.util.Tools;
 
 @Path("/trajet")
@@ -183,5 +190,72 @@ public class TrajetService {
 		em.getTransaction().commit();
 		
 		return trajet;
+	}
+	
+	
+	/**
+	 * Generation automatique des trajets habituels des conducteurs pour une date
+	 * @return Nombre de trajets generes
+	 */
+	@GET
+	@Path("/generate/{date}")
+	public Integer generate(@PathParam("id") String dateRef) {
+
+		log.info("Generation des trajets habituels pour le : " + dateRef);
+
+		int cpt = 0;
+		
+		SimpleDateFormat s1 = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = null;
+		try {
+			date = s1.parse(dateRef);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		int jour = calendar.get(calendar.DAY_OF_WEEK) - 2;
+		if (jour < 0) 
+			jour = 6;
+		
+		// LMMJVSD OOOOOOO
+
+		EntityManager em = Tools.getEntityManager();
+		List<Itineraire> itineraires = em.createQuery("SELECT i FROM Itineraire i where i.placeDispo > 0").getResultList();
+
+		for (Itineraire itineraire : itineraires) {
+			if (itineraire.getPlaceDispo() >  0) {
+				String chaineJour = itineraire.getFrequenceTrajet() + "NNNNNNN";
+				if (chaineJour.charAt(jour) == 'O') {
+					
+					Query query  = em.createQuery("SELECT p FROM Profil p where p.id=:param");
+					query.setParameter("param", itineraire.getIdProfil());
+					Profil profil = (Profil)query.getSingleResult();
+					
+					if (profil.getTypeProfil().equals("C")) {
+					
+						Trajet trajet = new Trajet();
+						trajet.setAutoroute(itineraire.isAutoroute());
+						trajet.setCommentaire(itineraire.getCommentaire());
+						trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
+						trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
+						trajet.setHoraireDepart(itineraire.getHoraireDepart());
+						trajet.setLieuDepart(itineraire.getLieuDepart());
+						trajet.setLieuDestination(itineraire.getLieuDestination());
+						trajet.setNbrePoint(itineraire.getNbrePoint());
+						trajet.setPlaceDispo(itineraire.getPlaceDispo());
+						trajet.setIdProfilConducteur(itineraire.getIdProfil());
+						trajet.setIdItineraire(itineraire.getId());
+						trajet.setVariableDepart(itineraire.getVariableDepart());
+						trajet.setDateTrajet(dateRef);
+						trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
+						add(trajet);
+						cpt++;
+					}
+				}
+			}
+		}		
+		return cpt;
 	}
 }
