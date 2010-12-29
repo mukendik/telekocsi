@@ -156,7 +156,17 @@ public class ItineraireDAO {
     	// sur l'URL pour supprimer tous les Itineraires
 		return (new GetNbFicheTask()).execute(new HttpDelete(
 				GAE.getItineraireEndPoint() + "/clear"));
-    }    
+    }   
+    
+    /**
+     * Recuperation d'un itineraire a partir de son id
+     * @param idItineraire
+     * @return Itineraire
+     */
+    public Itineraire getItineraire(String idItineraire) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getItineraireEndPoint() + "/" + idItineraire));
+    }
     
     
     /**
