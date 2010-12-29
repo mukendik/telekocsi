@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, covoiturage!</string>
-    <string name="app_name">Telekocsi</string>
-    
-    <string name="paiement">Paiement et évaluation</string>
+	<string name="hello">Hello World, covoiturage!</string>
+	<string name="app_name">Telekocsi</string>
+
+	<string name="paiement">Paiement et évaluation</string>
 	<string name="retour">Retour</string>
 	<string name="annuler">Annuler</string>
 	<string name="nbPointEchange">Nombre de points à échanger :</string>
@@ -30,7 +30,10 @@
 	<string name="page">Page : 1/5</string>
 	<string name="newsearch">Nouvelle recherche</string>
 	<string name="quit">Quitter</string>
-	
+
+	<!-- Google Map API Key -->
+	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
+
 	<color name="black">#000000</color>
 	<color name="entete">#e9e9e9</color>
 	<color name="fond">#97d7fb</color>
@@ -41,5 +44,5 @@
 	<color name="txtInfo">#4fc416</color>
 	<color name="txtGroupe">#84b441</color>
 	<color name="panelAction">#535252</color>
-    
+
 </resources>

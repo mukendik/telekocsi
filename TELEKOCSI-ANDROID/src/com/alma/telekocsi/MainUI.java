@@ -17,6 +17,7 @@ public class MainUI extends Activity {
 	Button btRechTrajet;
 	Button btTransaction;
 	Button btQuitter;
+	Button btMap;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -37,6 +38,9 @@ public class MainUI extends Activity {
         
         btQuitter = (Button)findViewById(R.id.btMainQuit);
         btQuitter.setOnClickListener(getOnClickListener());
+        
+        btMap = (Button)findViewById(R.id.btGoogleMap);
+        btMap.setOnClickListener(getOnClickListener());
     }
     
     
@@ -60,6 +64,8 @@ public class MainUI extends Activity {
 						goRechercheTrajet();
 					} else if (v == btTransaction) {
 						goTransaction();
+					} else if (v == btMap) {
+						goMap();
 					} else if (v == btLoadData) {
 						loadData();
 					}
@@ -78,6 +84,11 @@ public class MainUI extends Activity {
     
     public void goTransaction() {
         Intent intent = new Intent(this, Transaction.class);
+        startActivity(intent);
+    }
+    
+    public void goMap() {
+        Intent intent = new Intent(this, GoogleMapActivity.class);
         startActivity(intent);
     }
     
