@@ -1,12 +1,13 @@
 package com.alma.telekocsi;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
 import com.alma.telekocsi.init.DataContext;
+import com.alma.telekocsi.util.LocalDate;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,10 +35,12 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 	TextView tvVariableDepart;
 	TextView tvJours;
 	TextView tvAutoroute;
-	
+	/*
 	String[] dates = {"Lundi 15/11/2010",
 			"Mardi 16/11/2010",
-			"Mercredi 17/11/2010"};
+			"Mercredi 17/11/2010"};*/
+	LocalDate[] dates = new LocalDate[10];
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -71,7 +74,7 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
         
         Spinner spinDateTrajet = (Spinner)findViewById(R.id.spinDateTrajet);
         
-        ArrayAdapter<String> aa2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dates);
+        ArrayAdapter<LocalDate> aa2 = new ArrayAdapter<LocalDate>(this, android.R.layout.simple_spinner_item, dates);
         aa2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinDateTrajet.setAdapter(aa2);
     }
@@ -160,9 +163,17 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 	}
 	
 	public void initDates() {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd/MM/yyyy");
-		dates[0] = sdf.format(date);
+		
+		Calendar cal = new GregorianCalendar();		
+		LocalDate date = new LocalDate();
+
+		for (int cptDate = 0; cptDate < 10; cptDate++) {
+			
+			dates[cptDate] = date;
+			cal.setTime(date);
+			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
+			date = new LocalDate(cal.getTimeInMillis());
+		}
 	}
-	
+
 }
