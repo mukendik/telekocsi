@@ -37,7 +37,8 @@
 
 		<uses-library android:name="com.google.android.maps" />		
 
-	</application>
+	<service android:label="Telekocsi Session" android:name=".session.SessionImpl"></service>
+</application>
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
