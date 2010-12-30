@@ -27,8 +27,8 @@ public class Localisation implements Serializable {
 	
 	private String idProfil;
 	private String pointGPS;
-	private double longitude;
-	private double latitude;
+	private Double longitude;
+	private Double latitude;
 	private String dateLocalisation;
 	private String heureLocalisation;
 	
@@ -73,19 +73,19 @@ public class Localisation implements Serializable {
 		this.heureLocalisation = heureLocalisation;
 	}
 	
-	public double getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
-	public double getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 	
