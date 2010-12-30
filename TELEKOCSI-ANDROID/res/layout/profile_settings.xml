@@ -214,5 +214,6 @@ android:layout_height="fill_parent"
     	android:id="@+id/preferences_settings_button"
     	/>
     </LinearLayout>
-  
+ 
 </LinearLayout>
+

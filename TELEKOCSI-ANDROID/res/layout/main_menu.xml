@@ -52,13 +52,43 @@ android:layout_height="fill_parent"
 	     	
 	     	    	
 	     	
-	     		<Button
-    	 		android:id="@id/driver_handle"
-        		android:layout_width="fill_parent"
-       			android:layout_height="wrap_content"
-       			android:text="@string/driver_functions"
-       			android:textStyle="bold"
-       			/>
+<!--	     		<Button-->
+<!--    	 		android:id="@id/driver_handle"-->
+<!--        		android:layout_width="fill_parent"-->
+<!--       			android:layout_height="wrap_content"-->
+<!--       			android:text="@string/driver_functions"-->
+<!--       			android:textStyle="bold"-->
+<!--       			/>-->
+
+ <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    android:id="@id/driver_handle"
+    android:gravity="left"
+    >
+
+	<ImageView
+    		android:src="@drawable/volant"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingRight="10px"
+    		/>
+    		<TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:gravity="center"
+    		android:textColor="@color/black"
+    		android:text="@string/driver_functions" 
+    		android:textStyle="bold"
+    		
+    		/>
+
+</LinearLayout>
+
+
         		<ScrollView
          		android:id="@id/driver_content"
          		android:layout_width="fill_parent"
@@ -107,13 +137,44 @@ android:layout_height="fill_parent"
      		android:handle="@+id/driver_handle"
      		android:content="@+id/driver_content"
      		>
-	     		<Button
-    	 		android:id="@id/driver_handle"
-        		android:layout_width="fill_parent"
-       			android:layout_height="wrap_content"
-       			android:text="@string/occupant_functions"
-       			android:textStyle="bold"
-       			/>
+<!--	     		<Button-->
+<!--    	 		android:id="@id/driver_handle"-->
+<!--        		android:layout_width="fill_parent"-->
+<!--       			android:layout_height="wrap_content"-->
+<!--       			android:text="@string/occupant_functions"-->
+<!--       			android:textStyle="bold"-->
+<!--       			/>-->
+<!--       			-->
+       			
+       			 <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    android:id="@id/driver_handle"
+    android:gravity="left"
+    >
+
+	<ImageView
+    		android:src="@drawable/autostop"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingRight="10px"
+    		/>
+    		<TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:gravity="center"
+    		android:textColor="@color/black"
+    		android:text="@string/occupant_functions"
+    		android:textStyle="bold"
+    		/>
+
+</LinearLayout>
+       			
+       			
+       			
         		<ScrollView
          		android:id="@id/driver_content"
          		android:layout_width="fill_parent"
