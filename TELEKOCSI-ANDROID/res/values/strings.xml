@@ -33,8 +33,8 @@
 	
 	<!-- main_menu -->
     <string name="main_menu_title">Telekocsi</string>
-    <string name="occupant_functions">>Passager</string>
-    <string name="driver_functions">>Conducteur</string>
+    <string name="occupant_functions">Passager</string>
+    <string name="driver_functions">Conducteur</string>
     <string name="route_activation">Activer un trajet</string>
     <string name="route_search">Rechercher un trajet</string>
     <string name="route_modification">Modifier un trajet</string>
@@ -47,15 +47,15 @@
     
     <!-- connection_parameters -->
     <string name="registering">Enregistrement (1/3)</string>
-    <string name="connection_parameters">Paramètres de connexion</string>
+    <string name="connection_parameters"> Paramètres de connexion </string>
     <string name="email">Adresse e-mail</string>
     <string name="password1">Mot de passe</string>
    	<string name="password2">Ressaisissez le mot de passe</string>
-   	<string name="profile_settings_button_text">Créer votre profil</string>
+   	<string name="profile_settings_button_text">Etape 2/3</string>
    	
    	<!-- profile_settings -->
     <string name="registering2">Enregistrement (2/3)</string>
-   	<string name="profile">Profil</string>
+   	<string name="profile">Données personnelles </string>
    	<string name="sex">Sexe</string>
    	<string name="male">M</string>
    	<string name="female">F</string>
@@ -67,7 +67,7 @@
    	<string name="year">AAAA</string>
    	<string name="date_of_birth">Date de naissance</string>
    	<string name="profile_settings_back_button_text">Retour</string>
-   	<string name="preferences_settings_button_text">Enregistrer vos préférences</string>
+   	<string name="preferences_settings_button_text">Etape 3/3</string>
    	
    	<!-- preferences_settings -->
     <string name="registering3">Enregistrement (3/3)</string>
@@ -81,7 +81,7 @@
     <string name="detours">Détours</string>
     <string name="music">Musique</string>
     <string name="preferences_settings_back_button_text">Retour</string>
-    <string name="registering_submit_button_text">Submit all</string>
+    <string name="registering_submit_button_text">Terminer</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
@@ -96,6 +96,8 @@
 	<color name="txtInfo">#4fc416</color>
 	<color name="txtGroupe">#84b441</color>
 	<color name="panelAction">#535252</color>
+	<color name="blue">#30587c</color>
+	
 	
 	<color name="h1_color">#ffffff</color>
 	<color name="h2_color">#000000</color>

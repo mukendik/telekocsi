@@ -44,6 +44,7 @@ android:layout_height="fill_parent"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:paddingBottom="5px"
+    	android:gravity="center"
     	>
     		<ImageView
     		android:src="@drawable/profile"
@@ -55,10 +56,17 @@ android:layout_height="fill_parent"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:gravity="center_vertical"
-    		android:text="@string/profile"
     		android:textColor="@color/h1_color"
     		android:background="@color/h1_background"
+    		android:text="@string/profile" 
     		android:textStyle="bold"
+    		
+    		/>
+    		<ImageView
+    		android:src="@drawable/profile"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="5px"
     		/>
     	</LinearLayout>
     	

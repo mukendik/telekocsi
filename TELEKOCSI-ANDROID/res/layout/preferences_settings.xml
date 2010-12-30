@@ -44,6 +44,7 @@ android:layout_height="fill_parent"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:paddingBottom="5px"
+    	android:gravity="center"
     	>
     		<ImageView
     		android:src="@drawable/love"
@@ -59,6 +60,13 @@ android:layout_height="fill_parent"
     		android:textColor="@color/h1_color"
     		android:background="@color/h1_background"
     		android:textStyle="bold"
+    		/>
+    		
+    		<ImageView
+    		android:src="@drawable/love"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="5px"
     		/>
     	</LinearLayout>
     	
