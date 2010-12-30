@@ -24,6 +24,25 @@ public interface Session {
 	 * @param profile Le nouveau profil
 	 */
 	public abstract void saveProfile(Profil profile);
+
+	/**
+	 * 
+	 * @return <code>true</code> Si l'utilisateur c'est déconnecte
+	 */
+	public abstract boolean isConnected();
+	
+	/**
+	 * Se connecté à un profil
+	 * Si les identifiants sont valide, le profil devient le profil actif
+	 * @return <code>true</code> Si succès
+	 */
+	public abstract boolean login(String name,String password);
+	
+	/**
+	 * 
+	 * @return Deconnecter le profil actif
+	 */
+	public abstract boolean logout();
 	
 	/**
 	 * Ecouter les l'évènement sur la session

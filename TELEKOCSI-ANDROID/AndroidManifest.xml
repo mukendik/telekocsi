@@ -39,7 +39,9 @@
 
 		<uses-library android:name="com.google.android.maps" />		
 
-	<service android:label="Telekocsi Session" android:name=".session.SessionImpl"></service>
+	
+
+<activity android:launchMode="singleInstance" android:name=".session.SessionImpl"></activity>
 </application>
 
 	<uses-permission android:name="android.permission.INTERNET" />

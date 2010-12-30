@@ -7,18 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Binder;
-import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.alma.telekocsi.R;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 
@@ -26,22 +20,16 @@ import com.alma.telekocsi.dao.profil.ProfilDAO;
  * @author Rv
  *
  */
-public class SessionImpl extends IntentService implements Session {
-	/**
-     * Class for clients to access.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with
-     * IPC.
-     */
-    public class LocalBinder extends Binder {
-        SessionImpl getService() {
-            return SessionImpl.this;
-        }
-    }
-	
+public class SessionImpl implements Session {
 	
 	public static final String KEY_PROFILE_ID = "profile_id";
+	public static final String KEY_PROFILE_CONNECTED = "profile_connected";
 	private static final String PREFERENCES_STORE = "TELEKOCSI_PREFERENCES";
 	
+	/**
+	 * 
+	 */
+	private Context context;
 	/**
 	 * settings
 	 */
@@ -49,7 +37,7 @@ public class SessionImpl extends IntentService implements Session {
 	/**
 	 * The notification manager
 	 */
-	private NotificationManager notificationMgr;
+	protected NotificationManager notificationMgr;
 	/**
 	 * Liste avec gestion des accès concurrents
 	 */
@@ -61,55 +49,26 @@ public class SessionImpl extends IntentService implements Session {
 	 */
 	private Profil profile = null;
 
-	/**
-	 * The binder
-	 */
-	private LocalBinder mBinder = new LocalBinder();
-	
 	//DAO
 	private final ProfilDAO profileDAO = new ProfilDAO();
 
 	/**
 	 * 
-	 * @param name
+	 * @param context
 	 */
-    public SessionImpl(String name) {
-		super(name);
+	public SessionImpl(Context context){
+		init(context);
 	}
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("Session", "Received start id " + startId + ": " + intent);
-        // We want this service to continue running until it is explicitly
-        // stopped, so return sticky.
-        return START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        // Cancel the persistent notification.
-        notificationMgr.cancel(R.string.session_service_started);
-
-        // Tell the user we stopped.
-        Toast.makeText(this, R.string.session_service_stopped, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		notificationMgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);		
-		settings = getSharedPreferences(PREFERENCES_STORE, Context.MODE_PRIVATE);
+	
+	/**
+	 * 
+	 * @param context
+	 */
+	private void init(Context context) {
+		this.context = context;
+		notificationMgr = (NotificationManager)this.context.getSystemService(Context.NOTIFICATION_SERVICE);		
+		settings = context.getSharedPreferences(PREFERENCES_STORE, Context.MODE_PRIVATE);
 	}
-
-	@Override
-	protected void onHandleIntent(Intent intent) {
-	}
-
 
 	/* (non-Javadoc)
 	 * @see com.alma.telekocsi.session.Session#getActiveProfile()
@@ -174,6 +133,32 @@ public class SessionImpl extends IntentService implements Session {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isConnected() {
+		return settings.getBoolean(KEY_PROFILE_CONNECTED,false);
+	}
+
+	@Override
+	public boolean login(String name, String password) {
+		Profil profile = profileDAO.login(name, password);
+		if(profile!=null){
+			Editor edit = settings.edit();
+			edit.putString(KEY_PROFILE_ID, profile.getId());
+			edit.putBoolean(KEY_PROFILE_CONNECTED, true);
+			edit.commit();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean logout() {
+		Editor edit = settings.edit();
+		edit.putBoolean(KEY_PROFILE_CONNECTED, false);
+		edit.commit();
+		return true;
 	}
 
 	
