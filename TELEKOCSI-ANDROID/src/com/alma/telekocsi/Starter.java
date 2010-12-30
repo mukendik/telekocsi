@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
+
 public class Starter extends Activity {
 	
     @Override
@@ -13,8 +17,14 @@ public class Starter extends Activity {
         
         System.out.println("nawak-starter");
 
-        boolean exist = false;
+        //Initialization de la session
+        SessionFactory.init(this);
+        Session session = SessionFactory.getCurrentSession();
+        Profil profile = session.getActiveProfile();
+        
+        boolean exist = profile!=null;
         boolean disconnected = true;
+        
         //le compte de la personne n'est pas enregistre
         if(!exist){
         	startActivity(new Intent(this, ConnectionParameters.class));
