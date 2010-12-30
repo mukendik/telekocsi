@@ -19,29 +19,33 @@ public class ConnectionParametersChecking extends Activity {
 		 
 		 super.onCreate(savedInstanceState);
 		 
-		 System.out.println("nawak-cheking");
+		 System.out.println("nawak-checking");
 		 
-//		 EditText email = (EditText) savedInstanceState.get("email");
-//		 System.out.println("nawak");
-//		 EditText password1 = (EditText) savedInstanceState.get("password1");
-//		 EditText password2 = (EditText) savedInstanceState.get("password2");
-//		 
-//		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
-//	     Matcher m = p.matcher(email.getText().toString());
-//	     
-//	     if(!m.find()){
-//	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
-//	     }
-//	     else{
-//	    	 if(!password1.getText().toString().equals(password2.getText().toString())
-//	    			|| password1.getText().toString().equals("")){
-//	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
-//	         }
-//	    	 else{
-//	    		 setResult(RESULT_OK);
-//	    	 }
-//	     }
-	     setResult(RESULT_OK);
+		 Bundle extras = getIntent().getExtras();
+		 String  email = extras.getString("email").toString();
+		 String password1 = extras.getString("password1").toString();
+		 String password2 = extras.getString("password2").toString();
+		 
+		 System.out.println(email);
+		 System.out.println(password1);
+		 System.out.println(password2);
+		 
+		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
+	     Matcher m = p.matcher(email);
+	     
+	     if(!m.find()){
+	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
+	     }
+	     else{
+	    	 if(!password1.equals(password2)
+	    			|| password1.equals("")){
+	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
+	         }
+	    	 else{
+	    		 setResult(RESULT_OK);
+	    	 }
+	     }
+	     
 	     finish();
 	 }
 	 

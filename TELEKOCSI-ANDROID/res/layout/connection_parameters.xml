@@ -72,6 +72,7 @@ android:layout_height="fill_parent"
 
     	<!-- E-mail -->
     	<TextView
+    	android:id="@+id/emailLabelStep1"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
@@ -86,6 +87,7 @@ android:layout_height="fill_parent"
 
     	<!-- Password1 -->
     	<TextView
+    	android:id="@+id/password1LabelStep1"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
@@ -100,6 +102,7 @@ android:layout_height="fill_parent"
 
     	<!-- Password2 -->
     	<TextView
+    	android:id="@+id/password2LabelStep1"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class ConnectionParameters extends Activity {
 	
@@ -22,6 +23,9 @@ public class ConnectionParameters extends Activity {
 	private EditText email;
 	private EditText password1;
 	private EditText password2;
+	private TextView emailLabel;
+	private TextView password1Label;
+	private TextView password2Label;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,14 @@ public class ConnectionParameters extends Activity {
 		setContentView(R.layout.connection_parameters);
         profileSettingsButton = (Button)findViewById(R.id.profile_settings_button);
         profileSettingsButton.setOnClickListener(getOnClickListener());
+        
         email = (EditText)findViewById(R.id.connection_parameters_email);
         password1 = (EditText)findViewById(R.id.connection_parameters_password1);
         password2 = (EditText)findViewById(R.id.connection_parameters_password2);
+        
+        emailLabel = (TextView)findViewById(R.id.emailLabelStep1);
+        password1Label = (TextView)findViewById(R.id.password1LabelStep1);
+        password2Label = (TextView)findViewById(R.id.password2LabelStep1);
 	}
 	
 	@Override
@@ -48,11 +57,11 @@ public class ConnectionParameters extends Activity {
     			startActivityForResult(new Intent(this, ProfileSettings.class), NEXT_STEP);
     			break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
-    			email.setTextColor(Color.RED);
+    			emailLabel.setTextColor(Color.RED);
     			break;
     		case ConnectionParametersChecking.INVALID_PASSWORD:
-    			password1.setTextColor(Color.RED);
-    			password2.setTextColor(Color.RED);
+    			password1Label.setTextColor(Color.RED);
+    			password2Label.setTextColor(Color.RED);
     			break;
     		}
 		case NEXT_STEP:
@@ -86,6 +95,9 @@ public class ConnectionParameters extends Activity {
     
     private void startProfileSettings(){
     	Intent intent = new Intent(this, ConnectionParametersChecking.class);
+    	intent = intent.putExtra("email", email.getText().toString());
+    	intent = intent.putExtra("password1", password1.getText().toString());
+    	intent = intent.putExtra("password2", password2.getText().toString());
     	startActivityForResult(intent, CHECKING);
     }
 

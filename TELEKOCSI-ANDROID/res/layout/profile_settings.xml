@@ -100,8 +100,9 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/male"
+	   				android:checked="true"
 	   				/>
-		  	 		<RadioButtonbn 
+		  	 		<RadioButton 
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/female"
@@ -123,7 +124,7 @@ android:layout_height="fill_parent"
 	    		/>
 	
 	    		<!-- First name -->
-	    		<TextViewlabelsex
+	    		<TextView
 	    		android:id="@+id/labelfirstname"
 	    		android:layout_width="wrap_content"
 	    		android:layout_height="wrap_content"
