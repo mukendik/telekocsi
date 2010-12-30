@@ -71,6 +71,8 @@ android:layout_height="fill_parent"
     	<EditText
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
+    	android:id="@+id/connection_parameters_email"
+    	android:textColor="@color/black"
     	/>
 
     	<!-- Password1 -->
@@ -83,6 +85,8 @@ android:layout_height="fill_parent"
     	<EditText
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
+    	android:id="@+id/connection_parameters_password1"
+    	android:textColor="@color/black"
     	/>
 
     	<!-- Password2 -->
@@ -95,6 +99,8 @@ android:layout_height="fill_parent"
     	<EditText
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
+    	android:id="@+id/connection_parameters_password2"
+    	android:textColor="@color/black"
     	/>
     </LinearLayout>
     

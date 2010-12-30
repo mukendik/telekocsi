@@ -1,16 +1,25 @@
 package com.alma.telekocsi;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.alma.telekocsi.checking.ConnectionParameters;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Starter extends Activity {
 	
 	private OnClickListener onClickListener = null;
 	private Button profileSettingsButton;
+	private EditText email;
+	private EditText password1;
+	private EditText password2;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,9 @@ public class Starter extends Activity {
             setContentView(R.layout.connection_parameters);
             profileSettingsButton = (Button)findViewById(R.id.profile_settings_button);
             profileSettingsButton.setOnClickListener(getOnClickListener());
+            email = (EditText)findViewById(R.id.connection_parameters_email);
+            password1 = (EditText)findViewById(R.id.connection_parameters_password1);
+            password2 = (EditText)findViewById(R.id.connection_parameters_password2);
         }
         //sinon savoir s'il s'etait deconnecte ou non
         else if(disconnected){
@@ -55,9 +67,27 @@ public class Starter extends Activity {
     	};
     }
     
+    private static final String emailPattern = "^[\\w-\\.]+@[a-zA-Z]+\\.[a-zA-Z]{2,3}$";
+    
     private void startProfileSettings(){
-    	Intent intent = new Intent(this, ProfileSettings.class);
-        startActivity(intent);
+    	
+    	Pattern p = Pattern.compile(Starter.emailPattern);
+    	Matcher m = p.matcher(email.getText().toString());
+    	
+    	if(!m.find()){
+    		email.setTextColor(100);
+    	}
+    	else{
+    		if(!password1.getText().toString().equals(password2.getText().toString())
+    				|| password1.getText().toString().equals("")){
+        		password1.setTextColor(100);
+        		password2.setTextColor(100);
+    		}
+    		else{
+        		Intent intent = new Intent(this, ProfileSettings.class);
+        		startActivity(intent);
+    		}
+    	}
     }
 
 }
