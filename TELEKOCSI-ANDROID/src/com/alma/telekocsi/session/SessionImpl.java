@@ -13,8 +13,20 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+import com.alma.telekocsi.dao.avis.Avis;
+import com.alma.telekocsi.dao.avis.AvisDAO;
+import com.alma.telekocsi.dao.event.Event;
+import com.alma.telekocsi.dao.event.EventDAO;
+import com.alma.telekocsi.dao.itineraire.Itineraire;
+import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
+import com.alma.telekocsi.dao.localisation.Localisation;
+import com.alma.telekocsi.dao.localisation.LocalisationDAO;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
+import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.dao.trajet.TrajetDAO;
+import com.alma.telekocsi.dao.transaction.Transaction;
+import com.alma.telekocsi.dao.transaction.TransactionDAO;
 
 /**
  * @author Rv
@@ -51,7 +63,13 @@ public class SessionImpl implements Session {
 
 	//DAO
 	private final ProfilDAO profileDAO = new ProfilDAO();
-
+	private final AvisDAO avisDAO = new AvisDAO();
+	private final ItineraireDAO itineraireDAO = new ItineraireDAO();
+    private final EventDAO eventDAO = new EventDAO();
+    private final TrajetDAO trajetDAO = new TrajetDAO();
+    private final TransactionDAO transactionDAO = new TransactionDAO();
+    private final LocalisationDAO localisationDAO = new LocalisationDAO();
+    
 	/**
 	 * 
 	 * @param context
@@ -181,4 +199,53 @@ public class SessionImpl implements Session {
 			}
 		};
 	}
+
+	@Override
+	public <T> void save(T object) {
+		if(object instanceof Trajet) trajetDAO.insert((Trajet)object);
+		else if(object instanceof Itineraire) itineraireDAO.insert((Itineraire)object);
+		else if(object instanceof Event) eventDAO.insert((Event)object);
+		else if(object instanceof Profil) profileDAO.insert((Profil)object);
+		else if(object instanceof Avis) avisDAO.insert((Avis)object);
+		else if(object instanceof Localisation) localisationDAO.insert((Localisation)object);
+		else if(object instanceof Transaction) transactionDAO.insert((Transaction)object);
+		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+    }
+
+	@Override
+	public <T> void update(T object) {
+		if(object instanceof Trajet) trajetDAO.update((Trajet)object);
+		else if(object instanceof Itineraire) itineraireDAO.update((Itineraire)object);
+		else if(object instanceof Event) eventDAO.update((Event)object);
+		else if(object instanceof Profil) profileDAO.update((Profil)object);
+		else if(object instanceof Avis) avisDAO.update((Avis)object);
+		else if(object instanceof Localisation) localisationDAO.update((Localisation)object);
+		else if(object instanceof Transaction) transactionDAO.update((Transaction)object);
+		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+	}
+	
+	@Override
+	public <T> void delete(T object) {
+		if(object instanceof Trajet) trajetDAO.delete((Trajet)object);
+		else if(object instanceof Itineraire) itineraireDAO.delete((Itineraire)object);
+		else if(object instanceof Event) eventDAO.delete((Event)object);
+		else if(object instanceof Profil) profileDAO.delete((Profil)object);
+		else if(object instanceof Avis) avisDAO.delete((Avis)object);
+		else if(object instanceof Localisation) localisationDAO.delete((Localisation)object);
+		else if(object instanceof Transaction) transactionDAO.delete((Transaction)object);
+		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+	}
+
+	@Override
+	public void clear(int type) {
+		switch(type){
+		case PROFIL: profileDAO.clear(); break;
+		case TRANSACTION: transactionDAO.clear(); break;
+		case TRAJET: trajetDAO.clear(); break;
+		case EVENT: eventDAO.clear(); break;
+		case AVIS: avisDAO.clear(); break;
+		case LOCALISATION: localisationDAO.clear(); break;
+		}
+	}
+
 }
