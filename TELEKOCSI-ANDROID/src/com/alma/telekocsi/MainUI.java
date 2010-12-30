@@ -1,6 +1,7 @@
 package com.alma.telekocsi;
 
 import com.alma.telekocsi.dao.GAE;
+import com.alma.telekocsi.dao.localisation.LocalisationTestDAO;
 import com.alma.telekocsi.init.DataContext;
 import com.alma.telekocsi.init.LoadData;
 
