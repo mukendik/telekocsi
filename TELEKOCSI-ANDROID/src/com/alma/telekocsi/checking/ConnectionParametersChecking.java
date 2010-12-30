@@ -21,27 +21,27 @@ public class ConnectionParametersChecking extends Activity {
 		 
 		 System.out.println("nawak-cheking");
 		 
-		 EditText email = (EditText) savedInstanceState.get("email");
-		 System.out.println("nawak");
-		 EditText password1 = (EditText) savedInstanceState.get("password1");
-		 EditText password2 = (EditText) savedInstanceState.get("password2");
-		 
-		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
-	     Matcher m = p.matcher(email.getText().toString());
-	     
-	     if(!m.find()){
-	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
-	     }
-	     else{
-	    	 if(!password1.getText().toString().equals(password2.getText().toString())
-	    			|| password1.getText().toString().equals("")){
-	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
-	         }
-	    	 else{
-	    		 setResult(RESULT_OK);
-	    	 }
-	     }
-	     
+//		 EditText email = (EditText) savedInstanceState.get("email");
+//		 System.out.println("nawak");
+//		 EditText password1 = (EditText) savedInstanceState.get("password1");
+//		 EditText password2 = (EditText) savedInstanceState.get("password2");
+//		 
+//		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
+//	     Matcher m = p.matcher(email.getText().toString());
+//	     
+//	     if(!m.find()){
+//	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
+//	     }
+//	     else{
+//	    	 if(!password1.getText().toString().equals(password2.getText().toString())
+//	    			|| password1.getText().toString().equals("")){
+//	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
+//	         }
+//	    	 else{
+//	    		 setResult(RESULT_OK);
+//	    	 }
+//	     }
+	     setResult(RESULT_OK);
 	     finish();
 	 }
 	 

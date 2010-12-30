@@ -22,7 +22,6 @@ import android.os.Bundle;
 
 public class GoogleMapActivity extends MapActivity {
 
-
 	private MapView mapView;
 	private MapController mapController;
 	private GeoPoint location;

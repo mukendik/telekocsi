@@ -85,8 +85,8 @@ public class ConnectionParameters extends Activity {
     }
     
     private void startProfileSettings(){
-    	Intent intent = new Intent(this, ConnectionParameters.class);
-    	startActivityForResult(intent, NEXT_STEP);
+    	Intent intent = new Intent(this, ConnectionParametersChecking.class);
+    	startActivityForResult(intent, CHECKING);
     }
 
 
