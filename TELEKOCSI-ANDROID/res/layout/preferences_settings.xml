@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+
+	<!-- Header -->
+	<LinearLayout
+	android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/entete"
+    android:padding="5px"
+    >
+    	<ImageView
+    	android:src="@drawable/android"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingRight="5px"
+    	/>
+    	<TextView
+    	android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:color="@color/txtEntete"
+    	android:text="@string/registering"
+    	android:textSize="20px"
+    	android:textStyle="bold"
+    	android:gravity="center_vertical"
+    	/>
+    </LinearLayout>
+    
+    <!-- Main -->
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    >
+    	<!-- Preferences title -->
+    	<LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:paddingBottom="5px"
+    	>
+    		<ImageView
+    		android:src="@drawable/love"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingRight="5px"
+    		/>
+    		<TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:gravity="center_vertical"
+    		android:text="@string/preferences"
+    		android:textColor="@color/h1_color"
+    		android:background="@color/h1_background"
+    		android:textStyle="bold"
+    		/>
+    	</LinearLayout>
+    	
+    	<!-- Scroll bar -->
+    	<ScrollView
+    	android:layout_width="fill_parent"
+    	android:layout_height="280px"
+    	>
+    		<!-- Child of the scroll bar -->
+    		<LinearLayout
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		>
+    	
+		    	<!-- Smoking -->
+	    		<TextView
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textColor="@color/h2_color"
+	    		android:text="@string/smoker"
+	    		/>
+	   			<RadioGroup
+	   	    	android:orientation="horizontal"
+				android:layout_width="fill_parent"
+	   			android:layout_height="wrap_content"
+	   			>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/yes"
+	   				/>
+		  	 		<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/no"
+	   				/>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/any_difference"
+	   				/>
+				</RadioGroup>
+	    	
+	    		<!-- Animals -->
+	    		<TextView
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textColor="@color/h2_color"
+	    		android:text="@string/animals"
+	    		/>
+	   			<RadioGroup
+	   	    	android:orientation="horizontal"
+				android:layout_width="fill_parent"
+	   			android:layout_height="wrap_content"
+	   			>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/yes"
+	   				/>
+		  	 		<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/no"
+	   				/>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/any_difference"
+	   				/>
+				</RadioGroup>
+	
+	    		<!-- Detours -->
+	    		<TextView
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textColor="@color/h2_color"
+	    		android:text="@string/detours"
+	    		/>
+	   			<RadioGroup
+	   	    	android:orientation="horizontal"
+				android:layout_width="fill_parent"
+	   			android:layout_height="wrap_content"
+	   			>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/yes"
+	   				/>
+		  	 		<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/no"
+	   				/>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/any_difference"
+	   				/>
+				</RadioGroup>
+	
+	    		<!-- Music -->
+	    		<TextView
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textColor="@color/h2_color"
+	    		android:text="@string/music"
+	    		/>
+	   			<RadioGroup
+	   	    	android:orientation="horizontal"
+				android:layout_width="fill_parent"
+	   			android:layout_height="wrap_content"
+	   			>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/yes"
+	   				/>
+		  	 		<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/no"
+	   				/>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/any_difference"
+	   				/>
+				</RadioGroup>
+	    
+	    		<!-- Discussion -->
+	    		<TextView
+	    		android:layout_width="wrap_content"
+	    		android:layout_height="wrap_content"
+	    		android:textColor="@color/h2_color"
+	    		android:text="@string/discussion"
+	    		/>
+	   			<RadioGroup
+	   	    	android:orientation="horizontal"
+				android:layout_width="fill_parent"
+	   			android:layout_height="wrap_content"
+	   			>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/yes"
+	   				/>
+		  	 		<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/no"
+	   				/>
+	   				<RadioButton
+	   				android:layout_width="wrap_content"
+	   				android:layout_height="wrap_content"
+	   				android:text="@string/any_difference"
+	   				/>
+				</RadioGroup>
+    		</LinearLayout>
+   		 </ScrollView>
+   	 </LinearLayout>
+   	 
+    
+    <!-- Footer -->
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/panelAction"
+    android:padding="5px"
+    >
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/preferences_settings_back_button_text"
+    	android:id="@+id/preferences_settings_back_button"
+    	/>
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/registering_submit_button_text"
+    	android:id="@+id/registering_submit_button"
+    	/>
+    </LinearLayout>
+</LinearLayout>

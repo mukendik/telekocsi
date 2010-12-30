@@ -30,6 +30,52 @@
 	<string name="page">Page : 1/5</string>
 	<string name="newsearch">Nouvelle recherche</string>
 	<string name="quit">Quitter</string>
+	
+	<!-- main_menu -->
+    <string name="main_menu_title">Telekocsi</string>
+    <string name="occupant_functions">>Passager</string>
+    <string name="driver_functions">>Conducteur</string>
+    <string name="route_activation">Activer un trajet</string>
+    <string name="route_search">Rechercher un trajet</string>
+    <string name="route_modification">Modifier un trajet</string>
+    <string name="profile_settings">Modifier mon profil</string>
+    <string name="transaction_validation">Valider une transaction</string>
+    
+    <!-- connection_parameters -->
+    <string name="registering">Enregistrement</string>
+    <string name="connection_parameters">Paramètres de connexion</string>
+    <string name="email">Adresse e-mail</string>
+    <string name="password1">Mot de passe</string>
+   	<string name="password2">Ressaisissez le mot de passe</string>
+   	<string name="profile_settings_button_text">Créer votre profil</string>
+   	
+   	<!-- profile_settings -->
+   	<string name="profile">Profil</string>
+   	<string name="sex">Sexe</string>
+   	<string name="male">M</string>
+   	<string name="female">F</string>
+    <string name="name">Nom</string>
+   	<string name="first_name">Prénom</string>
+   	<string name="phone">Téléphone</string>
+   	<string name="day">JJ</string>
+   	<string name="month">MM</string>
+   	<string name="year">AAAA</string>
+   	<string name="date_of_birth">Date de naissance</string>
+   	<string name="profile_settings_back_button_text">Retour</string>
+   	<string name="preferences_settings_button_text">Enregistrer vos préférences</string>
+   	
+   	<!-- preferences_settings -->
+   	<string name="preferences">Préférences</string>
+   	<string name="yes">Oui</string>
+   	<string name="no">Non</string>
+   	<string name="any_difference">Sans importance</string>
+    <string name="discussion">Discussion</string>
+    <string name="animals">Animaux</string>
+    <string name="smoker">Fumeur</string>
+    <string name="detours">Détours</string>
+    <string name="music">Musique</string>
+    <string name="preferences_settings_back_button_text">Retour</string>
+    <string name="registering_submit_button_text">Submit all</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
@@ -44,5 +90,10 @@
 	<color name="txtInfo">#4fc416</color>
 	<color name="txtGroupe">#84b441</color>
 	<color name="panelAction">#535252</color>
+	
+	<color name="h1_color">#ffffff</color>
+	<color name="h2_color">#000000</color>
+	<color name="h1_background">#4fc416</color>
+	<color name="simple_text_color">#000000</color>
 
 </resources>
