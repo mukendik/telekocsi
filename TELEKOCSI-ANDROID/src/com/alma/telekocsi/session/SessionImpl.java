@@ -158,8 +158,27 @@ public class SessionImpl implements Session {
 		Editor edit = settings.edit();
 		edit.putBoolean(KEY_PROFILE_CONNECTED, false);
 		edit.commit();
+		dispatchEvent(makeEvent(SessionEvent.LOGOUT, this, null));
 		return true;
 	}
 
-	
+	private SessionEvent makeEvent(final int type,final Object source,final Object data){
+		return new SessionEvent() {
+			
+			@Override
+			public Object getUserData() {
+				return data;
+			}
+			
+			@Override
+			public Object getSource() {
+				return source;
+			}
+			
+			@Override
+			public int getEventType() {
+				return type;
+			}
+		};
+	}
 }

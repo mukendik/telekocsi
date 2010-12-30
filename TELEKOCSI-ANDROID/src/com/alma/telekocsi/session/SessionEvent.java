@@ -11,6 +11,10 @@ public interface SessionEvent {
 	 * Type d'évenement
 	 */
 	public final int TRAJET_ACTIVATED = 0;
+	/**
+	 * Evenement emis à la deconnection
+	 */
+	public final int LOGOUT = 1;
 	
 	/**
 	 * Le type d'évènement

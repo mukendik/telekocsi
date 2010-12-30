@@ -27,12 +27,12 @@ public interface Session {
 
 	/**
 	 * 
-	 * @return <code>true</code> Si l'utilisateur c'est déconnecte
+	 * @return <code>false</code> Si l'utilisateur c'est déconnecté
 	 */
 	public abstract boolean isConnected();
 	
 	/**
-	 * Se connecté à un profil
+	 * Se connecter à un profil
 	 * Si les identifiants sont valide, le profil devient le profil actif
 	 * @return <code>true</code> Si succès
 	 */
