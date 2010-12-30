@@ -103,6 +103,7 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:checked="true"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
@@ -137,6 +138,7 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:checked="true"
 	   				/>
 				</RadioGroup>
 	
@@ -166,6 +168,7 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:checked="true"
 	   				/>
 				</RadioGroup>
 	
@@ -195,6 +198,7 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:checked="true"
 	   				/>
 				</RadioGroup>
 	    
@@ -214,6 +218,7 @@ android:layout_height="fill_parent"
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:checked="true"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"

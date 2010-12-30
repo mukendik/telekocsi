@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class ProfileSettings extends Activity {
@@ -129,7 +128,6 @@ public class ProfileSettings extends Activity {
 	
 	private void startPreferencesSettings(){
 		Intent intent = new Intent(this, ProfileChecking.class);
-    	//intent = intent.putExtra("sex", Integer.valueOf(sex.getCheckedRadioButtonId()));
     	intent = intent.putExtra("name", name.getText().toString());
     	intent = intent.putExtra("firstName", firstName.getText().toString());
     	intent = intent.putExtra("jj", jj.getText().toString());
