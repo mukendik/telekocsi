@@ -176,13 +176,19 @@ public class LocalisationService {
 	}
 
 	/**
-	 * Ajoute un localisation
-	 * @param Avis a ajouter
-	 * @return Localisationvenant d'etre cree
+	 * Ajoute une localisation apres avoir supprimer les precedentes
+	 * pour le profil concerne.
+	 * 
+	 * @param Localisation a ajouter
+	 * @return Localisation venant d'etre cree
 	 */
 	@PUT
 	public Localisation add(Localisation localisation) {
 		log.info("Ajout d'un localisation");
+		
+		if (localisation.getIdProfil() != null) {
+			clear(localisation.getIdProfil());
+		}
 		
 		EntityManager em = Tools.getEntityManager();
 		em.getTransaction().begin();
