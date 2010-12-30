@@ -7,6 +7,7 @@ import com.alma.telekocsi.checking.ConnectionParameters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,13 +76,13 @@ public class Starter extends Activity {
     	Matcher m = p.matcher(email.getText().toString());
     	
     	if(!m.find()){
-    		email.setTextColor(100);
+    		email.setTextColor(Color.RED);
     	}
     	else{
     		if(!password1.getText().toString().equals(password2.getText().toString())
     				|| password1.getText().toString().equals("")){
-        		password1.setTextColor(100);
-        		password2.setTextColor(100);
+        		password1.setTextColor(Color.RED);
+        		password2.setTextColor(Color.RED);
     		}
     		else{
         		Intent intent = new Intent(this, ProfileSettings.class);
