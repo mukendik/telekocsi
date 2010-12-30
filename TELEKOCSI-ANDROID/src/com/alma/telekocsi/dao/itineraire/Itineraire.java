@@ -1,5 +1,7 @@
 package com.alma.telekocsi.dao.itineraire;
 
+import java.io.Serializable;
+
 
 /**
  * @author ALMA
@@ -7,7 +9,12 @@ package com.alma.telekocsi.dao.itineraire;
  * Represente juste un chemin entre un point de depart 
  * et un point d'arrivee.
  */
-public class Itineraire {
+public class Itineraire implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String id;
 	

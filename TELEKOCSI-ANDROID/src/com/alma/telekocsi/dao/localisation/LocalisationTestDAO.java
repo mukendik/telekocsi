@@ -52,8 +52,8 @@ public class LocalisationTestDAO {
 		Localisation localisation = new Localisation();
 		localisation.setIdProfil(profil.getId());
 		localisation.setPointGPS("458-5587");
-		localisation.setLongitude(458);
-		localisation.setLatitude(5587);
+		localisation.setLongitude(-47.23454);
+		localisation.setLatitude(-48.55555);
 		localisation.setDateLocalisation("26/12/2010");
 		localisation.setHeureLocalisation("08:00");
 		localisationDAO.insert(localisation);

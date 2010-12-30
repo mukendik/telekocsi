@@ -12,6 +12,8 @@ import com.alma.telekocsi.util.LocalDate;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,21 +28,41 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 
 	private static final int CODE_TRAJETRECHERCHE = 1;
 	
-	OnClickListener onClickListener = null;
-	Button btRecherche;
-	Button btAnnuler;
+	private OnClickListener onClickListener = null;
+	private Button btRecherche;
+	private Button btAnnuler;
 
-	TextView tvVilleDepart;
-	TextView tvVilleArrivee;
-	TextView tvHeureDepart;
-	TextView tvVariableDepart;
-	TextView tvJours;
-	TextView tvAutoroute;
-
-	LocalDate[] dates = new LocalDate[10];
+	private TextView tvVilleDepart;
+	private TextView tvVilleArrivee;
+	private TextView tvHeureDepart;
+	private TextView tvVariableDepart;
+	private TextView tvJours;
+	private TextView tvAutoroute;
+	private Spinner spinTrajet;
+	private Spinner spinDateTrajet;
+	
+	private LocalDate[] dates = new LocalDate[10];
+	private Itineraire itineraire;
+	private ArrayAdapter<Itineraire> adapterItineraire;
+	private ArrayAdapter<LocalDate> adapterDate;
+	private TrajetRecherche trajetRecherche = this;
 	
 	
-    /** Called when the activity is first created. */
+	final Handler handler = new Handler() {
+		
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			spinTrajet.setAdapter(adapterItineraire);
+			spinDateTrajet.setAdapter(adapterDate);
+			
+	        spinTrajet.setEnabled(true);
+	        spinDateTrajet.setEnabled(true);
+	        
+	        spinTrajet.setOnItemSelectedListener(trajetRecherche);
+		};
+	};
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
@@ -49,7 +71,8 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
         setContentView(R.layout.trajetrecherche);
         
         btRecherche = (Button)findViewById(R.id.btTRRecherche);
-        btRecherche.setOnClickListener(getOnClickListener());        
+        btRecherche.setOnClickListener(getOnClickListener());     
+        btRecherche.setEnabled(false);
 
         btAnnuler = (Button)findViewById(R.id.btTRAnnuler);
         btAnnuler.setOnClickListener(getOnClickListener()); 
@@ -60,27 +83,44 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
     	tvVariableDepart = (TextView)findViewById(R.id.tvTRVariableDepart);
     	tvJours = (TextView)findViewById(R.id.tvTRJours);
     	tvAutoroute = (TextView)findViewById(R.id.tvTRAutoroute);
-        
-    	initDates();
     	
-        Spinner spinTrajet = (Spinner)findViewById(R.id.spinTrajet);
-        spinTrajet.setOnItemSelectedListener(this);
-        
-        ArrayAdapter<Itineraire> aa1 = new ArrayAdapter<Itineraire>(this, android.R.layout.simple_spinner_item, getItineraires());
-        aa1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinTrajet.setAdapter(aa1);
-        
-        Spinner spinDateTrajet = (Spinner)findViewById(R.id.spinDateTrajet);
-        
-        ArrayAdapter<LocalDate> aa2 = new ArrayAdapter<LocalDate>(this, android.R.layout.simple_spinner_item, dates);
-        aa2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinDateTrajet.setAdapter(aa2);
+    	spinTrajet = (Spinner)findViewById(R.id.spinTrajet);
+    	spinDateTrajet = (Spinner)findViewById(R.id.spinDateTrajet);
     }
+    
+    
+    protected void onStart() {
+    	super.onStart();
+        
+        spinTrajet.setEnabled(false);
+        spinDateTrajet.setEnabled(false);
+        
+        Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+		        adapterItineraire = new ArrayAdapter<Itineraire>(trajetRecherche, android.R.layout.simple_spinner_item, getItineraires());
+		        adapterItineraire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);				
+
+		        initDates();
+		        adapterDate = new ArrayAdapter<LocalDate>(trajetRecherche, android.R.layout.simple_spinner_item, dates);
+		        adapterDate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		        
+		        Message msg = handler.obtainMessage();
+		        handler.sendMessage(msg);
+			}
+		});
+        
+        thread.start();
+    }
+    
     
     @Override
     protected void onRestart() {
     	super.onRestart();
     }
+    
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,12 +160,16 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
     
     public void goTrajetTrouve() {
         Intent intent = new Intent(this, TrajetTrouve.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("itineraire", itineraire);
+        intent.putExtras(bundle);
         startActivityForResult(intent, CODE_TRAJETRECHERCHE);
     }
     
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-		Itineraire itineraire = (Itineraire)parent.getItemAtPosition(position);
+		
+		itineraire = (Itineraire)parent.getItemAtPosition(position);
 		
 		tvVilleDepart.setText(itineraire.getLieuDepart());
 		tvVilleArrivee.setText(itineraire.getLieuDestination());
@@ -142,14 +186,13 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 				res += "-";
 		}
 		tvJours.setText(res);
-		
-		
 		tvAutoroute.setText(itineraire.isAutoroute() ? "oui" : "non");
+		btRecherche.setEnabled(true);
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		
+		btRecherche.setEnabled(false);
 	}
 	
 
