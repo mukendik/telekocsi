@@ -36,9 +36,12 @@ public class LoadData {
 		insertProfil();
 		insertItineraire();
 		generateTrajet();
+		testNbTrajetParProfil();
 	}
 	
 	
+
+
 	private void clearProfil() {
 		int nb = profilDAO.clear();
 		Log.i(LoadData.class.getSimpleName(), "clear profil : " + nb);
@@ -145,7 +148,7 @@ public class LoadData {
 		itineraire.setIdProfil(profilDAO.login("bbelin", "alma").getId());
 		itineraire.setVariableDepart("5");
 		itineraire = itineraireDAO.insert(itineraire);
-		Log.i(TrajetTestDAO.class.getSimpleName(), "insert itineraire : " + itineraire);
+		Log.i(LoadData.class.getSimpleName(), "insert itineraire : " + itineraire);
 
 		itineraire = new Itineraire();
 		itineraire.setAutoroute(false);
@@ -160,7 +163,7 @@ public class LoadData {
 		itineraire.setIdProfil(profilDAO.login("bbelin", "alma").getId());
 		itineraire.setVariableDepart("5");
 		itineraire = itineraireDAO.insert(itineraire);
-		Log.i(TrajetTestDAO.class.getSimpleName(), "insert itineraire : " + itineraire);		
+		Log.i(LoadData.class.getSimpleName(), "insert itineraire : " + itineraire);		
 		
 		itineraire = new Itineraire();
 		itineraire.setAutoroute(true);
@@ -190,22 +193,31 @@ public class LoadData {
 		itineraire.setIdProfil(profilDAO.login("sbelin", "alma").getId());
 		itineraire.setVariableDepart("5");
 		itineraire = itineraireDAO.insert(itineraire);
-		Log.i(TrajetTestDAO.class.getSimpleName(), "insert itineraire  : " + itineraire);
+		Log.i(LoadData.class.getSimpleName(), "insert itineraire  : " + itineraire);
 	}
 	
 	
 	private void clearTrajet() {
 		int nb = trajetDAO.clear();
-		Log.i(TrajetTestDAO.class.getSimpleName(), "clear trajet : " + nb);
+		Log.i(LoadData.class.getSimpleName(), "clear trajet : " + nb);
 	}
 	
 	private void generateTrajet() {
 		int nb = trajetDAO.generate("03/01/2011");
-		Log.i(TrajetTestDAO.class.getSimpleName(), "generate trajet 03/01/2010 : " + nb);
+		Log.i(LoadData.class.getSimpleName(), "generate trajet 03/01/2010 : " + nb);
 		
 		nb = trajetDAO.generate("04/01/2011");
-		Log.i(TrajetTestDAO.class.getSimpleName(), "generate trajet 04/01/2010 : " + nb);
+		Log.i(LoadData.class.getSimpleName(), "generate trajet 04/01/2010 : " + nb);
 	}
 	
-	
+	private void testNbTrajetParProfil() {
+		int nb = trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).size();
+		Log.i(LoadData.class.getSimpleName(), "Trajet du profil bbelin : " + nb);
+		
+		nb = trajetDAO.getList(profilDAO.login("sbelin", "alma").getId()).size();
+		Log.i(LoadData.class.getSimpleName(), "Trajet du profil sbelin : " + nb);
+		
+		String idProfil = trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).get(0).getIdProfilConducteur();
+		Log.i(LoadData.class.getSimpleName(), "id profil bbelin : " + idProfil);
+	}
 }
