@@ -55,6 +55,8 @@ public class TestLocalisationService {
 		localisation = new Localisation();
 		localisation.setIdProfil(profil.getId());
 		localisation.setPointGPS("458-5587");
+		localisation.setLongitude(458);
+		localisation.setLatitude(5587);
 		localisation.setDateLocalisation("26/12/2010");
 		localisation.setHeureLocalisation("08:00");
 
@@ -71,6 +73,8 @@ public class TestLocalisationService {
 		/* Test de mise a jour du localisation */
 		webResource = client.resource(URL + "/" + localisation.getId());
 		localisation.setPointGPS("459-6588");
+		localisation.setLongitude(459);
+		localisation.setLatitude(6588);
 		localisation.setHeureLocalisation("08:32");
 		localisation = webResource.type(MediaType.APPLICATION_JSON_TYPE)
 				.accept(MediaType.APPLICATION_JSON_TYPE)

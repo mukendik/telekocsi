@@ -27,6 +27,8 @@ public class Localisation implements Serializable {
 	
 	private String idProfil;
 	private String pointGPS;
+	private long longitude;
+	private long latitude;
 	private String dateLocalisation;
 	private String heureLocalisation;
 	
@@ -71,6 +73,22 @@ public class Localisation implements Serializable {
 		this.heureLocalisation = heureLocalisation;
 	}
 	
+	public long getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(long longitude) {
+		this.longitude = longitude;
+	}
+
+	public long getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(long latitude) {
+		this.latitude = latitude;
+	}
+	
 	@Override
 	public String toString() {
 		
@@ -78,6 +96,8 @@ public class Localisation implements Serializable {
 		stringBuilder.append("Id : " + getId());
 		stringBuilder.append("; id profil : " + getIdProfil());
 		stringBuilder.append("; point gps : " + getPointGPS());
+		stringBuilder.append("; longitude : " + getLongitude());
+		stringBuilder.append("; latitude : " + getLatitude());
 		stringBuilder.append("; Date : " + getDateLocalisation());
 		stringBuilder.append("; Heure : " + getHeureLocalisation());
 		return stringBuilder.toString();
