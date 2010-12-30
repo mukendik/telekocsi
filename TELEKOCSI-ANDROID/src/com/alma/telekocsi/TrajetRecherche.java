@@ -22,9 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class TrajetRecherche extends Activity implements AdapterView.OnItemSelectedListener {
+public class TrajetRecherche extends Activity {
 
 	private static final int CODE_TRAJETRECHERCHE = 1;
 	
@@ -42,10 +43,14 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 	private Spinner spinDateTrajet;
 	
 	private LocalDate[] dates = new LocalDate[10];
+	private LocalDate date;
 	private Itineraire itineraire;
 	private ArrayAdapter<Itineraire> adapterItineraire;
 	private ArrayAdapter<LocalDate> adapterDate;
 	private TrajetRecherche trajetRecherche = this;
+	
+	private OnItemSelectedListener onTrajetSelectedListener;
+	private OnItemSelectedListener onDateSelectedListener;
 	
 	
 	final Handler handler = new Handler() {
@@ -58,7 +63,8 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 	        spinTrajet.setEnabled(true);
 	        spinDateTrajet.setEnabled(true);
 	        
-	        spinTrajet.setOnItemSelectedListener(trajetRecherche);
+	        spinTrajet.setOnItemSelectedListener(getOnTrajetSelectedListener());
+	        spinDateTrajet.setOnItemSelectedListener(getOnDateSelectedListener());
 		};
 	};
 	
@@ -90,6 +96,7 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
     
     
     protected void onStart() {
+    	
     	super.onStart();
         
         spinTrajet.setEnabled(false);
@@ -158,44 +165,96 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
     	return onClickListener;
     } 
     
+    
     public void goTrajetTrouve() {
-        Intent intent = new Intent(this, TrajetTrouve.class);
+        
         Bundle bundle = new Bundle();
         bundle.putSerializable("itineraire", itineraire);
+        bundle.putSerializable("date", date);
+        
+        Intent intent = new Intent(this, TrajetTrouve.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, CODE_TRAJETRECHERCHE);
     }
-    
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+	
+	
+	private OnItemSelectedListener getOnTrajetSelectedListener() {
 		
-		itineraire = (Itineraire)parent.getItemAtPosition(position);
+		if (onTrajetSelectedListener == null) {
 		
-		tvVilleDepart.setText(itineraire.getLieuDepart());
-		tvVilleArrivee.setText(itineraire.getLieuDestination());
-		tvHeureDepart.setText(itineraire.getHoraireDepart());
-		tvVariableDepart.setText("+/-" + itineraire.getVariableDepart() + "mn");
-		
-		String frequence = itineraire.getFrequenceTrajet() + "NNNNNNN";
-		String frequenceJour = "LMMJVSD";
-		String res = "";
-		for (int cpt = 0; cpt < 7; cpt++) {
-			if (frequence.charAt(cpt) == 'O')
-				res += frequenceJour.charAt(cpt);
-			else
-				res += "-";
+			onTrajetSelectedListener = new OnItemSelectedListener() {
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+					
+					itineraire = (Itineraire)parent.getItemAtPosition(position);
+					
+					tvVilleDepart.setText(itineraire.getLieuDepart());
+					tvVilleArrivee.setText(itineraire.getLieuDestination());
+					tvHeureDepart.setText(itineraire.getHoraireDepart());
+					tvVariableDepart.setText("+/-" + itineraire.getVariableDepart() + "mn");
+					
+					String frequence = itineraire.getFrequenceTrajet() + "NNNNNNN";
+					String frequenceJour = "LMMJVSD";
+					String res = "";
+					for (int cpt = 0; cpt < 7; cpt++) {
+						if (frequence.charAt(cpt) == 'O')
+							res += frequenceJour.charAt(cpt);
+						else
+							res += "-";
+					}
+					tvJours.setText(res);
+					tvAutoroute.setText(itineraire.isAutoroute() ? "oui" : "non");
+					
+					refreshBtn();
+				}
+				
+				
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					
+					itineraire = null;
+					refreshBtn();
+				}
+			};
 		}
-		tvJours.setText(res);
-		tvAutoroute.setText(itineraire.isAutoroute() ? "oui" : "non");
-		btRecherche.setEnabled(true);
+		
+		return onTrajetSelectedListener;
 	}
 
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		btRecherche.setEnabled(false);
+	
+	private OnItemSelectedListener getOnDateSelectedListener() {
+		
+		if (onDateSelectedListener == null) {
+		
+			onDateSelectedListener = new OnItemSelectedListener() {
+				
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+					
+					date = (LocalDate)parent.getItemAtPosition(position);
+					refreshBtn();
+				}
+				
+				
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					
+					date = null;
+					refreshBtn();
+				}
+			};
+		}
+		
+		return onDateSelectedListener;
 	}
 	
 
+	private void refreshBtn() {
+		btRecherche.setEnabled((date != null) && (itineraire != null));
+	}
+	
+	
 	public List<Itineraire> getItineraires() {
 		
 		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
@@ -204,6 +263,7 @@ public class TrajetRecherche extends Activity implements AdapterView.OnItemSelec
 		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets");
 		return itineraires;
 	}
+	
 	
 	public void initDates() {
 		

@@ -1,7 +1,12 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.itineraire.Itineraire;
+import com.alma.telekocsi.util.LocalDate;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,8 +29,15 @@ public class TrajetTrouve extends Activity {
         
         btQuit = (Button)findViewById(R.id.btTTQuit);
         btQuit.setOnClickListener(getOnClickListener());        
-
     }
+    
+    @Override
+    protected void onStart() {
+
+    	super.onStart();
+    	chargeInfoIntent();
+    }
+    
     
     @Override
     protected void onRestart() {
@@ -55,4 +67,16 @@ public class TrajetTrouve extends Activity {
     	return onClickListener;
     }
 
+    
+    public void chargeInfoIntent() {
+        
+        Bundle bundle = this.getIntent().getExtras();
+        Itineraire itineraire = (Itineraire)bundle.getSerializable("itineraire");
+        LocalDate date = (LocalDate)bundle.getSerializable("date");
+        
+        Log.i(TrajetTrouve.class.getSimpleName(), " Itineraire : " + itineraire);
+        Log.i(TrajetTrouve.class.getSimpleName(), " Date : " + date);
+        
+    }    
+    
 }

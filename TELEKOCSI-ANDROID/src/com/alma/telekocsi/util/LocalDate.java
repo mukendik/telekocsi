@@ -1,9 +1,10 @@
 package com.alma.telekocsi.util;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class LocalDate extends Date {
+public class LocalDate extends Date implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
