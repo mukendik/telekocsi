@@ -12,6 +12,7 @@ public class OccupantTab extends Activity {
 	private OnClickListener onClickListener = null;
 	private Button routeSearchButton;
 	private Button occupantTransactionButton;
+	private Button profileModificationButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class OccupantTab extends Activity {
 		
 		occupantTransactionButton = (Button)findViewById(R.id.occupant_transaction_button);
 		occupantTransactionButton.setOnClickListener(getOnClickListener());
+		
+		profileModificationButton = (Button)findViewById(R.id.profile_modification_button);
+		profileModificationButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -44,6 +48,9 @@ public class OccupantTab extends Activity {
 				else if(v==occupantTransactionButton){
 					startTransaction();
 				}
+				else if(v==profileModificationButton){
+					startProfileModification();
+				}
 			}
 			
 		};
@@ -56,6 +63,11 @@ public class OccupantTab extends Activity {
 	
 	private void startTransaction(){
 		Intent intent = new Intent(this, Transaction.class);
+		startActivity(intent);
+	}
+	
+	private void startProfileModification(){
+		Intent intent = new Intent(this, ProfileSettings.class);
 		startActivity(intent);
 	}
 	

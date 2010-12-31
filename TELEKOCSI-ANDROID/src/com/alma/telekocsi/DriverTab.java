@@ -12,6 +12,7 @@ public class DriverTab extends Activity {
 	private OnClickListener onClickListener = null;
 	private Button routeActivationButton;
 	private Button driverTransactionButton;
+	private Button profileModificationButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class DriverTab extends Activity {
 		
 		driverTransactionButton = (Button)findViewById(R.id.driver_transaction_button);
 		driverTransactionButton.setOnClickListener(getOnClickListener());
+		
+		profileModificationButton = (Button)findViewById(R.id.profile_modification_button);
+		profileModificationButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -44,6 +48,9 @@ public class DriverTab extends Activity {
 				else if(v==driverTransactionButton){
 					startTransaction();
 				}
+				else if(v==profileModificationButton){
+					startProfileModification();
+				}
 			}
 			
 		};
@@ -54,6 +61,11 @@ public class DriverTab extends Activity {
 	
 	private void startTransaction(){
 		Intent intent = new Intent(this, Transaction.class);
+		startActivity(intent);
+	}
+	
+	private void startProfileModification(){
+		Intent intent = new Intent(this, ProfileSettings.class);
 		startActivity(intent);
 	}
 

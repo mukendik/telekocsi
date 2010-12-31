@@ -27,6 +27,6 @@ android:orientation="vertical">
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:text="@string/profile_settings"
-	android:id="@+id/profile_settings_button"/>
+	android:id="@+id/profile_modification_button"/>
 
 </LinearLayout>

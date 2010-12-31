@@ -22,7 +22,7 @@ public class Starter extends Activity {
 //        Profil profile = session.getActiveProfile();
         
         boolean exist = true;
-        boolean disconnected = true;
+        boolean disconnected = false;
         
         //le compte de la personne n'est pas enregistre
         if(!exist){
