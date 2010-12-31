@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+   		android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@color/entete"
+    	>
+
+    	<ImageButton
+    		android:src="@drawable/car"
+    		android:layout_width="24px"
+    		android:layout_height="24px"
+    		android:background="@color/entete"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginTop="5px"
+    		/>
+
+    	<TextView
+    		android:text="@string/trajetfind"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="5px"
+    		android:textColor="@color/txtEntete"
+    		android:textSize="24px"
+    		android:textStyle="bold"
+    		/>
+
+    </LinearLayout>
+
+	<!-- Selection d'un trajet existant ou saisie -->
+    <LinearLayout
+        android:orientation="vertical"
+   		android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:background="@color/fond"
+    	>
+    	
+    	<TextView  
+    		android:layout_width="wrap_content" 
+    		android:layout_height="wrap_content" 
+    		android:text="@string/identTrajet"
+    		android:textColor="@color/white"
+    		android:background="@color/txtGroupe"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginTop="5px"
+   		/>    	
+    	
+    	<LinearLayout
+    	    android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@color/fondPanel"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px"
+    		android:layout_marginBottom="5px"
+    		>
+    		
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/depart"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+    				android:layout_marginTop="1px"
+   					/>   
+
+	    		<TextView
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Les Herbiers"
+	    			android:id="@+id/tvTTVilleDepart"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	    			android:layout_marginTop="1px"
+	   				/>
+   			</LinearLayout>
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/arrivee"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Nantes"
+	    			android:id="@+id/tvTTVilleArrivee"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   						 							
+   			</LinearLayout>
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/le"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Lundi 15 novembre 2010"
+	    			android:id="@+id/tvTTDate"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>
+   			 			
+   		</LinearLayout>
+
+   	   	<LinearLayout
+   	 	   	android:orientation="horizontal"
+   			android:layout_width="wrap_content"
+   			android:layout_height="wrap_content">
+    		
+   			<TextView  
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content" 
+    			android:text="@string/resultats"
+    			android:id="@+id/tvTTResultat"
+    			android:textColor="@color/white"
+    			android:background="@color/txtGroupe"
+    			android:layout_marginLeft="5px"
+    			android:layout_marginTop="5px"
+   				/>  
+   				
+   				
+    		<ImageButton
+    			android:src="@drawable/previous"
+    			android:id="@+id/ibTTPrevious"
+    			android:layout_width="24px"
+    			android:layout_height="24px"
+    			android:background="@color/fond"
+    			android:layout_marginLeft="80px"
+    			android:layout_marginTop="5px"
+    			/>   			 
+
+	   		<TextView
+	   			android:id="@+id/tvTTPage"
+	   			android:layout_width="wrap_content" 
+	   			android:layout_height="wrap_content" 
+	   			android:text="@string/page"
+	   			android:textColor="@color/black"
+	   			android:layout_marginLeft="10px"
+	   			android:layout_marginTop="5px"
+				/>
+				
+			<ImageButton
+    			android:src="@drawable/next"
+    			android:id="@+id/ibTTNext"
+    			android:layout_width="24px"
+    			android:layout_height="24px"
+    			android:background="@color/fond"
+    			android:layout_marginLeft="10px"
+    			android:layout_marginTop="5px"
+    			/>
+    						
+   		</LinearLayout>
+   		
+   		
+   		<ScrollView
+   			android:layout_width="fill_parent"
+   			android:layout_height="210px"
+   			>
+   			
+   			
+   			<ListView
+   				android:id="@android:id/list"
+				android:layout_width="fill_parent" 
+				android:layout_height="fill_parent"
+				android:drawSelectorOnTop="false"
+   			/>
+   			
+   		
+   			<TableLayout
+   				android:layout_width="fill_parent"
+   				android:layout_height="fill_parent"
+   				>
+   				
+   				<TableRow 
+   					android:background="@color/white"
+   					android:layout_marginLeft="5px"
+   					android:layout_marginRight="5px"
+   					android:layout_marginTop="5px">
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/visagefemme1"
+    						android:scaleType="centerInside"
+    						android:layout_width="50px"
+    						android:layout_height="50px"
+    						android:layout_marginLeft="5px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Julie Les."
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							
+						<ImageView
+							android:src="@drawable/fivestarjaune"
+							android:layout_width="80px"
+    						android:layout_height="20px"
+    						android:scaleType="centerInside"
+    						android:layout_marginLeft="8px"
+	   						/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="5 avis"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+    					 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Aujourd'hui à 7h25"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="2 places disponibles"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 points"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/next1"
+    						android:scaleType="centerInside"
+    						android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginLeft="2px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					
+   				</TableRow>
+   				
+   				<TableRow 
+   					android:background="@color/white"
+   					android:layout_marginLeft="5px"
+   					android:layout_marginRight="5px"
+   					android:layout_marginTop="5px">
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/visagehomme1"
+    						android:scaleType="centerInside"
+    						android:layout_width="50px"
+    						android:layout_height="50px"
+    						android:layout_marginLeft="5px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="François M."
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							
+						<ImageView
+							android:src="@drawable/fourstarjaune"
+							android:layout_width="80px"
+    						android:layout_height="20px"
+    						android:scaleType="centerInside"
+    						android:layout_marginLeft="8px"
+	   						/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 avis"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+    					 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Aujourd'hui à 7h30"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="1 place disponible"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="4 points"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/next1"
+    						android:scaleType="centerInside"
+    						android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginLeft="2px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+   					
+   				</TableRow>
+
+   				<TableRow 
+   					android:background="@color/white"
+   					android:layout_marginLeft="5px"
+   					android:layout_marginRight="5px"
+   					android:layout_marginTop="5px">
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/man"
+    						android:scaleType="centerInside"
+    						android:layout_width="50px"
+    						android:layout_height="50px"
+    						android:layout_marginLeft="5px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Joseph T."
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							
+						<ImageView
+							android:src="@drawable/fourstarjaune"
+							android:layout_width="80px"
+    						android:layout_height="20px"
+    						android:scaleType="centerInside"
+    						android:layout_marginLeft="8px"
+	   						/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="7 avis"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+    					 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Aujourd'hui à 7h35"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 places disponibles"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 points"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/next1"
+    						android:scaleType="centerInside"
+    						android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginLeft="2px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+   					
+   				</TableRow>   				
+   				
+   				<TableRow 
+   					android:background="@color/white"
+   					android:layout_marginLeft="5px"
+   					android:layout_marginRight="5px"
+   					android:layout_marginTop="5px">
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/woman"
+    						android:scaleType="centerInside"
+    						android:layout_width="50px"
+    						android:layout_height="50px"
+    						android:layout_marginLeft="5px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Valerie Vr."
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							
+						<ImageView
+							android:src="@drawable/treestarjaune"
+							android:layout_width="80px"
+    						android:layout_height="20px"
+    						android:scaleType="centerInside"
+    						android:layout_marginLeft="8px"
+	   						/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 avis"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+    					 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Aujourd'hui à 7h30"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="2 places disponibles"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="5 points"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/next1"
+    						android:scaleType="centerInside"
+    						android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginLeft="2px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+   					
+   				</TableRow>   				
+
+   				<TableRow 
+   					android:background="@color/white"
+   					android:layout_marginLeft="5px"
+   					android:layout_marginRight="5px"
+   					android:layout_marginTop="5px">
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/man"
+    						android:scaleType="centerInside"
+    						android:layout_width="50px"
+    						android:layout_height="50px"
+    						android:layout_marginLeft="5px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Laurent Zav."
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							
+						<ImageView
+							android:src="@drawable/treestarjaune"
+							android:layout_width="80px"
+    						android:layout_height="20px"
+    						android:scaleType="centerInside"
+    						android:layout_marginLeft="8px"
+	   						/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="1 avis"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+    					 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="Aujourd'hui à 7h25"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="3 places disponibles"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+
+	   					<TextView
+	   						android:layout_width="wrap_content" 
+	   						android:layout_height="wrap_content" 
+	   						android:text="4 points"
+	   						android:textColor="@color/black"
+	   						android:layout_marginLeft="10px"
+							/>
+							 
+   					</LinearLayout>
+   					
+   					<LinearLayout
+    	   				android:orientation="vertical"
+   						android:layout_width="fill_parent"
+    					android:layout_height="fill_parent"
+    					android:layout_marginTop="5px">
+    					
+    					<ImageView
+    						android:src="@drawable/next1"
+    						android:scaleType="centerInside"
+    						android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginLeft="2px"
+   							android:layout_marginBottom="5px"
+    					/>
+    					 
+   					</LinearLayout>
+   					
+   				</TableRow>
+   				
+   			</TableLayout>
+   		
+   		</ScrollView>
+   		
+   		<LinearLayout
+    	   	android:orientation="horizontal"
+    	   	android:background="@color/panelAction"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    		
+    		<Button
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/newsearch"
+    			android:id="@+id/btTTNewSearch"
+    			android:textColor="@color/black"
+    			android:layout_marginTop="5px"
+   				/>
+   					
+   			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/quit"
+				android:id="@+id/btTTQuit"
+    			android:textColor="@color/black"
+    			android:layout_marginTop="5px"
+    			/>
+	   							
+   		</LinearLayout>  		
+   		
+    </LinearLayout> 
+   
+</LinearLayout>
+
