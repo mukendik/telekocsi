@@ -22,6 +22,8 @@ public class PreferencesSettings extends Activity {
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
+        
+        setContentView(R.layout.preferences_settings);
 
         backButton = (Button)findViewById(R.id.preferences_settings_back_button);
         backButton.setOnClickListener(getOnClickListener()); 
