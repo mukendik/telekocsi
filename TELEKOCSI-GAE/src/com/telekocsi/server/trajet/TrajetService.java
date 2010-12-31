@@ -147,7 +147,10 @@ public class TrajetService {
 			@PathParam("lieuArrivee") String lieuArrivee,
 			@PathParam("date") String date) {
 		
-		log.info("Recuperation des trajets disponibles pour le " + date);
+		String dateRef = date.replaceAll("-", "/");
+		
+		log.info("Recuperation des trajets disponibles pour le " + dateRef);
+		
 		
 		EntityManager em = Tools.getEntityManager();
 		
@@ -160,7 +163,7 @@ public class TrajetService {
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", lieuDepart);
 		query.setParameter("param2", lieuArrivee);
-		query.setParameter("param3", date);
+		query.setParameter("param3", dateRef);
 		
 		List<Trajet> trajets = query.getResultList();
 		
