@@ -50,7 +50,6 @@ public class DriverTab extends Activity {
 	}
 	
 	private void startActivation(){
-		
 	}
 	
 	private void startTransaction(){

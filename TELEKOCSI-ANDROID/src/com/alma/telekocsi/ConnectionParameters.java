@@ -32,8 +32,6 @@ public class ConnectionParameters extends Activity {
 		
 		super.onCreate(savedInstanceState);
 
-        System.out.println("nawak-connection-parameters");
-
 		setContentView(R.layout.connection_parameters);
         profileSettingsButton = (Button)findViewById(R.id.profile_settings_button);
         profileSettingsButton.setOnClickListener(getOnClickListener());
@@ -58,8 +56,11 @@ public class ConnectionParameters extends Activity {
     			break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
     			emailLabel.setTextColor(Color.RED);
+    			password1Label.setTextColor(Color.BLACK);
+    			password2Label.setTextColor(Color.BLACK);
     			break;
     		case ConnectionParametersChecking.INVALID_PASSWORD:
+    			emailLabel.setTextColor(Color.BLACK);
     			password1Label.setTextColor(Color.RED);
     			password2Label.setTextColor(Color.RED);
     			break;

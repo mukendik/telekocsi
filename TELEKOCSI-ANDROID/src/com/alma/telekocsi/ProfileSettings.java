@@ -38,8 +38,6 @@ public class ProfileSettings extends Activity {
     	
         super.onCreate(savedInstanceState);
         
-        System.out.println("nawak-profile-settings");
-        
         setContentView(R.layout.profile_settings);
         backButton = (Button)findViewById(R.id.profile_settings_back_button);
         backButton.setOnClickListener(getOnClickListener()); 
@@ -73,20 +71,50 @@ public class ProfileSettings extends Activity {
     			break;
     		case ProfileChecking.INVALID_NAME:
     			nameLabel.setTextColor(Color.RED);
+    			firstNameLabel.setTextColor(Color.BLACK);
+    			jjLabel.setTextColor(Color.BLACK);
+    			mmLabel.setTextColor(Color.BLACK);
+    			aaaaLabel.setTextColor(Color.BLACK);
+    			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_FIRST_NAME:
+    			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.RED);
+    			jjLabel.setTextColor(Color.BLACK);
+    			mmLabel.setTextColor(Color.BLACK);
+    			aaaaLabel.setTextColor(Color.BLACK);
+    			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_JJ:
+    			nameLabel.setTextColor(Color.BLACK);
+    			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.RED);
+    			mmLabel.setTextColor(Color.BLACK);
+    			aaaaLabel.setTextColor(Color.BLACK);
+    			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_MM:
+    			nameLabel.setTextColor(Color.BLACK);
+    			firstNameLabel.setTextColor(Color.BLACK);
+    			jjLabel.setTextColor(Color.BLACK);
     			mmLabel.setTextColor(Color.RED);
+    			aaaaLabel.setTextColor(Color.BLACK);
+    			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_AAAA:
+    			nameLabel.setTextColor(Color.BLACK);
+    			firstNameLabel.setTextColor(Color.BLACK);
+    			jjLabel.setTextColor(Color.BLACK);
+    			mmLabel.setTextColor(Color.BLACK);
     			aaaaLabel.setTextColor(Color.RED);
+    			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_PHONE:
+    			nameLabel.setTextColor(Color.BLACK);
+    			firstNameLabel.setTextColor(Color.BLACK);
+    			jjLabel.setTextColor(Color.BLACK);
+    			mmLabel.setTextColor(Color.BLACK);
+    			aaaaLabel.setTextColor(Color.BLACK);
     			phoneLabel.setTextColor(Color.RED);
     			break;
     		}
