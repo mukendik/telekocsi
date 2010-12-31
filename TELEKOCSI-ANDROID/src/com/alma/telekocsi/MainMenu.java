@@ -73,9 +73,9 @@ public class MainMenu extends TabActivity {
 				if(v==profileModificationButton){
 					startProfileModification();
 				}
-//				else if(v==routeModificationButton){
-//					startRouteModification();
-//				}
+				else if(v==routeModificationButton){
+					startRouteModification();
+				}
 			}
 			
 		};
@@ -86,9 +86,9 @@ public class MainMenu extends TabActivity {
 		startActivity(intent);
 	}
 	
-//	private void startRouteModification(){
-//		Intent intent = new Intent(this, RouteModification.class);
-//		startActivity(intent);
-//	}
+	private void startRouteModification(){
+		Intent intent = new Intent(this, RouteModification.class);
+		startActivity(intent);
+	}
 	
 }

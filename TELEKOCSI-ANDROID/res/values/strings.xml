@@ -83,6 +83,16 @@
     <string name="music">Musique</string>
     <string name="preferences_settings_back_button_text">Retour</string>
     <string name="registering_submit_button_text">Terminer</string>
+    
+    <!-- route_activation -->
+    <string name="route_identification_title">Identification du trajet</string>
+    <string name="route_date_title">Date du trajet</string>
+    <string name="negociations_checkbox">Je reste ouvert à toute négociation</string>
+    <string name="my_routes_radio_button">Mes trajets</string>
+    <string name="new_route_radio_button">Nouveau trajet</string>
+    <string name="back_button">Retour</string>
+    <string name="start_route_activation">Activer le trajet</string>
+    <string name="route_activation_title">Activer un trajet</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>

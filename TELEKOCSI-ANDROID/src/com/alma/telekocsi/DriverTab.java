@@ -50,6 +50,8 @@ public class DriverTab extends Activity {
 	}
 	
 	private void startActivation(){
+		Intent intent = new Intent(this, RouteActivation.class);
+		startActivity(intent);
 	}
 	
 	private void startTransaction(){

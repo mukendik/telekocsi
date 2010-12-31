@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<!-- Header -->
+	<LinearLayout
+	android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/entete"
+    android:padding="5px"
+    >
+    	<ImageView
+    	android:src="@drawable/man"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingRight="5px"
+    	/>
+    	<TextView
+    	android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:color="@color/txtEntete"
+    	android:text="@string/route_activation_title"
+    	android:textSize="20px"
+    	android:textStyle="bold"
+    	android:gravity="center_vertical"
+    	/>
+    </LinearLayout>
+    
+     <!-- Main -->
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    >
+    
+    	<LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:paddingBottom="5px"
+    	>
+    		<!--<ImageView
+    		android:src="@drawable/connection_parameters"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingRight="5px"
+    		/>
+    		-->
+    		<TextView
+    		android:id="@+id/TextView01"
+    		android:textColor="@color/h1_color"
+    		android:background="@color/h1_background" 
+    		android:text="@string/route_identification_title" 
+    		android:layout_height="wrap_content" 
+    		android:layout_width="wrap_content" 
+    		android:textStyle="bold"
+    		android:gravity="center_vertical"
+    		/>
+    	
+    		<!--<ImageView
+    		android:src="@drawable/connection_parameters"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:paddingLeft="5px"
+    		/>
+    		-->
+		</LinearLayout>
+		
+		<RadioGroup
+    	android:orientation="horizontal"
+   		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:layout_marginTop="5px"
+		>
+
+    		<RadioButton
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:background="@color/white"
+    		android:text="@string/my_routes_radio_button"
+    		android:paddingLeft="38px"
+    		android:paddingRight="5px"
+    		android:textColor="@color/black"
+    		android:checked="true"
+    		/>
+
+    		<RadioButton
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:background="@color/white"
+    		android:text="@string/new_route_radio_button"
+    		android:paddingLeft="38px"
+    		android:textColor="@color/black"
+    		/>
+	
+    	</RadioGroup>  
+    	
+    	<Spinner
+    		android:id="@+id/spinTrajet"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:drawSelectorOnTop="true" 
+    		/>
+    	
+    	<LinearLayout
+    	android:orientation="vertical"
+   		android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@color/white"
+    	android:minHeight="50px"
+    	android:maxHeight="50px"
+    	/>
+    	
+
+   		<TextView
+		android:textColor="@color/h1_color"
+		android:background="@color/h1_background"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/route_date_title"
+		android:layout_marginTop="5px"
+		android:textStyle="bold"
+    	android:gravity="center_vertical"
+		/>
+    		
+    	<Spinner
+    	android:id="@+id/spinDateTrajet"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:drawSelectorOnTop="true" 
+    	android:layout_marginTop="5px"
+    	/>
+    			
+    		
+    	<CheckBox
+    	android:checked="false"
+    	android:text="@string/negociations_checkbox"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:textColor="@color/black"
+		/>
+    
+    </LinearLayout>
+    
+    <!-- Footer -->
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/panelAction"
+    android:padding="5px"
+    >
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/back_button"
+    	android:id="@+id/cancel_route_activation"
+    	/>
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/start_route_activation"
+    	android:id="@+id/start_route_activation"
+    	/>
+    </LinearLayout>
+</LinearLayout>
