@@ -62,7 +62,7 @@ android:layout_height="fill_parent"
     	android:textColor="@color/black"
     	/>
 
-    	<!-- Password1 -->
+    	<!-- Password -->
     	<TextView
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
@@ -72,11 +72,21 @@ android:layout_height="fill_parent"
     	<EditText
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:id="@+id/connection_parameters_password1"
+    	android:id="@+id/identification_password"
     	android:textColor="@color/black"
     	android:password="true"
     	/>
 
+    	<TextView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:textColor="@color/fond"
+    	android:text="@string/identification_error_message"
+    	android:id="@+id/identification_error"
+    	android:gravity="center"
+    	android:layout_marginTop="10px"
+    	android:layout_marginBottom="10px"
+    	/>
     	
     </LinearLayout>
     
@@ -92,7 +102,7 @@ android:layout_height="fill_parent"
     	android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
     	android:text="@string/connexion_button"
-    	android:id="@+id/connexion_button"
+    	android:id="@+id/identification_button"
     	/>
     </LinearLayout>
 </LinearLayout>

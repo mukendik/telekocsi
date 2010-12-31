@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.EditText;
 
 public class ConnectionParametersChecking extends Activity {
 	
@@ -19,8 +18,6 @@ public class ConnectionParametersChecking extends Activity {
 		 
 		 super.onCreate(savedInstanceState);
 		 
-		 System.out.println("nawak-checking");
-		 
 		 Bundle extras = getIntent().getExtras();
 		 String  email = extras.getString("email").toString();
 		 String password1 = extras.getString("password1").toString();
@@ -30,15 +27,12 @@ public class ConnectionParametersChecking extends Activity {
 		 System.out.println(password1);
 		 System.out.println(password2);
 		 
-		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
-	     Matcher m = p.matcher(email);
 	     
-	     if(!m.find()){
+	     if(wrongEmail(email)){
 	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
 	     }
 	     else{
-	    	 if(!password1.equals(password2)
-	    			|| password1.equals("")){
+	    	 if(!samePasswords(password1, password2)){
 	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
 	         }
 	    	 else{
@@ -47,6 +41,16 @@ public class ConnectionParametersChecking extends Activity {
 	     }
 	     
 	     finish();
+	 }
+	 
+	 private boolean wrongEmail(String email){
+		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
+	     Matcher m = p.matcher(email);
+		 return !m.find();
+	 }
+	 
+	 private boolean samePasswords(String password1, String password2){
+		 return password1.equals(password2) && !password1.equals("");
 	 }
 	 
 

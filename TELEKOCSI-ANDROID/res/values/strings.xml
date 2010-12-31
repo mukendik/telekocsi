@@ -44,6 +44,7 @@
     <!-- identification -->
     <string name="identification">Identification</string>
     <string name="connexion_button">Connexion</string>
+    <string name="identification_error_message">Email ou mot de passe invalide</string>
     
     <!-- connection_parameters -->
     <string name="registering">Enregistrement (1/3)</string>

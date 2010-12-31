@@ -21,20 +21,20 @@ public class Starter extends Activity {
 //        Session session = SessionFactory.getCurrentSession(this);
 //        Profil profile = session.getActiveProfile();
         
-        boolean exist = false;
-        boolean connected = false;
+        boolean exist = true;
+        boolean disconnected = true;
         
         //le compte de la personne n'est pas enregistre
         if(!exist){
         	startActivity(new Intent(this, ConnectionParameters.class));
         }
         //sinon savoir s'il s'etait deconnecte ou non
-        else if(connected){
+        else if(disconnected){
         	startActivity(new Intent(this, Identification.class));
         }
         else{
         	//sinon on affiche l'ecran principal
-        	startActivity(new Intent(this, MainMenuOld.class));
+        	startActivity(new Intent(this, MainMenu.class));
         }
         
         finish();
