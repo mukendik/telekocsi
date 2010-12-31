@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical">
+  
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/route_activation_button"
+	android:text="@string/route_activation"/>
+	
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/route_modification"
+	android:id="@+id/route_modification_button"/>
+	
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/transaction_validation"
+	android:id="@+id/driver_transaction_button"/>
+
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/profile_settings"
+	android:id="@+id/profile_settings_button"/>
+        				
+</LinearLayout>

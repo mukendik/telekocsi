@@ -34,7 +34,7 @@ public class Starter extends Activity {
         }
         else{
         	//sinon on affiche l'ecran principal
-        	startActivity(new Intent(this, MainMenu.class));
+        	startActivity(new Intent(this, MainMenuOld.class));
         }
         
         finish();

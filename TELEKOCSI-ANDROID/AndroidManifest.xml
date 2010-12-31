@@ -10,15 +10,16 @@
 			</intent-filter>
 		</activity>
 		
-	<activity android:name=".MonActivite"></activity>
-		  <activity android:name=".ActiviteTab"></activity>
+		<activity android:name=".MainMenu"></activity>
+		<activity android:name=".DriverTab"></activity>
+		<activity android:name=".OccupantTab"></activity>
 		<activity android:name=".ConnectionParameters" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".ProfileSettings" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".PreferencesSettings" android:label="@string/app_name">
 		</activity>
-		<activity android:name=".MainMenu" android:label="@string/app_name">
+		<activity android:name=".MainMenuOld" android:label="@string/app_name">
 		</activity>
 		<activity android:name=".Identification" android:label="@string/app_name">
 		</activity>
