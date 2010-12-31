@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<!-- Header -->
+	<LinearLayout
+	android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/entete"
+    android:padding="5px"
+    >
+    	<ImageView
+    	android:src="@drawable/car"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingRight="5px"
+    	/>
+    	<TextView
+    	android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:color="@color/txtEntete"
+    	android:text="@string/route_creation_title"
+    	android:textSize="20px"
+    	android:textStyle="bold"
+    	android:gravity="center_vertical"
+    	/>
+    </LinearLayout>
+    
+    <!-- Main -->
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    >
+    	
+    	<LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:paddingBottom="5px"
+    	>
+    		<TextView
+    		android:id="@+id/TextView01"
+    		android:textColor="@color/h1_color"
+    		android:background="@color/h1_background" 
+    		android:text="@string/route_creation_type_title" 
+    		android:layout_height="wrap_content" 
+    		android:layout_width="wrap_content" 
+    		android:textStyle="bold"
+    		android:gravity="center_vertical"
+    		/>
+		</LinearLayout>
+		
+		<!-- Scroll bar -->
+    	<ScrollView
+    	android:layout_width="fill_parent"
+    	android:layout_height="280px"
+    	>
+    	
+    		<!-- Child of the scroll bar -->
+    		<LinearLayout
+    		android:orientation="vertical"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		>
+		
+				<RadioGroup
+    			android:orientation="horizontal"
+   				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5px"
+				>
+
+    				<RadioButton
+	    			android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+	    			android:text="@string/non_automatic_route_radio"
+	    			android:paddingLeft="38px"
+	    			android:paddingRight="5px"
+	    			android:textColor="@color/black"
+    				android:checked="true"
+    				/>
+
+	    			<RadioButton
+	    			android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+	    			android:text="@string/automatic_route_radio"
+	    			android:paddingLeft="38px"
+	    			android:textColor="@color/black"
+    				/>
+	
+    			</RadioGroup> 
+    	
+    			<!-- Lieu de depart -->
+    			<TextView
+   				android:id="@+id/route_creation_departure_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_departure"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_departure_user"
+    			android:textColor="@color/black"
+    			/>
+    	
+    			<!-- Lieu darrivee -->
+    			<TextView
+    			android:id="@+id/route_creation_arrival_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_arrival"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_arrival_user"
+    			android:textColor="@color/black"
+    			/>
+    			
+    			<!-- Places disponibles -->
+    			<TextView
+    			android:id="@+id/route_creation_places_count_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_places_count"
+    			/>
+    			<Spinner
+    			android:id="@+id/spinPlacesCount"
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:drawSelectorOnTop="true" 
+    			/>
+    	
+    			<!-- Horaire depart -->
+    			<TextView
+    			android:id="@+id/route_creation_arrival_time_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_departure_time"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_departure_time_user"
+    			android:textColor="@color/black"
+    			/>
+    	
+    			<!-- Horaire darrivee -->
+    			<TextView
+    			android:id="@+id/route_creation_arrival_time_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_arrival_time"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_arrival_time_user"
+    			android:textColor="@color/black"
+    			/>
+    			
+    			<!-- Frequence trajet -->
+    			<TextView
+    			android:id="@+id/route_creation_frequence_trajet_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_frequence"
+    			/>
+    			<Button
+		    	android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+		    	android:text="@string/route_creation_frequence_button_text"
+		    	android:id="@+id/route_creation_frequence_user"
+		    	/>
+		    	
+		    	<!-- Prix -->
+    			<TextView
+   				android:id="@+id/route_creation_price_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_price"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_price_user"
+    			android:textColor="@color/black"
+    			/>
+    	
+    			<!-- Commentaires -->
+    			<TextView
+    			android:id="@+id/route_creation_comment_label"
+    			android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:textColor="@color/h2_color"
+    			android:text="@string/route_creation_comment"
+    			/>
+    			<EditText
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/route_creation_comment_user"
+    			android:textColor="@color/black"
+    			/>
+    			
+    		</LinearLayout>
+    	</ScrollView>
+    
+    </LinearLayout>
+    
+    <!-- Footer -->
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/panelAction"
+    android:padding="5px"
+    >
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/cancel_route_creation"
+    	android:id="@+id/cancel_route_creation_button"
+    	/>
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/start_route_creation"
+    	android:id="@+id/start_route_creation_button"
+    	/>
+    </LinearLayout>
+    
+</LinearLayout>

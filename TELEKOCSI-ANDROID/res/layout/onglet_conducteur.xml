@@ -14,6 +14,12 @@ android:orientation="vertical">
 	<Button
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
+	android:text="@string/route_creation"
+	android:id="@+id/route_creation_button"/>
+
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
 	android:text="@string/transaction_validation"
 	android:id="@+id/driver_transaction_button"/>
         				

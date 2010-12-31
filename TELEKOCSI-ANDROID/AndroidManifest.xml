@@ -17,6 +17,7 @@
 		<activity android:name=".ProfileSettings" android:label="@string/app_name"/>
 		<activity android:name=".RouteModification" android:label="@string/app_name"/>
 		<activity android:name=".RouteActivation" android:label="@string/app_name"/>
+		<activity android:name=".RouteCreation" android:label="@string/app_name"/>
 		<activity android:name=".PreferencesSettings" android:label="@string/app_name"/>
 		<activity android:name=".MainMenuOld" android:label="@string/app_name"/>
 		<activity android:name=".Identification" android:label="@string/app_name"/>

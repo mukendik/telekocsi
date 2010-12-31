@@ -11,6 +11,7 @@ public class DriverTab extends Activity {
 	
 	private OnClickListener onClickListener = null;
 	private Button routeActivationButton;
+	private Button routeCreationButton;
 	private Button driverTransactionButton;
 	
 	@Override
@@ -24,6 +25,9 @@ public class DriverTab extends Activity {
 		
 		driverTransactionButton = (Button)findViewById(R.id.driver_transaction_button);
 		driverTransactionButton.setOnClickListener(getOnClickListener());
+		
+		routeCreationButton = (Button)findViewById(R.id.route_creation_button);
+		routeCreationButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -39,23 +43,31 @@ public class DriverTab extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(v==routeActivationButton){
-					startActivation();
+					startRouteActivation();
 				}
 				else if(v==driverTransactionButton){
-					startTransaction();
+					startDriverTransaction();
+				}
+				else if(v==routeCreationButton){
+					startRouteCreation();
 				}
 			}
 			
 		};
 	}
 	
-	private void startActivation(){
+	private void startRouteActivation(){
 		Intent intent = new Intent(this, RouteActivation.class);
 		startActivity(intent);
 	}
 	
-	private void startTransaction(){
+	private void startDriverTransaction(){
 		Intent intent = new Intent(this, Transaction.class);
+		startActivity(intent);
+	}
+	
+	private void startRouteCreation(){
+		Intent intent = new Intent(this, RouteCreation.class);
 		startActivity(intent);
 	}
 
