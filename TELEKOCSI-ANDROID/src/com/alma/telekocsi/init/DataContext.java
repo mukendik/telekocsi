@@ -15,6 +15,7 @@ public class DataContext {
 			Log.i(DataContext.class.getSimpleName(), "Debut initialisation du profil de connection");
 			ProfilDAO profilDAO = new ProfilDAO();
 			profil = profilDAO.login("bbelin", "alma");
+			Log.i(DataContext.class.getSimpleName(), "profil : "+profil);
 			Log.i(DataContext.class.getSimpleName(), "Fin initialisation du profil de connection");
 		}
 		return profil;

@@ -23,11 +23,11 @@ import com.google.android.maps.Overlay;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.widget.Toast;
 
 
 /**
- * Objectif du jour :
- * Trouver sa position et calculer la distance par rapport à un autre point
  * @author Romain
  *
  */
@@ -40,6 +40,7 @@ public class GoogleMapActivity extends MapActivity {
 	private Profil currentProfil;
 	private MapInfo mapInfo;
 	private Context context;
+	private boolean trajetActive = false;
 
 
 	/** Called when the activity is first created. */
@@ -48,20 +49,22 @@ public class GoogleMapActivity extends MapActivity {
 		super.onCreate(savedInstanceState);
 		context = this;
 		//Récupération du profil courant
-		Session session = SessionFactory.getCurrentSession(this);
+		Session session = SessionFactory.getCurrentSession(context);
 		currentProfil = session.getActiveProfile();
 		if(currentProfil==null) {
 			Log.i(GoogleMapActivity.class.getSimpleName(), "currentProfil == null");
 			currentProfil = DataContext.getCurrentProfil();//Créér profile
-			session.saveProfile(currentProfil);
+			
+		}else {
+			Log.i(GoogleMapActivity.class.getSimpleName(), "currentProfil == session");
 		}
-		String sessionID = currentProfil.getId();
+		
 
 
 		//		Profil currentProfil = DataContext.getCurrentProfil();
 		//		String sessionID = currentProfil.getId();
 
-		Log.i(GoogleMapActivity.class.getSimpleName(), "Session profilID : "+sessionID);
+		Log.i(GoogleMapActivity.class.getSimpleName(), "profil : "+currentProfil);
 
 
 
@@ -77,11 +80,13 @@ public class GoogleMapActivity extends MapActivity {
 			public void run() {
 				//générer les geopoints [conducteur, passager, depart etc.]
 				mapInfo = new MapInfo(context, currentProfil);
-				if(mapInfo.getPointDepart()!=null){
+				trajetActive = mapInfo.load();
+				if(mapInfo.getPointDepart()!=null) {
 					// positionne googlemap sur le point de depart
 					mapController.setCenter(mapInfo.getPointDepart());
 
 				}
+				Log.i(GoogleMapActivity.class.getSimpleName(), "Distance = " + mapInfo.getDistanceTotal());
 				makeOverlays();
 			}
 		});
@@ -89,22 +94,25 @@ public class GoogleMapActivity extends MapActivity {
 		thread.start();
 
 		
+
 		mapView.setSatellite(false);
 		mapView.setBuiltInZoomControls(true);
+		
+		if(!trajetActive){
+			Toast.makeText(context, "Pas de Trajet Activé", Toast.LENGTH_LONG).show();
+		}
 	}
 
 
 	protected void onStart() {
 		super.onStart();
-
-
-
+	
 	}
+
 
 
 	private void makeOverlays() {
 		//Ajout de markers
-
 		List<Overlay> listOfOverlays = mapView.getOverlays();
 		listOfOverlays.clear();
 		//depart
@@ -134,7 +142,6 @@ public class GoogleMapActivity extends MapActivity {
 
 
 
-
 	/* Itinéraire avec google maps
 	private void tracer(GeoPoint p, GeoPoint p2) {
 
@@ -151,7 +158,7 @@ public class GoogleMapActivity extends MapActivity {
 	}
 
 	public void setLocation(GeoPoint location) {
-		if(location!=null){
+		if(location!=null) {
 			this.location = location;
 			this.mapController.setCenter(this.location);
 			this.mapView.invalidate();

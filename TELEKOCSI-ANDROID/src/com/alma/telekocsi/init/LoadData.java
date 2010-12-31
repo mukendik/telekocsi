@@ -1,15 +1,18 @@
 package com.alma.telekocsi.init;
 
-
 import android.util.Log;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
+import com.alma.telekocsi.dao.localisation.Localisation;
+import com.alma.telekocsi.dao.localisation.LocalisationDAO;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.TrajetDAO;
+import com.alma.telekocsi.dao.trajet.TrajetLigne;
 import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.dao.trajet.TrajetTestDAO;
+import com.alma.telekocsi.util.LocalDate;
 
 
 public class LoadData {
@@ -18,29 +21,33 @@ public class LoadData {
 	ItineraireDAO itineraireDAO;
 	TrajetDAO trajetDAO;
 	TrajetLigneDAO trajetLigneDAO;
-
+	LocalisationDAO localisationDAO;
 	
 	public LoadData() {
 		profilDAO = new ProfilDAO();
 		itineraireDAO = new ItineraireDAO();
 		trajetDAO = new TrajetDAO();
 		trajetLigneDAO = new TrajetLigneDAO();
+		localisationDAO = new LocalisationDAO();
 	}
 	
 	public void load() {
 		
+		clearLocalisation();
+		clearTrajetLigne();
 		clearTrajet();
 		clearItineraire();
 		clearProfil();
 		
+		
 		insertProfil();
 		insertItineraire();
 		generateTrajet();
-		testNbTrajetParProfil();
+		insertTrajetLigne();
+		insertLocalisation();
 	}
 	
 	
-
 
 	private void clearProfil() {
 		int nb = profilDAO.clear();
@@ -210,14 +217,45 @@ public class LoadData {
 		Log.i(LoadData.class.getSimpleName(), "generate trajet 04/01/2010 : " + nb);
 	}
 	
-	private void testNbTrajetParProfil() {
-		int nb = trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).size();
-		Log.i(LoadData.class.getSimpleName(), "Trajet du profil bbelin : " + nb);
+	
+	private void clearTrajetLigne() {
+		int nb = trajetLigneDAO.clear();
+		Log.i(LoadData.class.getSimpleName(), "clear trajetLigne : " + nb);
+	}
+	
+	private void insertTrajetLigne() {
+		TrajetLigne trajetLigne = new TrajetLigne();
+		trajetLigne.setIdProfilPassager(profilDAO.login("rgournay", "alma").getId());
+		trajetLigne.setIdTrajet( trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).get(0).getId());
+		trajetLigne.setNbrePoint(5);
+		trajetLigne.setPlaceOccupee(1);
+		trajetLigneDAO.insert(trajetLigne);
+		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne);
+		TrajetLigne trajetLigne2 = new TrajetLigne();
+		trajetLigne2.setIdProfilPassager(profilDAO.login("sbelin", "alma").getId());
+		trajetLigne2.setIdTrajet( trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).get(0).getId());
+		trajetLigne2.setNbrePoint(5);
+		trajetLigne2.setPlaceOccupee(1);
+		trajetLigneDAO.insert(trajetLigne2);
+		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne2);
+	}
+	
+	private void clearLocalisation(){
+		int nb = localisationDAO.clear();
+		Log.i(LoadData.class.getSimpleName(), "clear des localisations : " + nb);
+	}
+	
+	private void insertLocalisation() {
 		
-		nb = trajetDAO.getList(profilDAO.login("sbelin", "alma").getId()).size();
-		Log.i(LoadData.class.getSimpleName(), "Trajet du profil sbelin : " + nb);
-		
-		String idProfil = trajetDAO.getList(profilDAO.login("bbelin", "alma").getId()).get(0).getIdProfilConducteur();
-		Log.i(LoadData.class.getSimpleName(), "id profil bbelin : " + idProfil);
+		Localisation localisation = new Localisation();
+		LocalDate currentDate = new LocalDate();
+		localisation.setDateLocalisation(currentDate.getDateFormatCalendar());
+		localisation.setHeureLocalisation(currentDate.getDateFomatHeure());
+		localisation.setIdProfil(profilDAO.login("rgournay", "alma").getId());
+		localisation.setLatitude(47.014081);
+		localisation.setLongitude(-1.249166);
+		localisation.setPointGPS("47.014081 , -1.249166");
+		localisationDAO.insert(localisation);
+		Log.i(LoadData.class.getSimpleName(), "insert localisation : " + localisation);
 	}
 }
