@@ -1,18 +1,29 @@
 package com.alma.telekocsi.map;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
+
 import com.alma.telekocsi.GoogleMapActivity;
+import com.alma.telekocsi.R;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
 import com.alma.telekocsi.dao.localisation.Localisation;
@@ -22,6 +33,8 @@ import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.util.LocalDate;
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class MapInfo {
 	private static final String CONDUCTEUR = "C";
@@ -37,12 +50,19 @@ public class MapInfo {
 
 	private Context context;
 
-	public MapInfo(Context context, Profil currentProfil) {
+	private MapView mapView;
+
+	private GeoPoint pointVia;
+
+	public MapInfo(Context context, Profil currentProfil,MapView mapView) {
 		this.context = context;
-		profil = currentProfil;
-		pointsPassager = new ArrayList<GeoPoint>();
+		this.profil = currentProfil;
+		this.pointsPassager = new ArrayList<GeoPoint>();
+		this.mapView = mapView;
+		this.distanceTotale = 0;
+
 	}
-	
+
 	public boolean load(){
 		TrajetDAO trajetDAO = new TrajetDAO();
 
@@ -111,7 +131,17 @@ public class MapInfo {
 			List<Address> adrs;
 			try {
 				//Récupération coordonnées de l'adresse de départ
-				Address AddressDepart=null,AddressArrivee =null;
+				Address AddressDepart=null;
+				Address AddressArrivee =null;
+
+				/*Test via Cholet*/
+				adrs = geoCoder.getFromLocationName("CHOLET", 1);
+				if(adrs.size()>0){
+					Address AddressVia = adrs.get(0);
+					pointVia = new GeoPoint((int) (AddressVia.getLatitude() * 1000000.0),(int) (AddressVia.getLongitude() * 1000000.0));
+				}
+				/**/
+
 				adrs = geoCoder.getFromLocationName(iti.getLieuDepart(), 1);
 				if(adrs!=null && adrs.size()>0){
 					AddressDepart = adrs.get(0);
@@ -141,21 +171,24 @@ public class MapInfo {
 					);
 				}
 
-				if(AddressDepart!=null && AddressArrivee!=null){
-					distanceTotale = Distance.calculateDistance(AddressDepart, AddressArrivee, Distance.KILOMETERS);
+				if(pointDepart!=null && pointArrivee!=null){
+					makeOverlays();
+					drawPath(pointDepart, pointArrivee,pointVia, Color.BLUE, mapView);
 				}
+
 			} catch (IOException e) {
 				Log.e(GoogleMapActivity.class.getSimpleName(),"Erreur MapInfo : " + e.toString());
 			}
+
 		}else {return false;}
-		
+
 		return true;
 	}
 
 	/**
 	 * Récupère la position du mobile
 	 * @param context
-	 * @return
+	 * @return un GeoPoint
 	 */
 	private GeoPoint getPositionMobile(Context context) {
 		Log.i(GoogleMapActivity.class.getSimpleName(),"---> Debut getPositionMobile() <---");
@@ -201,6 +234,10 @@ public class MapInfo {
 		return positionMobile;
 	}
 
+	/**
+	 * Derniere location connu par le provider
+	 * @return Location
+	 */
 	private Location getLastKnownLocation() {
 		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) ;
 		if(location==null){
@@ -208,8 +245,148 @@ public class MapInfo {
 		}
 		return location;
 	}
-	
 
+
+
+	/**
+	 * Positionnement des markers sur la map
+	 */
+	private void makeOverlays() {
+		//Ajout de markers
+		List<Overlay> listOfOverlays = mapView.getOverlays();
+		listOfOverlays.clear();
+		//depart
+		if(getPointDepart()!=null){
+			listOfOverlays.add(new MapOverlay(getPointDepart(), R.drawable.pin_depart));
+		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointDepart()-->null Pointer  donc non affiche");}
+
+		//arrivee
+		if(getPointArrivee()!=null){
+			listOfOverlays.add(new MapOverlay(getPointArrivee(), R.drawable.pin_arrivee));
+		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointArrivee()-->null Pointer  donc non affiche");}
+
+		//conducteur
+		if(getPointConducteur()!=null){
+			listOfOverlays.add(new MapOverlay(getPointConducteur(), R.drawable.pin_conducteur));  
+		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointConducteur()-->null Pointer  donc non affiche");}
+
+
+		//liste passagers
+		if(getPointsPassager()!=null){
+			for(GeoPoint pointPassager : getPointsPassager()){
+				listOfOverlays.add(new MapOverlay(pointPassager, R.drawable.pin_passager));
+			}
+		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointsPassager()-->null Pointer  donc non affiche");}
+
+	}
+
+	/**
+	 * Traces les différents itiniraires 
+	 * src-via  et via-dest
+	 * @param src
+	 * @param dest
+	 * @param via
+	 * @param color
+	 * @param mMapView01
+	 */
+	private void drawPath(GeoPoint src,GeoPoint dest,GeoPoint via, int color, MapView mMapView01){
+		if(via!=null){
+			drawPath(src, via, color, mMapView01);
+			drawPath(via, dest, color, mMapView01);
+		}else{
+			drawPath(src, dest, color, mMapView01);
+		}
+	}
+
+	/**
+	 * Trace l'itiniraire entre 2 points
+	 * @param src
+	 * @param dest
+	 * @param color
+	 * @param mMapView01
+	 */
+	private void drawPath(GeoPoint src,GeoPoint dest, int color, MapView mMapView01){
+		// connect to map web service
+		StringBuilder urlString = new StringBuilder();
+		urlString.append("http://maps.google.com/maps?f=d&hl=en");
+		urlString.append("&saddr=");//from
+		urlString.append( Double.toString((double)src.getLatitudeE6()/1.0E6 ));
+		urlString.append(",");
+		urlString.append( Double.toString((double)src.getLongitudeE6()/1.0E6 ));
+		urlString.append("&daddr=");//to
+		urlString.append( Double.toString((double)dest.getLatitudeE6()/1.0E6 ));
+		urlString.append(",");
+		urlString.append( Double.toString((double)dest.getLongitudeE6()/1.0E6 ));
+		urlString.append("&ie=UTF8&0&om=0&output=kml");
+		Log.d("xxx","URL="+urlString.toString());
+		// get the kml (XML) doc. And parse it to get the coordinates(direction route).
+		Document doc = null;
+		HttpURLConnection urlConnection= null;
+		URL url = null;
+		try
+		{ 
+			url = new URL(urlString.toString());
+			urlConnection=(HttpURLConnection)url.openConnection();
+			urlConnection.setRequestMethod("GET");
+			urlConnection.setDoOutput(true);
+			urlConnection.setDoInput(true);
+			urlConnection.connect(); 
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			doc = db.parse(urlConnection.getInputStream()); 
+
+			if(doc.getElementsByTagName("GeometryCollection").getLength()>0)
+			{
+				//String path = doc.getElementsByTagName("GeometryCollection").item(0).getFirstChild().getFirstChild().getNodeName();
+				String path = doc.getElementsByTagName("GeometryCollection").item(0).getFirstChild().getFirstChild().getFirstChild().getNodeValue() ;
+				Log.d("xxx","path="+ path);
+				String [] pairs = path.split(" "); 
+				String[] lngLat = pairs[0].split(","); // lngLat[0]=longitude lngLat[1]=latitude lngLat[2]=height
+				// src
+				GeoPoint startGP = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
+				mMapView01.getOverlays().add(new MapOverlay(startGP,startGP,MapOverlay.DEPART));
+				GeoPoint gp1;
+				GeoPoint gp2 = startGP; 
+				double distanceIntermediaire;
+				for(int i=1;i<pairs.length;i++) // the last one would be crash
+				{
+					lngLat = pairs[i].split(",");
+					gp1 = gp2;
+					// watch out! For GeoPoint, first:latitude, second:longitude
+					gp2 = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
+					mMapView01.getOverlays().add(new MapOverlay(gp1,gp2,MapOverlay.PATH,color));
+					Log.d("xxx","pair:" + pairs[i]);
+					distanceIntermediaire = Distance.calculateDistance(gp1, gp2, Distance.KILOMETERS);
+					distanceTotale += Double.isNaN(distanceIntermediaire) ? 0 : distanceIntermediaire;
+					//Log.i(GoogleMapActivity.class.getSimpleName(), "Distance intermediaire : "+ distanceIntermediaire);
+				}
+				mMapView01.getOverlays().add(new MapOverlay(dest,dest, MapOverlay.ARRIVE)); // use the default color
+			} 
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ParserConfigurationException e)
+		{
+			e.printStackTrace();
+		}
+		catch (SAXException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
+
+	/* ***************************
+	 * Getter & Setter
+	 * ***************************/
 	public GeoPoint getPointConducteur() {
 		return pointConducteur;
 	}
@@ -245,5 +422,7 @@ public class MapInfo {
 	public double getDistanceTotal(){
 		return distanceTotale;
 	}
+
+
 
 }

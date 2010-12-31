@@ -1,6 +1,8 @@
 package com.alma.telekocsi.map;
 
 
+import com.google.android.maps.GeoPoint;
+
 import android.location.Address;
 import android.location.Location;;
 
@@ -86,4 +88,20 @@ public class Distance
                 pointB.getLatitude(),
                 pointB.getLongitude()) * EARTHS_RADIUS[units]; 
 	}
+	
+	/**
+	 * Calculates the distance between two GeoPoints
+	 * @param pointA GeoPoint of point A
+	 * @param pointB GeoPoint of point B
+	 * @param units Desired units
+	 * @return Distance between the two points in the desired units
+	 */
+	public static double calculateDistance(GeoPoint pointA, GeoPoint pointB, int units)
+	{
+		return calclateArc(pointA.getLatitudeE6()/1E6,
+                pointA.getLongitudeE6()/1E6,
+                pointB.getLatitudeE6()/1E6,
+                pointB.getLongitudeE6()/1E6) * EARTHS_RADIUS[units]; 
+	}
+	
 }

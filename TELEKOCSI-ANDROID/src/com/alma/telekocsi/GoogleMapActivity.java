@@ -21,9 +21,9 @@ import com.google.android.maps.Overlay;
 //import android.content.Intent;
 //import android.net.Uri;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.Toast;
 
 
@@ -73,25 +73,25 @@ public class GoogleMapActivity extends MapActivity {
 		this.mapView = (MapView) findViewById(R.id.mapView);
 		this.mapController = this.mapView.getController();
 		this.mapController.setZoom(10); //taille du zoom
-
-		Thread thread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
+//
+//		Thread thread = new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
 				//générer les geopoints [conducteur, passager, depart etc.]
-				mapInfo = new MapInfo(context, currentProfil);
+				mapInfo = new MapInfo(context, currentProfil, mapView);
 				trajetActive = mapInfo.load();
 				if(mapInfo.getPointDepart()!=null) {
 					// positionne googlemap sur le point de depart
 					mapController.setCenter(mapInfo.getPointDepart());
-
+					
 				}
 				Log.i(GoogleMapActivity.class.getSimpleName(), "Distance = " + mapInfo.getDistanceTotal());
-				makeOverlays();
-			}
-		});
+			
+//			}
+//		});
 
-		thread.start();
+//		thread.start();
 
 		
 
@@ -108,49 +108,6 @@ public class GoogleMapActivity extends MapActivity {
 		super.onStart();
 	
 	}
-
-
-
-	private void makeOverlays() {
-		//Ajout de markers
-		List<Overlay> listOfOverlays = mapView.getOverlays();
-		listOfOverlays.clear();
-		//depart
-		if(mapInfo.getPointDepart()!=null){
-			listOfOverlays.add(new MapOverlay(this, mapInfo.getPointDepart(), R.drawable.pin_depart));
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointDepart()-->null Pointer  donc non affiche");}
-
-		//arrivee
-		if(mapInfo.getPointArrivee()!=null){
-			listOfOverlays.add(new MapOverlay(this, mapInfo.getPointArrivee(), R.drawable.pin_arrivee));
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointArrivee()-->null Pointer  donc non affiche");}
-
-		//conducteur
-		if(mapInfo.getPointConducteur()!=null){
-			listOfOverlays.add(new MapOverlay(this, mapInfo.getPointConducteur(), R.drawable.pin_conducteur));  
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointConducteur()-->null Pointer  donc non affiche");}
-
-
-		//liste passagers
-		if(mapInfo.getPointsPassager()!=null){
-			for(GeoPoint pointPassager : mapInfo.getPointsPassager()){
-				listOfOverlays.add(new MapOverlay(this, pointPassager, R.drawable.pin_passager));
-			}
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointsPassager()-->null Pointer  donc non affiche");}
-
-	}
-
-
-
-	/* Itinéraire avec google maps
-	private void tracer(GeoPoint p, GeoPoint p2) {
-
-		Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-				Uri.parse("http://maps.google.com/maps?saddr="+(p.getLatitudeE6()/1000000.0)+","+(p.getLongitudeE6()/1000000.0) + 
-						"&daddr="+(p2.getLatitudeE6()/1000000.0)+","+(p2.getLongitudeE6()/1000000.0)));
-		startActivity(intent);
-
-	}*/
 
 
 	public GeoPoint getLocation() {
