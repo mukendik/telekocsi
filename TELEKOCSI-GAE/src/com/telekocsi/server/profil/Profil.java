@@ -40,6 +40,8 @@ public class Profil implements Serializable {
 	/* Classement moyen de 0 à 5 */
 	private int classementMoyen;
 	
+	private int nombreAvis;
+	
 	private int pointsDispo;
 	private boolean connecte;
 	
@@ -149,6 +151,14 @@ public class Profil implements Serializable {
 	public void setClassementMoyen(int classementMoyen) {
 		this.classementMoyen = classementMoyen;
 	}
+	
+	public int getNombreAvis() {
+		return nombreAvis;
+	}
+
+	public void setNombreAvis(int nombreAvis) {
+		this.nombreAvis = nombreAvis;
+	}
 
 	public int getPointsDispo() {
 		return pointsDispo;
@@ -251,6 +261,7 @@ public class Profil implements Serializable {
 		stringBuilder.append("; Telephone : " + getTelephone());
 		stringBuilder.append("; Animaux : " + getAnimaux());
 		stringBuilder.append("; Classement moyen : " + getClassementMoyen());
+		stringBuilder.append("; Nombre d'avis : " + getNombreAvis());
 		stringBuilder.append("; Classement véhicule : " + getClasseVehicule());
 		stringBuilder.append("; Detours : " + getDetours());
 		stringBuilder.append("; Discution : " + getDiscussion());

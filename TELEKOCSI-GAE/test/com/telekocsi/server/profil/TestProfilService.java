@@ -46,6 +46,7 @@ public class TestProfilService {
 		profil.setPrenom("");
 		profil.setAnimaux("N");
 		profil.setClassementMoyen(4);
+		profil.setNombreAvis(5);
 		profil.setClasseVehicule(3);
 		profil.setConnecte(false);
 		profil.setDateNaissance("10/06/1965");

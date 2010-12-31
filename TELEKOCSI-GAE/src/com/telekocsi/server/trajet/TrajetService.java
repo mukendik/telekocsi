@@ -131,6 +131,41 @@ public class TrajetService {
 		List<Trajet> trajets = query.getResultList();
 		return trajets;
 	}
+
+	
+	/**
+	 * Recuperation de la liste des Trajets disponibles
+	 * @param Lieu de depart
+	 * @param Lieu d'arrivee
+	 * @param Date depart
+	 * @return liste des itineraires
+	 */
+	@GET
+	@Path("/trajetDispo/{lieuDepart}/{lieuArrivee}/{date}")
+	@SuppressWarnings("unchecked")
+	public List<Trajet> getTrajetDispo(@PathParam("lieuDepart") String lieuDepart, 
+			@PathParam("lieuArrivee") String lieuArrivee,
+			@PathParam("date") String date) {
+		
+		log.info("Recuperation des trajets disponibles pour le " + date);
+		
+		EntityManager em = Tools.getEntityManager();
+		
+		StringBuilder sb = new StringBuilder("SELECT t FROM Trajet t");
+		sb.append(" where t.lieuDepart=:param1");
+		sb.append(" and t.lieuDestination=:param2");
+		sb.append(" and t.dateTrajet=:param3");
+		sb.append(" and t.soldePlaceDispo > 0");
+		
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("param1", lieuDepart);
+		query.setParameter("param2", lieuArrivee);
+		query.setParameter("param3", date);
+		
+		List<Trajet> trajets = query.getResultList();
+		
+		return trajets;
+	}
 	
 
 	/**
