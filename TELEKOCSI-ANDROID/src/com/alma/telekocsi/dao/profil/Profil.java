@@ -30,6 +30,8 @@ public class Profil {
 	/* Classe de véhicule : de 1 à 3 */
 	private int classeVehicule;
 	
+	private int nombreAvis;
+	
 	/* Modele du véhicule */
 	private String vehicule;
 	
@@ -130,7 +132,15 @@ public class Profil {
 	public void setClassementMoyen(int classementMoyen) {
 		this.classementMoyen = classementMoyen;
 	}
+	
+	public int getNombreAvis() {
+		return nombreAvis;
+	}
 
+	public void setNombreAvis(int nombreAvis) {
+		this.nombreAvis = nombreAvis;
+	}
+	
 	public int getPointsDispo() {
 		return pointsDispo;
 	}

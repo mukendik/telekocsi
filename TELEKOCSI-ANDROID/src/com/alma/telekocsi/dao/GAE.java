@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 public class GAE {
 
+	
 	private static final boolean LOCAL = false;
 	private static final String BASE_URL_LOCAL = "http://10.0.2.2:8888";
 	private static final String BASE_URL_DISTANT = "http://alma-telekocsi.appspot.com";

@@ -16,13 +16,16 @@ public class LocalDate extends Date implements Serializable {
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
 	public static final SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm");
 
+	
 	public LocalDate() {
 		super();
 	}
 
+	
 	public LocalDate(long milliseconds) {
 		super(milliseconds);
 	}
+	
 	
 	public String toString() {
 		
@@ -37,9 +40,11 @@ public class LocalDate extends Date implements Serializable {
 		return day + " " + sdf2.format(this);
 	}
 	
+	
 	public String getDateFormatCalendar(){
 		return sdf2.format(this);
 	}
+	
 	
 	public String getDateFomatHeure(){
 		return sdf3.format(this);

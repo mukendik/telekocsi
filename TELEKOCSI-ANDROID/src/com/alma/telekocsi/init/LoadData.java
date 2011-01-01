@@ -23,6 +23,7 @@ public class LoadData {
 	TrajetLigneDAO trajetLigneDAO;
 	LocalisationDAO localisationDAO;
 	
+	
 	public LoadData() {
 		profilDAO = new ProfilDAO();
 		itineraireDAO = new ItineraireDAO();
@@ -30,6 +31,7 @@ public class LoadData {
 		trajetLigneDAO = new TrajetLigneDAO();
 		localisationDAO = new LocalisationDAO();
 	}
+	
 	
 	public void load() {
 		
@@ -39,7 +41,6 @@ public class LoadData {
 		clearItineraire();
 		clearProfil();
 		
-		
 		insertProfil();
 		insertItineraire();
 		generateTrajet();
@@ -48,7 +49,6 @@ public class LoadData {
 	}
 	
 	
-
 	private void clearProfil() {
 		int nb = profilDAO.clear();
 		Log.i(LoadData.class.getSimpleName(), "clear profil : " + nb);
@@ -62,6 +62,7 @@ public class LoadData {
 		profil.setPrenom("Bruno");
 		profil.setAnimaux("N");
 		profil.setClassementMoyen(4);
+		profil.setNombreAvis(5);
 		profil.setClasseVehicule(3);
 		profil.setConnecte(false);
 		profil.setDateNaissance("10/06/1965");
@@ -86,7 +87,8 @@ public class LoadData {
 		profil.setNom("BELIN");
 		profil.setPrenom("Sylvie");
 		profil.setAnimaux("N");
-		profil.setClassementMoyen(4);
+		profil.setClassementMoyen(3);
+		profil.setNombreAvis(4);
 		profil.setClasseVehicule(3);
 		profil.setConnecte(false);
 		profil.setDateNaissance("04/06/1967");
@@ -112,6 +114,7 @@ public class LoadData {
 		profil.setPrenom("Romain");
 		profil.setAnimaux("N");
 		profil.setClassementMoyen(4);
+		profil.setNombreAvis(3);
 		profil.setClasseVehicule(3);
 		profil.setConnecte(false);
 		profil.setDateNaissance("04/04/1987");

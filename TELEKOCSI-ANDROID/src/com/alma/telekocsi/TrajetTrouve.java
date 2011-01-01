@@ -1,9 +1,12 @@
 package com.alma.telekocsi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.profil.ProfilDAO;
+import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.util.LocalDate;
 
 import android.app.Activity;
@@ -20,6 +23,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
@@ -36,29 +41,49 @@ public class TrajetTrouve extends Activity {
 	private TextView tvPage;
 	
 	private ListView listView;
-	ArrayList<RowModel> list;
-	private ArrayAdapter<RowModel> detailTrajetsAdapter;
+	private ArrayAdapter<Trajet> detailTrajetsAdapter;
 	private OnItemSelectedListener onTrajetSelectedListener;
+	private OnItemClickListener onItemClickListener;
 	private TrajetTrouve trajetTrouve = this;
+	
+	private List<Trajet> trajets = null;
 	private Trajet trajet = null;
+	private Itineraire itineraire = null;
+	private LocalDate date = null;
+	private ProfilDAO profilDAO;
 	
-	
-	String[] items={"lorem", "ipsum", "dolor", "sit", "amet",
-			"consectetuer", "adipiscing", "elit", "morbi", "vel",
-			"ligula", "vitae", "arcu", "aliquet", "mollis",
-			"etiam", "vel", "erat", "placerat", "ante",
-			"porttitor", "sodales", "pellentesque", "augue",
-			"purus"};
-	
+		
 	final Handler handler = new Handler() {
 		
 		@Override
 		public void handleMessage(android.os.Message msg) {
 		
+			tvResultat.setText(trajets.size() + " résultats");
+			tvPage.setText("Page : 1/1");
+			
 			listView.setAdapter(detailTrajetsAdapter);
 			listView.setOnItemSelectedListener(getOnTrajetSelectedListener());
+			listView.setOnItemClickListener(getOnItemClickListener());
+			
+			if (trajets.size() == 0) {
+				Toast.makeText(trajetTrouve, "Aucun trajet ne correspond à vos critères", Toast.LENGTH_SHORT).show();
+			}
 		};
 	};
+	
+	
+	private OnItemClickListener getOnItemClickListener() {
+		
+		onItemClickListener = new OnItemClickListener() {
+			
+		    public void onItemClick(AdapterView parent, View v, int position, long id) {
+		    	
+		        Toast.makeText(trajetTrouve,"Gérer un event vers le conducteur",Toast.LENGTH_SHORT).show();
+		    }
+		};
+		
+		return onItemClickListener;
+	}
 	
 	
     @Override
@@ -95,8 +120,7 @@ public class TrajetTrouve extends Activity {
 			@Override
 			public void run() {
 		
-				detailTrajetsAdapter = new CheckAdapter(trajetTrouve, getListTrajets());
-						        
+				detailTrajetsAdapter = new CheckAdapter(trajetTrouve, getTrajets());
 		        Message msg = handler.obtainMessage();
 		        handler.sendMessage(msg);
 			}
@@ -104,17 +128,7 @@ public class TrajetTrouve extends Activity {
         
         thread.start();
     }
-    
-    
-    List<RowModel> getListTrajets() {
-    	
-		ArrayList<RowModel> list = new ArrayList<RowModel>();
-		for (String s : items) {
-			list.add(new RowModel(s));
-		}
-    	return list;
-    }
-    
+       
     
     @Override
     protected void onRestart() {
@@ -154,88 +168,63 @@ public class TrajetTrouve extends Activity {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 					
-					
-					
-					RowModel model = (RowModel)parent.getItemAtPosition(position);
+					Trajet model = (Trajet)parent.getItemAtPosition(position);
 					Log.i(TrajetTrouve.class.getSimpleName(), "onItemSelected -> " + model);
-					
-					//trajet = (Trajet)parent.getItemAtPosition(position);
-					
-					/*
-					tvVilleDepart.setText(itineraire.getLieuDepart());
-					tvVilleArrivee.setText(itineraire.getLieuDestination());
-					tvHeureDepart.setText(itineraire.getHoraireDepart());
-					tvVariableDepart.setText("+/-" + itineraire.getVariableDepart() + "mn");
-					
-					String frequence = itineraire.getFrequenceTrajet() + "NNNNNNN";
-					String frequenceJour = "LMMJVSD";
-					String res = "";
-					for (int cpt = 0; cpt < 7; cpt++) {
-						if (frequence.charAt(cpt) == 'O')
-							res += frequenceJour.charAt(cpt);
-						else
-							res += "-";
-					}
-					tvJours.setText(res);
-					tvAutoroute.setText(itineraire.isAutoroute() ? "oui" : "non");
-					
-					refreshBtn();*/
 				}
 				
 				
 				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
-					
-					/*
-					itineraire = null;
-					refreshBtn();*/
+
 				}
 			};
 		}
 		
 		return onTrajetSelectedListener;
-	}    
+	}
 
     
     public void chargeInfoIntent() {
         
         Bundle bundle = this.getIntent().getExtras();
-        Itineraire itineraire = (Itineraire)bundle.getSerializable("itineraire");
-        LocalDate date = (LocalDate)bundle.getSerializable("date");
+        itineraire = (Itineraire)bundle.getSerializable("itineraire");
+        date = (LocalDate)bundle.getSerializable("date");
         
         tvVilleDepart.setText(itineraire.getLieuDepart());
         tvVilleArrivee.setText(itineraire.getLieuDestination());
         tvDate.setText(date.toString());
-        tvResultat.setText("12 résultats");
-        tvPage.setText("Page : 2/5");
         
+        /*
+        tvResultat.setText("12 résultats");
+        tvPage.setText("Page : 2/5");*/
         
         Log.i(TrajetTrouve.class.getSimpleName(), " Itineraire : " + itineraire);
         Log.i(TrajetTrouve.class.getSimpleName(), " Date : " + date);
         
     }  
     
-    //--------------------------------------------------------
-    // TESTS
-    //--------------------------------------------------------
-    
-	private RowModel getModel(int position) {
+
+    private Trajet getModel(int position) {
 		
 		return detailTrajetsAdapter.getItem(position);
 	}  
     
 	
-	class CheckAdapter extends ArrayAdapter<RowModel> {
+	class CheckAdapter extends ArrayAdapter<Trajet> {
 		
 		Activity context;
 		
-		CheckAdapter(Activity context, List<RowModel> list) {
+		CheckAdapter(Activity context, List<Trajet> list) {
 			
 			super(context, R.layout.trajettrouverow, list);
 			this.context = context;
 		}
 		
 		
+		/**
+		 * Fixer la taille des champs pour avoir la place suffisante
+		 * pour tout afficher !
+		 */
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
 			View row = convertView;
@@ -251,33 +240,54 @@ public class TrajetTrouve extends Activity {
 				wrapper = (ViewWrapper)row.getTag();
 			}
 
-			RowModel model = getModel(position);
+			Trajet trajet = getModel(position);
 			
-			wrapper.getDateHeure().setText("Aujourd'hui à 14h30");
-			wrapper.getNbrePlaceDispo().setText("2 places dispo");
-			wrapper.getNbrePoint().setText(position + " points");
-			wrapper.getNombreAvis().setText("1 avis");
-			wrapper.getNomConducteur().setText("Dupond G.");
+			StringBuilder dateAff = new StringBuilder();
+			String dateJour = new LocalDate().getDateFormatCalendar();
+			if (trajet.getDateTrajet().equals(dateJour)) {
+				dateAff.append("Aujourd'hui");
+			} else {
+				dateAff.append(trajet.getDateTrajet());
+			}
+			dateAff.append(" à " + trajet.getHoraireDepart());
+			
+			wrapper.getDateHeure().setText(dateAff.toString());
+			wrapper.getNbrePlaceDispo().setText(trajet.getPlaceDispo() + " places dispo");
+			wrapper.getNbrePoint().setText(trajet.getNbrePoint() + " points");
+			
+			Profil profil = getProfilDAO().getProfil(trajet.getIdProfilConducteur());
+			
+			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
+			wrapper.getNomConducteur().setText(profil.getPseudo());
 			
 			return (row);
 		}
 	}
 	
 	
-	class RowModel {
-		String label;
-		float rating = 2.0f;
+	public List<Trajet> getTrajets() {
 		
-		RowModel(String label) {
-			this.label = label;
-		}
+		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
+		TrajetDAO trajetDAO = new TrajetDAO();
 		
-		public String toString() {
-			if (rating >= 3.0) {
-				return (label.toUpperCase());
-			}
-			
-			return (label);
-		}
+		Trajet trajetModel = new Trajet();
+		trajetModel.setLieuDepart(itineraire.getLieuDepart());
+		trajetModel.setLieuDestination(itineraire.getLieuDestination());
+		trajetModel.setDateTrajet(date.getDateFormatCalendar());
+		
+		trajets = trajetDAO.getTrajetDispo(trajetModel);
+		
+		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets : " + trajets.size());
+		return trajets;
 	}
+	
+	
+	private ProfilDAO getProfilDAO() {
+		
+		if (profilDAO == null) {
+			profilDAO = new ProfilDAO();
+		}
+		return profilDAO;
+	}
+	
 }

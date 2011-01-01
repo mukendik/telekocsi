@@ -177,9 +177,30 @@ public class TrajetDAO {
      * @return
      */
     public List<Trajet> getList(String idProfil) {
-    	// recuperation de tous les trajets
-		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil));
+
+    	return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil));
     }
+    
+    
+    /**
+     * Recupere la liste des trajets disponibles
+     * @param Trajet de reference (lieu depart, lieu arrivee et date)
+     * 
+     * @return liste des trajets disponibles
+     */
+    public List<Trajet> getTrajetDispo(Trajet trajetModel) {
+    	
+    	HttpPut request = new HttpPut(GAE.getTrajetEndPoint() + "/trajetDispo");
+    	request.setHeader("Content-Type", GAE.getContentType());
+    	
+    	synchronized (AbstractTask.lock) {
+    		try {
+    			request.setEntity(new StringEntity(
+    					GAE.getGson().toJson(trajetModel), GAE.getEncoding()));
+    		} catch (UnsupportedEncodingException e) {}
+    	}
+    	return (new GetListTask()).execute(request);
+    }    
     
     
     /**
@@ -188,7 +209,7 @@ public class TrajetDAO {
      * @return nb de trajets generes
      */
     public int generate(String date) {
-    	// recuperation de tous les trajets
+
     	String dateRef = date.replaceAll("/", "-"); // Non supporte sinon change le chemin http !
 		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/generate/" + dateRef));
     }
