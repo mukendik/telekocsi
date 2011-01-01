@@ -11,7 +11,7 @@ public class ConnectionParametersChecking extends Activity {
 	
 	public static final int INVALID_EMAIL = 1;
 	public static final int INVALID_PASSWORD = 2;
-	private static final String emailPattern = "^[\\w-\\.]+@[a-zA-Z]+\\.[a-zA-Z]{2,3}$";
+	private static final String emailPattern = "^[\\w\\-\\.]+@[a-zA-Z][a-zA-Z\\-]+[a-zA-Z]\\.[a-zA-Z]{2,3}$";
 	
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {

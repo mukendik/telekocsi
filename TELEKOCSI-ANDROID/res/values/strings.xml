@@ -136,4 +136,5 @@
 	<color name="h1_background">#4fc416</color>
 	<color name="simple_text_color">#000000</color>
 
+<string name="profile_creation_ongoing">Mise à jour du profil</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.alma.telekocsi;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ public class PreferencesSettings extends Activity {
 	private RadioGroup music;
 	private RadioGroup discussion;
 	private RadioGroup detours;
+	private Session session;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,55 @@ public class PreferencesSettings extends Activity {
          
         registeringSubmitButton = (Button)findViewById(R.id.registering_submit_button);
         registeringSubmitButton.setOnClickListener(getOnClickListener());
+        session = SessionFactory.getCurrentSession(this);
+        
+        //Valeur courantes en cas d'édition du profil
+        initValues();
     }
+	
+	/**
+	 * remplir les champs avec les valeurs courantes
+	 */
+	private void initValues(){
+		Profil profile = session.getActiveProfile();
+		if(profile!=null){
+			
+			//smoker
+			String val  = profile.getFumeur();
+			for(int i=0;i<smoker.getChildCount();i++){
+				RadioButton rb = (RadioButton)smoker.getChildAt(i);
+				rb.setChecked(rb.getText().toString().equals(val));
+			}
+			
+			//animals
+			val  = profile.getAnimaux();
+			for(int i=0;i<animals.getChildCount();i++){
+				RadioButton rb = (RadioButton)animals.getChildAt(i);
+				rb.setChecked(rb.getText().toString().equals(val));
+			}
+
+			//detours
+			val  = profile.getDetours();
+			for(int i=0;i<detours.getChildCount();i++){
+				RadioButton rb = (RadioButton)detours.getChildAt(i);
+				rb.setChecked(rb.getText().toString().equals(val));
+			}
+			
+			//music
+			val  = profile.getMusique();
+			for(int i=0;i<music.getChildCount();i++){
+				RadioButton rb = (RadioButton)music.getChildAt(i);
+				rb.setChecked(rb.getText().toString().equals(val));
+			}
+
+			//discussion
+			val  = profile.getDiscussion();
+			for(int i=0;i<discussion.getChildCount();i++){
+				RadioButton rb = (RadioButton)discussion.getChildAt(i);
+				rb.setChecked(rb.getText().toString().equals(val));
+			}
+		}
+	}
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -101,49 +151,55 @@ public class PreferencesSettings extends Activity {
 	}
 
 	private void saveSettings(){
-		Session session = SessionFactory.getCurrentSession(this);
-		Profil prof = new Profil();
-		Intent intent = getIntent();
-		prof.setNom(intent.getStringExtra("name"));
-		prof.setPrenom(intent.getStringExtra("firstName"));
-		prof.setEmail(intent.getStringExtra("email"));
-		prof.setMotDePasse(intent.getStringExtra("password"));
-		if(smoker!=null){
-			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
-			if(rb!=null){
-				prof.setDetours(rb.getText().toString());
+		ProgressDialog progressDialog = ProgressDialog.show(PreferencesSettings.this, "",getString(R.string.profile_creation_ongoing),true);
+		try{
+			progressDialog.show();
+			
+			Profil prof = new Profil();
+			Intent intent = getIntent();
+			prof.setNom(intent.getStringExtra("name"));
+			prof.setPrenom(intent.getStringExtra("firstName"));
+			prof.setEmail(intent.getStringExtra("email"));
+			prof.setMotDePasse(intent.getStringExtra("password"));
+			if(smoker!=null){
+				RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
+				if(rb!=null){
+					prof.setDetours(rb.getText().toString());
+				}
 			}
-		}
-		if(animals!=null){
-			RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
-			if(rb!=null){
-				prof.setAnimaux(rb.getText().toString());
+			if(animals!=null){
+				RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
+				if(rb!=null){
+					prof.setAnimaux(rb.getText().toString());
+				}
 			}
-		}
-		if(detours!=null){
-			RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
-			if(rb!=null){
-				prof.setDetours(rb.getText().toString());
+			if(detours!=null){
+				RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
+				if(rb!=null){
+					prof.setDetours(rb.getText().toString());
+				}
 			}
-		}
-		if(discussion!=null){
-			RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
-			if(rb!=null){
-				prof.setDiscussion(rb.getText().toString());
+			if(discussion!=null){
+				RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
+				if(rb!=null){
+					prof.setDiscussion(rb.getText().toString());
+				}
 			}
-		}
-		if(music!=null){
-			RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
-			if(rb!=null){
-				prof.setMusique(rb.getText().toString());
+			if(music!=null){
+				RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
+				if(rb!=null){
+					prof.setMusique(rb.getText().toString());
+				}
 			}
+			prof.setDateNaissance(String.format("%s-%s-%s"
+					, intent.getStringExtra("jj")
+					,intent.getStringExtra("mm")
+					,intent.getStringExtra("aaaa")));
+			prof.setSexe(intent.getStringExtra("sexe"));
+			session.saveProfile(prof);
+		} finally {
+			progressDialog.dismiss();
 		}
-		prof.setDateNaissance(String.format("%s-%s-%s"
-				, intent.getStringExtra("jj")
-				,intent.getStringExtra("mm")
-				,intent.getStringExtra("aaaa")));
-		prof.setSexe(intent.getStringExtra("sexe"));
-		session.saveProfile(prof);
 	}
 }
 

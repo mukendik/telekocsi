@@ -13,6 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alma.telekocsi.checking.ProfileChecking;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class ProfileSettings extends Activity {
 
@@ -35,11 +38,13 @@ public class ProfileSettings extends Activity {
 	private TextView aaaaLabel;
 	private TextView phoneLabel;
 	private RadioGroup sexe;
+	Session session;
 	
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-    	
+    public void onCreate(Bundle savedInstanceState) {    	
         super.onCreate(savedInstanceState);
+        
+        session = SessionFactory.getCurrentSession(this);
         
         setContentView(R.layout.profile_settings);
         backButton = (Button)findViewById(R.id.profile_settings_back_button);
@@ -62,8 +67,25 @@ public class ProfileSettings extends Activity {
         phone = (EditText)findViewById(R.id.respphone);
     
         sexe = (RadioGroup)findViewById(R.id.respsex);
+        
+        //Si l'utilisateur avait déjà les préferences on met ajour ces valeurs
+        initValues();
     }
 	
+	private void initValues(){
+        if(session!=null){
+        	Profil profile = session.getActiveProfile();
+        	if(profile!=null){
+        		name.setText(profile.getNom());
+        		firstName.setText(profile.getPrenom());
+        		phone.setText(profile.getTelephone());
+        		String split[] = profile.getDateNaissance().split("\\-");
+        		jj.setText(split[0].trim());
+        		mm.setText(split[1].trim());
+        		aaaa.setText(split[2].trim());
+        	}
+        }
+	}
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
