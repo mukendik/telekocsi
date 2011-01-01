@@ -169,7 +169,39 @@ public class TrajetService {
 		
 		return trajets;
 	}
+
 	
+	/**
+	 * Recuperation de la liste des Trajets disponibles
+	 * @param Lieu de depart
+	 * @param Lieu d'arrivee
+	 * @param Date depart
+	 * @return liste des itineraires
+	 */
+	@PUT
+	@Path("/trajetDispo")
+	@SuppressWarnings("unchecked")
+	public List<Trajet> getTrajetDispo(Trajet trajetModel) {
+		
+		log.info("Recuperation des trajets correspondants");
+		
+		EntityManager em = Tools.getEntityManager();
+		
+		StringBuilder sb = new StringBuilder("SELECT t FROM Trajet t");
+		sb.append(" where t.lieuDepart=:param1");
+		sb.append(" and t.lieuDestination=:param2");
+		sb.append(" and t.dateTrajet=:param3");
+		sb.append(" and t.soldePlaceDispo > 0");
+		
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("param1", trajetModel.getLieuDepart());
+		query.setParameter("param2", trajetModel.getLieuDestination());
+		query.setParameter("param3", trajetModel.getDateTrajet());
+		
+		List<Trajet> trajets = query.getResultList();
+		
+		return trajets;
+	}
 
 	/**
 	 * Supprime un trajet par son id
