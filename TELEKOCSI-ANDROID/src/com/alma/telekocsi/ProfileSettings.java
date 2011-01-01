@@ -1,7 +1,5 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.checking.ProfileChecking;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +8,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.alma.telekocsi.checking.ProfileChecking;
 
 public class ProfileSettings extends Activity {
 
@@ -32,6 +34,7 @@ public class ProfileSettings extends Activity {
 	private TextView mmLabel;
 	private TextView aaaaLabel;
 	private TextView phoneLabel;
+	private RadioGroup sexe;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,8 @@ public class ProfileSettings extends Activity {
         mm = (EditText)findViewById(R.id.respmonth);
         aaaa = (EditText)findViewById(R.id.respyear);
         phone = (EditText)findViewById(R.id.respphone);
-        
+    
+        sexe = (RadioGroup)findViewById(R.id.respsex);
     }
 	
 	@Override
@@ -66,9 +70,19 @@ public class ProfileSettings extends Activity {
     	switch (requestCode) {
     	case CHECKING:
     		switch(resultCode) {
-    		case RESULT_OK:
-    			startActivityForResult(new Intent(this, PreferencesSettings.class), NEXT_STEP);
-    			break;
+    		case RESULT_OK:{
+    			Intent intent = new Intent(this, PreferencesSettings.class);
+    			intent = intent.putExtras(getIntent());
+    	    	intent = intent.putExtra("name", name.getText().toString());
+    	    	intent = intent.putExtra("firstName", firstName.getText().toString());
+    	    	intent = intent.putExtra("jj", jj.getText().toString());
+    	    	intent = intent.putExtra("mm", mm.getText().toString());
+    	    	intent = intent.putExtra("aaaa", aaaa.getText().toString());
+    	    	intent = intent.putExtra("phone", phone.getText().toString());
+    	    	RadioButton rb = (RadioButton)findViewById(sexe.getCheckedRadioButtonId());
+    	    	intent = intent.putExtra("sexe",rb==null?"M":rb.getText().toString());
+    			startActivityForResult(intent, NEXT_STEP);
+    		}break;
     		case ProfileChecking.INVALID_NAME:
     			nameLabel.setTextColor(Color.RED);
     			firstNameLabel.setTextColor(Color.BLACK);
@@ -164,6 +178,6 @@ public class ProfileSettings extends Activity {
     	intent = intent.putExtra("phone", phone.getText().toString());
     	startActivityForResult(intent, CHECKING);
 	}
-
+	
 }
 

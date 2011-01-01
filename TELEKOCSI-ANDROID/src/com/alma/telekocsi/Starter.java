@@ -18,11 +18,11 @@ public class Starter extends Activity {
         System.out.println("nawak-starter");
 
         //Initialization de la session
-//        Session session = SessionFactory.getCurrentSession(this);
-//        Profil profile = session.getActiveProfile();
+        Session session = SessionFactory.getCurrentSession(this);
+        Profil profile = session.getActiveProfile();
         
-        boolean exist = true;
-        boolean disconnected = false;
+        boolean exist = profile!=null;
+        boolean disconnected = session.isConnected();
         
         //le compte de la personne n'est pas enregistre
         if(!exist){

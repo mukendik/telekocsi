@@ -1,13 +1,18 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.checking.PreferencesChecking;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.alma.telekocsi.checking.PreferencesChecking;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class PreferencesSettings extends Activity {
 	
@@ -17,6 +22,11 @@ public class PreferencesSettings extends Activity {
 	private OnClickListener onClickListener = null;
 	private Button backButton;
 	private Button registeringSubmitButton;
+	private RadioGroup smoker;
+	private RadioGroup animals;
+	private RadioGroup music;
+	private RadioGroup discussion;
+	private RadioGroup detours;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +35,12 @@ public class PreferencesSettings extends Activity {
         
         setContentView(R.layout.preferences_settings);
 
+        smoker = (RadioGroup)findViewById(R.id.smoker_radio_group);
+        animals = (RadioGroup)findViewById(R.id.animals_radio_group);
+        detours = (RadioGroup)findViewById(R.id.detours_radio_group);
+        discussion = (RadioGroup)findViewById(R.id.discussion_radio_group);
+        music = (RadioGroup)findViewById(R.id.music_radio_group);
+        
         backButton = (Button)findViewById(R.id.preferences_settings_back_button);
         backButton.setOnClickListener(getOnClickListener()); 
          
@@ -39,6 +55,7 @@ public class PreferencesSettings extends Activity {
     	case CHECKING:
     		switch(resultCode) {
     		case RESULT_OK:
+    			saveSettings();
     			startActivityForResult(new Intent(this, MainMenu.class), MAIN_MENU);
     			break;
     		}
@@ -83,5 +100,50 @@ public class PreferencesSettings extends Activity {
     	startActivityForResult(intent, CHECKING);
 	}
 
+	private void saveSettings(){
+		Session session = SessionFactory.getCurrentSession(this);
+		Profil prof = new Profil();
+		Intent intent = getIntent();
+		prof.setNom(intent.getStringExtra("name"));
+		prof.setPrenom(intent.getStringExtra("firstName"));
+		prof.setEmail(intent.getStringExtra("email"));
+		prof.setMotDePasse(intent.getStringExtra("password"));
+		if(smoker!=null){
+			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDetours(rb.getText().toString());
+			}
+		}
+		if(animals!=null){
+			RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setAnimaux(rb.getText().toString());
+			}
+		}
+		if(detours!=null){
+			RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDetours(rb.getText().toString());
+			}
+		}
+		if(discussion!=null){
+			RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDiscussion(rb.getText().toString());
+			}
+		}
+		if(music!=null){
+			RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setMusique(rb.getText().toString());
+			}
+		}
+		prof.setDateNaissance(String.format("%s-%s-%s"
+				, intent.getStringExtra("jj")
+				,intent.getStringExtra("mm")
+				,intent.getStringExtra("aaaa")));
+		prof.setSexe(intent.getStringExtra("sexe"));
+		session.saveProfile(prof);
+	}
 }
 

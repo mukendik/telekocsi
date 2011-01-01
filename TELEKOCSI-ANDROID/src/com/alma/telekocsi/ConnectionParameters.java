@@ -51,9 +51,12 @@ public class ConnectionParameters extends Activity {
     	switch (requestCode) {
     	case CHECKING:
     		switch(resultCode) {
-    		case RESULT_OK:
-    			startActivityForResult(new Intent(this, ProfileSettings.class), NEXT_STEP);
-    			break;
+    		case RESULT_OK:{
+    			Intent intent = new Intent(this, ProfileSettings.class);
+    			intent = intent.putExtra("email", email.getText().toString());
+    			intent = intent.putExtra("password", password1.getText().toString());
+    			startActivityForResult(intent, NEXT_STEP);
+    		}break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
     			emailLabel.setTextColor(Color.RED);
     			password1Label.setTextColor(Color.BLACK);
