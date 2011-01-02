@@ -1,20 +1,19 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class OccupantTab extends Activity {
+public class OccupantTab extends OptionsMenu {
 	
 	private OnClickListener onClickListener = null;
 	private Button routeSearchButton;
 	private Button occupantTransactionButton;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.onglet_passager);

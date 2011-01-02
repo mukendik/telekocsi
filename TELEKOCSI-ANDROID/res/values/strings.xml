@@ -41,6 +41,11 @@
     <string name="profile_settings">Modifier mon profil</string>
     <string name="transaction_validation">Valider une transaction</string>
     <string name="route_creation">Créer un nouveau trajet</string>
+    
+    <!-- options_menu -->
+    <string name="disconnection_text">Déconnexion</string>
+    <string name="main_menu_text">Menu principal</string>
+    <string name="notifications_text">Notifications</string>
  
     <!-- identification -->
     <string name="identification">Identification</string>

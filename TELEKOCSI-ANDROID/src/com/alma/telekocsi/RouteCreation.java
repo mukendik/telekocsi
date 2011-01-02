@@ -1,6 +1,5 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +16,7 @@ import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class RouteCreation extends Activity {
+public class RouteCreation extends OptionsMenu {
 
 	private Button startRouteCreationButton;
 	private Button cancelRouteCreationButton;
@@ -77,7 +76,7 @@ public class RouteCreation extends Activity {
 					goBack();
 				}
 				else if(v==startRouteCreationButton){
-					//FIXME Ajouter la vérifaction des valeurs
+					//FIXME Ajouter la vï¿½rifaction des valeurs
 					if(doCreateRoute()){
 						goBack();
 					}
@@ -103,8 +102,8 @@ public class RouteCreation extends Activity {
 //	}
 	
 	/**
-	 * Création du trajet
-	 * @return true en cas de succès
+	 * Crï¿½ation du trajet
+	 * @return true en cas de succï¿½s
 	 */
 	protected boolean doCreateRoute(){		
 		RadioButton rb = (RadioButton)findViewById(automaticRoute.getCheckedRadioButtonId());
@@ -117,7 +116,7 @@ public class RouteCreation extends Activity {
 		itineraire.setIdProfil(profile.getId());
 		itineraire.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
 		itineraire.setAutoroute(autoroute);
-		//FIXME Ajouter la frequence du trajet à l'itinireraire
+		//FIXME Ajouter la frequence du trajet ï¿½ l'itinireraire
 		itineraire = session.save(itineraire);
 
 		if(itineraire!=null){
@@ -130,7 +129,7 @@ public class RouteCreation extends Activity {
 			trajet.setIdProfilConducteur(profile.getId());
 			trajet.setIdItineraire(itineraire.getId());
 			trajet.setNbrePoint(Integer.valueOf(price.getText().toString()));
-			//FIXME Ajouter la fréquence du trajet au trajet
+			//FIXME Ajouter la frï¿½quence du trajet au trajet
 			trajet = session.save(trajet);
 			
 			return trajet!=null;

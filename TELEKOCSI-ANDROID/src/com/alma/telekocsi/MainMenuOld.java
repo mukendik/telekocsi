@@ -1,13 +1,12 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MainMenuOld extends Activity {
+public class MainMenuOld extends OptionsMenu {
 	
 	private OnClickListener onClickListener = null;
 	private Button routeActivationButton;

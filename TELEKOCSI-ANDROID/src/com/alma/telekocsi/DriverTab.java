@@ -1,13 +1,12 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class DriverTab extends Activity {
+public class DriverTab extends OptionsMenu {
 	
 	private OnClickListener onClickListener = null;
 	private Button routeActivationButton;
@@ -15,7 +14,7 @@ public class DriverTab extends Activity {
 	private Button driverTransactionButton;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.onglet_conducteur);

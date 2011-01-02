@@ -16,7 +16,7 @@ public class Starter extends Activity {
         super.onCreate(savedInstanceState);
         
         System.out.println("nawak-starter");
-
+        
         //Initialization de la session
         Session session = SessionFactory.getCurrentSession(this);
         Profil profile = session.getActiveProfile();

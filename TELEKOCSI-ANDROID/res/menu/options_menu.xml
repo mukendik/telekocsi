@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<item
+	android:id="@+id/disconnection_id"
+	android:icon="@drawable/car"
+	android:title="@string/disconnection_text"
+	/>
+    
+    <item
+    android:id="@+id/main_menu_id"
+	android:icon="@drawable/car"
+	android:title="@string/main_menu_text"
+	/>
+    
+    <item
+    android:id="@+id/notifications_id"
+	android:icon="@drawable/car"
+	android:title="@string/notifications_text"
+	/>
+
+</menu>
