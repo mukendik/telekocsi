@@ -18,7 +18,6 @@ import com.alma.telekocsi.session.SessionFactory;
 public class PreferencesSettings extends Activity {
 	
 	private static final int CHECKING = 1;
-	private static final int MAIN_MENU = 2;
 
 	private OnClickListener onClickListener = null;
 	private Button backButton;
@@ -50,7 +49,7 @@ public class PreferencesSettings extends Activity {
         registeringSubmitButton.setOnClickListener(getOnClickListener());
         session = SessionFactory.getCurrentSession(this);
         
-        //Valeur courantes en cas d'édition du profil
+        //Valeur courantes en cas d'ï¿½dition du profil
         initValues();
     }
 	
@@ -106,15 +105,9 @@ public class PreferencesSettings extends Activity {
     		switch(resultCode) {
     		case RESULT_OK:
     			saveSettings();
-    			startActivityForResult(new Intent(this, MainMenu.class), MAIN_MENU);
+    			startActivity(new Intent(this, MainMenu.class));
     			break;
     		}
-		case MAIN_MENU:
-			switch(resultCode){
-			case RESULT_CANCELED:
-				break;
-			}
-			break;
     	}
     }
 	

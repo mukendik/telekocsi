@@ -18,7 +18,6 @@ import com.alma.telekocsi.session.SessionFactory;
 public class Identification extends Activity {
 
 	private static final int CHECKING = 1;
-	private static final int NEXT_STEP = 2;
 
 	private OnClickListener onClickListener = null;
 	private Button identificationButton;
@@ -57,18 +56,12 @@ public class Identification extends Activity {
     	case CHECKING:
     		switch(resultCode) {
     		case RESULT_OK:
-    			startActivityForResult(new Intent(this, MainMenu.class), NEXT_STEP);
+    			startActivity(new Intent(this, MainMenu.class));
     			break;
     		case IdentificationChecking.IDENTIFICATION_ERROR:
     			identificationError.setTextColor(Color.RED);
     			break;
     		}
-		case NEXT_STEP:
-			switch(resultCode){
-			case RESULT_CANCELED:
-				break;
-			}
-			break;
     	}
     }
     

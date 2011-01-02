@@ -20,7 +20,6 @@ import com.alma.telekocsi.session.SessionFactory;
 public class ProfileSettings extends Activity {
 
 	private static final int CHECKING = 1;
-	private static final int NEXT_STEP = 2;
 	
 	private OnClickListener onClickListener = null;
 	private Button backButton;
@@ -68,7 +67,7 @@ public class ProfileSettings extends Activity {
     
         sexe = (RadioGroup)findViewById(R.id.respsex);
         
-        //Si l'utilisateur avait déjà les préferences on met ajour ces valeurs
+        //Si l'utilisateur avait dï¿½jï¿½ les prï¿½ferences on met ajour ces valeurs
         initValues();
     }
 	
@@ -103,7 +102,7 @@ public class ProfileSettings extends Activity {
     	    	intent = intent.putExtra("phone", phone.getText().toString());
     	    	RadioButton rb = (RadioButton)findViewById(sexe.getCheckedRadioButtonId());
     	    	intent = intent.putExtra("sexe",rb==null?"M":rb.getText().toString());
-    			startActivityForResult(intent, NEXT_STEP);
+    			startActivity(intent);
     		}break;
     		case ProfileChecking.INVALID_NAME:
     			nameLabel.setTextColor(Color.RED);
@@ -154,12 +153,6 @@ public class ProfileSettings extends Activity {
     			phoneLabel.setTextColor(Color.RED);
     			break;
     		}
-		case NEXT_STEP:
-			switch(resultCode){
-			case RESULT_CANCELED:
-				break;
-			}
-			break;
     	}
     }
 	

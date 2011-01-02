@@ -36,8 +36,4 @@ public class IdentificationChecking extends Activity {
 	     finish();
 	 }
 	 
-	 protected boolean identificationError(String email, String password){
-		 return true;
-	 }
-
 }

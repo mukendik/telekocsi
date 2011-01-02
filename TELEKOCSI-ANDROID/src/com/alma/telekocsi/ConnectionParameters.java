@@ -16,7 +16,6 @@ import android.widget.TextView;
 public class ConnectionParameters extends Activity {
 	
 	private static final int CHECKING = 1;
-	private static final int NEXT_STEP = 2;
 	
 	private OnClickListener onClickListener = null;
 	private Button profileSettingsButton;
@@ -55,7 +54,7 @@ public class ConnectionParameters extends Activity {
     			Intent intent = new Intent(this, ProfileSettings.class);
     			intent = intent.putExtra("email", email.getText().toString());
     			intent = intent.putExtra("password", password1.getText().toString());
-    			startActivityForResult(intent, NEXT_STEP);
+    			startActivity(intent);
     		}break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
     			emailLabel.setTextColor(Color.RED);
@@ -67,11 +66,6 @@ public class ConnectionParameters extends Activity {
     			password1Label.setTextColor(Color.RED);
     			password2Label.setTextColor(Color.RED);
     			break;
-    		}
-		case NEXT_STEP:
-			switch(resultCode){
-			case RESULT_CANCELED:
-				break;
 			}
 			break;
     	}

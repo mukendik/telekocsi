@@ -37,25 +37,6 @@ public class MainMenu extends TabActivity {
 		
 		routeModificationButton = (Button)findViewById(R.id.route_modification_button);
 		routeModificationButton.setOnClickListener(getOnClickListener());
-     
-//        tabHost.setCurrentTab(0);
-        
-//        Intent intent = new Intent(this, ActiviteTab.class);
-//        tabHost = getTabHost();
-//        
-//        intent.putExtra("valeur","hi");
-//        
-//        tabSpec = tabHost.newTabSpec("conducteur").setIndicator("Conducteur", 
-//        		getResources().getDrawable(R.drawable.volant)).setContent(intent);
-//        tabHost.addTab(tabSpec);
-//        
-//        
-//        intent.putExtra("valeur", "Hello world !");
-//        
-//        tabSpec = tabHost.newTabSpec("passager").setIndicator("Passager", 
-//        		getResources().getDrawable(R.drawable.autostop)).setContent(intent);
-//        tabHost.addTab(tabSpec);
-        
     }
 	
 	private OnClickListener getOnClickListener(){
