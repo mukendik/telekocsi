@@ -77,19 +77,21 @@ android:layout_height="fill_parent"
 				android:id="@+id/automatic_route_radio_group"
 				>
 
+					<!--  automatic route  -->
     				<RadioButton
 	    			android:layout_width="wrap_content"
 	    			android:layout_height="wrap_content"
-	    			android:text="@string/non_automatic_route_radio"
+	    			android:text="@string/yes"
 	    			android:paddingLeft="38px"
 	    			android:paddingRight="5px"
 	    			android:textColor="@color/black"
     				/>
 
+					<!-- non automatic route -->
 	    			<RadioButton
 	    			android:layout_width="wrap_content"
 	    			android:layout_height="wrap_content"
-	    			android:text="@string/automatic_route_radio"
+	    			android:text="@string/no"
 	    			android:paddingLeft="38px"
 	    			android:textColor="@color/black"
     				/>
@@ -109,6 +111,7 @@ android:layout_height="fill_parent"
     			android:layout_height="wrap_content"
     			android:id="@+id/route_creation_departure_user"
     			android:textColor="@color/black"
+    			android:inputType="textPostalAddress"
     			/>
     	
     			<!-- Lieu darrivee -->
@@ -124,6 +127,7 @@ android:layout_height="fill_parent"
     			android:layout_height="wrap_content"
     			android:id="@+id/route_creation_arrival_user"
     			android:textColor="@color/black"
+    			android:inputType="textPostalAddress"
     			/>
     			
     			<!-- Places disponibles -->
@@ -155,6 +159,7 @@ android:layout_height="fill_parent"
     			android:layout_height="wrap_content"
     			android:id="@+id/route_creation_departure_time_user"
     			android:textColor="@color/black"
+    			android:inputType="time"
     			/>
     	
     			<!-- Horaire darrivee -->
@@ -170,6 +175,7 @@ android:layout_height="fill_parent"
     			android:layout_height="wrap_content"
     			android:id="@+id/route_creation_arrival_time_user"
     			android:textColor="@color/black"
+    			android:inputType="time"
     			/>
     			
     			<!-- Frequence trajet -->
@@ -200,6 +206,7 @@ android:layout_height="fill_parent"
     			android:layout_height="wrap_content"
     			android:id="@+id/route_creation_price_user"
     			android:textColor="@color/black"
+    			android:inputType="numberDecimal"
     			/>
     	
     			<!-- Commentaires -->

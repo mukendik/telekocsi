@@ -83,6 +83,7 @@ android:layout_height="fill_parent"
     	android:layout_height="wrap_content"
     	android:id="@+id/connection_parameters_email"
     	android:textColor="@color/black"
+    	android:inputType="textEmailAddress"
     	/>
 
     	<!-- Password1 -->
