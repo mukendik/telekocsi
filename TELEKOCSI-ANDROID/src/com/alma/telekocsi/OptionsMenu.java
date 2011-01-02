@@ -33,7 +33,10 @@ public abstract class OptionsMenu extends Activity {
 	abstract protected void showMainMenu();
 	
 	private void disconnect(){
-		//fermer la session
+		//fermeture de la session
+		
+		//fermeture de lactivite
+		finish();
 		
 		//retour a la page didentification
 		Intent intent = new Intent(this, Identification.class);
