@@ -18,7 +18,7 @@ public class SessionFactory{
 	 */
 	public static Session getCurrentSession(Context context){
 		if(theSession==null && context!=null){
-			theSession = new SessionImpl(context);
+			theSession = new SessionImpl(context.getApplicationContext());
 		}
 		return theSession;
 	}

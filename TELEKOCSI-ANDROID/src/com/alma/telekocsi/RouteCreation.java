@@ -1,17 +1,38 @@
 package com.alma.telekocsi;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+
+import com.alma.telekocsi.dao.itineraire.Itineraire;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class RouteCreation extends Activity {
 
 	private Button startRouteCreationButton;
 	private Button cancelRouteCreationButton;
 	private OnClickListener onClickListener = null;
+	
+	private Spinner placesCount;
+	private RadioGroup automaticRoute;
+	private EditText departure;
+	private EditText arrival;
+	private EditText departureTime;
+	private EditText arrivalTime;
+	private EditText price;
+	private EditText comment;
+	private Session session;
+	private Profil profile;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +45,19 @@ public class RouteCreation extends Activity {
 
         cancelRouteCreationButton = (Button)findViewById(R.id.cancel_route_creation_button);
         cancelRouteCreationButton.setOnClickListener(getOnClickListener());
-}
+        
+        placesCount = (Spinner)findViewById(R.id.route_creation_places_count_value);
+        automaticRoute = (RadioGroup)findViewById(R.id.automatic_route_radio_group);
+        departure = (EditText)findViewById(R.id.route_creation_departure_user);
+        arrival = (EditText)findViewById(R.id.route_creation_arrival_user);
+        departureTime = (EditText)findViewById(R.id.route_creation_departure_time_user);
+        arrivalTime = (EditText)findViewById(R.id.route_creation_arrival_time_user);
+        price = (EditText)findViewById(R.id.route_creation_price_user);
+        comment = (EditText)findViewById(R.id.route_creation_comment_user);
+        
+        session = SessionFactory.getCurrentSession(this);
+        profile = session.getActiveProfile();
+	}
 	
 	private OnClickListener getOnClickListener(){
 		if(onClickListener==null){
@@ -34,6 +67,8 @@ public class RouteCreation extends Activity {
 	}
 	
 	private OnClickListener makeOnClickListener(){
+		final RouteCreation self = this;
+		
 		return new OnClickListener(){
 
 			@Override
@@ -41,9 +76,18 @@ public class RouteCreation extends Activity {
 				if(v==cancelRouteCreationButton){
 					goBack();
 				}
-//				else if(v==startRouteCreationButton){
-//					startRouteCreation();
-//				}
+				else if(v==startRouteCreationButton){
+					//FIXME Ajouter la vérifaction des valeurs
+					if(doCreateRoute()){
+						goBack();
+					}
+					else{
+						final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
+						alertBuilder.setTitle(R.string.app_name);
+						alertBuilder.setMessage(getString(R.string.route_creation_failed));
+						alertBuilder.show();
+					}
+				}
 			}
 			
 		};
@@ -57,5 +101,42 @@ public class RouteCreation extends Activity {
 //		Intent intent = new Intent(this, StartRouteCreation.class);
 //		startActivity(intent);
 //	}
+	
+	/**
+	 * Création du trajet
+	 * @return true en cas de succès
+	 */
+	protected boolean doCreateRoute(){		
+		RadioButton rb = (RadioButton)findViewById(automaticRoute.getCheckedRadioButtonId());
+		boolean autoroute = rb!=null && getString(R.string.yes).equals(rb.getText().toString());
+
+		Itineraire itineraire = new Itineraire();
+		itineraire.setLieuDepart(departure.getText().toString());
+		itineraire.setLieuDestination(arrival.getText().toString());
+		itineraire.setCommentaire(comment.getText().toString());
+		itineraire.setIdProfil(profile.getId());
+		itineraire.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
+		itineraire.setAutoroute(autoroute);
+		//FIXME Ajouter la frequence du trajet à l'itinireraire
+		itineraire = session.save(itineraire);
+
+		if(itineraire!=null){
+			Trajet trajet = new Trajet();
+			trajet.setAutoroute(autoroute);
+			trajet.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
+			trajet.setHoraireDepart(departureTime.getText().toString());
+			trajet.setHoraireArrivee(arrivalTime.getText().toString());
+			trajet.setCommentaire(comment.getText().toString());
+			trajet.setIdProfilConducteur(profile.getId());
+			trajet.setIdItineraire(itineraire.getId());
+			trajet.setNbrePoint(Integer.valueOf(price.getText().toString()));
+			//FIXME Ajouter la fréquence du trajet au trajet
+			trajet = session.save(trajet);
+			
+			return trajet!=null;
+		}
+		
+		return false;
+	}
 	
 }

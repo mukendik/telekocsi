@@ -74,6 +74,7 @@ android:layout_height="fill_parent"
    				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5px"
+				android:id="@+id/automatic_route_radio_group"
 				>
 
     				<RadioButton
@@ -83,7 +84,6 @@ android:layout_height="fill_parent"
 	    			android:paddingLeft="38px"
 	    			android:paddingRight="5px"
 	    			android:textColor="@color/black"
-    				android:checked="true"
     				/>
 
 	    			<RadioButton
@@ -135,10 +135,11 @@ android:layout_height="fill_parent"
     			android:text="@string/route_creation_places_count"
     			/>
     			<Spinner
-    			android:id="@+id/spinPlacesCount"
+    			android:id="@+id/route_creation_places_count_value"
     			android:layout_width="fill_parent"
     			android:layout_height="wrap_content"
     			android:drawSelectorOnTop="true" 
+    			android:entries="@array/places_count_list"
     			/>
     	
     			<!-- Horaire depart -->
