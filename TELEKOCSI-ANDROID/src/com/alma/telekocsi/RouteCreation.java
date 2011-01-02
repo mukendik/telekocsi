@@ -137,5 +137,11 @@ public class RouteCreation extends OptionsMenu {
 		
 		return false;
 	}
+
+	@Override
+	protected void showMainMenu() {
+		//appelee a partir du menu principal donc on peut finir
+		finish();
+	}
 	
 }

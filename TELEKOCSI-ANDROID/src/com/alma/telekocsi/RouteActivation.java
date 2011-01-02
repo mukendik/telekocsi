@@ -56,6 +56,13 @@ public class RouteActivation extends OptionsMenu {
 	private void goBack(){
 		finish();
 	}
+
+
+	@Override
+	protected void showMainMenu() {
+		//appelee a partir du menu principal donc on peut finir
+		finish();
+	}
 	
 
 }

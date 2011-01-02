@@ -70,4 +70,9 @@ public class DriverTab extends OptionsMenu {
 		startActivity(intent);
 	}
 
+	@Override
+	protected void showMainMenu() {
+		//nothing to do
+	}
+
 }

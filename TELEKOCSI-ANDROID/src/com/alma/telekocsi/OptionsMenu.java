@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class OptionsMenu extends Activity {
+public abstract class OptionsMenu extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -30,9 +30,7 @@ public class OptionsMenu extends Activity {
 	    return false;
 	}
 	
-	private void showMainMenu(){
-		
-	}
+	abstract protected void showMainMenu();
 	
 	private void disconnect(){
 		//fermer la session

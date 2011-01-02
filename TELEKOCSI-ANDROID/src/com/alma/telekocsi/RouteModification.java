@@ -12,6 +12,12 @@ public class RouteModification extends OptionsMenu {
 //        setContentView(R.layout.route_modification);
         
 	}
+
+	@Override
+	protected void showMainMenu() {
+		//appelee a partir du menu principal donc on peut finir
+		finish();
+	}
         
 
 }

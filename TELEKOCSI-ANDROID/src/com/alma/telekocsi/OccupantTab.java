@@ -57,5 +57,10 @@ public class OccupantTab extends OptionsMenu {
 		Intent intent = new Intent(this, Transaction.class);
 		startActivity(intent);
 	}
+
+	@Override
+	protected void showMainMenu() {
+		//nothing to do
+	}
 	
 }
