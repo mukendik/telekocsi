@@ -10,6 +10,7 @@
 			</intent-filter>
 		</activity>
 		
+		<activity android:name=".RafaNotification" android:label="@string/app_name"/>
 		<activity android:name=".MainMenu" android:label="@string/app_name"/>
 		<activity android:name=".OptionsMenu" android:label="@string/app_name"/>
 		<activity android:name=".DriverTab" android:label="@string/app_name"/>
@@ -46,5 +47,6 @@
 	<uses-permission android:name="android.permission.NETWORK_PROVIDER" />
 	<uses-permission android:name="android.permission.GPS_PROVIDER" />
 	 
+	 <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest> 

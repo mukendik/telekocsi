@@ -75,6 +75,18 @@ android:layout_height="fill_parent"
 		android:text="@string/profile_settings"
 		android:id="@+id/profile_modification_button"/>
 		
+		<Button
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="Add notification test"
+		android:id="@+id/add_notification_test"/>
+		
+		<Button
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="Remove notification test"
+		android:id="@+id/remove_notification_test"/>
+
 	</LinearLayout>
 	
 	<!-- Footer -->
