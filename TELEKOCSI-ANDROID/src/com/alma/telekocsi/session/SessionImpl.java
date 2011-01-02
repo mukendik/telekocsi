@@ -86,6 +86,8 @@ public class SessionImpl implements Session {
 		this.context = context;
 		notificationMgr = (NotificationManager)this.context.getSystemService(Context.NOTIFICATION_SERVICE);		
 		settings = context.getSharedPreferences(PREFERENCES_STORE, Context.MODE_PRIVATE);
+		
+		Log.i(getClass().getName(), "Current Profile = "+settings.getString(KEY_PROFILE_ID, "null"));
 	}
 
 	/* (non-Javadoc)
@@ -109,11 +111,19 @@ public class SessionImpl implements Session {
 	@Override
 	public synchronized void saveProfile(Profil profile) {
 		if(profile!=null){
-			profileDAO.insert(profile);
-			this.profile = profile;
+			Log.i(getClass().getName(),"Saving profile '"+profile.getEmail()+"'");
+			String id = profile.getId();
+			if(id==null){				
+				this.profile = profileDAO.insert(profile);
+			}
+			else{
+				this.profile = profileDAO.update(profile);
+			}
 			Editor editor = settings.edit();
-			editor.putString(KEY_PROFILE_ID, profile.getId());
+			editor.putString(KEY_PROFILE_ID, this.profile.getId());
+			editor.putBoolean(KEY_PROFILE_CONNECTED, true);
 			editor.commit();
+			Log.i(getClass().getName(),this.profile.toString());
 		}
 	}
 
@@ -162,6 +172,7 @@ public class SessionImpl implements Session {
 	public boolean login(String name, String password) {
 		Profil profile = profileDAO.login(name, password);
 		if(profile!=null){
+			this.profile = profile;
 			Editor edit = settings.edit();
 			edit.putString(KEY_PROFILE_ID, profile.getId());
 			edit.putBoolean(KEY_PROFILE_CONNECTED, true);

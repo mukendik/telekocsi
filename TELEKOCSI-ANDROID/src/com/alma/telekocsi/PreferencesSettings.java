@@ -153,13 +153,14 @@ public class PreferencesSettings extends Activity {
 	private void saveSettings(){
 		ProgressDialog progressDialog = ProgressDialog.show(PreferencesSettings.this, "",getString(R.string.profile_creation_ongoing),true);
 		try{
-			progressDialog.show();
+			progressDialog.show(); 
 			
 			Profil prof = new Profil();
 			Intent intent = getIntent();
 			prof.setNom(intent.getStringExtra("name"));
 			prof.setPrenom(intent.getStringExtra("firstName"));
 			prof.setEmail(intent.getStringExtra("email"));
+			prof.setPseudo(intent.getStringExtra("email"));
 			prof.setMotDePasse(intent.getStringExtra("password"));
 			if(smoker!=null){
 				RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());

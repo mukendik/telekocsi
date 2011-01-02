@@ -1,7 +1,5 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.checking.IdentificationChecking;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +9,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.alma.telekocsi.checking.IdentificationChecking;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class Identification extends Activity {
 
@@ -22,6 +25,7 @@ public class Identification extends Activity {
 	private EditText email;
 	private EditText password;
 	private TextView identificationError;
+	private Session session = null;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,13 +34,20 @@ public class Identification extends Activity {
 		
 		setContentView(R.layout.identification);
 		
+		session = SessionFactory.getCurrentSession(this);
+		Profil profile = session.getActiveProfile();
+		
 		identificationButton = (Button)findViewById(R.id.identification_button);
 		identificationButton.setOnClickListener(getOnClickListener());
         
-        email = (EditText)findViewById(R.id.identification_email);
+        email = (EditText)findViewById(R.id.identification_email);    
         password = (EditText)findViewById(R.id.identification_password);
         
         identificationError = (TextView)findViewById(R.id.identification_error);
+        
+        if(profile!=null){
+        	email.setText(profile.getEmail());
+        }
 	}
 	
 	@Override
