@@ -36,6 +36,8 @@ public class SessionImpl implements Session {
 	
 	public static final String KEY_PROFILE_ID = "profile_id";
 	public static final String KEY_PROFILE_CONNECTED = "profile_connected";
+	public static final String KEY_PROFILE_PASS = "profile_secret";
+	public static final String KEY_PROFILE_PSEUDO = "profile_pseudo";
 	private static final String PREFERENCES_STORE = "TELEKOCSI_PREFERENCES";
 	
 	/**
@@ -211,27 +213,29 @@ public class SessionImpl implements Session {
 		};
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> void save(T object) {
-		if(object instanceof Trajet) trajetDAO.insert((Trajet)object);
-		else if(object instanceof Itineraire) itineraireDAO.insert((Itineraire)object);
-		else if(object instanceof Event) eventDAO.insert((Event)object);
-		else if(object instanceof Profil) profileDAO.insert((Profil)object);
-		else if(object instanceof Avis) avisDAO.insert((Avis)object);
-		else if(object instanceof Localisation) localisationDAO.insert((Localisation)object);
-		else if(object instanceof Transaction) transactionDAO.insert((Transaction)object);
+	public <T> T save(T object) {
+		if(object instanceof Trajet) return (T)trajetDAO.insert((Trajet)object);
+		else if(object instanceof Itineraire) return (T)itineraireDAO.insert((Itineraire)object);
+		else if(object instanceof Event) return (T)eventDAO.insert((Event)object);
+		else if(object instanceof Profil) return (T)profileDAO.insert((Profil)object);
+		else if(object instanceof Avis) return (T)avisDAO.insert((Avis)object);
+		else if(object instanceof Localisation) return (T)localisationDAO.insert((Localisation)object);
+		else if(object instanceof Transaction) return (T)transactionDAO.insert((Transaction)object);
 		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
     }
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> void update(T object) {
-		if(object instanceof Trajet) trajetDAO.update((Trajet)object);
-		else if(object instanceof Itineraire) itineraireDAO.update((Itineraire)object);
-		else if(object instanceof Event) eventDAO.update((Event)object);
-		else if(object instanceof Profil) profileDAO.update((Profil)object);
-		else if(object instanceof Avis) avisDAO.update((Avis)object);
-		else if(object instanceof Localisation) localisationDAO.update((Localisation)object);
-		else if(object instanceof Transaction) transactionDAO.update((Transaction)object);
+	public <T> T update(T object) {
+		if(object instanceof Trajet) return (T)trajetDAO.update((Trajet)object);
+		else if(object instanceof Itineraire) return (T)itineraireDAO.update((Itineraire)object);
+		else if(object instanceof Event) return (T)eventDAO.update((Event)object);
+		else if(object instanceof Profil) return (T)profileDAO.update((Profil)object);
+		else if(object instanceof Avis) return (T)avisDAO.update((Avis)object);
+		else if(object instanceof Localisation) return (T)localisationDAO.update((Localisation)object);
+		else if(object instanceof Transaction) return (T)transactionDAO.update((Transaction)object);
 		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
 	}
 	

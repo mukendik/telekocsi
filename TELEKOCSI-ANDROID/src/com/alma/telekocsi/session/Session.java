@@ -68,14 +68,14 @@ public interface Session {
      * @param <T> Avis,Itineraire, Event,Transaction,Trajet ou Localisation
      * @param object L'instance
      */
-    public abstract<T> void save(T object); 
+    public abstract<T> T save(T object); 
     
     /**
      * 
      * @param <T> Avis,Itineraire, Transaction,Trajet, Event ou Localisation
      * @param object L'instance
      */
-    public abstract<T> void update(T object);
+    public abstract<T> T update(T object);
 
     /**
      * 
