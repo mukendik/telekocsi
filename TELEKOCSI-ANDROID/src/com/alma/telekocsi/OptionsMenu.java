@@ -48,6 +48,7 @@ public abstract class OptionsMenu extends Activity {
 	
 	private void disconnect(){
 		//fermeture de la session
+		SessionFactory.getCurrentSession(this).logout();
 		
 		//fermeture de lactivite
 		finish();
