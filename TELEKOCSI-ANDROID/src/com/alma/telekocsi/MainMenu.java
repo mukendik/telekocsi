@@ -1,7 +1,5 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.notification.RafaNotification;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+
+import com.alma.telekocsi.notification.RafaNotification;
 
 public class MainMenu extends TabActivity {
 
@@ -47,6 +47,7 @@ public class MainMenu extends TabActivity {
 		
 		removeRafaNotification = (Button)findViewById(R.id.add_notification_test);
 		removeRafaNotification.setOnClickListener(getOnClickListener());
+		
     }
 	
 	private OnClickListener getOnClickListener(){

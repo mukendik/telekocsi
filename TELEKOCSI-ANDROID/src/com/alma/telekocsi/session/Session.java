@@ -41,6 +41,30 @@ public interface Session {
 	public abstract Trajet getActiveRoute();
 	
 	/**
+	 * Active un trajet
+	 * @param route
+	 */
+	public abstract void activateRoute(Trajet route);
+	
+	/**
+	 * Désactive la route actite
+	 * Une fois appeler la méthode <code>getActiveRoute()</code> retourne <code>null</code>
+	 */
+	public abstract void deactivateRoute();
+	
+	/**
+	 * Change le type du profil courant comme passager.
+	 * A noter que le type du profil n'est pas sauvé en base.
+	 */
+	public abstract void switchToPassengerType();
+	
+	/**
+	 * Change le type du profil courant comme conducteur.
+	 * A noter que le type du profil n'est pas sauvé en base.
+	 */
+	public abstract void switchToDriverType();
+	
+	/**
 	 * 
 	 * @return <code>false</code> Si l'utilisateur c'est deconnecte
 	 */

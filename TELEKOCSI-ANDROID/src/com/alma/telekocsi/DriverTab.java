@@ -1,5 +1,9 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +18,8 @@ public class DriverTab extends OptionsMenu {
 	private Button driverTransactionButton;
 	private Button routeModificationButton;
 	private Button activatedRouteButton;
+	private Session session = null;
+	Profil profile = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,11 @@ public class DriverTab extends OptionsMenu {
 		
 		activatedRouteButton = (Button)findViewById(R.id.activated_route_map);
 		activatedRouteButton.setOnClickListener(getOnClickListener());
+
+		session = SessionFactory.getCurrentSession(this);
+		profile = session.getActiveProfile();
+		
+		session.switchToDriverType();
 	}
 	
 	private OnClickListener getOnClickListener(){

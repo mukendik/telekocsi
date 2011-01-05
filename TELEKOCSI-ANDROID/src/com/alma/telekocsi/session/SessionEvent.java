@@ -3,21 +3,27 @@ package com.alma.telekocsi.session;
 /**
  * 
  * @author Rv
- * Base des evenements pour ceux qui veulent être notifié
+ * Base des evenements pour ceux qui veulent atre notifia
  *
  */
 public interface SessionEvent {
 	/**
-	 * Type d'évenement
+	 * Type d'evenement
 	 */
-	public final int TRAJET_ACTIVATED = 0;
+	public final int ROUTE_ACTIVATED = 0;
+	
 	/**
-	 * Evenement emis à la deconnection
+	 * 
+	 */
+	public final int ROUTE_DISACTIVATED = 1;
+	
+	/**
+	 * Evenement emis a la deconnection
 	 */
 	public final int LOGOUT = 1;
 	
 	/**
-	 * Le type d'évènement
+	 * Le type d'avanement
 	 * @return
 	 */
 	public abstract int getEventType();
@@ -29,7 +35,7 @@ public interface SessionEvent {
 	public abstract Object getSource();
 	
 	/**
-	 *  Les données
+	 *  Les donnees
 	 * @return
 	 */
 	public abstract Object getUserData();

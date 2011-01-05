@@ -1,5 +1,9 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +16,8 @@ public class OccupantTab extends OptionsMenu {
 	private Button routeSearchButton;
 	private Button occupantTransactionButton;
 	private Button activatedRouteButton;
+	private Session session = null;
+	Profil profile = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,11 @@ public class OccupantTab extends OptionsMenu {
 		
 		activatedRouteButton = (Button)findViewById(R.id.activated_route_map);
 		activatedRouteButton.setOnClickListener(getOnClickListener());
+	
+		session = SessionFactory.getCurrentSession(this);
+		profile = session.getActiveProfile();
+		
+		session.switchToPassengerType();
 	}
 	
 	private OnClickListener getOnClickListener(){

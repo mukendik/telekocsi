@@ -53,7 +53,7 @@ public class SessionImpl implements Session {
 	 */
 	protected NotificationManager notificationMgr;
 	/**
-	 * Liste avec gestion des acc�s concurrents
+	 * Liste avec gestion des acces concurrents
 	 */
 	private final List<SessionListener> listeners 
 		= Collections.synchronizedList(new ArrayList<SessionListener>());
@@ -62,6 +62,11 @@ public class SessionImpl implements Session {
 	 * The active profile
 	 */
 	private Profil profile = null;
+	
+	/**
+	 * The active route
+	 */
+	private Trajet activeRoute = null;
 
 	//DAO
 	private final ProfilDAO profileDAO = new ProfilDAO();
@@ -273,7 +278,31 @@ public class SessionImpl implements Session {
 
 	@Override
 	public Trajet getActiveRoute() {
-		return null;
+		return activeRoute;
+	}
+
+	@Override
+	public void activateRoute(Trajet route) {
+		this.activeRoute = route;
+	}
+
+	@Override
+	public void deactivateRoute() {
+		activeRoute = null;
+	}
+
+	@Override
+	public void switchToPassengerType() {
+		if(profile!=null){
+			profile.setTypeProfil("P");
+		}
+	}
+
+	@Override
+	public void switchToDriverType() {
+		if(profile!=null){
+			profile.setTypeProfil("C");
+		}
 	}
 
 }
