@@ -1,14 +1,19 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.dao.profil.Profil;
-import com.alma.telekocsi.session.Session;
-import com.alma.telekocsi.session.SessionFactory;
+import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class DriverTab extends OptionsMenu {
 	
@@ -97,8 +102,39 @@ public class DriverTab extends OptionsMenu {
 
 
 	private void startRouteModification(){
-		Intent intent = new Intent(this, DriverRouteList.class);
-		startActivity(intent);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.route_modification));
+		
+		final List<Trajet> routes = session.getRoutes();
+		String[] names = new String[routes.size()];
+		for(int i=0;i<names.length;++i){
+			Trajet route = routes.get(i);
+			names[i] = String.format("%s -> %s",route.getLieuDepart(),route.getLieuDestination());
+		}
+		final AlertDialog dialog;
+		
+		builder.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				Intent intent = new Intent(DriverTab.this, RouteModification.class);
+				intent.putExtra(RouteModification.ROUTE_ARG, routes.get(which).getId());
+				startActivity(intent);
+			}
+			
+		});
+		
+		builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		
+		dialog = builder.create();
+		dialog.show();
 	}	
  	
 	private void showActiveRoute(){

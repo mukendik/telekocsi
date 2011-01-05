@@ -14,13 +14,6 @@ import com.alma.telekocsi.dao.trajet.Trajet;
  * d'utilisation et fournir un point d'entrer pour la notification.
  */
 public interface Session {
-	public int TRAJET = 0;
-	public int EVENT = 1;
-	public int LOCALISATION = 2;
-	public int TRANSACTION = 3;
-	public int AVIS = 4;
-	public int PROFIL = 5;
-	
 	/**
 	 * Acceder au profil courant.
 	 * On verifie que le profil n'a pas encore ete cree, si oui on le charge
@@ -105,6 +98,15 @@ public interface Session {
     
     /**
      * 
+     * @param <T>
+     * @param type
+     * @param id
+     * @return
+     */
+    public abstract<T> T find(Class<T> type,String id);
+    
+    /**
+     * 
      * @param <T> Avis,Itineraire, Transaction,Trajet, Event ou Localisation
      * @param object L'instance
      */
@@ -119,10 +121,18 @@ public interface Session {
     
     /**
      * Effacer toutes les donnees d'un type donne
-     * @param type Session.AVIS, Session.TRANSACTION, Session.PROFIL, Session.EVENT, Session.LOCALISATION
+     * @param type Un des types de la DAO
      */
-    public abstract void clear(int type);
+    public abstract<T> void clear(Class<T> type);
 
+    /**
+     * De meme que clear mais pour un profil particulier
+     * @param <T>
+     * @param type
+     * @param profilId
+     */
+    public abstract<T> void clear(Class<T> type,String profilId);
+    
     /**
      * 
      * @return Les trajets du profil actif

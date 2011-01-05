@@ -257,17 +257,20 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
-	public void clear(int type) {
-		switch(type){
-		case PROFIL: profileDAO.clear(); break;
-		case TRANSACTION: transactionDAO.clear(); break;
-		case TRAJET: trajetDAO.clear(); break;
-		case EVENT: eventDAO.clear(); break;
-		case AVIS: avisDAO.clear(); break;
-		case LOCALISATION: localisationDAO.clear(); break;
-		}
+	public<T> void clear(Class<T> type) {
+		if(Profil.class==type) profileDAO.clear();
+		else if(Trajet.class==type) trajetDAO.clear();
+		else if(Itineraire.class==type) itineraireDAO.clear();
+		else if(Avis.class==type) avisDAO.clear();
+		else if(Event.class==type) eventDAO.clear();
+		else if(Localisation.class==type) localisationDAO.clear();
 	}
 
+	@Override
+	public<T> void clear(Class<T> type,String id) {
+		if(Localisation.class==type) localisationDAO.clear(id);
+	}
+	
 	@Override
 	public List<Trajet> getRoutes() {
 		if(profile!=null){
@@ -303,6 +306,18 @@ public class SessionImpl implements Session {
 		if(profile!=null){
 			profile.setTypeProfil("C");
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T find(Class<T> type, String id) {
+		if(Profil.class==type) return (T)profileDAO.getProfil(id);
+		else if(Trajet.class==type) return (T)trajetDAO.getTrajet(id);
+		else if(Itineraire.class==type) return (T)itineraireDAO.getItineraire(id);
+		else if(Avis.class==type) return (T)avisDAO.getAvis(id);
+		else if(Event.class==type) return (T)eventDAO.getEvent(id);
+		else if(Localisation.class==type) return (T)localisationDAO.getLocalisation(id);
+		return null;
 	}
 
 }

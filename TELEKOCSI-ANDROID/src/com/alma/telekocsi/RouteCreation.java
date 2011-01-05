@@ -39,7 +39,7 @@ public class RouteCreation extends OptionsMenu {
 	/**
 	 * Tableau de frequence de la meme taille que 
 	 */
-	private boolean[] frequencies;
+	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false,false};;
 		                
 	@Override
     public void onCreate(Bundle savedInstanceState) {
