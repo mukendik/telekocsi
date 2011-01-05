@@ -5,7 +5,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory
 	android:title="Mon compte">
 		<EditTextPreference
-		android:key="login"
+		android:key="email"
 		android:title="Adresse email"
 		android:summary="Entrez votre nouvelle adresse email"
 		android:inputType="textEmailAddress"
@@ -22,7 +22,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory
 	android:title="Notifications">
 		<RingtonePreference
-		android:key="sonnerie"
+		android:key="song"
 		android:title="Sonnerie de notification"
 		android:summary="Choisissez la sonnerie pour les notifications"
 		/>

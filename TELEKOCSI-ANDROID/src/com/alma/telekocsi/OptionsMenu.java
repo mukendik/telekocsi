@@ -1,7 +1,13 @@
 package com.alma.telekocsi;
 
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,9 +66,23 @@ public abstract class OptionsMenu extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
 		if(requestCode == Preferences.RESULT) {
-			Toast.makeText(this, "Modifications terminées", Toast.LENGTH_SHORT).show();
+			saveProfileAndNotify();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	private void saveProfileAndNotify(){
+		//recuperation des preferences
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		//et du profil du user
+		Session session = SessionFactory.getCurrentSession(this);
+		Profil profile = session.getActiveProfile();
+		//mise a jour
+		profile.setEmail(preferences.getString("email", profile.getEmail()));
+		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
+		session.saveProfile(profile);
+		//notification rapide
+		Toast.makeText(this, "Modifications terminées", Toast.LENGTH_SHORT).show();
 	}
 	
 }
