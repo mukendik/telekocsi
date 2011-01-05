@@ -22,14 +22,14 @@ public interface Session {
 	public int PROFIL = 5;
 	
 	/**
-	 * Acc�der au profil courant.
-	 * On v�rifie que le profil n'a pas encore �t� cr�e, si oui on le charge
+	 * Acceder au profil courant.
+	 * On verifie que le profil n'a pas encore ete cree, si oui on le charge
 	 * @return Le profil actif et <code>null</code> si non existant
 	 */
 	public abstract Profil getActiveProfile();
 	
 	/**
-	 * Remplacer ou cr�er le profil actif
+	 * Remplacer ou creer le profil actif
 	 * @param profile Le nouveau profil
 	 */
 	public abstract void saveProfile(Profil profile);
@@ -42,14 +42,14 @@ public interface Session {
 	
 	/**
 	 * 
-	 * @return <code>false</code> Si l'utilisateur c'est d�connect�
+	 * @return <code>false</code> Si l'utilisateur c'est deconnecte
 	 */
 	public abstract boolean isConnected();
 	
 	/**
-	 * Se connecter � un profil
+	 * Se connecter e un profil
 	 * Si les identifiants sont valide, le profil devient le profil actif
-	 * @return <code>true</code> Si succ�s
+	 * @return <code>true</code> Si succes
 	 */
 	public abstract boolean login(String name,String password);
 	
@@ -60,13 +60,13 @@ public interface Session {
 	public abstract boolean logout();
 	
 	/**
-	 * Ecouter les l'�v�nement sur la session
+	 * Ecouter les l'evenement sur la session
 	 * @param listener
 	 */
 	public abstract void addSessionListener(SessionListener listener);
 	
 	/**
-	 *  Arr�ter l'�coute
+	 *  Arreter l'ecoute
 	 * @param listener
 	 */
 	public abstract void removeSessionListener(SessionListener listener);
@@ -94,7 +94,7 @@ public interface Session {
     public abstract<T> void delete(T object);
     
     /**
-     * Effacer toutes les donn�es d'un type donn�
+     * Effacer toutes les donnees d'un type donne
      * @param type Session.AVIS, Session.TRANSACTION, Session.PROFIL, Session.EVENT, Session.LOCALISATION
      */
     public abstract void clear(int type);
