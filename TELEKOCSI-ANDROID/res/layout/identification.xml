@@ -105,5 +105,11 @@ android:layout_height="fill_parent"
     	android:text="@string/connexion_button"
     	android:id="@+id/identification_button"
     	/>
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/new_profile_button_text"
+    	android:id="@+id/new_profile_button"
+    	/>
     </LinearLayout>
 </LinearLayout>

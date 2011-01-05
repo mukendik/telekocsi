@@ -21,6 +21,7 @@ public class Identification extends Activity {
 
 	private OnClickListener onClickListener = null;
 	private Button identificationButton;
+	private Button newProfileButton;
 	private EditText email;
 	private EditText password;
 	private TextView identificationError;
@@ -43,6 +44,9 @@ public class Identification extends Activity {
         password = (EditText)findViewById(R.id.identification_password);
         
         identificationError = (TextView)findViewById(R.id.identification_error);
+        
+        newProfileButton = (Button)findViewById(R.id.new_profile_button);
+        newProfileButton.setOnClickListener(getOnClickListener());
         
         if(profile!=null){
         	email.setText(profile.getEmail());
@@ -80,9 +84,16 @@ public class Identification extends Activity {
 				if(v==identificationButton){
 					startProfileSettings();
 				}
+				else if(v==newProfileButton){
+					startProfileCreation();
+				}
 			}
     		
     	};
+    }
+    
+    private void startProfileCreation(){    
+    	startActivity(new Intent(this, ConnectionParameters.class));
     }
     
     private void startProfileSettings(){

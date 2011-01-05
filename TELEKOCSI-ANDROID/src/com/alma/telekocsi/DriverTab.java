@@ -12,6 +12,7 @@ public class DriverTab extends OptionsMenu {
 	private Button routeActivationButton;
 	private Button routeCreationButton;
 	private Button driverTransactionButton;
+	private Button routeModificationButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class DriverTab extends OptionsMenu {
 		
 		routeCreationButton = (Button)findViewById(R.id.route_creation_button);
 		routeCreationButton.setOnClickListener(getOnClickListener());
+		
+		routeModificationButton = (Button)findViewById(R.id.route_modification_button);
+		routeModificationButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -50,6 +54,9 @@ public class DriverTab extends OptionsMenu {
 				else if(v==routeCreationButton){
 					startRouteCreation();
 				}
+				else if(v==routeModificationButton){
+					startRouteModification();
+				}
 			}
 			
 		};
@@ -70,6 +77,12 @@ public class DriverTab extends OptionsMenu {
 		startActivity(intent);
 	}
 
+
+	private void startRouteModification(){
+		Intent intent = new Intent(this, RouteModification.class);
+		startActivity(intent);
+	}	
+ 	
 	@Override
 	protected void showMainMenu() {
 		//nothing to do

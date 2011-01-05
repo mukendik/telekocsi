@@ -20,7 +20,6 @@ public class MainMenu extends TabActivity {
 	private TabHost tabHost;
 	private TabSpec tabSpec;
 	private Button profileModificationButton;
-	private Button routeModificationButton;
 	private Button addRafaNotification;
 	private Button removeRafaNotification;
 	private OnClickListener onClickListener = null;
@@ -65,9 +64,6 @@ public class MainMenu extends TabActivity {
 				if(v==profileModificationButton){
 					startProfileModification();
 				}
-				else if(v==routeModificationButton){
-					startRouteModification();
-				}
 				else if(v==addRafaNotification){
 					createNotify();
 				}
@@ -84,12 +80,7 @@ public class MainMenu extends TabActivity {
 		startActivity(intent);
 	}
 	
-	private void startRouteModification(){
-		Intent intent = new Intent(this, RouteModification.class);
-		startActivity(intent);
-	}
-	
-    private void createNotify(){
+   private void createNotify(){
     	NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);        
     	Notification notification = new Notification(R.drawable.notifications, "Rafa notification!", System.currentTimeMillis());  
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, RafaNotification.class), 0);

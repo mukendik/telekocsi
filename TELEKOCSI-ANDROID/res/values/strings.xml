@@ -161,4 +161,5 @@
 </string-array>
 
 <string name="route_creation_failed">Echec de la création du trajet</string>
+<string name="new_profile_button_text">Nouveau Profil</string>
 </resources>

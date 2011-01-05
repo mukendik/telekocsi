@@ -66,12 +66,6 @@ android:layout_height="fill_parent"
 		<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/route_modification"
-		android:id="@+id/route_modification_button"/>
-		
-		<Button
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
 		android:text="@string/profile_settings"
 		android:id="@+id/profile_modification_button"/>
 		
