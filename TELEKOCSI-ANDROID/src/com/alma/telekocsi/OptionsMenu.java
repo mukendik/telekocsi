@@ -82,7 +82,7 @@ public abstract class OptionsMenu extends Activity {
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
 		//notification rapide
-		Toast.makeText(this, "Modifications terminées", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
 	}
 	
 }

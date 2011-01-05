@@ -22,6 +22,7 @@ public class Identification extends Activity {
 	private OnClickListener onClickListener = null;
 	private Button identificationButton;
 	private Button newProfileButton;
+	private Button sendEmailButton;
 	private EditText email;
 	private EditText password;
 	private TextView identificationError;
@@ -48,7 +49,10 @@ public class Identification extends Activity {
         newProfileButton = (Button)findViewById(R.id.new_profile_button);
         newProfileButton.setOnClickListener(getOnClickListener());
         
-        if(profile!=null){
+		sendEmailButton = (Button)findViewById(R.id.send_email_button);
+		sendEmailButton.setOnClickListener(getOnClickListener());
+
+		if(profile!=null){
         	email.setText(profile.getEmail());
         }
 	}
@@ -87,6 +91,9 @@ public class Identification extends Activity {
 				else if(v==newProfileButton){
 					startProfileCreation();
 				}
+				else if(v==sendEmailButton){
+					sendEmail();
+				}
 			}
     		
     	};
@@ -102,6 +109,28 @@ public class Identification extends Activity {
     	intent = intent.putExtra("password", password.getText().toString());
     	startActivityForResult(intent, CHECKING);
     }
-
+    
+    private void sendEmail(){
+    	Session session = SessionFactory.getCurrentSession(this);
+		Profil profile = session.getActiveProfile();
+    	String[] mailto = { profile.getEmail().toString() };
+    	Intent sendIntent = new Intent(Intent.ACTION_SEND);
+    	sendIntent.putExtra(Intent.EXTRA_EMAIL, mailto);
+    	sendIntent.putExtra(Intent.EXTRA_SUBJECT,"SUJET");
+    	sendIntent.putExtra(Intent.EXTRA_TEXT,"Votre mot de passe : "+profile.getMotDePasse().toString());
+    	sendIntent.setType("text/plain");
+    	startActivity(Intent.createChooser(sendIntent, "MySendMail"));
+//		EMailSender sender = new EMailSender(); // SUBSTITUTE HERE                    
+//		try {
+//			sender.sendMail(
+//				"about Hello World by email",   //subject.getText().toString(),   
+//				"body of the world ",           //body.getText().toString(),   
+//				"anybody@hotmail.com",          //from.getText().toString(),  
+//				"somebody@gmail.com"            //to.getText().toString()  
+//			);
+//		}catch (Exception e){
+//			Log.e("SendMail", e.getMessage(), e);
+//		}
+    }
 
 }
