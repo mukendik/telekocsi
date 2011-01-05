@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class RafaNotification extends Activity {
 	
@@ -14,11 +14,13 @@ public class RafaNotification extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
-		TextView txt=new TextView(this);
-		txt.setText("Resultat de la notif: rafa is back");
- 
-		setContentView(txt);
+
+		Context context = getApplicationContext();
+		CharSequence text = "Rafa is back!";
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
  
 		NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancel(RAFA);

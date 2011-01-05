@@ -22,6 +22,7 @@ public abstract class OptionsMenu extends Activity {
 			disconnect();
 			return true;
 		case R.id.notifications_id:
+			showNotifications();
 			return true;
 		case R.id.main_menu_id:
 			showMainMenu();
@@ -41,6 +42,9 @@ public abstract class OptionsMenu extends Activity {
 		//retour a la page didentification
 		Intent intent = new Intent(this, Identification.class);
 		startActivity(intent);
+	}
+	
+	private void showNotifications(){
 	}
 
 

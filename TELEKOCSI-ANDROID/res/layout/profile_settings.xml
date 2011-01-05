@@ -162,6 +162,7 @@ android:layout_height="fill_parent"
 	    			android:id="@+id/respday"
 	    			android:layout_width="40px"
 	    			android:layout_height="wrap_content"
+		   			android:inputType="number"
 	    			/>
 	    			<!-- Month -->
 	    			<TextView
@@ -175,6 +176,7 @@ android:layout_height="fill_parent"
 	    			android:id="@+id/respmonth"
 	    			android:layout_width="40px"
 	    			android:layout_height="wrap_content"
+		   			android:inputType="number"
 	    			/>
 	    			<!-- Year -->
 	    			<TextView
@@ -183,6 +185,7 @@ android:layout_height="fill_parent"
 	    			android:layout_height="wrap_content"
 	    			android:text="@string/year"
 	    			android:textColor="@color/simple_text_color"
+		   			android:inputType="number"
 	    			/>
 	    			<EditText
 	    			android:id="@+id/respyear"
@@ -203,6 +206,7 @@ android:layout_height="fill_parent"
 	    		android:id="@+id/respphone"
 	    		android:layout_width="fill_parent"
 	    		android:layout_height="wrap_content"
+	    		android:inputType="phone"
 	    		/>
     		</LinearLayout>
    		 </ScrollView>
