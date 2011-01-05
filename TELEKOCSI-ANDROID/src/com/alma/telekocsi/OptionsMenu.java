@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public abstract class OptionsMenu extends Activity {
 	
@@ -27,6 +28,9 @@ public abstract class OptionsMenu extends Activity {
 		case R.id.main_menu_id:
 			showMainMenu();
 			return true;
+		case R.id.preferences_id:
+			showPreferences();
+			return true;
 	    }
 	    return false;
 	}
@@ -47,5 +51,18 @@ public abstract class OptionsMenu extends Activity {
 	private void showNotifications(){
 	}
 
-
+	private void showPreferences(){
+		Intent intent = new Intent(this, Preferences.class);
+		startActivityForResult(intent, Preferences.RESULT);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if(requestCode == Preferences.RESULT) {
+			Toast.makeText(this, "Modifications terminées", Toast.LENGTH_SHORT).show();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 }
