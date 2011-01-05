@@ -1,6 +1,8 @@
 package com.alma.telekocsi;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,11 +19,13 @@ import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
 public class RouteCreation extends OptionsMenu {
-
+	static final int ROUTE_FREQUENCY_DIALOG = 0;
+	
 	private Button startRouteCreationButton;
 	private Button cancelRouteCreationButton;
 	private OnClickListener onClickListener = null;
 	
+	private Button routeFreq;
 	private Spinner placesCount;
 	private RadioGroup automaticRoute;
 	private EditText departure;
@@ -32,7 +36,12 @@ public class RouteCreation extends OptionsMenu {
 	private EditText comment;
 	private Session session;
 	private Profil profile;
-	
+
+	/**
+	 * Tableau de frequence de la meme taille que 
+	 */
+	private boolean[] frequencies;
+		                
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -53,11 +62,68 @@ public class RouteCreation extends OptionsMenu {
         arrivalTime = (EditText)findViewById(R.id.route_creation_arrival_time_user);
         price = (EditText)findViewById(R.id.route_creation_price_user);
         comment = (EditText)findViewById(R.id.route_creation_comment_user);
-        
+        routeFreq = (Button)findViewById(R.id.route_creation_frequence_user);
         session = SessionFactory.getCurrentSession(this);
         profile = session.getActiveProfile();
+        
+        routeFreq.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				if(frequencies==null){
+					frequencies = new boolean[]{false,false,false,false,false,false,false,false};
+				}
+				AlertDialog.Builder builder = new AlertDialog.Builder(RouteCreation.this);
+				builder.setTitle(R.string.route_creation_frequence);
+				builder.setMultiChoiceItems(R.array.weekday_list, frequencies,new DialogInterface.OnMultiChoiceClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+						frequencies[which] = isChecked;
+					}
+					
+				});
+				final AlertDialog dialog;
+				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if(dialog!=null) dialog.dismiss();
+					}
+					
+				});
+				dialog = builder.create();
+				dialog.show();
+			}
+		});
+        
 	}
 	
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch(id){
+		case ROUTE_FREQUENCY_DIALOG:{
+			if(frequencies==null){
+				frequencies = new boolean[]{false,false,false,false,false,false,false,false};
+			}
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.route_creation_frequence);
+			builder.setMultiChoiceItems(R.array.weekday_list, frequencies,new DialogInterface.OnMultiChoiceClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					frequencies[which] = isChecked;
+				}
+				
+			});
+			return builder.create();
+		}
+		default:
+			return super.onCreateDialog(id);
+		}
+	}
+
+
 	private OnClickListener getOnClickListener(){
 		if(onClickListener==null){
 			onClickListener = makeOnClickListener();

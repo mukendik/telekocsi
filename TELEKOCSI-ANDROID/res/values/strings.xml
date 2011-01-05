@@ -149,5 +149,16 @@
 <item>3</item>
 <item>4</item>
 </string-array>
+
+<string-array name="weekday_list">
+	<item>Dimanche</item>
+	<item>Lundi</item>
+	<item>Mardi</item>
+	<item>Mercredi</item>
+	<item>Jeudi</item>
+	<item>Vendredi</item>
+	<item>Samedi</item>
+</string-array>
+
 <string name="route_creation_failed">Echec de la création du trajet</string>
 </resources>
