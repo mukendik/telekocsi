@@ -182,6 +182,12 @@ public class RouteCreation extends OptionsMenu {
 		itineraire.setIdProfil(profile.getId());
 		itineraire.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
 		itineraire.setAutoroute(autoroute);
+		
+		//La fréquence du trajet
+		String freq = "";
+		for(boolean freqBool : frequencies) freq += freqBool?"O":"N";
+		itineraire.setFrequenceTrajet(freq);
+		
 		//FIXME Ajouter la frequence du trajet � l'itinireraire
 		itineraire = session.save(itineraire);
 
