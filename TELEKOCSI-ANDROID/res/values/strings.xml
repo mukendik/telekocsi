@@ -142,7 +142,8 @@
 	<color name="simple_text_color">#000000</color>
 
 <string name="profile_creation_ongoing">Mise à jour du profil</string>
-<string-array name="places_count_list"><item>1</item>
+<string-array name="places_count_list">
+        <item>1</item>
 <item>2</item>
 <item>3</item>
 <item>4</item>
