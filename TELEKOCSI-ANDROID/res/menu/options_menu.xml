@@ -24,4 +24,5 @@
 	android:title="@string/disconnection_text"
 	/>
 
+<item android:title="@string/profile_settings" android:id="@+id/profile_settings_id" android:icon="@drawable/preferences"></item>
 </menu>

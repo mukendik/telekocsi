@@ -37,6 +37,9 @@ public abstract class OptionsMenu extends Activity {
 		case R.id.preferences_id:
 			showPreferences();
 			return true;
+		case R.id.profile_settings_id:
+			showProfileSettings();
+			return true;
 	    }
 	    return false;
 	}
@@ -60,6 +63,11 @@ public abstract class OptionsMenu extends Activity {
 	private void showPreferences(){
 		Intent intent = new Intent(this, Preferences.class);
 		startActivityForResult(intent, Preferences.RESULT);
+	}
+	
+	private void showProfileSettings(){		
+		Intent intent = new Intent(this, ProfileSettings.class);
+		startActivity(intent);
 	}
 	
 	@Override

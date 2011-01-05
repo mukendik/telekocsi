@@ -38,7 +38,7 @@
     <string name="route_activation">Activer un trajet</string>
     <string name="route_search">Rechercher un trajet</string>
     <string name="route_modification">Modifier un trajet</string>
-    <string name="profile_settings">Modifier mon profil</string>
+    <string name="profile_settings">Mon Profil</string>
     <string name="transaction_validation">Valider une transaction</string>
     <string name="route_creation">Créer un nouveau trajet</string>
     

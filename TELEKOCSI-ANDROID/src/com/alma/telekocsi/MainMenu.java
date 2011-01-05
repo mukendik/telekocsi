@@ -19,7 +19,6 @@ public class MainMenu extends TabActivity {
 
 	private TabHost tabHost;
 	private TabSpec tabSpec;
-	private Button profileModificationButton;
 	private Button addRafaNotification;
 	private Button removeRafaNotification;
 	private OnClickListener onClickListener = null;
@@ -39,9 +38,6 @@ public class MainMenu extends TabActivity {
         tabSpec = tabHost.newTabSpec("research").setIndicator("Passager",getResources().getDrawable(R.drawable.autostop)).setContent(intent);
         tabHost.addTab(tabSpec);
         
-        profileModificationButton = (Button)findViewById(R.id.profile_modification_button);
-		profileModificationButton.setOnClickListener(getOnClickListener());
-		
 		addRafaNotification = (Button)findViewById(R.id.add_notification_test);
 		addRafaNotification.setOnClickListener(getOnClickListener());
 		
@@ -62,10 +58,7 @@ public class MainMenu extends TabActivity {
 
 			@Override
 			public void onClick(View v) {
-				if(v==profileModificationButton){
-					startProfileModification();
-				}
-				else if(v==addRafaNotification){
+				if(v==addRafaNotification){
 					createNotify();
 				}
 				else if(v==removeRafaNotification){
@@ -74,11 +67,6 @@ public class MainMenu extends TabActivity {
 			}
 			
 		};
-	}
-	
-	private void startProfileModification(){
-		Intent intent = new Intent(this, ProfileSettings.class);
-		startActivity(intent);
 	}
 	
    private void createNotify(){
