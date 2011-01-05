@@ -13,6 +13,7 @@ public class DriverTab extends OptionsMenu {
 	private Button routeCreationButton;
 	private Button driverTransactionButton;
 	private Button routeModificationButton;
+	private Button activatedRouteButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class DriverTab extends OptionsMenu {
 		
 		routeModificationButton = (Button)findViewById(R.id.route_modification_button);
 		routeModificationButton.setOnClickListener(getOnClickListener());
+		
+		activatedRouteButton = (Button)findViewById(R.id.activated_route_map);
+		activatedRouteButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -57,6 +61,9 @@ public class DriverTab extends OptionsMenu {
 				else if(v==routeModificationButton){
 					startRouteModification();
 				}
+				else if(v==activatedRouteButton){
+					showActiveRoute();
+				}
 			}
 			
 		};
@@ -79,10 +86,14 @@ public class DriverTab extends OptionsMenu {
 
 
 	private void startRouteModification(){
-		Intent intent = new Intent(this, RouteModification.class);
+		Intent intent = new Intent(this, DriverRouteList.class);
 		startActivity(intent);
 	}	
  	
+	private void showActiveRoute(){
+		startActivity(new Intent(this, GoogleMapActivity.class));
+	}
+	
 	@Override
 	protected void showMainMenu() {
 		//nothing to do

@@ -3,7 +3,10 @@
  */
 package com.alma.telekocsi.session;
 
+import java.util.List;
+
 import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.trajet.Trajet;
 
 /**
  * @author Rv
@@ -19,28 +22,34 @@ public interface Session {
 	public int PROFIL = 5;
 	
 	/**
-	 * Accéder au profil courant.
-	 * On vérifie que le profil n'a pas encore été crée, si oui on le charge
+	 * Accï¿½der au profil courant.
+	 * On vï¿½rifie que le profil n'a pas encore ï¿½tï¿½ crï¿½e, si oui on le charge
 	 * @return Le profil actif et <code>null</code> si non existant
 	 */
 	public abstract Profil getActiveProfile();
 	
 	/**
-	 * Remplacer ou créer le profil actif
+	 * Remplacer ou crï¿½er le profil actif
 	 * @param profile Le nouveau profil
 	 */
 	public abstract void saveProfile(Profil profile);
 
 	/**
 	 * 
-	 * @return <code>false</code> Si l'utilisateur c'est déconnecté
+	 * @return Le traject actif ou null si pas de trajet
+	 */
+	public abstract Trajet getActiveRoute();
+	
+	/**
+	 * 
+	 * @return <code>false</code> Si l'utilisateur c'est dï¿½connectï¿½
 	 */
 	public abstract boolean isConnected();
 	
 	/**
-	 * Se connecter à un profil
+	 * Se connecter ï¿½ un profil
 	 * Si les identifiants sont valide, le profil devient le profil actif
-	 * @return <code>true</code> Si succès
+	 * @return <code>true</code> Si succï¿½s
 	 */
 	public abstract boolean login(String name,String password);
 	
@@ -51,13 +60,13 @@ public interface Session {
 	public abstract boolean logout();
 	
 	/**
-	 * Ecouter les l'évènement sur la session
+	 * Ecouter les l'ï¿½vï¿½nement sur la session
 	 * @param listener
 	 */
 	public abstract void addSessionListener(SessionListener listener);
 	
 	/**
-	 *  Arrêter l'écoute
+	 *  Arrï¿½ter l'ï¿½coute
 	 * @param listener
 	 */
 	public abstract void removeSessionListener(SessionListener listener);
@@ -85,9 +94,14 @@ public interface Session {
     public abstract<T> void delete(T object);
     
     /**
-     * Effacer toutes les données d'un type donné
+     * Effacer toutes les donnï¿½es d'un type donnï¿½
      * @param type Session.AVIS, Session.TRANSACTION, Session.PROFIL, Session.EVENT, Session.LOCALISATION
      */
     public abstract void clear(int type);
 
+    /**
+     * 
+     * @return Les trajets du profil actif
+     */
+    public abstract List<Trajet> getRoutes();
 }

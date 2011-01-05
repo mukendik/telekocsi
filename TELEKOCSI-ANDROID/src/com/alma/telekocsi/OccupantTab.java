@@ -11,6 +11,7 @@ public class OccupantTab extends OptionsMenu {
 	private OnClickListener onClickListener = null;
 	private Button routeSearchButton;
 	private Button occupantTransactionButton;
+	private Button activatedRouteButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,9 @@ public class OccupantTab extends OptionsMenu {
 		
 		occupantTransactionButton = (Button)findViewById(R.id.occupant_transaction_button);
 		occupantTransactionButton.setOnClickListener(getOnClickListener());
+		
+		activatedRouteButton = (Button)findViewById(R.id.activated_route_map);
+		activatedRouteButton.setOnClickListener(getOnClickListener());
 	}
 	
 	private OnClickListener getOnClickListener(){
@@ -43,6 +47,9 @@ public class OccupantTab extends OptionsMenu {
 				else if(v==occupantTransactionButton){
 					startTransaction();
 				}
+				else if(v==activatedRouteButton){
+					showActiveRoute();
+				}
 			}
 			
 		};
@@ -58,6 +65,10 @@ public class OccupantTab extends OptionsMenu {
 		startActivity(intent);
 	}
 
+	private void showActiveRoute(){
+		startActivity(new Intent(this, GoogleMapActivity.class));
+	}
+	
 	@Override
 	protected void showMainMenu() {
 		//nothing to do

@@ -27,6 +27,12 @@ android:orientation="vertical">
 	<Button
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
+	android:text="@string/activated_route_map_text"
+	android:id="@+id/activated_route_map"/>
+
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
 	android:text="@string/transaction_validation"
 	android:id="@+id/driver_transaction_button"/>
                 				

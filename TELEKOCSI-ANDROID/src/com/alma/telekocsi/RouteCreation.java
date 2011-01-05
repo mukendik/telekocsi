@@ -1,7 +1,6 @@
 package com.alma.telekocsi;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -99,31 +98,6 @@ public class RouteCreation extends OptionsMenu {
 	}
 	
 	
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch(id){
-		case ROUTE_FREQUENCY_DIALOG:{
-			if(frequencies==null){
-				frequencies = new boolean[]{false,false,false,false,false,false,false,false};
-			}
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.route_creation_frequence);
-			builder.setMultiChoiceItems(R.array.weekday_list, frequencies,new DialogInterface.OnMultiChoiceClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					frequencies[which] = isChecked;
-				}
-				
-			});
-			return builder.create();
-		}
-		default:
-			return super.onCreateDialog(id);
-		}
-	}
-
-
 	private OnClickListener getOnClickListener(){
 		if(onClickListener==null){
 			onClickListener = makeOnClickListener();
@@ -188,20 +162,21 @@ public class RouteCreation extends OptionsMenu {
 		for(boolean freqBool : frequencies) freq += freqBool?"O":"N";
 		itineraire.setFrequenceTrajet(freq);
 		
-		//FIXME Ajouter la frequence du trajet � l'itinireraire
 		itineraire = session.save(itineraire);
 
 		if(itineraire!=null){
 			Trajet trajet = new Trajet();
 			trajet.setAutoroute(autoroute);
 			trajet.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
+			trajet.setLieuDepart(itineraire.getLieuDepart());
+			trajet.setLieuDestination(itineraire.getLieuDestination());
+			trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
 			trajet.setHoraireDepart(departureTime.getText().toString());
 			trajet.setHoraireArrivee(arrivalTime.getText().toString());
 			trajet.setCommentaire(comment.getText().toString());
 			trajet.setIdProfilConducteur(profile.getId());
 			trajet.setIdItineraire(itineraire.getId());
 			trajet.setNbrePoint(Integer.valueOf(price.getText().toString()));
-			//FIXME Ajouter la fr�quence du trajet au trajet
 			trajet = session.save(trajet);
 			
 			return trajet!=null;

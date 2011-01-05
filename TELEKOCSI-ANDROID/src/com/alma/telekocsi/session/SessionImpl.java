@@ -53,7 +53,7 @@ public class SessionImpl implements Session {
 	 */
 	protected NotificationManager notificationMgr;
 	/**
-	 * Liste avec gestion des accès concurrents
+	 * Liste avec gestion des accï¿½s concurrents
 	 */
 	private final List<SessionListener> listeners 
 		= Collections.synchronizedList(new ArrayList<SessionListener>());
@@ -261,6 +261,19 @@ public class SessionImpl implements Session {
 		case AVIS: avisDAO.clear(); break;
 		case LOCALISATION: localisationDAO.clear(); break;
 		}
+	}
+
+	@Override
+	public List<Trajet> getRoutes() {
+		if(profile!=null){
+			return trajetDAO.getList(profile.getId());
+		}
+		return new ArrayList<Trajet>(0);
+	}
+
+	@Override
+	public Trajet getActiveRoute() {
+		return null;
 	}
 
 }

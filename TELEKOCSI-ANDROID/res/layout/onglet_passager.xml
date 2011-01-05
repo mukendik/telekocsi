@@ -17,4 +17,10 @@ android:orientation="vertical">
 	android:text="@string/transaction_validation"
 	android:id="@+id/occupant_transaction_button"/>
 
+	<Button
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="@string/activated_route_map_text"
+	android:id="@+id/activated_route_map"/>
+
 </LinearLayout>
