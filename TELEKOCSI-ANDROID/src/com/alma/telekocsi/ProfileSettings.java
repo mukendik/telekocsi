@@ -1,9 +1,10 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class ProfileSettings extends Activity {
+public class ProfileSettings extends OptionsMenu {
 
 	private static final int CHECKING = 1;
 	
@@ -192,6 +193,23 @@ public class ProfileSettings extends Activity {
     	intent = intent.putExtra("aaaa", aaaa.getText().toString());
     	intent = intent.putExtra("phone", phone.getText().toString());
     	startActivityForResult(intent, CHECKING);
+	}
+
+	@Override
+	protected void showMainMenu() {
+		//appelee a partir du menu principal donc on peut finir
+		finish();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		session = SessionFactory.getCurrentSession(this);
+		if(session.isConnected()){
+			MenuInflater inflater = getMenuInflater();
+		    inflater.inflate(R.menu.options_menu, menu);
+		    return true;
+		}
+		return false;
 	}
 	
 }

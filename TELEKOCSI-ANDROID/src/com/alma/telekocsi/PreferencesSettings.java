@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,7 +17,7 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class PreferencesSettings extends Activity {
+public class PreferencesSettings extends OptionsMenu {
 	
 	private static final int CHECKING = 1;
 
@@ -195,5 +197,23 @@ public class PreferencesSettings extends Activity {
 			progressDialog.dismiss();
 		}
 	}
+	
+	@Override
+	protected void showMainMenu() {
+		finish();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		session = SessionFactory.getCurrentSession(this);
+		if(session.isConnected()){
+			MenuInflater inflater = getMenuInflater();
+		    inflater.inflate(R.menu.options_menu, menu);
+		    return true;
+		}
+		return false;
+	}
+
+	
 }
 
