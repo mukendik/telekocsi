@@ -37,7 +37,7 @@ public abstract class OptionsMenu extends Activity {
 		case R.id.preferences_id:
 			showPreferences();
 			return true;
-		case R.id.profile_settings_id:
+		case R.id.profile_id:
 			showProfileSettings();
 			return true;
 	    }
