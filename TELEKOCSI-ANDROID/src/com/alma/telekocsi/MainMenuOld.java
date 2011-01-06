@@ -56,4 +56,10 @@ public class MainMenuOld extends OptionsMenu {
 		//nothing to do
 	}
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

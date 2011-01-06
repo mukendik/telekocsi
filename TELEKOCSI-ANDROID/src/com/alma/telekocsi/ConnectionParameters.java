@@ -3,7 +3,6 @@ package com.alma.telekocsi;
 
 import com.alma.telekocsi.checking.ConnectionParametersChecking;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class ConnectionParameters extends Activity {
+public class ConnectionParameters extends ARunnableActivity {
 	
 	private static final int CHECKING = 1;
 	
@@ -98,6 +97,12 @@ public class ConnectionParameters extends Activity {
     	intent = intent.putExtra("password2", password2.getText().toString());
     	startActivityForResult(intent, CHECKING);
     }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

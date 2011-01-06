@@ -84,5 +84,11 @@ public class OccupantTab extends OptionsMenu {
 	protected void showMainMenu() {
 		//nothing to do
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

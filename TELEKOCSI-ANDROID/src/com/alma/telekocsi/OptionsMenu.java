@@ -4,7 +4,6 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public abstract class OptionsMenu extends Activity {
+public abstract class OptionsMenu extends ARunnableActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

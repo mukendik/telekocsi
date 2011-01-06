@@ -1,6 +1,5 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -212,6 +211,12 @@ public class PreferencesSettings extends OptionsMenu {
 		    return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

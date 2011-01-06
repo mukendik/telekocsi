@@ -1,6 +1,6 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class Identification extends Activity {
+public class Identification extends ARunnableActivity {
 
 	private static final int CHECKING = 1;
 
@@ -27,7 +27,7 @@ public class Identification extends Activity {
 	private EditText password;
 	private TextView identificationError;
 	private Session session = null;
-
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		
@@ -64,7 +64,7 @@ public class Identification extends Activity {
     	case CHECKING:
     		switch(resultCode) {
     		case RESULT_OK:
-    			startActivity(new Intent(this, MainMenu.class));
+    	    	startActivity(new Intent(this, MainMenu.class));
     			break;
     		case IdentificationChecking.IDENTIFICATION_ERROR:
     			identificationError.setTextColor(Color.RED);
@@ -86,7 +86,7 @@ public class Identification extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(v==identificationButton){
-					startProfileSettings();
+					startIdentificationChecking();
 				}
 				else if(v==newProfileButton){
 					startProfileCreation();
@@ -103,11 +103,10 @@ public class Identification extends Activity {
     	startActivity(new Intent(this, ConnectionParameters.class));
     }
     
-    private void startProfileSettings(){
-    	Intent intent = new Intent(this, IdentificationChecking.class);
-    	intent = intent.putExtra("email", email.getText().toString());
-    	intent = intent.putExtra("password", password.getText().toString());
-    	startActivityForResult(intent, CHECKING);
+    private void startIdentificationChecking(){
+       	progress = ProgressDialog.show(this, "Chargement...", "Vérification", true, false);
+    	Thread thread = new Thread(this);
+    	thread.start();
     }
     
     private void sendEmail(){
@@ -133,4 +132,15 @@ public class Identification extends Activity {
 //		}
     }
 
+	@Override
+	public void run() {
+		Intent intent = new Intent(this, IdentificationChecking.class);
+    	intent = intent.putExtra("email", email.getText().toString());
+    	intent = intent.putExtra("password", password.getText().toString());
+    	startActivityForResult(intent, CHECKING);
+    	handler.sendEmptyMessage(0);
+    }
+	
+	
+    
 }

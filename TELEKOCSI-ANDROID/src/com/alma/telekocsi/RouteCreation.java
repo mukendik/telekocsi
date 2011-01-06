@@ -190,5 +190,12 @@ public class RouteCreation extends OptionsMenu {
 		//appelee a partir du menu principal donc on peut finir
 		finish();
 	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

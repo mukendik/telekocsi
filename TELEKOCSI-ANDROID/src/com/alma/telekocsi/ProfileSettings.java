@@ -211,6 +211,12 @@ public class ProfileSettings extends OptionsMenu {
 		}
 		return false;
 	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 
