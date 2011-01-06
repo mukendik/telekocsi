@@ -104,7 +104,7 @@ public class Identification extends ARunnableActivity {
     }
     
     private void startIdentificationChecking(){
-    	showProgressDialog(this);
+    	startProgressDialog(this);
     	Thread thread = new Thread(this);
     	thread.start();
     }

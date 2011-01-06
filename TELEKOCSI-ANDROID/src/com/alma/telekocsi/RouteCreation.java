@@ -1,7 +1,6 @@
 package com.alma.telekocsi;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -98,7 +97,6 @@ public class RouteCreation extends OptionsMenu {
         
 	}
 	
-	
 	private OnClickListener getOnClickListener(){
 		if(onClickListener==null){
 			onClickListener = makeOnClickListener();
@@ -128,9 +126,10 @@ public class RouteCreation extends OptionsMenu {
 	}
 	
 	private void startRouteCreation(){
-		showProgressDialog(this);
+		startProgressDialog(this);
     	Thread thread = new Thread(this);
     	thread.start();
+		stopProgressDialog();
 	}
 	
 	/**
@@ -197,7 +196,6 @@ public class RouteCreation extends OptionsMenu {
 			alertBuilder.setMessage(getString(R.string.route_creation_failed));
 			alertBuilder.show();
 		}
-		stopProgressDialog();
 	}
 	
 }

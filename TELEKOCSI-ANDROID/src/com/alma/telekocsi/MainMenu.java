@@ -38,12 +38,11 @@ public class MainMenu extends TabActivity {
         tabSpec = tabHost.newTabSpec("research").setIndicator("Passager",getResources().getDrawable(R.drawable.autostop)).setContent(intent);
         tabHost.addTab(tabSpec);
         
-		addRafaNotification = (Button)findViewById(R.id.add_notification_test);
-		addRafaNotification.setOnClickListener(getOnClickListener());
-		
-		removeRafaNotification = (Button)findViewById(R.id.add_notification_test);
-		removeRafaNotification.setOnClickListener(getOnClickListener());
-		
+//		addRafaNotification = (Button)findViewById(R.id.add_notification_test);
+//		addRafaNotification.setOnClickListener(getOnClickListener());
+//		
+//		removeRafaNotification = (Button)findViewById(R.id.add_notification_test);
+//		removeRafaNotification.setOnClickListener(getOnClickListener());
     }
 	
 	private OnClickListener getOnClickListener(){

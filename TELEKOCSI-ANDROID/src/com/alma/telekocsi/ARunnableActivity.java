@@ -32,7 +32,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		progress = ProgressDialog.show(context, title, message, indeterminate, cancelable);
 	}
 	
-	protected void showProgressDialog(Context context){
+	protected void startProgressDialog(Context context){
 		showProgressDialog(context, "Chargement...", "", true, false);
 	}
 	

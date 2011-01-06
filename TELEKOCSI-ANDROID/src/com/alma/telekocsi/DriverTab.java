@@ -138,7 +138,10 @@ public class DriverTab extends OptionsMenu {
 	}	
  	
 	private void showActiveRoute(){
-		startActivity(new Intent(this, GoogleMapActivity.class));
+		startProgressDialog(this);
+		Thread thread = new Thread(this);
+    	thread.start();
+		stopProgressDialog();
 	}
 	
 	@Override
@@ -148,8 +151,7 @@ public class DriverTab extends OptionsMenu {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this, GoogleMapActivity.class));
 	}
 
 }

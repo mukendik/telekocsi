@@ -63,7 +63,7 @@ android:layout_height="fill_parent"
 			</LinearLayout>
 		</TabHost>
 		
-		<Button
+<!--		<Button
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Add notification test"
@@ -74,7 +74,7 @@ android:layout_height="fill_parent"
 		android:layout_height="wrap_content"
 		android:text="Remove notification test"
 		android:id="@+id/remove_notification_test"/>
-
+-->
 	</LinearLayout>
 	
 	<!-- Footer -->
