@@ -1,6 +1,5 @@
 package com.alma.telekocsi;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -105,11 +104,11 @@ public class PreferencesSettings extends OptionsMenu {
     	case CHECKING:
     		switch(resultCode) {
     		case RESULT_OK:
-    			saveSettings();
-    			startActivity(new Intent(this, MainMenu.class));
+    			startShowingMainMenu();
     			break;
     		}
     	}
+    	stopProgressDialog();
     }
 	
 	private OnClickListener getOnClickListener(){
@@ -128,7 +127,7 @@ public class PreferencesSettings extends OptionsMenu {
 					goBack();
 				}
 				else if(v==registeringSubmitButton){
-					startMainMenu();
+					startPreferencesChecking();
 				}
 			}
 			
@@ -139,62 +138,61 @@ public class PreferencesSettings extends OptionsMenu {
 		finish();
 	}
 	
-	private void startMainMenu(){
-		Intent intent = new Intent(this, PreferencesChecking.class);
-    	startActivityForResult(intent, CHECKING);
+	private void startPreferencesChecking(){
+		showProgressDialog(this, "Chargement...");
+    	Thread thread = new Thread(this);
+    	thread.start();
+	}
+	
+	private void startShowingMainMenu(){
+		saveSettings();
+		startActivity(new Intent(this, MainMenu.class));
 	}
 
 	private void saveSettings(){
-		ProgressDialog progressDialog = ProgressDialog.show(PreferencesSettings.this, "",getString(R.string.profile_creation_ongoing),true);
-		try{
-			progressDialog.show(); 
-			
-			Profil prof = new Profil();
-			Intent intent = getIntent();
-			prof.setNom(intent.getStringExtra("name"));
-			prof.setPrenom(intent.getStringExtra("firstName"));
-			prof.setEmail(intent.getStringExtra("email"));
-			prof.setPseudo(intent.getStringExtra("email"));
-			prof.setMotDePasse(intent.getStringExtra("password"));
-			if(smoker!=null){
-				RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
-				if(rb!=null){
-					prof.setDetours(rb.getText().toString());
-				}
+		Profil prof = new Profil();
+		Intent intent = getIntent();
+		prof.setNom(intent.getStringExtra("name"));
+		prof.setPrenom(intent.getStringExtra("firstName"));
+		prof.setEmail(intent.getStringExtra("email"));
+		prof.setPseudo(intent.getStringExtra("email"));
+		prof.setMotDePasse(intent.getStringExtra("password"));
+		if(smoker!=null){
+			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDetours(rb.getText().toString());
 			}
-			if(animals!=null){
-				RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
-				if(rb!=null){
-					prof.setAnimaux(rb.getText().toString());
-				}
-			}
-			if(detours!=null){
-				RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
-				if(rb!=null){
-					prof.setDetours(rb.getText().toString());
-				}
-			}
-			if(discussion!=null){
-				RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
-				if(rb!=null){
-					prof.setDiscussion(rb.getText().toString());
-				}
-			}
-			if(music!=null){
-				RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
-				if(rb!=null){
-					prof.setMusique(rb.getText().toString());
-				}
-			}
-			prof.setDateNaissance(String.format("%s-%s-%s"
-					, intent.getStringExtra("jj")
-					,intent.getStringExtra("mm")
-					,intent.getStringExtra("aaaa")));
-			prof.setSexe(intent.getStringExtra("sexe"));
-			session.saveProfile(prof);
-		} finally {
-			progressDialog.dismiss();
 		}
+		if(animals!=null){
+			RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setAnimaux(rb.getText().toString());
+			}
+		}
+		if(detours!=null){
+			RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDetours(rb.getText().toString());
+			}
+		}
+		if(discussion!=null){
+			RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setDiscussion(rb.getText().toString());
+			}
+		}
+		if(music!=null){
+			RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
+			if(rb!=null){
+				prof.setMusique(rb.getText().toString());
+			}
+		}
+		prof.setDateNaissance(String.format("%s-%s-%s"
+				, intent.getStringExtra("jj")
+				,intent.getStringExtra("mm")
+				,intent.getStringExtra("aaaa")));
+		prof.setSexe(intent.getStringExtra("sexe"));
+		session.saveProfile(prof);
 	}
 	
 	@Override
@@ -215,8 +213,8 @@ public class PreferencesSettings extends OptionsMenu {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		Intent intent = new Intent(this, PreferencesChecking.class);
+    	startActivityForResult(intent, CHECKING);
 	}
 
 	

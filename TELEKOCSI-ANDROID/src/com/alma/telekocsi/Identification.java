@@ -1,6 +1,5 @@
 package com.alma.telekocsi;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -71,6 +70,7 @@ public class Identification extends ARunnableActivity {
     			break;
     		}
     	}
+    	stopProgressDialog();
     }
     
     protected OnClickListener getOnClickListener(){
@@ -104,7 +104,7 @@ public class Identification extends ARunnableActivity {
     }
     
     private void startIdentificationChecking(){
-       	progress = ProgressDialog.show(this, "Chargement...", "Vérification", true, false);
+    	showProgressDialog(this, "Chargement...");
     	Thread thread = new Thread(this);
     	thread.start();
     }
@@ -138,7 +138,6 @@ public class Identification extends ARunnableActivity {
     	intent = intent.putExtra("email", email.getText().toString());
     	intent = intent.putExtra("password", password.getText().toString());
     	startActivityForResult(intent, CHECKING);
-    	handler.sendEmptyMessage(0);
     }
 	
 	
