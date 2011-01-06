@@ -139,7 +139,7 @@ public class PreferencesSettings extends OptionsMenu {
 	}
 	
 	private void startPreferencesChecking(){
-		showProgressDialog(this, "Chargement...");
+		showProgressDialog(this);
     	Thread thread = new Thread(this);
     	thread.start();
 	}

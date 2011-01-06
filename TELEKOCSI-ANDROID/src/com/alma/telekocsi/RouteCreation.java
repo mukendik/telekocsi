@@ -128,15 +128,10 @@ public class RouteCreation extends OptionsMenu {
 	}
 	
 	private void startRouteCreation(){
-		progress = ProgressDialog.show(this, "Chargement...", "", true, false);
+		showProgressDialog(this);
     	Thread thread = new Thread(this);
     	thread.start();
 	}
-	
-//	private void startRouteCreation(){
-//		Intent intent = new Intent(this, StartRouteCreation.class);
-//		startActivity(intent);
-//	}
 	
 	/**
 	 * Cr�ation du trajet
@@ -202,6 +197,7 @@ public class RouteCreation extends OptionsMenu {
 			alertBuilder.setMessage(getString(R.string.route_creation_failed));
 			alertBuilder.show();
 		}
+		stopProgressDialog();
 	}
 	
 }

@@ -11,10 +11,14 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	protected ProgressDialog progress = null;
 	
 	protected Handler handler = new Handler() {
+		
 		@Override
 		public void handleMessage(Message msg) {
-			progress.dismiss();
+			if(progress!=null){
+				progress.dismiss();
+			}
 		}
+		
 	};
 	
 	@Override
@@ -22,14 +26,14 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	
 	protected void showProgressDialog(Context context
 										,String title
-										,String description
-										,boolean t
-										,boolean u){
-		progress = ProgressDialog.show(context, title, description, t, u);
+										,String message
+										,boolean indeterminate
+										,boolean cancelable){
+		progress = ProgressDialog.show(context, title, message, indeterminate, cancelable);
 	}
 	
-	protected void showProgressDialog(Context context, String title){
-		showProgressDialog(context, title, "", true, false);
+	protected void showProgressDialog(Context context){
+		showProgressDialog(context, "Chargement...", "", true, false);
 	}
 	
 	protected void stopProgressDialog(){
