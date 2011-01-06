@@ -11,6 +11,12 @@
 	android:icon="@drawable/notifications"
 	android:title="@string/notifications_text"
 	/>
+	
+    <item
+    android:id="@+id/profile_id"
+	android:icon="@drawable/profile"
+	android:title="@string/profile_text"
+	/>
 
 	<item
 	android:id="@+id/preferences_id"

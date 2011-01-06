@@ -46,6 +46,7 @@
     <string name="disconnection_text">Déconnexion</string>
     <string name="main_menu_text">Menu principal</string>
     <string name="notifications_text">Notifications</string>
+    <string name="profile_text">Mon profil</string>
     <string name="preferences_text">Mes préférences</string>
  
     <!-- identification -->
