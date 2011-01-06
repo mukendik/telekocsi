@@ -194,12 +194,6 @@ public class ProfileSettings extends ARunnableActivity {
     	intent = intent.putExtra("phone", phone.getText().toString());
     	startActivityForResult(intent, CHECKING);
 	}
-
-	@Override
-	protected void showMainMenu() {
-		//appelee a partir du menu principal donc on peut finir
-		finish();
-	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

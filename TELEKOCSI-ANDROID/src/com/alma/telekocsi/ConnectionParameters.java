@@ -6,6 +6,7 @@ import com.alma.telekocsi.checking.ConnectionParametersChecking;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -105,8 +106,9 @@ public class ConnectionParameters extends ARunnableActivity {
 	}
 
 	@Override
-	protected void showMainMenu() {
-		//nothing to do
+	public boolean onCreateOptionsMenu(Menu menu) {
+		//on n'affiche pas le menu quand on est connecte
+		return false;
 	}
 
 

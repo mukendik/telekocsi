@@ -196,11 +196,6 @@ public class PreferencesSettings extends ARunnableActivity {
 	}
 	
 	@Override
-	protected void showMainMenu() {
-		finish();
-	}
-	
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		session = SessionFactory.getCurrentSession(this);
 		if(session.isConnected()){

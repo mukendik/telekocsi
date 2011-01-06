@@ -54,9 +54,11 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	
 	
 	//==========================================================
-	//Gestion du menu OptionsMenu
+	//Gestion du menu a options
 	
-	abstract protected void showMainMenu();
+	protected void showMainMenu(){
+		finish();
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -177,13 +177,6 @@ public class RouteCreation extends ARunnableActivity {
 	}
 
 	@Override
-	protected void showMainMenu() {
-		//appelee a partir du menu principal donc on peut finir
-		finish();
-	}
-
-
-	@Override
 	public void run() {
 		RouteCreation self = this;
 		//FIXME Ajouter la v�rifaction des valeurs

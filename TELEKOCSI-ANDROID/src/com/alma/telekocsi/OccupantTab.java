@@ -116,6 +116,7 @@ public class OccupantTab extends ListActivity {
 			showNotifications();
 			return true;
 		case R.id.main_menu_id:
+			//nothing to do
 			return true;
 		case R.id.preferences_id:
 			showPreferences();

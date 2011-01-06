@@ -57,14 +57,6 @@ public class RouteActivation extends ARunnableActivity {
 		finish();
 	}
 
-
-	@Override
-	protected void showMainMenu() {
-		//appelee a partir du menu principal donc on peut finir
-		finish();
-	}
-
-
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

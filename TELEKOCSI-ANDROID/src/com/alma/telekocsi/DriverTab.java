@@ -153,8 +153,6 @@ public class DriverTab extends ListActivity {
 		startActivity(new Intent(this, GoogleMapActivity.class));
 	}
 	
-	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -172,6 +170,7 @@ public class DriverTab extends ListActivity {
 			showNotifications();
 			return true;
 		case R.id.main_menu_id:
+			//nothing to do
 			return true;
 		case R.id.preferences_id:
 			showPreferences();

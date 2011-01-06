@@ -3,6 +3,7 @@ package com.alma.telekocsi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -138,12 +139,11 @@ public class Identification extends ARunnableActivity {
     	intent = intent.putExtra("password", password.getText().toString());
     	startActivityForResult(intent, CHECKING);
     }
-
+	
 	@Override
-	protected void showMainMenu() {
-		//nothing to do
+	public boolean onCreateOptionsMenu(Menu menu) {
+		//on n'affiche pas le menu quand on est connecte
+		return false;
 	}
-	
-	
     
 }
