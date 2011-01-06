@@ -1,6 +1,7 @@
 package com.alma.telekocsi;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -106,7 +107,6 @@ public class RouteCreation extends OptionsMenu {
 	}
 	
 	private OnClickListener makeOnClickListener(){
-		final RouteCreation self = this;
 		
 		return new OnClickListener(){
 
@@ -116,16 +116,7 @@ public class RouteCreation extends OptionsMenu {
 					goBack();
 				}
 				else if(v==startRouteCreationButton){
-					//FIXME Ajouter la v�rifaction des valeurs
-					if(doCreateRoute()){
-						goBack();
-					}
-					else{
-						final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
-						alertBuilder.setTitle(R.string.app_name);
-						alertBuilder.setMessage(getString(R.string.route_creation_failed));
-						alertBuilder.show();
-					}
+					startRouteCreation();
 				}
 			}
 			
@@ -134,6 +125,12 @@ public class RouteCreation extends OptionsMenu {
 	
 	private void goBack(){
 		finish();
+	}
+	
+	private void startRouteCreation(){
+		progress = ProgressDialog.show(this, "Chargement...", "", true, false);
+    	Thread thread = new Thread(this);
+    	thread.start();
 	}
 	
 //	private void startRouteCreation(){
@@ -194,8 +191,17 @@ public class RouteCreation extends OptionsMenu {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		RouteCreation self = this;
+		//FIXME Ajouter la v�rifaction des valeurs
+		if(doCreateRoute()){
+			goBack();
+		}
+		else{
+			final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
+			alertBuilder.setTitle(R.string.app_name);
+			alertBuilder.setMessage(getString(R.string.route_creation_failed));
+			alertBuilder.show();
+		}
 	}
 	
 }
