@@ -112,10 +112,9 @@ public class Identification extends ARunnableActivity {
     private void sendEmail(){
     	Session session = SessionFactory.getCurrentSession(this);
 		Profil profile = session.getActiveProfile();
-    	String[] mailto = { profile.getEmail().toString() };
     	Intent sendIntent = new Intent(Intent.ACTION_SEND);
-    	sendIntent.putExtra(Intent.EXTRA_EMAIL, mailto);
-    	sendIntent.putExtra(Intent.EXTRA_SUBJECT,"SUJET");
+    	sendIntent.putExtra(Intent.EXTRA_EMAIL, profile.getEmail().toString());
+    	sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Android Telekocsi Application. Mot de passe.");
     	sendIntent.putExtra(Intent.EXTRA_TEXT,"Votre mot de passe : "+profile.getMotDePasse().toString());
     	sendIntent.setType("text/plain");
     	startActivity(Intent.createChooser(sendIntent, "MySendMail"));
