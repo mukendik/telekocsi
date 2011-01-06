@@ -17,7 +17,7 @@ import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class RouteCreation extends OptionsMenu {
+public class RouteCreation extends ARunnableActivity {
 	static final int ROUTE_FREQUENCY_DIALOG = 0;
 	
 	private Button startRouteCreationButton;

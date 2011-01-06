@@ -15,7 +15,7 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class PreferencesSettings extends OptionsMenu {
+public class PreferencesSettings extends ARunnableActivity {
 	
 	private static final int CHECKING = 1;
 

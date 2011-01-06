@@ -104,5 +104,10 @@ public class ConnectionParameters extends ARunnableActivity {
 		
 	}
 
+	@Override
+	protected void showMainMenu() {
+		//nothing to do
+	}
+
 
 }

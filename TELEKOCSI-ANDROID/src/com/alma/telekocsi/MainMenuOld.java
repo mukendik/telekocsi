@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MainMenuOld extends OptionsMenu {
+public class MainMenuOld extends ARunnableActivity {
 	
 	private OnClickListener onClickListener = null;
 	private Button routeActivationButton;

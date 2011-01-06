@@ -139,6 +139,11 @@ public class Identification extends ARunnableActivity {
     	intent = intent.putExtra("password", password.getText().toString());
     	startActivityForResult(intent, CHECKING);
     }
+
+	@Override
+	protected void showMainMenu() {
+		//nothing to do
+	}
 	
 	
     

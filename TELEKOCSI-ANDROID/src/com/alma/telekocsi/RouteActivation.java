@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class RouteActivation extends OptionsMenu {
+public class RouteActivation extends ARunnableActivity {
 	
 	private Button routeActivationButton;
 	private Button cancelButton;
