@@ -48,7 +48,7 @@ public class DriverTab extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		setListAdapter(new ArrayAdapter<String>(this
-												,R.layout.onglet_conducteur
+												,R.layout.main_menu_tab_list
 												,DRIVER_FUNCTIONS)
 		);
 

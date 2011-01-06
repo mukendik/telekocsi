@@ -41,8 +41,8 @@ public class OccupantTab extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		setListAdapter(new ArrayAdapter<String>(this
-				,R.layout.onglet_conducteur
-				,DRIVER_FUNCTIONS)
+												,R.layout.main_menu_tab_list
+												,DRIVER_FUNCTIONS)
 		);
 
 		listView = getListView();
