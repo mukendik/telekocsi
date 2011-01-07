@@ -27,18 +27,25 @@ public class OccupantTab extends ListActivity {
 	private Session session = null;
 	Profil profile = null;
 	
-	private static final String SEARCH = "Rechercher un trajet";
-	private static final String ACTIVATED = "Trajet actif";
-	private static final String TRANSACTION = "Valider une transaction";
+	private  String SEARCH;
+	private  String ACTIVATED;
+	private  String TRANSACTION;
 	
-	private static final String[] DRIVER_FUNCTIONS = new String[] {
+	private  String[] DRIVER_FUNCTIONS = new String[] {
 		SEARCH, ACTIVATED, TRANSACTION
 	};
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
+	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
+		
+		//Internationalisation
+		SEARCH = getString(R.string.route_search);
+		ACTIVATED = getString(R.string.activated_route_map_text);
+		TRANSACTION = getString(R.string.transaction_validation);
+		DRIVER_FUNCTIONS = new String[] {
+				SEARCH, ACTIVATED, TRANSACTION
+			};
 		
 		setListAdapter(new ArrayAdapter<String>(this
 												,R.layout.main_menu_tab_list

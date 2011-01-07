@@ -32,21 +32,27 @@ public class DriverTab extends ListActivity {
 	private Session session = null;
 	Profil profile = null;
 	
-	private static final String ACTIVATE = "Activer un trajet";
-	private static final String CREATE = "Créer un nouveau trajet";
-	private static final String MODIFY = "Modifier un trajet";
-	private static final String ACTIVATED = "Trajet actif";
-	private static final String TRANSACTION = "Valider une transaction";
+	private String ACTIVATE;
+	private String CREATE;
+	private String MODIFY;
+	private String ACTIVATED;
+	private String TRANSACTION;
 	
-	private static final String[] DRIVER_FUNCTIONS = new String[] {
-		ACTIVATE, CREATE, MODIFY, ACTIVATED, TRANSACTION
-	};
+	private String[] DRIVER_FUNCTIONS;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		
+	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 		
+		//Penser a l'internationalisation 
+		ACTIVATE = getString(R.string.start_route_activation);
+		CREATE = getString(R.string.route_creation);
+		MODIFY = getString(R.string.route_modification);
+		ACTIVATED = getString(R.string.activated_route_map_text);
+		TRANSACTION = getString(R.string.validerTransaction);
+		DRIVER_FUNCTIONS = new String[] {
+				ACTIVATE, CREATE, MODIFY, ACTIVATED, TRANSACTION
+			};
 		setListAdapter(new ArrayAdapter<String>(this
 												,R.layout.main_menu_tab_list
 												,DRIVER_FUNCTIONS)
@@ -227,7 +233,7 @@ public class DriverTab extends ListActivity {
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
 		//notification rapide
-		Toast.makeText(this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.profile_creation_ongoing), Toast.LENGTH_SHORT).show();
 	}
 	
 
