@@ -139,9 +139,7 @@ public class PreferencesSettings extends ARunnableActivity {
 	}
 	
 	private void startPreferencesChecking(){
-		startProgressDialog(this);
-    	Thread thread = new Thread(this);
-    	thread.start();
+		startProgressDialogInNewThread(this);
 	}
 	
 	private void startShowingMainMenu(){

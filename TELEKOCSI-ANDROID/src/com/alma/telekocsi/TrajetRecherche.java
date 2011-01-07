@@ -167,9 +167,7 @@ public class TrajetRecherche extends ARunnableActivity {
     
     
     public void goTrajetTrouve() {
-    	startProgressDialog(this);
-    	Thread thread = new Thread(this);
-    	thread.start();
+    	startProgressDialogInNewThread(this);
     }
 	
 	

@@ -1,13 +1,12 @@
 package com.alma.telekocsi;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 
-public class Transaction extends Activity {
+public class Transaction extends ARunnableActivity {
 	
 	OnClickListener onClickListener = null;
 	Button btValider;
@@ -58,5 +57,12 @@ public class Transaction extends Activity {
     private void actionValider() {
     	
     }
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

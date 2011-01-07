@@ -212,9 +212,7 @@ public class RouteCreation extends ARunnableActivity {
 	}
 	
 	private void startRouteCreation(){
-		startProgressDialog(this);
-    	Thread thread = new Thread(this);
-    	thread.start();
+		startProgressDialogInNewThread(this);
 	}
 	
 	/**

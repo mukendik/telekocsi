@@ -35,16 +35,18 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	@Override
 	abstract public void run();
 	
-	protected void showProgressDialog(Context context
+	protected void startProgressDialogInNewThread(Context context
 										,String title
 										,String message
 										,boolean indeterminate
 										,boolean cancelable){
 		progress = ProgressDialog.show(context, title, message, indeterminate, cancelable);
+    	Thread thread = new Thread((Runnable)context);
+    	thread.start();
 	}
 	
-	protected void startProgressDialog(Context context){
-		showProgressDialog(context, "Chargement...", "", true, false);
+	protected void startProgressDialogInNewThread(Context context){
+		startProgressDialogInNewThread(context, "Chargement...", "", true, false);
 	}
 	
 	protected void stopProgressDialog(){

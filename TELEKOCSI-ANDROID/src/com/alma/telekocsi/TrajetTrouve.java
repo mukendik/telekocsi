@@ -28,7 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class TrajetTrouve extends Activity {
+public class TrajetTrouve extends ARunnableActivity {
     
 	private OnClickListener onClickListener = null;
 	private Button btNewSerach;
@@ -288,6 +288,13 @@ public class TrajetTrouve extends Activity {
 			profilDAO = new ProfilDAO();
 		}
 		return profilDAO;
+	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
