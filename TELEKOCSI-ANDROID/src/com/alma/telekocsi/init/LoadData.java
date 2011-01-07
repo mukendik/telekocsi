@@ -213,11 +213,11 @@ public class LoadData {
 	}
 	
 	private void generateTrajet() {
-		int nb = trajetDAO.generate("03/01/2011");
-		Log.i(LoadData.class.getSimpleName(), "generate trajet 03/01/2010 : " + nb);
+		int nb = trajetDAO.generate("09/01/2011");
+		Log.i(LoadData.class.getSimpleName(), "generate trajet 09/01/2010 : " + nb);
 		
-		nb = trajetDAO.generate("04/01/2011");
-		Log.i(LoadData.class.getSimpleName(), "generate trajet 04/01/2010 : " + nb);
+		nb = trajetDAO.generate("10/01/2011");
+		Log.i(LoadData.class.getSimpleName(), "generate trajet 10/01/2010 : " + nb);
 	}
 	
 	

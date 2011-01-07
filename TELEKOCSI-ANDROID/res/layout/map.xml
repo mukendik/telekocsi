@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 	<com.google.android.maps.MapView
 		android:id="@+id/mapView" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:enabled="true"
 		android:clickable="true" android:apiKey="@string/mapskey" />
-</LinearLayout>
+
+
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:stretchColumns="1" android:background="#AA000000"
+		android:textColor="#ffffffff" android:id="@+id/mapTableInfo">
+
+		<TableRow>
+			<TextView android:text="Départ :" android:padding="1dip" />
+			<TextView android:id="@+id/departName"  android:text="N/A" 
+				android:padding="1dip" />
+		</TableRow>
+
+		<TableRow>
+			<TextView android:text="Arrivée :" android:padding="1dip" />
+			<TextView android:id="@+id/arriveeName"  android:text="N/A" 
+				android:padding="1dip" />
+		</TableRow>
+
+		<TableRow>
+			<TextView android:text="Distance :" android:padding="1dip" />
+			<TextView android:id="@+id/distance" android:text="N/A"
+				android:padding="1dip" />
+		</TableRow>
+
+	</TableLayout>
+
+
+
+
+
+</merge>
