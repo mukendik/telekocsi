@@ -9,7 +9,6 @@ import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
 import com.alma.telekocsi.init.DataContext;
 import com.alma.telekocsi.util.LocalDate;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class TrajetRecherche extends Activity {
+public class TrajetRecherche extends ARunnableActivity {
 
 	private static final int CODE_TRAJETRECHERCHE = 1;
 	
@@ -142,6 +141,7 @@ public class TrajetRecherche extends Activity {
     			finish();
     		}
     	}
+    	stopProgressDialog();
     }
     
     
@@ -167,14 +167,9 @@ public class TrajetRecherche extends Activity {
     
     
     public void goTrajetTrouve() {
-        
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("itineraire", itineraire);
-        bundle.putSerializable("date", date);
-        
-        Intent intent = new Intent(this, TrajetTrouve.class);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, CODE_TRAJETRECHERCHE);
+    	startProgressDialog(this);
+    	Thread thread = new Thread(this);
+    	thread.start();
     }
 	
 	
@@ -277,6 +272,18 @@ public class TrajetRecherche extends Activity {
 			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1);
 			date = new LocalDate(cal.getTimeInMillis());
 		}
+	}
+
+
+	@Override
+	public void run() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("itineraire", itineraire);
+        bundle.putSerializable("date", date);
+        
+        Intent intent = new Intent(this, TrajetTrouve.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, CODE_TRAJETRECHERCHE);
 	}
 
 }

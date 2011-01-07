@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
@@ -24,12 +25,16 @@ import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
 public class RouteCreation extends ARunnableActivity {
+	
 	static final int ROUTE_FREQUENCY_DIALOG = 0;
+	static private final int DEPARTURE_TIME = 1;
+	static private final int ARRIVAL_TIME = 2;
 	
 	private Button startRouteCreationButton;
 	private Button cancelRouteCreationButton;
 	private Button timeDepartureButton;
 	private Button timeArrivalButton;
+	
 	private OnClickListener onClickListener = null;
 	
 	private Button routeFreq;
@@ -37,22 +42,18 @@ public class RouteCreation extends ARunnableActivity {
 	private RadioGroup automaticRoute;
 	private EditText departure;
 	private EditText arrival;
-	private EditText departureTime;
-	private EditText arrivalTime;
 	private EditText price;
 	private EditText comment;
 	private Session session;
 	private Profil profile;
 	
-	private int departureMinute, departureHour, arrivalMinute, arrivalHour;
-	static private final int DEPARTURE_TIME = 1;
-	static private final int ARRIVAL_TIME = 2;
-
 	/**
 	 * Tableau de frequence de la meme taille que 
 	 */
 	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false,false};;
 		                
+	private int departureMinute, departureHour, arrivalMinute, arrivalHour;
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -69,8 +70,6 @@ public class RouteCreation extends ARunnableActivity {
         automaticRoute = (RadioGroup)findViewById(R.id.automatic_route_radio_group);
         departure = (EditText)findViewById(R.id.route_creation_departure_user);
         arrival = (EditText)findViewById(R.id.route_creation_arrival_user);
-        departureTime = (EditText)findViewById(R.id.route_creation_departure_time_user);
-        arrivalTime = (EditText)findViewById(R.id.route_creation_arrival_time_user);
         price = (EditText)findViewById(R.id.route_creation_price_user);
         comment = (EditText)findViewById(R.id.route_creation_comment_user);
         routeFreq = (Button)findViewById(R.id.route_creation_frequence_user);
@@ -162,7 +161,11 @@ public class RouteCreation extends ARunnableActivity {
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			String time = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+			String min=String.valueOf(minute);
+			if(minute>=0 && minute<=9){
+				min = "0"+min;
+			}
+			String time = String.valueOf(hourOfDay)+":"+min;
 			timeDepartureButton.setText(time);
 		}
 	};
@@ -170,7 +173,11 @@ public class RouteCreation extends ARunnableActivity {
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			String time = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+			String min=String.valueOf(minute);
+			if(minute>=0 && minute<=9){
+				min = "0"+min;
+			}
+			String time = String.valueOf(hourOfDay)+":"+min;
 			timeArrivalButton.setText(time);
 		}
 	};
@@ -208,7 +215,6 @@ public class RouteCreation extends ARunnableActivity {
 		startProgressDialog(this);
     	Thread thread = new Thread(this);
     	thread.start();
-		stopProgressDialog();
 	}
 	
 	/**
@@ -241,8 +247,8 @@ public class RouteCreation extends ARunnableActivity {
 			trajet.setLieuDepart(itineraire.getLieuDepart());
 			trajet.setLieuDestination(itineraire.getLieuDestination());
 			trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
-			trajet.setHoraireDepart(departureTime.getText().toString());
-			trajet.setHoraireArrivee(arrivalTime.getText().toString());
+			trajet.setHoraireDepart(timeDepartureButton.getText().toString());
+			trajet.setHoraireArrivee(timeArrivalButton.getText().toString());
 			trajet.setCommentaire(comment.getText().toString());
 			trajet.setIdProfilConducteur(profile.getId());
 			trajet.setIdItineraire(itineraire.getId());
@@ -261,6 +267,7 @@ public class RouteCreation extends ARunnableActivity {
 		//FIXME Ajouter la v�rifaction des valeurs
 		if(doCreateRoute()){
 			goBack();
+//			Toast.makeText(this, "Trajet enregistré", Toast.LENGTH_SHORT).show();
 		}
 		else{
 			final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
@@ -268,6 +275,7 @@ public class RouteCreation extends ARunnableActivity {
 			alertBuilder.setMessage(getString(R.string.route_creation_failed));
 			alertBuilder.show();
 		}
+		stopProgressDialog();
 	}
 	
 }

@@ -52,7 +52,8 @@ public class DriverTab extends ListActivity {
 		TRANSACTION = getString(R.string.validerTransaction);
 		DRIVER_FUNCTIONS = new String[] {
 				ACTIVATE, CREATE, MODIFY, ACTIVATED, TRANSACTION
-			};
+		};
+		
 		setListAdapter(new ArrayAdapter<String>(this
 												,R.layout.main_menu_tab_list
 												,DRIVER_FUNCTIONS)
