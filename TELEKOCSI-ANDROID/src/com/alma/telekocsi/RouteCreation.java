@@ -1,6 +1,11 @@
 package com.alma.telekocsi;
 
+import java.util.Calendar;
+
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
@@ -22,6 +28,8 @@ public class RouteCreation extends ARunnableActivity {
 	
 	private Button startRouteCreationButton;
 	private Button cancelRouteCreationButton;
+	private Button timeDepartureButton;
+	private Button timeArrivalButton;
 	private OnClickListener onClickListener = null;
 	
 	private Button routeFreq;
@@ -35,6 +43,10 @@ public class RouteCreation extends ARunnableActivity {
 	private EditText comment;
 	private Session session;
 	private Profil profile;
+	
+	private int departureMinute, departureHour, arrivalMinute, arrivalHour;
+	static private final int DEPARTURE_TIME = 1;
+	static private final int ARRIVAL_TIME = 2;
 
 	/**
 	 * Tableau de frequence de la meme taille que 
@@ -64,6 +76,32 @@ public class RouteCreation extends ARunnableActivity {
         routeFreq = (Button)findViewById(R.id.route_creation_frequence_user);
         session = SessionFactory.getCurrentSession(this);
         profile = session.getActiveProfile();
+        
+        timeDepartureButton = (Button)findViewById(R.id.time_departure_button);
+        timeDepartureButton.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+			    departureHour = c.get(Calendar.HOUR_OF_DAY);
+			    departureMinute = c.get(Calendar.MINUTE);
+			    showDialog(DEPARTURE_TIME);
+			}
+        	
+        });
+
+        timeArrivalButton = (Button)findViewById(R.id.time_arrival_button);
+        timeArrivalButton.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+			    arrivalHour = c.get(Calendar.HOUR_OF_DAY);
+			    arrivalMinute = c.get(Calendar.MINUTE);
+			    showDialog(ARRIVAL_TIME);
+			}
+        	
+        });
         
         routeFreq.setOnClickListener(new OnClickListener() {			
 			@Override
@@ -95,7 +133,48 @@ public class RouteCreation extends ARunnableActivity {
 			}
 		});
         
-	}
+	}//onCreate()
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+	 
+		switch(id){
+		case DEPARTURE_TIME:
+			return new TimePickerDialog(this
+										,onTimeDepartureSetListener
+										,departureHour
+										,departureMinute
+										,false
+			);
+		case ARRIVAL_TIME:
+			return new TimePickerDialog(this
+										,onTimeArrivalSetListener
+										,arrivalHour
+										,arrivalMinute
+										,false
+			);
+		default:
+			return null;
+		}
+	 }
+	 
+	private OnTimeSetListener onTimeDepartureSetListener = new OnTimeSetListener(){
+
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			String time = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+			timeDepartureButton.setText(time);
+		}
+	};
+	private OnTimeSetListener onTimeArrivalSetListener = new OnTimeSetListener(){
+
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			String time = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+			timeArrivalButton.setText(time);
+		}
+	};
+	    
 	
 	private OnClickListener getOnClickListener(){
 		if(onClickListener==null){

@@ -154,13 +154,12 @@ android:layout_height="fill_parent"
     			android:textColor="@color/h2_color"
     			android:text="@string/route_creation_departure_time"
     			/>
-    			<EditText
-    			android:layout_width="fill_parent"
-    			android:layout_height="wrap_content"
-    			android:id="@+id/route_creation_departure_time_user"
-    			android:textColor="@color/black"
-    			android:inputType="time"
-    			/>
+    			<Button
+				android:id="@+id/time_departure_button"
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" 
+				android:text="@string/time_departure_button_text"
+				/>
     	
     			<!-- Horaire darrivee -->
     			<TextView
@@ -170,13 +169,12 @@ android:layout_height="fill_parent"
     			android:textColor="@color/h2_color"
     			android:text="@string/route_creation_arrival_time"
     			/>
-    			<EditText
-    			android:layout_width="fill_parent"
-    			android:layout_height="wrap_content"
-    			android:id="@+id/route_creation_arrival_time_user"
-    			android:textColor="@color/black"
-    			android:inputType="time"
-    			/>
+    			<Button
+				android:id="@+id/time_arrival_button"
+    			android:layout_width="fill_parent" 
+    			android:layout_height="wrap_content" 
+    			android:text="@string/time_arrival_button_text"
+ 				/>
     			
     			<!-- Frequence trajet -->
     			<TextView
