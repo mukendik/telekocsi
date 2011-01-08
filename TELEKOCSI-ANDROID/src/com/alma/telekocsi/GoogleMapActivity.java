@@ -51,6 +51,10 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+		mapView = (MapView) findViewById(R.id.mapView);
+		tvArrivee = (TextView) findViewById(R.id.arriveeName);
+		tvDepart = (TextView) findViewById(R.id.departName);
+		tvDistance = (TextView) findViewById(R.id.distance);
 		context = this;
 
 		//Récupération du profil courant
@@ -84,14 +88,6 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 					finish();
 				}
 			}
-
-
-			mapView = (MapView) findViewById(R.id.mapView);
-			//mapTableInfo = (TableLayout) findViewById(R.id.mapTableInfo);
-			tvArrivee = (TextView) findViewById(R.id.arriveeName);
-			tvDepart = (TextView) findViewById(R.id.departName);
-			tvDistance = (TextView) findViewById(R.id.distance);
-
 		}
 
 	}
@@ -120,8 +116,8 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		mapInfoItiniraire.stop();
-		mapUserLocalization.stop();
+		if(mapInfoItiniraire!=null)	mapInfoItiniraire.stop();
+		if(mapUserLocalization!=null) mapUserLocalization.stop();
 	}
 
 
@@ -172,6 +168,7 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 
 	@Override
 	public void showUserLocalizationOverlays() {
+	
 		mapView.getOverlays().addAll(mapUserLocalization.getOverlays());
 	}
 

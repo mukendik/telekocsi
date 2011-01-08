@@ -33,10 +33,11 @@ public class MapInfoItiniraire {
 	private String lieuDepart;
 	private GeoPoint pointArrivee;
 	private String lieuArrivee;
+	private List<GeoPoint> pointsVia;
 	private double distanceTotale;
 	private List<MapOverlay> overlays;
 
-	private GeoPoint pointVia;
+
 	private NumberFormat doubleFormat;
 
 	//	private Timer timer;
@@ -79,6 +80,89 @@ public class MapInfoItiniraire {
 	}
 
 
+	private class CalculItiniraire extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected Void doInBackground(Void... urls) {
+			calculInfoItiniraire();
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			context.showItiniraireOverlays();
+		}		
+	}
+
+
+	/**
+	 * Chargement, calule informations de l'itineraire
+	 * @return
+	 */
+	public boolean calculInfoItiniraire(){
+
+		if(trajet!=null){
+			ItineraireDAO itineraireDAO = new ItineraireDAO();
+			Itineraire iti = itineraireDAO.getItineraire(trajet.getIdItineraire());
+			Log.i(getClass().getSimpleName(), "isAutoroute : " + trajet.isAutoroute());
+			// Lieu de départ et Lieu d'arrivée
+			lieuDepart = iti.getLieuDepart();
+			lieuArrivee = iti.getLieuDestination();			
+			Log.i(MapInfoItiniraire.class.getSimpleName(), "Itineraire :\n => Depart : " + iti.getLieuDepart()+" \n => Arrivee : "+iti.getLieuDestination());
+
+			//Calcul des GeoPoints  Depart & Arrivee
+			pointDepart = calculGeoPoint(lieuDepart);
+			overlays.add(new MapOverlay(pointDepart, R.drawable.pin_depart));
+			pointArrivee = calculGeoPoint(lieuArrivee);
+			overlays.add(new MapOverlay(pointArrivee, R.drawable.pin_arrivee));
+
+			//Calcul des GeoPoints Via
+			/*
+			List<String> lieux = iti.getLieuxVia();
+			pointsVia = new ArrayList<GeoPoint>();
+			if(lieux.size()>0) {
+				for(String lieuVia : lieux){
+					pointsVia.add(calculGeoPoint(lieuVia));
+				}
+			}
+			 */
+
+			/*Test via Cholet   TEMPORAIRE *
+			Geocoder geoCoder = new Geocoder(context);
+			List<Address> adrs;
+			try {
+				adrs = geoCoder.getFromLocationName("CHOLET", 1);
+
+				if(adrs!=null && adrs.size()>0){
+					Address addressVia = adrs.get(0);
+					pointsVia = new ArrayList<GeoPoint>();
+					pointsVia.add(new GeoPoint((int) (addressVia.getLatitude() * 1000000.0),(int) (addressVia.getLongitude() * 1000000.0)));
+
+					Log.i(MapInfoItiniraire.class.getSimpleName(), 
+							" Lieu Via" +
+							" |Pays : " + addressVia.getCountryName() + 
+							" |feature : "+ addressVia.getFeatureName() +
+							" |Latitude : "+ addressVia.getLatitude() +
+							" |Longitude : "+ addressVia.getLongitude() 
+					);
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			* FIN TEMPORAIRE */
+
+
+			if(pointDepart!=null && pointArrivee!=null){
+				drawPath(pointDepart, pointArrivee, pointsVia, Color.BLUE);
+			}
+
+
+			return true;
+		}
+
+		return false;
+	}
+
+
 
 
 	//Calcul le GeoPoint d'un lieu :  exemple  de lieu :  "Chateau Gontier, Mayenne, France"
@@ -113,18 +197,26 @@ public class MapInfoItiniraire {
 
 
 	/**
-	 * Traces les différents itiniraires 
+	 * Traces les différentes portion d'itiniraires en prenant en compte les intermédiaires
 	 * src-via  et via-dest
-	 * @param src
-	 * @param dest
-	 * @param via
-	 * @param color
+	 * @param src  point de départ
+	 * @param dest point d'arrivée
+	 * @param via  Liste de points intermédiaire
+	 * @param color couleur de l'itiniraire
 	 */
-	private void drawPath(GeoPoint src,GeoPoint dest,GeoPoint via, int color){
-		if(via!=null){
-			drawPath(src, via, color);
-			drawPath(via, dest, color);
+	private void drawPath(GeoPoint src,GeoPoint dest,List<GeoPoint> via, int color){
+		if(via!=null && via.size()>0){
+			Log.i(getClass().getSimpleName(), "Tracage itiniraire intermediaire");
+			//trace la portion (depart - 1er point intermédiaire)
+			drawPath(src, via.get(0), color);	
+			//trace les différentes portions de points intermédiaire de l'itiniraire
+			for(int i = 1; i<via.size(); i++) {
+				drawPath(via.get(i-1), via.get(i), color);	
+			}
+			//trace la portion (dernier point intermédiaire - point d'arrivee)
+			drawPath(via.get(via.size()-1), dest, color); 
 		}else{
+			Log.i(getClass().getSimpleName(), "Tracage itiniraire sans intermediaire");
 			drawPath(src, dest, color);
 		}
 	}
@@ -138,7 +230,8 @@ public class MapInfoItiniraire {
 	private void drawPath(GeoPoint src,GeoPoint dest, int color){
 		// connect to map web service
 		StringBuilder urlString = new StringBuilder();
-		urlString.append("http://maps.google.com/maps?f=d&hl=en");
+		urlString.append("http://maps.google.com/maps?f=d&hl=fr");
+		if(!trajet.isAutoroute())urlString.append("&dirflg=t"); // evitement section à peage
 		urlString.append("&saddr=");//from
 		urlString.append( Double.toString((double)src.getLatitudeE6()/1.0E6 ));
 		urlString.append(",");
@@ -199,74 +292,9 @@ public class MapInfoItiniraire {
 
 	}
 
-	/**
-	 * Chargement, calule informations de l'itineraire
-	 * @return
-	 */
-	public boolean calculInfoItiniraire(){
-
-		if(trajet!=null){
-			ItineraireDAO itineraireDAO = new ItineraireDAO();
-			Itineraire iti = itineraireDAO.getItineraire(trajet.getIdItineraire());
-
-			// Lieu de départ et Lieu d'arrivée
-			lieuDepart = iti.getLieuDepart();
-			lieuArrivee = iti.getLieuDestination();			
-			Log.i(MapInfoItiniraire.class.getSimpleName(), "Itineraire :\n => Depart : " + iti.getLieuDepart()+" \n => Arrivee : "+iti.getLieuDestination());
-
-			//Calcul des GeoPoints
-			pointDepart = calculGeoPoint(lieuDepart);
-			overlays.add(new MapOverlay(pointDepart, R.drawable.pin_depart));
-			pointArrivee = calculGeoPoint(lieuArrivee);
-			overlays.add(new MapOverlay(pointArrivee, R.drawable.pin_arrivee));
-
-			Geocoder geoCoder = new Geocoder(context);
-			List<Address> adrs;
-			try {
 
 
-				/*Test via Cholet*/
-				adrs = geoCoder.getFromLocationName("CHOLET", 1);
-				if(adrs.size()>0){
-					Address addressVia = adrs.get(0);
-					pointVia = new GeoPoint((int) (addressVia.getLatitude() * 1000000.0),(int) (addressVia.getLongitude() * 1000000.0));
 
-					Log.i(MapInfoItiniraire.class.getSimpleName(), 
-							" Lieu Via" +
-							" |Pays : " + addressVia.getCountryName() + 
-							" |feature : "+ addressVia.getFeatureName() +
-							" |Latitude : "+ addressVia.getLatitude() +
-							" |Longitude : "+ addressVia.getLongitude() 
-					);
-
-				}
-				/**/
-				if(pointDepart!=null && pointArrivee!=null){
-					drawPath(pointDepart, pointArrivee,pointVia, Color.BLUE);
-				}
-
-			} catch (IOException e) {
-				Log.e(MapInfoItiniraire.class.getSimpleName(),"Erreur MapInfo : " + e.toString());
-			}
-			return true;
-		}
-
-		return false;
-
-
-	}
-
-	private class CalculItiniraire extends AsyncTask<Void, Void, Void> {
-		@Override
-		protected Void doInBackground(Void... urls) {
-			calculInfoItiniraire();
-			return null;
-		}
-		@Override
-		protected void onPostExecute(Void result) {
-			context.showItiniraireOverlays();
-		}		
-	}
 
 
 
@@ -291,13 +319,10 @@ public class MapInfoItiniraire {
 		this.pointArrivee = pointArrivee;
 	}
 
-	public GeoPoint getPointVia() {
-		return pointVia;
+	public List<GeoPoint> getPointsVia() {
+		return pointsVia;
 	}
 
-	public void setPointVia(GeoPoint pointVia) {
-		this.pointVia = pointVia;
-	}
 
 	public double getDistanceTotal(){
 		return distanceTotale;

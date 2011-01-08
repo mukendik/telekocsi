@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.Log;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Projection;
@@ -68,10 +70,8 @@ public class MapOverlay extends Overlay
 	}
 
 	@Override
-	public boolean draw
-	(Canvas canvas, MapView mapView, boolean shadow, long when)
-	{
-		
+	public boolean draw	(Canvas canvas, MapView mapView, boolean shadow, long when)	{
+		try {
 		Projection projection = mapView.getProjection();
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
@@ -137,7 +137,13 @@ public class MapOverlay extends Overlay
 				canvas.drawOval(oval, paint);
 			}
 		}
+		
+		}catch(Exception e){
+			Log.e(getClass().getSimpleName(), e.toString());
+		}
 		return super.draw(canvas, mapView, shadow, when);
+		
+		
 	}
 	
 	
