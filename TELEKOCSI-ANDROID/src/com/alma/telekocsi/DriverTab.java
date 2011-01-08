@@ -41,7 +41,7 @@ public class DriverTab extends ListActivity {
 	private String[] DRIVER_FUNCTIONS;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {		
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		//Penser a l'internationalisation 
@@ -51,7 +51,7 @@ public class DriverTab extends ListActivity {
 		ACTIVATED = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
 		DRIVER_FUNCTIONS = new String[] {
-				ACTIVATE, CREATE, MODIFY, ACTIVATED, TRANSACTION
+				ACTIVATED, TRANSACTION
 		};
 		
 		setListAdapter(new ArrayAdapter<String>(this
@@ -85,16 +85,16 @@ public class DriverTab extends ListActivity {
 		    						,View view
 		    						,int position
 		    						,long id) {
-		    	if(((TextView) view).getText().equals(ACTIVATE)){
-		    		startRouteActivation();
-		    	}
-		    	else if(((TextView) view).getText().equals(CREATE)){
-		    		startRouteCreation();
-		    	}
-		    	else if(((TextView) view).getText().equals(MODIFY)){
-		    		startRouteModification();
-		    	}
-		    	else if(((TextView) view).getText().equals(ACTIVATED)){
+//		    	if(((TextView) view).getText().equals(ACTIVATE)){
+//		    		startRouteActivation();
+//		    	}
+//		    	else if(((TextView) view).getText().equals(CREATE)){
+//		    		startRouteCreation();
+//		    	}
+//		    	else if(((TextView) view).getText().equals(MODIFY)){
+//		    		startRouteModification();
+//		    	}
+		    	if(((TextView) view).getText().equals(ACTIVATED)){
 		    		showActiveRoute();
 		    	}
 		    	else if(((TextView) view).getText().equals(TRANSACTION)){
@@ -187,8 +187,16 @@ public class DriverTab extends ListActivity {
 		case R.id.profile_id:
 			showProfileSettings();
 			return true;
+		case R.id.routes_id:
+			showRoutesManaging();
+			return true;
 	    }
 	    return false;
+	}
+	
+	private void showRoutesManaging(){
+		Intent intent = new Intent(this, RoutesManaging.class);
+		startActivity(intent);
 	}
 	
 	private void disconnect(){

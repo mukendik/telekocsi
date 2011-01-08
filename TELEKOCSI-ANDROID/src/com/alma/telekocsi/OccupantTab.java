@@ -129,8 +129,16 @@ public class OccupantTab extends ListActivity {
 		case R.id.profile_id:
 			showProfileSettings();
 			return true;
+		case R.id.routes_id:
+			showRoutesManaging();
+			return true;
 	    }
 	    return false;
+	}
+	
+	private void showRoutesManaging(){
+		Intent intent = new Intent(this, RoutesManaging.class);
+		startActivity(intent);
 	}
 	
 	private void disconnect(){

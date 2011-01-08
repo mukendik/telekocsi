@@ -7,6 +7,12 @@
 	/>
     
     <item
+    android:id="@+id/routes_id"
+	android:icon="@drawable/route"
+	android:title="@string/routes_text"
+	/>
+
+    <item
     android:id="@+id/profile_id"
 	android:icon="@drawable/profile"
 	android:title="@string/profile_text"

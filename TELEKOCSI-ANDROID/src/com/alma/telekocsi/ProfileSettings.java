@@ -156,6 +156,7 @@ public class ProfileSettings extends ARunnableActivity {
     			break;
     		}
     	}
+    	stopProgressDialog();
     }
 	
 	private OnClickListener getOnClickListener(){
@@ -186,14 +187,7 @@ public class ProfileSettings extends ARunnableActivity {
 	}
 	
 	private void startPreferencesSettings(){
-		Intent intent = new Intent(this, ProfileChecking.class);
-    	intent = intent.putExtra("name", name.getText().toString());
-    	intent = intent.putExtra("firstName", firstName.getText().toString());
-    	intent = intent.putExtra("jj", jj.getText().toString());
-    	intent = intent.putExtra("mm", mm.getText().toString());
-    	intent = intent.putExtra("aaaa", aaaa.getText().toString());
-    	intent = intent.putExtra("phone", phone.getText().toString());
-    	startActivityForResult(intent, CHECKING);
+		startProgressDialogInNewThread(this);
 	}
 	
 	@Override
@@ -209,8 +203,14 @@ public class ProfileSettings extends ARunnableActivity {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		Intent intent = new Intent(this, ProfileChecking.class);
+    	intent = intent.putExtra("name", name.getText().toString());
+    	intent = intent.putExtra("firstName", firstName.getText().toString());
+    	intent = intent.putExtra("jj", jj.getText().toString());
+    	intent = intent.putExtra("mm", mm.getText().toString());
+    	intent = intent.putExtra("aaaa", aaaa.getText().toString());
+    	intent = intent.putExtra("phone", phone.getText().toString());
+    	startActivityForResult(intent, CHECKING);
 	}
 	
 }

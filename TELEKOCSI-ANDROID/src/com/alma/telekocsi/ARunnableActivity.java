@@ -87,6 +87,9 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		case R.id.profile_id:
 			showProfileSettings();
 			return true;
+		case R.id.routes_id:
+			showRoutesManaging();
+			return true;
 	    }
 	    return false;
 	}
@@ -113,6 +116,11 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	
 	private void showProfileSettings(){		
 		Intent intent = new Intent(this, ProfileSettings.class);
+		startActivity(intent);
+	}
+	
+	private void showRoutesManaging(){
+		Intent intent = new Intent(this, RoutesManaging.class);
 		startActivity(intent);
 	}
 	

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+>
+	<!-- Header -->
+	<LinearLayout
+	android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/entete"
+    android:padding="5px"
+    >
+    	<ImageView
+    	android:src="@drawable/route"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingRight="5px"
+    	/>
+    	<TextView
+    	android:layout_width="wrap_content"
+    	android:layout_height="fill_parent"
+    	android:color="@color/txtEntete"
+    	android:text="@string/routes_managing_title"
+    	android:textSize="20px"
+    	android:textStyle="bold"
+    	android:gravity="center_vertical"
+    	/>
+    </LinearLayout>
+    
+     <!-- Main -->
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5px"
+    android:background="@color/fond"
+    >
+    	<ListView
+    	android:id="@+id/routes_array_id" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		/>
+	</LinearLayout>
+    
+    <!-- Footer -->
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/panelAction"
+    android:padding="5px"
+    >
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/back_button"
+    	android:id="@+id/routes_managing_back_id"
+    	/>
+    	<Button
+    	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+    	android:text="@string/create_new_route_button"
+    	android:id="@+id/routes_managing_creation_id"
+    	/>
+    </LinearLayout>
+</LinearLayout>
+    

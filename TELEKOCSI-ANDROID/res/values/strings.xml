@@ -48,6 +48,7 @@
     <string name="notifications_text">Notifications</string>
     <string name="profile_text">Mon profil</string>
     <string name="preferences_text">Mes préférences</string>
+    <string name="routes_text">Mes trajets</string>
  
     <!-- identification -->
     <string name="identification">Identification</string>
@@ -122,6 +123,14 @@
     <string name="route_creation_frequence_button_text">Choisissez la fréquence</string>
     <string name="route_creation_price">Prix (nombre de points)</string>
     <string name="route_creation_comment">Commentaire</string>
+
+	<!-- routes_managing -->
+	<string name="routes_managing_title">Gérer mes trajets</string>
+	<string name="no_route_registered">Vous n\'avez aucun trajet</string>
+	<string name="routes_managing_delete">Supprimer</string>
+	<string name="routes_managing_modify">Modifier</string>
+	<string name="create_new_route_button">Créer un nouveau trajet</string>
+	<string name="routes_managing_activate">Activer</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
