@@ -166,6 +166,10 @@
 </string-array>
 
 <string name="route_creation_failed">Echec de la création du trajet</string>
+<string name="route_creation_successed">Trajet enregistré</string>
+<string name="route_modification_failed">Echec de la création du trajet</string>
+<string name="route_modification_successed">Trajet enregistré</string>
 <string name="new_profile_button_text">Nouveau Profil</string>
 <string name="activated_route_map_text">Trajet actif</string>
+
 </resources>

@@ -137,8 +137,10 @@ public class DriverTab extends ListActivity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-				Intent intent = new Intent(DriverTab.this, RouteModification.class);
-				intent.putExtra(RouteModification.ROUTE_ARG, routes.get(which).getId());
+				//on affiche la l'ecran de creation
+				//au lieu de repeter le code dans modification
+				Intent intent = new Intent(DriverTab.this, RouteCreation.class);
+				intent.putExtra(RouteCreation.ROUTE_ARG, routes.get(which).getId());
 				startActivity(intent);
 			}
 			

@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 public class RouteModification extends ARunnableActivity {
+	
 	public static final String ROUTE_ARG = "routeToEdit";
 	
 	private Button startRouteCreationButton;

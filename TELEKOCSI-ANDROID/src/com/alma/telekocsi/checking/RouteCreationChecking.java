@@ -74,7 +74,7 @@ public class RouteCreationChecking extends Activity {
 
 	private boolean wrongArrivalTimes(String departure, String arrival){
 		//recuperer les date java en fonction des string
-		//et voir si departure >= arrival ou non
+		//et voir si departure < arrival ou non
 		return false;
 	}
 

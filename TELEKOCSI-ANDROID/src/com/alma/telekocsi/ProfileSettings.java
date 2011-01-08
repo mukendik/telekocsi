@@ -86,6 +86,7 @@ public class ProfileSettings extends ARunnableActivity {
         	}
         }
 	}
+	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

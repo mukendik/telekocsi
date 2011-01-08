@@ -31,6 +31,7 @@ import com.alma.telekocsi.session.SessionFactory;
 public class RouteCreation extends ARunnableActivity {
 	
 	private static final int CHECKING = 1;
+	public static final String ROUTE_ARG = "routeToEdit";
 	
 	static final int ROUTE_FREQUENCY_DIALOG = 0;
 	static private final int DEPARTURE_TIME = 1;
@@ -59,6 +60,10 @@ public class RouteCreation extends ARunnableActivity {
 	private TextView arrivalTimeLabel;
 	private TextView priceLabel;
 	private TextView frequencyLabel;
+	
+	private Trajet trajet;
+	
+	private boolean create = false;
 	
 	/**
 	 * Tableau de frequence de la meme taille que 
@@ -122,7 +127,7 @@ public class RouteCreation extends ARunnableActivity {
         	
         });
         
-        routeFreq.setOnClickListener(new OnClickListener() {			
+        routeFreq.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(frequencies==null){
@@ -152,7 +157,44 @@ public class RouteCreation extends ARunnableActivity {
 			}
 		});
         
+        //========================================
+        //on cree ou on modifie?
+        //Chargement du trajet parametres
+        String trajetId = (String)getIntent().getStringExtra(ROUTE_ARG);
+        if(trajetId==null){
+        	create = true;
+        }
+        else{
+            trajet = session.find(Trajet.class, trajetId);
+            if(trajet==null){
+            	finish();
+            	return;
+            }
+            //l'utilisateur modifie un trajet donc il faut mettre a jour ses valeurs
+            initValues();
+        }
+        
 	}//onCreate()
+	
+	private void initValues(){
+        //Chargement du trajet parametres
+		placesCount.setPrompt(""+trajet.getPlaceDispo());
+		timeArrivalButton.setText(trajet.getHoraireArrivee());
+		timeDepartureButton.setText(trajet.getHoraireDepart());
+		arrival.setText(trajet.getLieuDestination());
+		departure.setText(trajet.getLieuDepart());
+		comment.setText(trajet.getCommentaire());
+		frequencies = new boolean[]{false,false,false,false,false,false,false};
+		String freq = trajet.getFrequenceTrajet();
+		if(freq!=null){
+			for(int i=0;i<freq.length() && i<frequencies.length;++i) frequencies[i] = 'O'==freq.charAt(i);
+		}
+		price.setText(""+trajet.getNbrePoint());
+		for(int i=0;i<this.automaticRoute.getChildCount();++i){
+			RadioButton btn = (RadioButton)this.automaticRoute.getChildAt(i);
+			btn.setChecked(getString(R.string.yes).equals(btn.getText()));
+		}
+	}
 	
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -246,12 +288,20 @@ public class RouteCreation extends ARunnableActivity {
     			RouteCreation self = this;
     			if(doCreateRoute()){
     				goBack();
-    				Toast.makeText(self, "Trajet enregistré", Toast.LENGTH_SHORT).show();
+    				if(create){
+        				Toast.makeText(self, getString(R.string.route_creation_successed), Toast.LENGTH_SHORT).show();
+    				}else{
+        				Toast.makeText(self, getString(R.string.route_modification_successed), Toast.LENGTH_SHORT).show();
+    				}
     			}
     			else{
     				final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
     				alertBuilder.setTitle(R.string.app_name);
-    				alertBuilder.setMessage(getString(R.string.route_creation_failed));
+    				if(create){
+        				alertBuilder.setMessage(getString(R.string.route_creation_failed));
+    				}else{
+        				alertBuilder.setMessage(getString(R.string.route_modification_failed));
+    				}
     				alertBuilder.show();
     			}
     		}break;
@@ -317,7 +367,12 @@ public class RouteCreation extends ARunnableActivity {
 		RadioButton rb = (RadioButton)findViewById(automaticRoute.getCheckedRadioButtonId());
 		boolean autoroute = rb!=null && getString(R.string.yes).equals(rb.getText().toString());
 
-		Itineraire itineraire = new Itineraire();
+		Itineraire itineraire = null;
+		if(create){
+			itineraire = new Itineraire();
+		}else{
+			itineraire = session.find(Itineraire.class, trajet.getId());
+		}
 		itineraire.setLieuDepart(departure.getText().toString());
 		itineraire.setLieuDestination(arrival.getText().toString());
 		itineraire.setCommentaire(comment.getText().toString());
@@ -330,10 +385,16 @@ public class RouteCreation extends ARunnableActivity {
 		for(boolean freqBool : frequencies) freq += freqBool?"O":"N";
 		itineraire.setFrequenceTrajet(freq);
 		
-		itineraire = session.save(itineraire);
+		if(create){
+			itineraire = session.save(itineraire);
+		}else{
+			itineraire = session.update(itineraire);
+		}
 
 		if(itineraire!=null){
-			Trajet trajet = new Trajet();
+			if(create){
+				trajet = new Trajet();
+			}
 			trajet.setAutoroute(autoroute);
 			trajet.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
 			trajet.setLieuDepart(itineraire.getLieuDepart());
