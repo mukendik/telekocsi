@@ -61,7 +61,7 @@ public class MapInfoItiniraire {
 
 
 	public void start() {
-		Log.i(this.getClass().getName(), "start()");
+		Log.i(this.getClass().getName(), "start MapInfoItiniraire");
 		new CalculItiniraire().execute(null, null, null);
 
 		//		timer.scheduleAtFixedRate(new TimerTask() { 
@@ -74,7 +74,7 @@ public class MapInfoItiniraire {
 
 
 	public void stop(){ 
-		Log.i(this.getClass().getName(), "stop()");
+		Log.i(this.getClass().getName(), "stop MapInfoItiniraire");
 		//		timer.cancel();
 	}
 

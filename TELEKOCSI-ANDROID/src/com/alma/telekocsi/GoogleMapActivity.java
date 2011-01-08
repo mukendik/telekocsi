@@ -7,8 +7,10 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.map.IMapInfoItiniraire;
+import com.alma.telekocsi.map.IMapUserLocalization;
 import com.alma.telekocsi.map.MapInfoItiniraire;
 import com.alma.telekocsi.map.MapOverlay;
+import com.alma.telekocsi.map.MapUserLocalization;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
@@ -30,7 +32,7 @@ import android.widget.Toast;
  *
  */
 
-public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire {
+public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire,IMapUserLocalization {
 
 	private MapView mapView;
 	private TextView tvDistance;
@@ -42,6 +44,7 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 	private Context context;
 	private Trajet trajetActif;
 	private MapInfoItiniraire mapInfoItiniraire;
+	private MapUserLocalization mapUserLocalization;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -52,8 +55,8 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 
 		//Récupération du profil courant
 		Session session = SessionFactory.getCurrentSession(context);
+		
 		if(session!=null) {
-
 			currentProfil = session.getActiveProfile(); // n'est jamais null normalement
 			Log.i(GoogleMapActivity.class.getSimpleName(), "profil de la session courante \n==> "+currentProfil);
 
@@ -106,24 +109,21 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 		mapInfoItiniraire = new MapInfoItiniraire(this, trajetActif);
 		mapInfoItiniraire.start();
 		Toast.makeText(context, "Veuillez patienter...", Toast.LENGTH_LONG).show();
+		
+		mapUserLocalization = new MapUserLocalization(this, currentProfil, trajetActif);
+		mapUserLocalization.start();
 
 	}
 
 	
-
 	
-
-
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
 		mapInfoItiniraire.stop();
+		mapUserLocalization.stop();
 	}
 
-
-	public GeoPoint getLocation() {
-		return location; 
-	}
 
 	public void setLocation(GeoPoint location) {
 		if(location!=null) {
@@ -140,6 +140,7 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 
 	@Override
 	public void finish() {
+		mapView.getOverlays().clear();
 		super.finish();
 	}
 	
@@ -147,12 +148,10 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 
 	@Override
 	public void showItiniraireOverlays() {
-		//Ajout de markers
-		List<Overlay> listOfOverlays = mapView.getOverlays();
-		listOfOverlays.clear();
+
 		//depart
 		if(mapInfoItiniraire.getPointDepart()!=null){
-			listOfOverlays.add(new MapOverlay(mapInfoItiniraire.getPointDepart(), R.drawable.pin_depart));
+			mapView.getOverlays().add(new MapOverlay(mapInfoItiniraire.getPointDepart(), R.drawable.pin_depart));
 			mapController.animateTo(mapInfoItiniraire.getPointDepart());
 			tvDepart.setText(mapInfoItiniraire.getLieuDepart());
 		}
@@ -160,15 +159,20 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 
 		//arrivee
 		if(mapInfoItiniraire.getPointArrivee()!=null){
-			listOfOverlays.add(new MapOverlay(mapInfoItiniraire.getPointArrivee(), R.drawable.pin_arrivee));
+			mapView.getOverlays().add(new MapOverlay(mapInfoItiniraire.getPointArrivee(), R.drawable.pin_arrivee));
 			tvArrivee.setText(mapInfoItiniraire.getLieuArrivee());
 		}
 		
 		
-		listOfOverlays.addAll(mapInfoItiniraire.getOverlays());
+		mapView.getOverlays().addAll(mapInfoItiniraire.getOverlays());
 
 		tvDistance.setText( mapInfoItiniraire.getDistanceTotalToString()+" / " + mapInfoItiniraire.getDistanceTotalToString()+" Km");
 		
+	}
+
+	@Override
+	public void showUserLocalizationOverlays() {
+		mapView.getOverlays().addAll(mapUserLocalization.getOverlays());
 	}
 
 	

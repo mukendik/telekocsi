@@ -1,7 +1,5 @@
 package com.alma.telekocsi.map;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -12,19 +10,15 @@ import com.alma.telekocsi.R;
 import com.alma.telekocsi.dao.localisation.Localisation;
 import com.alma.telekocsi.dao.localisation.LocalisationDAO;
 import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.util.LocalDate;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
 
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Binder;
-import android.os.IBinder;
+import android.os.AsyncTask;
 import android.util.Log;
 
 
@@ -33,90 +27,41 @@ public class MapUserLocalization {
 	private GeoPoint pointConducteur;
 	private List<GeoPoint> pointsPassager;
 
-
-	public static final String RESULT_USERLOCALIZATION = "result";
 	private static final String CONDUCTEUR = "C";        
 	
 	private Timer timer;
 	private Profil profil;
+	private Trajet trajet;
 	private LocationManager locationManager;
-	private MapView mapView;
+	private GoogleMapActivity context;
+	private List<MapOverlay> overlays;
 
-
-	public MapUserLocalization() {
-	
-	
+	public MapUserLocalization(GoogleMapActivity context, Profil profil, Trajet trajet) {
+		this.context = context;
+		this.profil = profil;
+		this.trajet = trajet;
 		timer = new Timer();
 		pointsPassager = new ArrayList<GeoPoint>();
-		//mapView = (MapView) findViewById(R.id.mapView);
-/*
-		if(profil.getTypeProfil().equals(CONDUCTEUR)){
-			Log.i(GoogleMapActivity.class.getSimpleName(), "Type du Profil : CONDUCTEUR");
-
-			//position conducteur = celle du mobile calcule GPS
-			pointConducteur = getPositionMobile(context);
-
-			//coordonnée des passagers = derniere localisation GAE 
-			TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
-			LocalisationDAO localisationDAO = new LocalisationDAO();
-			Localisation localisation = null;
-
-			for(String idPassager : trajetLigneDAO.getListPassagers(trajetID)) {
-				localisation = localisationDAO.getList(idPassager).size() > 0 ? localisationDAO.getList(idPassager).get(0) : null;
-				if(localisation!=null) {
-					pointsPassager.add(new GeoPoint((int)(localisation.getLatitude()*1000000),(int)(localisation.getLongitude()*1000000)));
-
-					Log.i(GoogleMapActivity.class.getSimpleName(), "Passager position : " + localisation.getLatitude() +" , " +localisation.getLongitude());
-				}
-			}
-
-		}else {
-			GeoPoint p = getPositionMobile(context);
-			if(p!=null){
-				pointsPassager.add(p);
-			}
-
-			int latitudeE6 = (int)(46.814081*1000000);
-			int longitudeE6 = (int)(-1.349166*1000000);
-
-			pointConducteur = new GeoPoint(latitudeE6, longitudeE6);
-			Log.i(GoogleMapActivity.class.getSimpleName(), "Type Profil : PASSAGER");
-			//coordonnée du conducteur
-			// recherche sur GAE
-		}
-*/
+		overlays = new ArrayList<MapOverlay>();
 	}
 
 
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d(this.getClass().getName(), "onStart"); 
+	public void start() {
+		Log.d(this.getClass().getName(), "start MapUserLocalization"); 
 		timer.scheduleAtFixedRate(new TimerTask() { 
 			public void run() { 
-				int n = 3, result = 2;
-				Intent resultIntent = new Intent(RESULT_USERLOCALIZATION);
-				resultIntent.putExtra("fibo", n);
-				resultIntent.putExtra("result", result);
-				//sendBroadcast(resultIntent);
+				Log.i(MapUserLocalization.class.getSimpleName(), "Scheduler MapUserLocalization");
+				new CalculUserPosition().execute(null, null, null);
 			} 
 		}, 0, 20000); 
-
-		return 1;
+		
+		
 	}
 
 
 	
-	public void onDestroy(){ 
-		
+	public void stop(){ 
 		timer.cancel();
-	}
-
-
-
-
-
-	/* Methods du service */
-	public String test() {
-		return "Test appel method sur service";
 	}
 
 
@@ -126,11 +71,12 @@ public class MapUserLocalization {
 	 * @return un GeoPoint
 	 */
 	private GeoPoint getPositionMobile(Context context) {
-		Log.i(GoogleMapActivity.class.getSimpleName(),"---> Debut getPositionMobile() <---");
-
+		Log.i(MapUserLocalization.class.getSimpleName(),"---> Debut getPositionMobile() <---");
+		
 		String locationContext = Context.LOCATION_SERVICE;
+		Log.i(MapUserLocalization.class.getSimpleName(), "LOCATION_SERVICE : " + locationContext);
 		locationManager = (LocationManager) context.getSystemService(locationContext);
-
+		Log.i(MapUserLocalization.class.getSimpleName(), "locationManager : " + locationManager.toString());
 		Location location;
 		location = getLastKnownLocation();
 
@@ -139,7 +85,7 @@ public class MapUserLocalization {
 		int longitudeE6;
 
 		if(location!=null) {
-			Log.i(GoogleMapActivity.class.getSimpleName(),"LocationManager -> provider : " + location.getProvider() +
+			Log.i(MapUserLocalization.class.getSimpleName(),"LocationManager -> provider : " + location.getProvider() +
 					" | Lat: " +location.getLatitude() +
 					" | Longitude : "+location.getLongitude());
 
@@ -165,7 +111,7 @@ public class MapUserLocalization {
 		}
 
 
-		Log.i(GoogleMapActivity.class.getSimpleName(),"---> Fin getPositionMobile() <---");
+		Log.i(MapUserLocalization.class.getSimpleName(),"---> Fin getPositionMobile() <---");
 		return positionMobile;
 	}
 
@@ -178,33 +124,74 @@ public class MapUserLocalization {
 		if(location==null){
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) ;
 		}
+		Log.i(MapUserLocalization.class.getSimpleName(), "location : "+location);
 		return location;
 	}
 
+	private void calculUsersPosition() {
+		
+		LocalisationDAO localisationDAO = new LocalisationDAO();
+		if(profil.getTypeProfil().equals(CONDUCTEUR)){
+			Log.i(MapUserLocalization.class.getSimpleName(), "Type du Profil : CONDUCTEUR");
 
-	/**
-	 * Positionnement des markers sur la map
-	 */
-	private void makeOverlays() {
-		//Ajout de markers
-		List<Overlay> listOfOverlays = mapView.getOverlays();
-		listOfOverlays.clear();
-
-		//conducteur
-		if(getPointConducteur()!=null){
-			listOfOverlays.add(new MapOverlay(getPointConducteur(), R.drawable.pin_conducteur));  
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointConducteur()-->null Pointer  donc non affiche");}
-
-
-		//liste passagers
-		if(getPointsPassager()!=null){
-			for(GeoPoint pointPassager : getPointsPassager()){
-				listOfOverlays.add(new MapOverlay(pointPassager, R.drawable.pin_passager));
+			//position conducteur = celle du mobile calcule GPS
+			pointConducteur = getPositionMobile(context);
+			if(pointConducteur!=null){
+				overlays.add(new MapOverlay(pointConducteur, R.drawable.pin_conducteur));
 			}
-		}else {Log.i(GoogleMapActivity.class.getSimpleName(),"makeOverlays : mapInfo.getPointsPassager()-->null Pointer  donc non affiche");}
+			//coordonnée des passagers = derniere localisation GAE 
+			TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
+		
+			Localisation localisation = null;
 
+			for(String idPassager : trajetLigneDAO.getListPassagers(trajet.getId())) {
+				localisation = localisationDAO.getList(idPassager).size() > 0 ? localisationDAO.getList(idPassager).get(0) : null;
+				if(localisation!=null) {
+					GeoPoint pointPassager = new GeoPoint((int)(localisation.getLatitude()*1000000),(int)(localisation.getLongitude()*1000000));
+					pointsPassager.add(pointPassager);
+					overlays.add(new MapOverlay(pointPassager, R.drawable.pin_conducteur));
+					
+					Log.i(MapUserLocalization.class.getSimpleName(), "Passager position : " + localisation.getLatitude() +" , " +localisation.getLongitude());
+				}
+			}
+
+		}else {
+			Log.i(MapUserLocalization.class.getSimpleName(), "Type du Profil : PASSAGER");
+			
+			GeoPoint passager = getPositionMobile(context);
+			
+			if(passager!=null){
+				pointsPassager.add(passager);
+			}
+			
+			
+			//coordonnée du conducteur
+			// recherche sur GAE
+			List<Localisation> localisationsConducteur = localisationDAO.getList(trajet.getIdProfilConducteur());
+			if(localisationsConducteur!=null && localisationsConducteur.size()>0) {
+				pointConducteur = new GeoPoint((int)(localisationsConducteur.get(0).getLatitude()*1000000), (int)(localisationsConducteur.get(0).getLongitude()*1000000));
+			}
+
+		}
+		
 	}
-
+	
+	private class CalculUserPosition extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected Void doInBackground(Void... urls) {
+			calculUsersPosition();
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			context.showUserLocalizationOverlays();
+		}		
+	}
+	
+	
+	
+	
 	/* ***************************
 	 * Getter & Setter
 	 * ***************************/
@@ -222,5 +209,9 @@ public class MapUserLocalization {
 
 	public void setPointsPassager(List<GeoPoint> pointsPassager) {
 		this.pointsPassager = pointsPassager;
+	}
+	
+	public List<MapOverlay> getOverlays(){
+		return overlays;
 	}
 }
