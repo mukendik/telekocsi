@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import android.graphics.Color;
 import android.location.Address;
@@ -148,7 +149,7 @@ public class MapInfoItiniraire {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			* FIN TEMPORAIRE */
+			 * FIN TEMPORAIRE */
 
 
 			if(pointDepart!=null && pointArrivee!=null){
@@ -260,28 +261,33 @@ public class MapInfoItiniraire {
 			doc = db.parse(urlConnection.getInputStream()); 
 
 			if(doc.getElementsByTagName("GeometryCollection").getLength()>0) {
-				String path = doc.getElementsByTagName("GeometryCollection").item(0).getFirstChild().getFirstChild().getFirstChild().getNodeValue() ;
-				Log.d("xxx","path="+ path);
-				String [] pairs = path.split(" "); 
-				String[] lngLat = pairs[0].split(","); // lngLat[0]=longitude lngLat[1]=latitude lngLat[2]=height
-				// src
-				GeoPoint startGP = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
-				//overlays.add(new MapOverlay(startGP, R.drawable.pin_depart));
-				GeoPoint gp1;
-				GeoPoint gp2 = startGP; 
-				double distanceIntermediaire;
-				for(int i=1;i<pairs.length;i++) // the last one would be crash
-				{
-					lngLat = pairs[i].split(",");
-					gp1 = gp2;
-					// watch out! For GeoPoint, first:latitude, second:longitude
-					gp2 = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
-					overlays.add(new MapOverlay(gp1,gp2,MapOverlay.PATH,color));
-					Log.d("xxx","pair:" + pairs[i]);
-					distanceIntermediaire = Distance.calculateDistance(gp1, gp2, Distance.KILOMETERS);
-					distanceTotale += Double.isNaN(distanceIntermediaire) ? 0 : distanceIntermediaire;
+				for(int lineStringId = 0 ; lineStringId < doc.getElementsByTagName("LineString").getLength(); lineStringId++){
+					Log.i("xxx"," path["+lineStringId+"]: " +doc.getElementsByTagName("LineString").item(lineStringId).getFirstChild().getFirstChild().getNodeValue());
+
+					String path = doc.getElementsByTagName("LineString").item(lineStringId).getFirstChild().getFirstChild().getNodeValue() ;
+
+					String[]  pairs = path.split(" ");
+					String[] lngLat = pairs[0].split(","); // lngLat[0]=longitude lngLat[1]=latitude lngLat[2]=height
+					// src
+					GeoPoint startGP = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
+					//overlays.add(new MapOverlay(startGP, R.drawable.pin_depart));
+					GeoPoint gp1;
+					GeoPoint gp2 = startGP; 
+					double distanceIntermediaire;
+					Log.d("xxx","nb pairs : " + pairs.length);
+					for(int i=1;i<pairs.length;i++) // the last one would be crash
+					{
+						lngLat = pairs[i].split(",");
+						gp1 = gp2;
+						// watch out! For GeoPoint, first:latitude, second:longitude
+						gp2 = new GeoPoint((int)(Double.parseDouble(lngLat[1])*1E6),(int)(Double.parseDouble(lngLat[0])*1E6));
+						overlays.add(new MapOverlay(gp1,gp2,MapOverlay.PATH,color));
+						Log.d("xxx","pair["+i+"]:" + pairs[i]);
+						distanceIntermediaire = Distance.calculateDistance(gp1, gp2, Distance.KILOMETERS);
+						distanceTotale += Double.isNaN(distanceIntermediaire) ? 0 : distanceIntermediaire;
+					}
+					//overlays.add(new MapOverlay(dest, R.drawable.pin_arrivee)); // use the default color
 				}
-				//overlays.add(new MapOverlay(dest, R.drawable.pin_arrivee)); // use the default color
 			} 
 		}
 		catch (Exception e)
