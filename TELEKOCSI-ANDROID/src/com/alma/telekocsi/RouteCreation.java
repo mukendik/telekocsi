@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,9 +17,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.alma.telekocsi.checking.RouteCreationChecking;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
@@ -25,6 +29,8 @@ import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
 public class RouteCreation extends ARunnableActivity {
+	
+	private static final int CHECKING = 1;
 	
 	static final int ROUTE_FREQUENCY_DIALOG = 0;
 	static private final int DEPARTURE_TIME = 1;
@@ -47,10 +53,17 @@ public class RouteCreation extends ARunnableActivity {
 	private Session session;
 	private Profil profile;
 	
+	private TextView departurePlaceLabel;
+	private TextView departureTimeLabel;
+	private TextView arrivalPlaceLabel;
+	private TextView arrivalTimeLabel;
+	private TextView priceLabel;
+	private TextView frequencyLabel;
+	
 	/**
 	 * Tableau de frequence de la meme taille que 
 	 */
-	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false,false};;
+	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false,false};
 		                
 	private int departureMinute, departureHour, arrivalMinute, arrivalHour;
 
@@ -75,6 +88,13 @@ public class RouteCreation extends ARunnableActivity {
         routeFreq = (Button)findViewById(R.id.route_creation_frequence_user);
         session = SessionFactory.getCurrentSession(this);
         profile = session.getActiveProfile();
+        
+        departurePlaceLabel = (TextView)findViewById(R.id.route_creation_departure_label);
+        arrivalPlaceLabel = (TextView)findViewById(R.id.route_creation_arrival_label);
+        departureTimeLabel = (TextView)findViewById(R.id.route_creation_departure_time_label);
+        arrivalTimeLabel = (TextView)findViewById(R.id.route_creation_arrival_time_label);
+        frequencyLabel = (TextView)findViewById(R.id.route_creation_frequence_trajet_label);
+        priceLabel = (TextView)findViewById(R.id.route_creation_price_label);
         
         timeDepartureButton = (Button)findViewById(R.id.time_departure_button);
         timeDepartureButton.setOnClickListener(new OnClickListener(){
@@ -215,11 +235,85 @@ public class RouteCreation extends ARunnableActivity {
 		startProgressDialogInNewThread(this);
 	}
 	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    	switch (requestCode) {
+    	case CHECKING:
+    		switch(resultCode) {
+    		case RESULT_OK:{
+    			
+    			RouteCreation self = this;
+    			if(doCreateRoute()){
+    				goBack();
+    				Toast.makeText(self, "Trajet enregistré", Toast.LENGTH_SHORT).show();
+    			}
+    			else{
+    				final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
+    				alertBuilder.setTitle(R.string.app_name);
+    				alertBuilder.setMessage(getString(R.string.route_creation_failed));
+    				alertBuilder.show();
+    			}
+    		}break;
+    		case RouteCreationChecking.INVALID_DEPARTURE_PLACE:
+    			departurePlaceLabel.setTextColor(Color.RED);
+    			departureTimeLabel.setTextColor(Color.BLACK);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
+    		case RouteCreationChecking.INVALID_ARRIVAL_PLACE:
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.BLACK);
+    			arrivalPlaceLabel.setTextColor(Color.RED);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
+    		case RouteCreationChecking.INVALID_DEPARTURE_TIME:
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.RED);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
+    		case RouteCreationChecking.INVALID_ARRIVAL_TIME:
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.BLACK);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.RED);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
+    		case RouteCreationChecking.INVALID_FREQUENCY:
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.BLACK);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.RED);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
+    		case RouteCreationChecking.INVALID_PRICE:
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.BLACK);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.RED);
+    			break;
+    		}
+    	}
+		stopProgressDialog();
+    }
+	
 	/**
 	 * Cr�ation du trajet
 	 * @return true en cas de succ�s
 	 */
-	protected boolean doCreateRoute(){		
+	protected boolean doCreateRoute(){
+		
 		RadioButton rb = (RadioButton)findViewById(automaticRoute.getCheckedRadioButtonId());
 		boolean autoroute = rb!=null && getString(R.string.yes).equals(rb.getText().toString());
 
@@ -261,19 +355,20 @@ public class RouteCreation extends ARunnableActivity {
 
 	@Override
 	public void run() {
-		RouteCreation self = this;
-		//FIXME Ajouter la v�rifaction des valeurs
-		if(doCreateRoute()){
-			goBack();
-//			Toast.makeText(this, "Trajet enregistré", Toast.LENGTH_SHORT).show();
-		}
-		else{
-			final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(self);
-			alertBuilder.setTitle(R.string.app_name);
-			alertBuilder.setMessage(getString(R.string.route_creation_failed));
-			alertBuilder.show();
-		}
-		stopProgressDialog();
+		Intent intent = new Intent(this, RouteCreationChecking.class);
+    	intent = intent.putExtra("departurePlace", departure.getText().toString());
+    	intent = intent.putExtra("arrivalPlace", arrival.getText().toString());
+    	intent = intent.putExtra("departureTime", timeDepartureButton.getText().toString());
+    	intent = intent.putExtra("arrivalTime", timeArrivalButton.getText().toString());
+    	intent = intent.putExtra("frequency", hasAtLeastOneFrequency());
+    	intent = intent.putExtra("price", price.getText().toString());
+    	startActivityForResult(intent, CHECKING);
+	}
+	
+	private boolean hasAtLeastOneFrequency(){
+		boolean res = false;
+		for(boolean freqBool : frequencies) res |= freqBool;
+		return res;
 	}
 	
 }
