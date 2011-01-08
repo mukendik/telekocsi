@@ -149,7 +149,7 @@ public class MapUserLocalization {
 				if(localisation!=null) {
 					GeoPoint pointPassager = new GeoPoint((int)(localisation.getLatitude()*1000000),(int)(localisation.getLongitude()*1000000));
 					pointsPassager.add(pointPassager);
-					overlays.add(new MapOverlay(pointPassager, R.drawable.pin_conducteur));
+					overlays.add(new MapOverlay(pointPassager, R.drawable.pin_passager));
 					
 					Log.i(MapUserLocalization.class.getSimpleName(), "Passager position : " + localisation.getLatitude() +" , " +localisation.getLongitude());
 				}
@@ -162,6 +162,7 @@ public class MapUserLocalization {
 			
 			if(passager!=null){
 				pointsPassager.add(passager);
+				overlays.add(new MapOverlay(passager, R.drawable.pin_passager));
 			}
 			
 			
@@ -170,6 +171,7 @@ public class MapUserLocalization {
 			List<Localisation> localisationsConducteur = localisationDAO.getList(trajet.getIdProfilConducteur());
 			if(localisationsConducteur!=null && localisationsConducteur.size()>0) {
 				pointConducteur = new GeoPoint((int)(localisationsConducteur.get(0).getLatitude()*1000000), (int)(localisationsConducteur.get(0).getLongitude()*1000000));
+				overlays.add(new MapOverlay(pointConducteur, R.drawable.pin_conducteur));
 			}
 
 		}
