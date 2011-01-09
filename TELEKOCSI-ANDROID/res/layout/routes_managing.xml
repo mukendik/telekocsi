@@ -3,13 +3,14 @@
 android:orientation="vertical"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/fd"
 >
 	<!-- Header -->
 	<LinearLayout
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -35,7 +36,6 @@ android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5px"
-    android:background="@color/fond"
     >
     
     	<LinearLayout
@@ -48,12 +48,11 @@ android:layout_height="fill_parent"
     		<TextView
     		android:gravity="center_vertical" 
     		android:id="@+id/help_to_context_menu_id"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background" 
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     		android:text="@string/help_to_context_menu"
     		android:layout_height="wrap_content" 
-    		android:layout_width="wrap_content" 
-    		android:textStyle="bold">
+    		android:layout_width="wrap_content">
     		</TextView>
 		</LinearLayout>
     	<ListView

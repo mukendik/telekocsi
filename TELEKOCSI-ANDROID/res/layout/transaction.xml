@@ -10,14 +10,13 @@
         android:orientation="horizontal"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:background="@color/entete"
+    android:background="@color/gris"
     	>
 
     	<ImageButton
     		android:src="@drawable/payment"
     		android:layout_width="24px"
     		android:layout_height="24px"
-    		android:background="@color/entete"
     		android:layout_marginLeft="5px"
     		android:layout_marginTop="5px"
     		/>
@@ -46,8 +45,8 @@
     		android:layout_width="wrap_content" 
     		android:layout_height="wrap_content" 
     		android:text="@string/nbPointEchange"
-    		android:textColor="@color/white"
-    		android:background="@color/txtGroupe"
+	    	android:textColor="@color/h2_color"
+   			android:background="@color/grisc"
     		android:layout_marginLeft="5px"
     		android:layout_marginTop="5px"
    		/>
@@ -258,8 +257,8 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content" 
     			android:text="@string/avis"
-    			android:textColor="@color/white"
-    			android:background="@color/txtGroupe"
+		    	android:textColor="@color/h2_color"
+	   			android:background="@color/grisc"
    				/> 
     		
     		<RatingBar
@@ -286,8 +285,8 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content" 
     			android:text="@string/commentaire"
-    			android:textColor="@color/white"
-    			android:background="@color/txtGroupe"
+		    	android:textColor="@color/h2_color"
+	   			android:background="@color/grisc"
    				/> 
     		
     		<EditText

@@ -3,13 +3,14 @@
 android:orientation="vertical"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/fd"
 >
 	<!-- Header -->
 	<LinearLayout
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -35,7 +36,6 @@ android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5px"
-    android:background="@color/fond"
     >
     	
     	<LinearLayout
@@ -46,12 +46,11 @@ android:layout_height="fill_parent"
     	>
     		<TextView
     		android:id="@+id/TextView01"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background" 
+	    	android:textColor="@color/h2_color"
+	    	android:background="@color/grisc"
     		android:text="@string/route_creation_type_title" 
     		android:layout_height="wrap_content" 
     		android:layout_width="wrap_content" 
-    		android:textStyle="bold"
     		android:gravity="center_vertical"
     		/>
 		</LinearLayout>
@@ -103,7 +102,8 @@ android:layout_height="fill_parent"
    				android:id="@+id/route_creation_departure_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_departure"
     			/>
     			<EditText
@@ -119,7 +119,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_arrival_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_arrival"
     			/>
     			<EditText
@@ -135,7 +136,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_places_count_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_places_count"
     			/>
     			<Spinner
@@ -151,7 +153,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_arrival_time_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_departure_time"
     			/>
     			<EditText
@@ -167,7 +170,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_arrival_time_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_arrival_time"
     			/>
     			<EditText
@@ -183,7 +187,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_frequence_trajet_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_frequence"
     			/>
     			<Button
@@ -198,7 +203,8 @@ android:layout_height="fill_parent"
    				android:id="@+id/route_creation_price_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_price"
     			/>
     			<EditText
@@ -214,7 +220,8 @@ android:layout_height="fill_parent"
     			android:id="@+id/route_creation_comment_label"
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:textColor="@color/h2_color"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     			android:text="@string/route_creation_comment"
     			/>
     			<EditText

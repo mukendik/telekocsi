@@ -3,20 +3,20 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/fd"
     >
-
+	<!-- Header -->
     <LinearLayout
         android:orientation="horizontal"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:background="@color/entete"
+    	android:background="@color/gris"
     	>
 
     	<ImageButton
     		android:src="@drawable/car"
     		android:layout_width="24px"
     		android:layout_height="24px"
-    		android:background="@color/entete"
     		android:layout_marginLeft="5px"
     		android:layout_marginTop="5px"
     		/>
@@ -37,20 +37,19 @@
         android:orientation="vertical"
    		android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:background="@color/fond"
     	>
     	
     	<TextView  
     		android:layout_width="fill_parent" 
     		android:layout_height="wrap_content" 
     		android:id="@+id/tvDTDepartArrivee"
-    		android:textColor="@color/white"
-    		android:background="@color/txtGroupe"
+	    	android:textColor="@color/h2_color"
+	    	android:background="@color/grisc"
     		android:layout_marginLeft="5px"
     		android:layout_marginRight="5px"
     		android:layout_marginTop="5px"
     		android:gravity="center_horizontal"
-    		android:textStyle="bold"
+
    		/>
  
     	
@@ -234,7 +233,6 @@
    		    android:orientation="vertical"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
     		android:layout_marginLeft="5px"
     		android:layout_marginRight="5px"
     		android:layout_marginTop="5px">
@@ -243,8 +241,8 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content" 
     			android:text="@string/conducteur2"
-    			android:textColor="@color/white"
-    			android:background="@color/txtGroupe"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
    				/>
    				
    		</LinearLayout>

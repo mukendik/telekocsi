@@ -85,8 +85,8 @@ android:background="@drawable/fd"
 	    		<TextView
 	    		android:layout_width="wrap_content"
 	    		android:layout_height="wrap_content"
-	    		android:textColor="@color/h2_color"
 	    		android:text="@string/smoker" 
+	    		android:textColor="@color/h2_color"
 	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup

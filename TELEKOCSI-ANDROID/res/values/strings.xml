@@ -167,7 +167,7 @@
 	<color name="fondBtn">#4bc2f3</color>
 	<color name="white">#ffffff</color>
 	<color name="txtEntete">#a9a9a9</color>
-	<color name="fondPanel">#d0effc</color>
+	<color name="fondPanel">#ffffff</color>
 	<color name="txtInfo">#4fc416</color>
 	<color name="txtGroupe">#84b441</color>
 	<color name="panelAction">#535252</color>
