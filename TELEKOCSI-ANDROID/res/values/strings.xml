@@ -34,6 +34,7 @@
 	<string name="page">Page : 1/5</string>
 	<string name="newsearch">Nouvelle recherche</string>
 	<string name="quit">Quitter</string>
+	<string name="tel">Téléphone</string>
 	
 	<!-- main_menu -->
     <string name="main_menu_title">Telekocsi</string>
