@@ -28,6 +28,7 @@ import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.dao.transaction.Transaction;
 import com.alma.telekocsi.dao.transaction.TransactionDAO;
 
+
 /**
  * @author Rv
  *
@@ -319,5 +320,19 @@ public class SessionImpl implements Session {
 		else if(Localisation.class==type) return (T)localisationDAO.getLocalisation(id);
 		return null;
 	}
+	
 
+	@Override
+	public List<Itineraire> getItineraires() {
+		List<Itineraire> itineraires = itineraireDAO.getList(getActiveProfile().getId());
+		return itineraires;
+	}
+	
+	
+	@Override
+	public List<Trajet> getTrajets(Trajet trajetModel) {
+		List<Trajet> trajets = trajetDAO.getTrajetDispo(trajetModel);		
+		return trajets;
+	}
+	
 }

@@ -5,15 +5,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
-import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
-import com.alma.telekocsi.init.DataContext;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -51,6 +50,8 @@ public class TrajetRecherche extends ARunnableActivity {
 	private OnItemSelectedListener onTrajetSelectedListener;
 	private OnItemSelectedListener onDateSelectedListener;
 	
+	private Session session;
+	
 	
 	final Handler handler = new Handler() {
 		
@@ -74,6 +75,8 @@ public class TrajetRecherche extends ARunnableActivity {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.trajetrecherche);
+        
+        session = SessionFactory.getCurrentSession(this);
         
         btRecherche = (Button)findViewById(R.id.btTRRecherche);
         btRecherche.setOnClickListener(getOnClickListener());     
@@ -106,7 +109,9 @@ public class TrajetRecherche extends ARunnableActivity {
 			@Override
 			public void run() {
 				
-		        adapterItineraire = new ArrayAdapter<Itineraire>(trajetRecherche, android.R.layout.simple_spinner_item, getItineraires());
+				
+				List<Itineraire> itineraires = session.getItineraires();
+		        adapterItineraire = new ArrayAdapter<Itineraire>(trajetRecherche, android.R.layout.simple_spinner_item, itineraires);
 		        adapterItineraire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);				
 
 		        initDates();
@@ -247,7 +252,7 @@ public class TrajetRecherche extends ARunnableActivity {
 		btRecherche.setEnabled((date != null) && (itineraire != null));
 	}
 	
-	
+	/*
 	public List<Itineraire> getItineraires() {
 		
 		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
@@ -255,7 +260,7 @@ public class TrajetRecherche extends ARunnableActivity {
 		List<Itineraire> itineraires = itineraireDAO.getList(DataContext.getCurrentProfil().getId());
 		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets");
 		return itineraires;
-	}
+	}*/
 	
 	
 	public void initDates() {

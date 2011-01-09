@@ -68,7 +68,7 @@ public class RouteCreation extends ARunnableActivity {
 	/**
 	 * Tableau de frequence de la meme taille que 
 	 */
-	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false,false};
+	private boolean[] frequencies = new boolean[]{false,false,false,false,false,false,false};
 		                
 	private int departureMinute, departureHour, arrivalMinute, arrivalHour;
 
@@ -131,7 +131,7 @@ public class RouteCreation extends ARunnableActivity {
 			@Override
 			public void onClick(View v) {
 				if(frequencies==null){
-					frequencies = new boolean[]{false,false,false,false,false,false,false,false};
+					frequencies = new boolean[]{false,false,false,false,false,false,false};
 				}
 				AlertDialog.Builder builder = new AlertDialog.Builder(RouteCreation.this);
 				builder.setTitle(R.string.route_creation_frequence);

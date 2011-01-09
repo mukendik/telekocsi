@@ -22,9 +22,8 @@ public class IdentificationChecking extends Activity {
 		 String  email = extras.getString("email").toString();
 		 String password = extras.getString("password").toString();
 		 
-		 System.out.println(email);
-		 System.out.println(password);
-		 
+		 System.out.println("email [" + email + "]");
+		 System.out.println("password [" + password + "]");
 	     
 	     if(!session.login(email, password)){
 	    	 setResult(IDENTIFICATION_ERROR);

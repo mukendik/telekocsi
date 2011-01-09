@@ -5,6 +5,7 @@ package com.alma.telekocsi.session;
 
 import java.util.List;
 
+import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 
@@ -138,4 +139,26 @@ public interface Session {
      * @return Les trajets du profil actif
      */
     public abstract List<Trajet> getRoutes();
+    
+    /**
+     * 
+     * @return Les itineraires du profil actif
+     */
+    public abstract List<Itineraire> getItineraires();
+    
+    
+    /**
+     * Recherche les trajets actifs correspondants au modele transmis.
+     * Les trajets selectionnes doivent avoir des places disponibles.
+     * 
+     * Elements devant etre renseignes dans le modele :
+     * - lieuDepart
+     * - lieuDestination
+     * - dateTrajet
+     * 
+     * @param le modele permettant d'identifier les criteres de recherche
+     * @return Les trajets actifs sur la base du modele transmis
+     */
+    public abstract List<Trajet> getTrajets(Trajet trajetModel);
+	
 }

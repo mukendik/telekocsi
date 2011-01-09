@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
-import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
-import com.alma.telekocsi.dao.trajet.TrajetDAO;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
 
 import android.app.Activity;
@@ -47,10 +47,11 @@ public class TrajetTrouve extends ARunnableActivity {
 	private TrajetTrouve trajetTrouve = this;
 	
 	private List<Trajet> trajets = null;
-	private Trajet trajet = null;
 	private Itineraire itineraire = null;
 	private LocalDate date = null;
-	private ProfilDAO profilDAO;
+
+	
+	private Session session;
 	
 		
 	final Handler handler = new Handler() {
@@ -91,6 +92,8 @@ public class TrajetTrouve extends ARunnableActivity {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.trajettrouve);
+        
+        session = SessionFactory.getCurrentSession(this);
         
         btNewSerach = (Button)findViewById(R.id.btTTNewSearch);
         btNewSerach.setOnClickListener(getOnClickListener());
@@ -255,7 +258,8 @@ public class TrajetTrouve extends ARunnableActivity {
 			wrapper.getNbrePlaceDispo().setText(trajet.getPlaceDispo() + " places dispo");
 			wrapper.getNbrePoint().setText(trajet.getNbrePoint() + " points");
 			
-			Profil profil = getProfilDAO().getProfil(trajet.getIdProfilConducteur());
+			//Profil profil = getProfilDAO().getProfil(trajet.getIdProfilConducteur());
+			Profil profil = session.find(Profil.class, trajet.getIdProfilConducteur());
 			
 			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
 			wrapper.getNomConducteur().setText(profil.getPseudo());
@@ -265,6 +269,7 @@ public class TrajetTrouve extends ARunnableActivity {
 	}
 	
 	
+	/*
 	public List<Trajet> getTrajets() {
 		
 		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
@@ -279,17 +284,22 @@ public class TrajetTrouve extends ARunnableActivity {
 		
 		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets : " + trajets.size());
 		return trajets;
-	}
+	}*/
 	
-	
-	private ProfilDAO getProfilDAO() {
+	public List<Trajet> getTrajets() {
 		
-		if (profilDAO == null) {
-			profilDAO = new ProfilDAO();
-		}
-		return profilDAO;
+		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
+		
+		Trajet trajetModel = new Trajet();
+		trajetModel.setLieuDepart(itineraire.getLieuDepart());
+		trajetModel.setLieuDestination(itineraire.getLieuDestination());
+		trajetModel.setDateTrajet(date.getDateFormatCalendar());
+		
+		trajets = session.getTrajets(trajetModel);
+		
+		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets : " + trajets.size());
+		return trajets;
 	}
-
 
 	@Override
 	public void run() {

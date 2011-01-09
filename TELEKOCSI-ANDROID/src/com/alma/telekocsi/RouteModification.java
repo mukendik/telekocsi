@@ -83,7 +83,7 @@ public class RouteModification extends ARunnableActivity {
 			@Override
 			public void onClick(View v) {
 				if(frequencies==null){
-					frequencies = new boolean[]{false,false,false,false,false,false,false,false};
+					frequencies = new boolean[]{false,false,false,false,false,false,false};
 				}
 				AlertDialog.Builder builder = new AlertDialog.Builder(RouteModification.this);
 				builder.setTitle(R.string.route_creation_frequence);
