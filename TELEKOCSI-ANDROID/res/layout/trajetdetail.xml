@@ -223,33 +223,339 @@
 	   				/>
 	   							
    			</LinearLayout>  			
-   			
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/placesDispo"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="3 places"
+	    			android:id="@+id/tvDTPlaceDispo"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>    			
    			 			
    		</LinearLayout>
 
 		<!-- informations liees au conducteur -->
 
-   		<LinearLayout
-   		    android:orientation="vertical"
-   			android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:layout_marginLeft="5px"
-    		android:layout_marginRight="5px"
-    		android:layout_marginTop="5px">
-    		
-    		<TextView  
-    			android:layout_width="wrap_content" 
-    			android:layout_height="wrap_content" 
-    			android:text="@string/conducteur2"
-	    		android:textColor="@color/h2_color"
-	    		android:background="@color/grisc"
-   				/>
-   				
-   		</LinearLayout>
 
+    	<ScrollView
+    		android:layout_width="fill_parent"
+    		android:layout_height="160px"
+    		>
+
+   			<LinearLayout
+   			    android:orientation="vertical"
+   				android:layout_width="fill_parent"
+    			android:layout_height="wrap_content">
+
+   				<LinearLayout
+   				    android:orientation="vertical"
+   					android:layout_width="fill_parent"
+    				android:layout_height="wrap_content"
+    				android:background="@color/fond"
+    				android:layout_marginLeft="5px"
+    				android:layout_marginRight="5px"
+    				android:layout_marginTop="5px">
+
+
+    				<TextView  
+    					android:layout_width="wrap_content" 
+    					android:layout_height="wrap_content" 
+    					android:text="@string/conducteur2"
+	    				android:textColor="@color/h2_color"
+	    				android:background="@color/grisc"
+   						/>
+   				
+   				</LinearLayout>
 	   		
-	   		
+   				<TableLayout
+    			   	android:background="@color/fond"
+   					android:layout_width="fill_parent"
+    				android:layout_height="wrap_content"
+    				android:layout_marginTop="5px">
+    		
+    				<TableRow 
+   						android:background="@color/fondPanel"
+   						android:layout_marginLeft="5px"
+   						android:layout_marginRight="5px"
+   						android:layout_marginTop="5px"
+   						android:layout_marginBottom="5px">
+	   			
+	    				<LinearLayout
+    						android:orientation="vertical"
+   							android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginTop="5px">
+    					
+   	 						<ImageView
+    							android:src="@drawable/visagefemme1"
+    							android:scaleType="centerInside"
+    							android:layout_width="50px"
+    							android:layout_height="50px"
+    							android:layout_marginLeft="5px"
+   								android:layout_marginBottom="5px"
+    						/>
+    					 
+   						</LinearLayout>	
+   			
+   						<LinearLayout
+    						android:orientation="vertical"
+   							android:layout_width="fill_parent"
+    						android:layout_height="fill_parent"
+    						android:layout_marginTop="5px">
+    					
+	   						<TextView
+	   							android:layout_width="wrap_content" 
+	   							android:layout_height="wrap_content" 
+	   							android:text="Julie Les."
+	   							android:id="@+id/tvDTRowNomConducteur"
+	   							android:textColor="@color/black"
+	   							android:layout_marginLeft="10px"
+								/>
+							
+							<ImageView
+								android:src="@drawable/fivestarjaune"
+								android:layout_width="80px"
+    							android:layout_height="20px"
+   								android:scaleType="centerInside"
+   								android:layout_marginLeft="8px"
+   								/>
+
+  							<TextView
+   								android:layout_width="wrap_content" 
+   								android:layout_height="wrap_content" 
+   								android:text="5 avis"
+   								android:id="@+id/tvDTRowNombreAvis"
+   								android:textColor="@color/black"
+   								android:layout_marginLeft="10px"
+								/>
+    					 
+						</LinearLayout>
+				 
+					</TableRow>  			
+   		
+   				</TableLayout>
+   		
+	
+    			<!-- Child of the scroll bar -->
+    			<LinearLayout
+    				android:orientation="vertical"
+    				android:layout_width="fill_parent"
+    				android:layout_height="fill_parent"
+    				android:layout_marginLeft="5px"
+    				android:layout_marginRight="5px">
+    	
+			    	<!-- Smoking -->
+	   		 		<TextView
+	    				android:layout_width="wrap_content"
+	    				android:layout_height="wrap_content"
+	    				android:textColor="@color/h2_color"
+	    				android:background="@color/grisc"
+	    				android:text="@string/smoker"
+	    				/>
+	   				<RadioGroup
+	   	    			android:orientation="horizontal"
+						android:layout_width="fill_parent"
+	   					android:layout_height="wrap_content"
+	   					android:id="@+id/smoker_radio_group"
+	   					android:checkedButton="@+id/smoking_no">
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/yes"
+	   						android:id="@+id/smoking_yes"
+	   						android:enabled="false"/>
 	   				
+		  		 		<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/no"
+	   						android:id="@+id/smoking_no"
+	   						android:enabled="false"/>
+	   				
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/any_difference"
+	   						android:id="@+id/smoking_any"
+	   						android:enabled="false"/>
+					</RadioGroup>
+	    	
+	    			<!-- Animals -->
+	    			<TextView
+	    				android:layout_width="wrap_content"
+	    				android:layout_height="wrap_content"
+	    				android:textColor="@color/h2_color"
+	    				android:background="@color/grisc"
+	    				android:text="@string/animals"/>
+	    			
+	   				<RadioGroup
+	   	    			android:orientation="horizontal"
+						android:layout_width="fill_parent"
+	   					android:layout_height="wrap_content"
+	   					android:id="@+id/animals_radio_group"
+	   					android:checkedButton="@+id/animals_any">
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/yes"
+	   						android:id="@+id/animals_yes"
+	   						android:enabled="false"/>
+	   				
+		  	 			<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/no"
+	   						android:id="@+id/animals_no"
+	   						android:enabled="false"/>
+	   			
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/any_difference"
+	   						android:id="@+id/animals_any"
+	   						android:enabled="false"/>
+					</RadioGroup>
+	
+		    		<!-- Detours -->
+		    		<TextView
+		    			android:layout_width="wrap_content"
+		    			android:layout_height="wrap_content"
+		    			android:textColor="@color/h2_color"
+		    			android:background="@color/grisc"
+		    			android:text="@string/detours"
+		    			/>
+		   			<RadioGroup
+		   	    		android:orientation="horizontal"
+						android:layout_width="fill_parent"
+		   				android:layout_height="wrap_content"
+		   				android:id="@+id/detours_radio_group"
+		   				android:checkedButton="@+id/detours_any">
+		   				<RadioButton
+	   						android:layout_width="wrap_content"
+		   					android:layout_height="wrap_content"
+		   					android:textColor="@color/h2_color"
+	   						android:text="@string/yes"
+	   						android:id="@+id/detours_yes"
+	   						android:enabled="false"/>
+		  	 		
+		  		 		<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/no"
+	   						android:id="@+id/detours_no"
+	   						android:enabled="false"/>
+	   					
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/any_difference"
+	   						android:id="@+id/detours_any"
+	   						android:enabled="false"/>
+					</RadioGroup>
+	
+	    			<!-- Music -->
+	    			<TextView
+	    				android:layout_width="wrap_content"
+	    				android:layout_height="wrap_content"
+	    				android:textColor="@color/h2_color"
+	    				android:background="@color/grisc"
+	    				android:text="@string/music"/>
+	   				<RadioGroup
+	   	    			android:orientation="horizontal"
+						android:layout_width="fill_parent"
+	   					android:layout_height="wrap_content"
+	   					android:id="@+id/music_radio_group"
+	   					android:checkedButton="@+id/music_any">
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/yes"
+	   						android:id="@+id/music_yes"
+	   						android:enabled="false"/>
+		  	 			<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/no"
+	   						android:id="@+id/music_no"
+	   						android:enabled="false"/>
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/any_difference"
+	   						android:id="@+id/music_any"
+	   						android:enabled="false"/>
+					</RadioGroup>
+	    
+	    			<!-- Discussion -->
+	    			<TextView
+	    				android:layout_width="wrap_content"
+	    				android:layout_height="wrap_content"
+	    				android:textColor="@color/h2_color"
+	    				android:background="@color/grisc"
+	    				android:text="@string/discussion"
+	    			/>
+	   				<RadioGroup
+	   	    			android:orientation="horizontal"
+						android:layout_width="fill_parent"
+	   					android:layout_height="wrap_content"
+	   					android:id="@+id/discussion_radio_group"
+	   					android:checkedButton="@+id/discussion_yes"
+	   					>
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/yes"
+	   						android:id="@+id/discussion_yes"
+	   						android:enabled="false"/>
+		  	 		
+		  	 			<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/no"
+	   						android:id="@+id/discussion_no"
+	   						android:enabled="false"/>
+	   				
+	   					<RadioButton
+	   						android:layout_width="wrap_content"
+	   						android:layout_height="wrap_content"
+	   						android:textColor="@color/h2_color"
+	   						android:text="@string/any_difference"
+	   						android:id="@+id/discussion_any"
+	   						android:enabled="false"/>
+					</RadioGroup>
+    			</LinearLayout>
+    		</LinearLayout>
+   		</ScrollView>
    		
    		
    		<LinearLayout
@@ -269,9 +575,8 @@
     			android:layout_marginTop="5px"
    				/>
 	   							
-   		</LinearLayout>  		
+   		</LinearLayout>
    		
     </LinearLayout> 
    
 </LinearLayout>
-

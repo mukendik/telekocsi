@@ -17,6 +17,7 @@
 	<string name="le">Le :</string>
 	<string name="pour">Pour :</string>
 	<string name="place">place</string>
+	<string name="placesDispo">Places disponibles :</string>
 	<string name="validerTransaction">Valider une transaction</string>
 	<string name="avis">Laisser une appréciation :</string>
 	<string name="commentaire">Commentaire :</string>
