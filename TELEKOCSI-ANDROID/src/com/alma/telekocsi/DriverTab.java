@@ -53,7 +53,7 @@ public class DriverTab extends ListActivity {
 		TRANSACTION = getString(R.string.validerTransaction);
 
 		DRIVER_FUNCTIONS = new String[] {
-				ACTIVATED, TRANSACTION
+				ACTIVATE, CREATE, ACTIVATED, TRANSACTION
 		};
 		
 		setListAdapter(new ArrayAdapter<String>(this
@@ -87,16 +87,16 @@ public class DriverTab extends ListActivity {
 		    						,View view
 		    						,int position
 		    						,long id) {
-//		    	if(((TextView) view).getText().equals(ACTIVATE)){
-//		    		startRouteActivation();
-//		    	}
-//		    	else if(((TextView) view).getText().equals(CREATE)){
-//		    		startRouteCreation();
-//		    	}
+		    	if(((TextView) view).getText().equals(ACTIVATE)){
+		    		startRouteActivation();
+		    	}
+		    	else if(((TextView) view).getText().equals(CREATE)){
+		    		startRouteCreation();
+		    	}
 //		    	else if(((TextView) view).getText().equals(MODIFY)){
 //		    		startRouteModification();
 //		    	}
-		    	if(((TextView) view).getText().equals(ACTIVATED)){
+		    	else if(((TextView) view).getText().equals(ACTIVATED)){
 		    		showActiveRoute();
 		    	}
 		    	else if(((TextView) view).getText().equals(TRANSACTION)){
