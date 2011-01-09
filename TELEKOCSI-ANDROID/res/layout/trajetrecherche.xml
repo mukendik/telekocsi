@@ -3,13 +3,14 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+       android:background="@drawable/fd"
     >
-
+<!-- Header -->
     <LinearLayout
         android:orientation="horizontal"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:background="@color/entete"
+    	android:background="@color/gris"
     	>
 
     	<ImageButton
@@ -38,15 +39,14 @@
         android:orientation="vertical"
    		android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:background="@color/fond"
     	>
     	
     	<TextView  
     		android:layout_width="wrap_content" 
     		android:layout_height="wrap_content" 
     		android:text="@string/identTrajet"
-    		android:textColor="@color/white"
-    		android:background="@color/txtGroupe"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
     		android:layout_marginLeft="5px"
     		android:layout_marginTop="5px"
    		/>
@@ -55,27 +55,24 @@
     	    android:orientation="horizontal"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
     		android:checkedButton="@+id/my_routes_search_id"
     		>
 
     		<RadioButton
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:background="@color/fond"
     			android:text="Mes trajets"
     			android:paddingLeft="38px"
     			android:paddingRight="5px"
-    			android:id="@+id/my_routes_search_id"
+    			android:textColor="@color/h2_color"
     			/>
 
     		<RadioButton
     			android:layout_width="wrap_content"
     			android:layout_height="wrap_content"
-    			android:background="@color/fond"
     			android:text="Autre trajet"
     			android:paddingLeft="38px"
-    			android:id="@+id/other_routes_search_id"
+    			    			android:textColor="@color/h2_color"
     			/>
 	
     	</RadioGroup>  
@@ -234,12 +231,11 @@
    			</LinearLayout>
    			 			
    		</LinearLayout>
-
+<!-- Date du trajet -->
    		<LinearLayout
    		    android:orientation="vertical"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
     		android:layout_marginLeft="5px"
     		android:layout_marginRight="5px"
     		android:layout_marginTop="5px">
@@ -248,8 +244,8 @@
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content" 
     			android:text="@string/dateTrajet"
-    			android:textColor="@color/white"
-    			android:background="@color/txtGroupe"
+	    		android:textColor="@color/h2_color"
+	    		android:background="@color/grisc"
    				/> 
     		
     		<Spinner
