@@ -252,16 +252,6 @@ public class TrajetRecherche extends ARunnableActivity {
 		btRecherche.setEnabled((date != null) && (itineraire != null));
 	}
 	
-	/*
-	public List<Itineraire> getItineraires() {
-		
-		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
-		ItineraireDAO itineraireDAO = new ItineraireDAO();
-		List<Itineraire> itineraires = itineraireDAO.getList(DataContext.getCurrentProfil().getId());
-		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets");
-		return itineraires;
-	}*/
-	
 	
 	public void initDates() {
 		

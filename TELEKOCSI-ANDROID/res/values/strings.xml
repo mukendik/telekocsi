@@ -8,8 +8,10 @@
 	<string name="annuler">Annuler</string>
 	<string name="nbPointEchange">Nombre de points à échanger :</string>
 	<string name="nbPoints">3 points</string>
+	<string name="prix">Prix :</string>
 	<string name="passager">Du passager :</string>
 	<string name="conducteur">Au conducteur :</string>
+	<string name="conducteur2">Conducteur</string>
 	<string name="depart">Départ :</string>
 	<string name="arrivee">Arrivée :</string>
 	<string name="le">Le :</string>
@@ -19,6 +21,7 @@
 	<string name="avis">Laisser une appréciation :</string>
 	<string name="commentaire">Commentaire :</string>
 	<string name="rechTrajet">Recherche trajet</string>
+	<string name="detailTrajet">Détail du trajet</string>
 	<string name="identTrajet">Identification du trajet :</string>
 	<string name="heure">Heure :</string>
 	<string name="jours">Jours :</string>

@@ -10,6 +10,7 @@ import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,7 +30,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class TrajetTrouve extends ARunnableActivity {
-    
+	
+	private static final int CODE_TRAJETTROUVE = 20;
+	
 	private OnClickListener onClickListener = null;
 	private Button btNewSerach;
 	private Button btQuit;
@@ -80,6 +83,7 @@ public class TrajetTrouve extends ARunnableActivity {
 		    public void onItemClick(AdapterView parent, View v, int position, long id) {
 		    	
 		        Toast.makeText(trajetTrouve,"Gérer un event vers le conducteur",Toast.LENGTH_SHORT).show();
+		        goTrajetDetail();
 		    }
 		};
 		
@@ -258,7 +262,6 @@ public class TrajetTrouve extends ARunnableActivity {
 			wrapper.getNbrePlaceDispo().setText(trajet.getPlaceDispo() + " places dispo");
 			wrapper.getNbrePoint().setText(trajet.getNbrePoint() + " points");
 			
-			//Profil profil = getProfilDAO().getProfil(trajet.getIdProfilConducteur());
 			Profil profil = session.find(Profil.class, trajet.getIdProfilConducteur());
 			
 			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
@@ -268,23 +271,6 @@ public class TrajetTrouve extends ARunnableActivity {
 		}
 	}
 	
-	
-	/*
-	public List<Trajet> getTrajets() {
-		
-		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
-		TrajetDAO trajetDAO = new TrajetDAO();
-		
-		Trajet trajetModel = new Trajet();
-		trajetModel.setLieuDepart(itineraire.getLieuDepart());
-		trajetModel.setLieuDestination(itineraire.getLieuDestination());
-		trajetModel.setDateTrajet(date.getDateFormatCalendar());
-		
-		trajets = trajetDAO.getTrajetDispo(trajetModel);
-		
-		Log.i(TrajetRecherche.class.getSimpleName(), "Fin recherche des trajets : " + trajets.size());
-		return trajets;
-	}*/
 	
 	public List<Trajet> getTrajets() {
 		
@@ -301,10 +287,37 @@ public class TrajetTrouve extends ARunnableActivity {
 		return trajets;
 	}
 
+	
+    public void goTrajetDetail() {
+    	startProgressDialogInNewThread(this);
+    }
+	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    	switch (requestCode) {
+    	case CODE_TRAJETTROUVE:
+    		switch(resultCode) {
+    		case RESULT_OK:
+    			// Nouvelle recherche
+    			break;
+    		case RESULT_CANCELED:
+    			finish();
+    		}
+    	}
+    	stopProgressDialog();
+    }    
+    
+    
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("itineraire", "");
+        bundle.putSerializable("date", "");
+        
+        Intent intent = new Intent(this, TrajetDetail.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, CODE_TRAJETTROUVE);
 	}
 	
 }

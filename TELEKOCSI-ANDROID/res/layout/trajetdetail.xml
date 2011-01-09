@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+   		android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@color/entete"
+    	>
+
+    	<ImageButton
+    		android:src="@drawable/car"
+    		android:layout_width="24px"
+    		android:layout_height="24px"
+    		android:background="@color/entete"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginTop="5px"
+    		/>
+
+    	<TextView
+    		android:text="@string/detailTrajet"
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="5px"
+    		android:textColor="@color/txtEntete"
+    		android:textSize="24px"
+    		android:textStyle="bold"
+    		/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+   		android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:background="@color/fond"
+    	>
+    	
+    	<TextView  
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content" 
+    		android:id="@+id/tvDTDepartArrivee"
+    		android:textColor="@color/white"
+    		android:background="@color/txtGroupe"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px"
+    		android:gravity="center_horizontal"
+    		android:textStyle="bold"
+   		/>
+ 
+    	
+    	<LinearLayout
+    	    android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@color/fondPanel"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px"
+    		android:layout_marginBottom="5px"
+    		>
+    		
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/depart"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+    				android:layout_marginTop="1px"
+   					/>   
+
+	    		<TextView
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Les Herbiers"
+	    			android:id="@+id/tvDTVilleDepart"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	    			android:layout_marginTop="1px"
+	   				/>									
+   			</LinearLayout>
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/heure"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="7h10"
+	    			android:id="@+id/tvDTHeureDepart"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="+/- 5mn"
+	    			android:id="@+id/tvDTVariableDepart"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="25px"
+	   				/>
+				
+   			</LinearLayout>  
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/arrivee"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Nantes"
+	    			android:id="@+id/tvDTVilleArrivee"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   						 							
+   			</LinearLayout>
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/heure"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="8h10"
+	    			android:id="@+id/tvDTHeureArrivee"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+				
+   			</LinearLayout> 
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/autoroute"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="non"
+	    			android:id="@+id/tvTRAutoroute"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>
+   			
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/prix"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="3 points"
+	    			android:id="@+id/tvDTPrix"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>  			
+   			
+   			 			
+   		</LinearLayout>
+
+		<!-- informations liees au conducteur -->
+
+   		<LinearLayout
+   		    android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@color/fond"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px">
+    		
+    		<TextView  
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content" 
+    			android:text="@string/conducteur2"
+    			android:textColor="@color/white"
+    			android:background="@color/txtGroupe"
+   				/>
+   				
+   		</LinearLayout>
+
+	   		
+	   		
+	   				
+   		
+   		
+   		<LinearLayout
+    	   	android:orientation="horizontal"
+    	   	android:background="@color/panelAction"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    		
+    		<Button
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/retour"
+    			android:id="@+id/btDTRestour"
+    			android:textColor="@color/black"
+    			android:layout_marginLeft="5px"
+    			android:layout_marginTop="5px"
+   				/>
+	   							
+   		</LinearLayout>  		
+   		
+    </LinearLayout> 
+   
+</LinearLayout>
+
