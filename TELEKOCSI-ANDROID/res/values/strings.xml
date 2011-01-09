@@ -156,6 +156,8 @@
 	<string name="routes_managing_activate">Activer</string>
 	<string name="help_to_context_menu">Rester appuyé sur un trajet</string>
 	
+	<!-- results_for_driver -->
+	<string name="results_for_driver">Passagers trouvés</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
