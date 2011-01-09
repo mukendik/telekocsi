@@ -56,6 +56,7 @@
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
     		android:background="@color/fond"
+    		android:checkedButton="@+id/my_routes_search_id"
     		>
 
     		<RadioButton
@@ -65,6 +66,7 @@
     			android:text="Mes trajets"
     			android:paddingLeft="38px"
     			android:paddingRight="5px"
+    			android:id="@+id/my_routes_search_id"
     			/>
 
     		<RadioButton
@@ -73,6 +75,7 @@
     			android:background="@color/fond"
     			android:text="Autre trajet"
     			android:paddingLeft="38px"
+    			android:id="@+id/other_routes_search_id"
     			/>
 	
     	</RadioGroup>  

@@ -73,7 +73,6 @@ public class TrajetRecherche extends ARunnableActivity {
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.trajetrecherche);
         
         session = SessionFactory.getCurrentSession(this);
@@ -95,7 +94,6 @@ public class TrajetRecherche extends ARunnableActivity {
     	spinTrajet = (Spinner)findViewById(R.id.spinTrajet);
     	spinDateTrajet = (Spinner)findViewById(R.id.spinDateTrajet);
     }
-    
     
     protected void onStart() {
     	

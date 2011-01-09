@@ -75,6 +75,7 @@ android:background="@drawable/fd"
    		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="5px"
+		android:checkedButton="@+id/my_routes_id"
 		>
 
     		<RadioButton
@@ -84,7 +85,7 @@ android:background="@drawable/fd"
     		android:paddingLeft="38px"
     		android:paddingRight="5px"
     		android:textColor="@color/black"
-    		android:checked="true"
+    		android:id="@+id/my_routes_id"
     		/>
 
     		<RadioButton
@@ -93,54 +94,190 @@ android:background="@drawable/fd"
     		android:text="@string/new_route_radio_button"
     		android:paddingLeft="38px"
     		android:textColor="@color/black"
+    		android:id="@+id/other_routes_id"
     		/>
 	
     	</RadioGroup>  
     	
     	<Spinner
-    		android:id="@+id/spinTrajet"
+    		android:id="@+id/routes_spin"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
     		android:drawSelectorOnTop="true" 
     		/>
     	
     	<LinearLayout
-    	android:orientation="vertical"
-   		android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:background="@color/white"
-    	android:minHeight="50px"
-    	android:maxHeight="50px"
-    	/>
-    	
+    	    android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@color/fondPanel"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px"
+    		android:layout_marginBottom="5px"
+    		>
+    		
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/depart"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+    				android:layout_marginTop="1px"
+   					/>   
 
-   		<TextView
-    	android:textColor="@color/h2_color"
-    	android:background="@color/grisc" 
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/route_date_title"
-		android:layout_marginTop="5px"
-    	android:gravity="center_vertical"
-		/>
+   				<TextView
+    			android:textColor="@color/black"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Nantes"
+				android:layout_marginLeft="5px"
+		    	android:id="@+id/activation_departure"
+				/>
+			</LinearLayout>
+    		<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/heure"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="6h00"
+	    			android:id="@+id/activation_departure_time"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="+/- 5mn"
+	    			android:id="@+id/activation_variable_time"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="25px"
+	   				/>
+				
+   			</LinearLayout>  
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
     		
-    	<Spinner
-    	android:id="@+id/spinDateTrajet"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:drawSelectorOnTop="true" 
-    	android:layout_marginTop="5px"
-    	/>
-    			
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/arrivee"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="Lyon"
+	    			android:id="@+id/activation_arrival"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   						 							
+   			</LinearLayout>
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
     		
-    	<CheckBox
-    	android:checked="false"
-    	android:text="@string/negociations_checkbox"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:textColor="@color/black"
-		/>
-    
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/jours"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="L M M J V - -"
+	    			android:id="@+id/activation_frequency"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>  
+
+   			<LinearLayout
+    	 	   	android:orientation="horizontal"
+   				android:layout_width="wrap_content"
+    			android:layout_height="wrap_content">
+    		
+    			<TextView  
+    				android:layout_width="wrap_content" 
+    				android:layout_height="wrap_content" 
+    				android:text="@string/autoroute"
+    				android:textColor="@color/black"
+    				android:textStyle="bold"
+    				android:layout_marginLeft="5px"
+   					/>   
+
+	    		<TextView  
+	    			android:layout_width="wrap_content" 
+	    			android:layout_height="wrap_content" 
+	    			android:text="non"
+	    			android:id="@+id/activation_autoroute"
+	    			android:textColor="@color/black"
+	    			android:layout_marginLeft="5px"
+	   				/>
+	   							
+   			</LinearLayout>
+   			 			
+   		</LinearLayout>
+   		
+   		<LinearLayout
+   		    android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:background="@color/fond"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
+    		android:layout_marginTop="5px">
+    		
+    		<TextView  
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content" 
+    			android:text="@string/dateTrajet"
+    			android:textColor="@color/white"
+    			android:background="@color/txtGroupe"
+   				/> 
+    		
+    		<Spinner
+    			android:id="@+id/dates_spin"
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+    			android:drawSelectorOnTop="true" 
+    			android:layout_marginTop="5px"
+    			/>
+	   							
+   		</LinearLayout> 
+  
     </LinearLayout>
     
     <!-- Footer -->
