@@ -115,15 +115,15 @@ public class MapInfoItiniraire {
 			overlays.add(new MapOverlay(pointArrivee, R.drawable.pin_arrivee));
 
 			//Calcul des GeoPoints Via
-			/*
-			List<String> lieux = iti.getLieuxVia();
+			
+			List<String> lieux = iti.getLieuxPassage();
 			pointsVia = new ArrayList<GeoPoint>();
 			if(lieux.size()>0) {
 				for(String lieuVia : lieux){
 					pointsVia.add(calculGeoPoint(lieuVia));
 				}
 			}
-			 */
+			
 
 			/*Test via Cholet   TEMPORAIRE *
 			Geocoder geoCoder = new Geocoder(context);
