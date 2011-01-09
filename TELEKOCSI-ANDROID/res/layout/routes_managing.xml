@@ -37,6 +37,25 @@ android:layout_height="fill_parent"
     android:padding="5px"
     android:background="@color/fond"
     >
+    
+    	<LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:paddingBottom="5px"
+    	android:gravity="center"
+    	>
+    		<TextView
+    		android:gravity="center_vertical" 
+    		android:id="@+id/help_to_context_menu_id"
+    		android:textColor="@color/h1_color"
+    		android:background="@color/h1_background" 
+    		android:text="@string/help_to_context_menu"
+    		android:layout_height="wrap_content" 
+    		android:layout_width="wrap_content" 
+    		android:textStyle="bold">
+    		</TextView>
+		</LinearLayout>
     	<ListView
     	android:id="@+id/routes_array_id" 
 		android:layout_width="fill_parent"

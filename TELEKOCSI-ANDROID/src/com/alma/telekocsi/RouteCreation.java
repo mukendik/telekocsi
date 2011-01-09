@@ -190,9 +190,22 @@ public class RouteCreation extends ARunnableActivity {
 			for(int i=0;i<freq.length() && i<frequencies.length;++i) frequencies[i] = 'O'==freq.charAt(i);
 		}
 		price.setText(""+trajet.getNbrePoint());
+		boolean isAutoroute = trajet.isAutoroute();
 		for(int i=0;i<this.automaticRoute.getChildCount();++i){
 			RadioButton btn = (RadioButton)this.automaticRoute.getChildAt(i);
-			btn.setChecked(getString(R.string.yes).equals(btn.getText()));
+			if(isAutoroute){
+				if(getString(R.string.yes).equals(btn.getText())){
+					btn.setChecked(true);
+				}else{
+					btn.setChecked(false);
+				}
+			}else{
+				if(getString(R.string.yes).equals(btn.getText())){
+					btn.setChecked(false);
+				}else{
+					btn.setChecked(true);
+				}
+			}
 		}
 	}
 	

@@ -146,6 +146,8 @@
 	<string name="routes_managing_modify">Modifier</string>
 	<string name="create_new_route_button">Créer un nouveau trajet</string>
 	<string name="routes_managing_activate">Activer</string>
+	<string name="help_to_context_menu">Rester appuyé sur un trajet</string>
+	
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
