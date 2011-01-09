@@ -192,4 +192,16 @@ public class ProfilDAO {
     	
 		return (new GetFicheTask()).execute(new HttpGet(GAE.getProfilEndPoint() + "/login/" + pseudo + "/" + passWord));
     }
+    
+    
+    /**
+     * Recuperation du profil lie au pseudo + password
+     * @param pseudo pseudo
+     * @param passWord mot de passe
+     * @return profil associe
+     */
+    public Profil getProfilFromEmail(String email) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getProfilEndPoint() + "/email/" + email));
+    }
 }
