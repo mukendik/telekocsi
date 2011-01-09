@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class RouteActivator extends Activity {
+public class TrajetActivator extends Activity {
 
 	private Itineraire itineraire = null;
 	private LocalDate date = null;
@@ -19,9 +19,9 @@ public class RouteActivator extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
 		
+		super.onCreate(savedInstanceState);
+		/*
 		session = SessionFactory.getCurrentSession(this);
         
 		Bundle bundle = this.getIntent().getExtras();
@@ -42,9 +42,9 @@ public class RouteActivator extends Activity {
         trajet.setNbrePoint(itineraire.getNbrePoint());
         trajet.setPlaceDispo(itineraire.getPlaceDispo());
         
-        Log.i(RouteActivator.class.getSimpleName(), " Itineraire : " + itineraire);
-        Log.i(RouteActivator.class.getSimpleName(), " Date : " + date);
-        
+        Log.i(TrajetActivator.class.getSimpleName(), " Itineraire : " + itineraire);
+        Log.i(TrajetActivator.class.getSimpleName(), " Date : " + date);
+        */
         setResult(RESULT_OK);
         
         finish();

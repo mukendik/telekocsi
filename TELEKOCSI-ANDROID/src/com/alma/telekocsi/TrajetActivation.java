@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
+import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
@@ -23,11 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class RouteActivation extends ARunnableActivity {
+public class TrajetActivation extends ARunnableActivity {
 	
 	private static final int ACTIVATION = 1;
 	
-	private Button routeActivationButton;
+	private Button trajetActivationButton;
 	private Button cancelButton;
 	private OnClickListener onClickListener = null;
 	private Spinner routesSpin;
@@ -50,7 +51,7 @@ public class RouteActivation extends ARunnableActivity {
 	private OnItemSelectedListener onRouteSelectedListener;
 	private OnItemSelectedListener onDateSelectedListener;
 	
-	private RouteActivation routeActivation = this;
+	private TrajetActivation routeActivation = this;
 	
 	final Handler handler = new Handler() {
 		
@@ -75,9 +76,9 @@ public class RouteActivation extends ARunnableActivity {
         
         session = SessionFactory.getCurrentSession(this);
         
-        routeActivationButton = (Button)findViewById(R.id.start_route_activation);
-        routeActivationButton.setOnClickListener(getOnClickListener());
-        routeActivationButton.setEnabled(false);
+        trajetActivationButton = (Button)findViewById(R.id.start_route_activation);
+        trajetActivationButton.setOnClickListener(getOnClickListener());
+        trajetActivationButton.setEnabled(false);
         
         cancelButton = (Button)findViewById(R.id.cancel_route_activation);
         cancelButton.setOnClickListener(getOnClickListener());
@@ -107,7 +108,6 @@ public class RouteActivation extends ARunnableActivity {
 			public void run() {
 				
 				List<Itineraire> itineraires = session.getItineraires();
-				System.out.println("ITIN == "+itineraires);
 		        adapterItineraire = new ArrayAdapter<Itineraire>(routeActivation, android.R.layout.simple_spinner_item, itineraires);
 		        adapterItineraire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);				
 
@@ -194,7 +194,7 @@ public class RouteActivation extends ARunnableActivity {
 	}
 	
 	private void refreshBtn() {
-		routeActivationButton.setEnabled((date != null) && (itineraire != null));
+		trajetActivationButton.setEnabled((date != null) && (itineraire != null));
 	}
 
 	private OnClickListener getOnClickListener(){
@@ -212,7 +212,7 @@ public class RouteActivation extends ARunnableActivity {
 			public void onClick(View v) {
 				if (v==cancelButton) {
 					goBack();
-				}else if (v==routeActivationButton) {
+				}else if (v==trajetActivationButton) {
 					startRouteActivation();
 				}
 			}
@@ -234,8 +234,9 @@ public class RouteActivation extends ARunnableActivity {
     	case ACTIVATION:
     		switch(resultCode) {
     		case RESULT_OK:
+    			createTrajet();    			
     			Toast.makeText(this, R.string.activation_successed, Toast.LENGTH_SHORT).show();
-    			routeActivationButton.setText(getText(R.string.route_activation_button_after_activation));
+    			trajetActivationButton.setText(getText(R.string.route_activation_button_after_activation));
     			break;
     		case RESULT_CANCELED:
     			finish();
@@ -244,6 +245,32 @@ public class RouteActivation extends ARunnableActivity {
     	stopProgressDialog();
     }
 	
+	private void createTrajet() {
+		
+		
+		Trajet trajet = new Trajet();
+		trajet.setAutoroute(itineraire.isAutoroute());
+		trajet.setCommentaire(itineraire.getCommentaire());
+		trajet.setDateTrajet(date.toString());
+		trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
+		trajet.setHoraireDepart(itineraire.getHoraireDepart());
+		trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
+		trajet.setIdItineraire(itineraire.getId());
+		trajet.setIdProfilConducteur(itineraire.getIdProfil());
+		trajet.setLieuDepart(itineraire.getLieuDepart());
+		trajet.setLieuPassage1(itineraire.getLieuPassage1());
+		trajet.setLieuPassage2(itineraire.getLieuPassage2());
+		trajet.setLieuDestination(itineraire.getLieuDestination());
+		trajet.setNbrePoint(itineraire.getNbrePoint());
+		trajet.setPlaceDispo(itineraire.getPlaceDispo());
+		trajet.setSoldePlaceDispo(itineraire.getPlaceDispo());
+		trajet.setVariableDepart(itineraire.getVariableDepart());
+		
+	
+	
+			session.save(trajet);	
+	}
+
 	public void initDates() {
 		
 		Calendar cal = new GregorianCalendar();		
@@ -260,7 +287,7 @@ public class RouteActivation extends ARunnableActivity {
 
 	@Override
 	public void run() {
-		if(routeActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
+		if(trajetActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
 //			startActivity(new Intent(this, GoogleMapActivity.class));
 			stopProgressDialog();
 		}
@@ -268,7 +295,7 @@ public class RouteActivation extends ARunnableActivity {
 			Bundle bundle = new Bundle();
 	        bundle.putSerializable("itineraire", itineraire);
 	        bundle.putSerializable("date", date);
-	        Intent intent = new Intent(this, RouteActivator.class);
+	        Intent intent = new Intent(this, TrajetActivator.class);
 	        intent.putExtras(bundle);
 	        startActivityForResult(intent, ACTIVATION);
 		}

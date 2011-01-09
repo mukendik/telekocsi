@@ -107,7 +107,7 @@ public class DriverTab extends ListActivity {
 	}
 	
 	private void startRouteActivation(){
-		Intent intent = new Intent(this, RouteActivation.class);
+		Intent intent = new Intent(this, TrajetActivation.class);
 		startActivity(intent);
 	}
 	

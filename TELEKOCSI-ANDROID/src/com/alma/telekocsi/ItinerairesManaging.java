@@ -113,7 +113,7 @@ public class ItinerairesManaging extends ARunnableActivity {
 	}
 	
 	private void startRouteActivation(AdapterContextMenuInfo routeInfos){
-		Intent intent = new Intent(this, RouteActivation.class);
+		Intent intent = new Intent(this, TrajetActivation.class);
 		startActivity(intent);
 	}
 
