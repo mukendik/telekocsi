@@ -106,6 +106,7 @@ public class SessionImpl implements Session {
 	 */
 	@Override
 	public synchronized Profil getActiveProfile(){
+		if(!isConnected()) return null;
 		if(profile==null){
 			//On charge le profil
 			String id = settings.getString(KEY_PROFILE_ID, null);
@@ -333,8 +334,12 @@ public class SessionImpl implements Session {
 
 	@Override
 	public List<Itineraire> getItineraires() {
-		List<Itineraire> itineraires = itineraireDAO.getList(getActiveProfile().getId());
-		return itineraires;
+		Profil profil = getActiveProfile();
+		if(profil!=null){
+			List<Itineraire> itineraires = itineraireDAO.getList(profil.getId());
+			return itineraires;
+		}
+		return new ArrayList<Itineraire>(0);
 	}
 	
 	
