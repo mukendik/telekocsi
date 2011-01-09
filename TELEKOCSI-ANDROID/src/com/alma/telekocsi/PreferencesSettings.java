@@ -60,7 +60,6 @@ public class PreferencesSettings extends ARunnableActivity {
 	private void initValues(){
 		Profil profile = session.getActiveProfile();
 		if(profile!=null && session.isConnected()){
-			
 			//smoker
 			String val  = Profile.getStringVal(profile.getFumeur());
 			for(int i=0;i<smoker.getChildCount();i++){
@@ -156,7 +155,8 @@ public class PreferencesSettings extends ARunnableActivity {
 
 	private void saveSettings(){
 		Profil prof = session.getActiveProfile();
-		if(prof==null){
+		Intent intent = getIntent();
+		if(prof==null && !session.isConnected()){
 			//creation profil
 			Log.d(getClass().getSimpleName(), "Création de profil");
 			prof = new Profil();
@@ -169,15 +169,16 @@ public class PreferencesSettings extends ARunnableActivity {
 			prof.setTypeProfil("C");
 			prof.setTypeProfilHabituel("C");
 			prof.setPathPhoto("");
-			
+			prof.setEmail(intent.getStringExtra("email"));
+			prof.setPseudo(intent.getStringExtra("email"));
+			prof.setMotDePasse(intent.getStringExtra("password"));
+			prof.setConnecte(true);
 		}
 		
-		Intent intent = getIntent();
+		prof.setSexe(intent.getStringExtra("sexe"));
 		prof.setNom(intent.getStringExtra("name"));
 		prof.setPrenom(intent.getStringExtra("firstName"));
-		prof.setEmail(intent.getStringExtra("email"));
-		prof.setPseudo(intent.getStringExtra("email"));
-		prof.setMotDePasse(intent.getStringExtra("password"));
+		
 		if(smoker!=null){
 			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
 			if(rb!=null){
@@ -212,12 +213,10 @@ public class PreferencesSettings extends ARunnableActivity {
 				, intent.getStringExtra("jj")
 				,intent.getStringExtra("mm")
 				,intent.getStringExtra("aaaa")));
-		prof.setSexe(intent.getStringExtra("sexe"));
-		prof.setTelephone(intent.getStringExtra("phone"));
-		prof.setConnecte(true);
 		
-		System.out.println("SEX = "+prof.getSexe());
-		System.out.println("PHONE = "+prof.getTelephone());
+		prof.setTelephone(intent.getStringExtra("phone"));
+	
+		
 		session.saveProfile(prof);
 	}
 	
