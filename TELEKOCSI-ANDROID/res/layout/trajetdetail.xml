@@ -268,13 +268,12 @@
    				    android:orientation="vertical"
    					android:layout_width="fill_parent"
     				android:layout_height="wrap_content"
-    				android:background="@color/fond"
     				android:layout_marginLeft="5px"
     				android:layout_marginRight="5px"
     				android:layout_marginTop="5px">
 
     				<TextView  
-    					android:layout_width="wrap_content" 
+    					android:layout_width="fill_parent" 
     					android:layout_height="wrap_content" 
     					android:text="@string/conducteur2"
 	    				android:textColor="@color/h2_color"
@@ -284,7 +283,6 @@
    				</LinearLayout>
 	   		
    				<TableLayout
-    			   	android:background="@color/fond"
    					android:layout_width="fill_parent"
     				android:layout_height="wrap_content"
     				android:layout_marginTop="5px">
@@ -383,6 +381,7 @@
     				android:orientation="vertical"
     				android:layout_width="fill_parent"
     				android:layout_height="fill_parent"
+    				android:layout_marginTop="5px"
     				android:layout_marginLeft="5px"
     				android:layout_marginRight="5px">
     	

@@ -4,8 +4,6 @@ package com.alma.telekocsi;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
-import com.alma.telekocsi.session.Session;
-import com.alma.telekocsi.session.SessionFactory;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,32 +38,11 @@ public class TrajetDetail extends ARunnableActivity {
 	private TextView tvDTNombreAvis;
 	private TextView tvDTTelephone;
 	private RadioGroup rgDTsmoker;
-	/*private RadioButton rbDTsmoking_yes;
-	private RadioButton rbDTsmoking_no;
-	private RadioButton rbDTsmoking_any;*/
-    
 	private RadioGroup rgDTanimals;
-	/*private RadioButton rbDTanimals_yes;
-	private RadioButton rbDTanimals_no;
-	private RadioButton rbDTanimals_any;*/
-    
 	private RadioGroup rgDTdetours;
-	/*private RadioButton rbDTdetours_yes;
-	private RadioButton rbDTdetours_no;
-	private RadioButton rbDTdetours_any;*/
-
 	private RadioGroup rgDTmusic;
-	/*private RadioButton rbDTmusic_yes;
-	private RadioButton rbDTmusic_no;
-	private RadioButton rbDTmusic_any;*/
-
 	private RadioGroup rgDTdiscussion;
-	/*private RadioButton rbDTdiscussion_yes;
-	private RadioButton rbDTdiscussion_no;
-	private RadioButton rbDTdiscussion_any;*/
-	
 	private Button btRetour;
-	private Session session;
 	
 	
 	final Handler handler = new Handler() {
@@ -76,21 +53,20 @@ public class TrajetDetail extends ARunnableActivity {
 			tvDepartArrivee.setText(trajet.getLieuDepart() + " -> " + trajet.getLieuDestination());
 			tvVilleDepart.setText(trajet.getLieuDepart());
 			tvDTHeureDepart.setText(trajet.getHoraireDepart());
-			tvDTVariableDepart.setText(trajet.getVariableDepart());
+			tvDTVariableDepart.setText("+/- " + trajet.getVariableDepart() + " mn");
 			tvDTVilleArrivee.setText(trajet.getLieuDestination());
 			tvDTHeureArrivee.setText(trajet.getHoraireArrivee());
 			tvDTAutoroute.setText(trajet.isAutoroute() ? "oui" : "non");
-			tvDTPrix.setText(trajet.getNbrePoint() + "");
-			tvDTPlaceDispo.setText(trajet.getPlaceDispo() + "");
+			tvDTPrix.setText(trajet.getNbrePoint() + (trajet.getNbrePoint() > 1 ? " points" : " point"));
+			tvDTPlaceDispo.setText(trajet.getPlaceDispo() + (trajet.getPlaceDispo() > 1 ? " places" : " place"));
 			
 			ProfilDAO profilDAO = new ProfilDAO();
 			Profil conducteur = profilDAO.getProfil(trajet.getIdProfilConducteur());
 			
+			ivDTVisage.setImageResource(Profile.getImageResource(conducteur.getSexe()));
+			ivDTStars.setImageResource(Profile.getClassementStarImageResource(conducteur.getClassementMoyen()));
 			
-			//ivDTVisage;
-			//ivDTStars;
-			
-			tvDTNomConducteur.setText(conducteur.getPrenom() + " " + (conducteur.getNom() + "     ").substring(0, 4));
+			tvDTNomConducteur.setText(conducteur.getPrenom() + " " + (conducteur.getNom() + "     ").substring(0, 4) + ".");
 			tvDTNombreAvis.setText(conducteur.getNombreAvis() + " avis");
 			tvDTTelephone.setText(conducteur.getTelephone());
 			
@@ -125,7 +101,6 @@ public class TrajetDetail extends ARunnableActivity {
 				RadioButton rb = (RadioButton)rgDTdiscussion.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
-			
 		}
 	};
 	
@@ -135,8 +110,6 @@ public class TrajetDetail extends ARunnableActivity {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trajetdetail);
-        
-        session = SessionFactory.getCurrentSession(this);
         
         tvDepartArrivee = (TextView)findViewById(R.id.tvDTDepartArrivee);
         tvVilleDepart = (TextView)findViewById(R.id.tvDTVilleDepart);
@@ -152,34 +125,12 @@ public class TrajetDetail extends ARunnableActivity {
         ivDTStars = (ImageView)findViewById(R.id.ivDTStars);
         tvDTNombreAvis = (TextView)findViewById(R.id.tvDTNombreAvis);
         tvDTTelephone = (TextView)findViewById(R.id.tvDTTelephone);
+
         rgDTsmoker = (RadioGroup)findViewById(R.id.rgDTsmoker);
-        
-        /*rbDTsmoking_yes = (RadioButton)findViewById(R.id.rbDTsmoking_yes);
-        rbDTsmoking_no = (RadioButton)findViewById(R.id.rbDTsmoking_no);
-        rbDTsmoking_any = (RadioButton)findViewById(R.id.rbDTsmoking_any);*/
-        
         rgDTanimals = (RadioGroup)findViewById(R.id.rgDTanimals);
-        /*rbDTanimals_yes = (RadioButton)findViewById(R.id.rbDTanimals_yes);
-        rbDTanimals_no = (RadioButton)findViewById(R.id.rbDTanimals_no);
-        rbDTanimals_any = (RadioButton)findViewById(R.id.rbDTanimals_any);*/
-        
         rgDTdetours = (RadioGroup)findViewById(R.id.rgDTdetours);
-        /*rbDTdetours_yes = (RadioButton)findViewById(R.id.rbDTdetours_yes);
-        rbDTdetours_no = (RadioButton)findViewById(R.id.rbDTdetours_no);
-        rbDTdetours_any = (RadioButton)findViewById(R.id.rbDTdetours_any);*/
-
         rgDTmusic = (RadioGroup)findViewById(R.id.rgDTmusic);
-        /*rbDTmusic_yes = (RadioButton)findViewById(R.id.rbDTmusic_yes);
-        rbDTmusic_no = (RadioButton)findViewById(R.id.rbDTmusic_no);
-        rbDTmusic_any = (RadioButton)findViewById(R.id.rbDTmusic_any);*/
-
         rgDTdiscussion = (RadioGroup)findViewById(R.id.rgDTdiscussion);
-        /*rbDTdiscussion_yes = (RadioButton)findViewById(R.id.rbDTdiscussion_yes);
-        rbDTdiscussion_no = (RadioButton)findViewById(R.id.rbDTdiscussion_no);
-        rbDTdiscussion_any = (RadioButton)findViewById(R.id.rbDTdiscussion_any);*/
-
-        
-        //tvDepartArrivee.setText("LES HERBIERS -> ANGERS");
         
         btRetour = (Button)findViewById(R.id.btDTRestour);
         btRetour.setOnClickListener(getOnClickListener());
@@ -230,16 +181,6 @@ public class TrajetDetail extends ARunnableActivity {
         
         Bundle bundle = this.getIntent().getExtras();
         trajet = (Trajet)bundle.getSerializable("trajet");
-        
-        /*
-        tvVilleDepart.setText(itineraire.getLieuDepart());
-        tvVilleArrivee.setText(itineraire.getLieuDestination());
-        tvDate.setText(date.toString());*/
-        
-        /*
-        tvResultat.setText("12 résultats");
-        tvPage.setText("Page : 2/5");*/
-        
         Log.i(TrajetTrouve.class.getSimpleName(), " Trajet : " + trajet);        
     }
 

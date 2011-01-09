@@ -52,7 +52,34 @@ public class Profile {
 
 		return null;
 	}
+	
+	public static int getImageResource(String sexe) {
+		if (sexe.equals("H")) {
+			return R.drawable.man;
+		} else {
+			return R.drawable.woman;
+		}
+	}
 
+	public static int getClassementStarImageResource(int classement) {
+		switch (classement) {
+		case 0:
+			return R.drawable.zerostarjaune;
+		case 1:
+			return R.drawable.onestarjaune;
+		case 2:
+			return R.drawable.twostarjaune;
+		case 3:
+			return R.drawable.treestarjaune;
+		case 4:
+			return R.drawable.fourstarjaune;
+		case 5:
+			return R.drawable.fivestarjaune;
+		default:
+			return R.drawable.fivestarjaune;
+		}
+	}
+	
 
 	public void setName(String name){
 		this.name = name;

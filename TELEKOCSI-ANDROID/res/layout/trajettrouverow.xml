@@ -19,6 +19,7 @@
     					
     		<ImageView
     			android:src="@drawable/visagefemme1"
+    			android:id="@+id/ivTTVisage"
     			android:scaleType="centerInside"
     			android:layout_width="50px"
     			android:layout_height="50px"
@@ -45,6 +46,7 @@
 							
 			<ImageView
 				android:src="@drawable/fivestarjaune"
+				android:id="@+id/ivTTStarts"
 				android:layout_width="80px"
     			android:layout_height="20px"
    				android:scaleType="centerInside"

@@ -134,6 +134,8 @@ public class TrajetRecherche extends ARunnableActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+    	stopProgressDialog();
+    	
     	switch (requestCode) {
     	case CODE_TRAJETRECHERCHE:
     		switch(resultCode) {
@@ -144,7 +146,6 @@ public class TrajetRecherche extends ARunnableActivity {
     			finish();
     		}
     	}
-    	stopProgressDialog();
     }
     
     

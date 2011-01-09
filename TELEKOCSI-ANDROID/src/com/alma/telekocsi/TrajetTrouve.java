@@ -55,7 +55,6 @@ public class TrajetTrouve extends ARunnableActivity {
 	private Trajet trajet = null;
 	
 	private Session session;
-	
 		
 	final Handler handler = new Handler() {
 		
@@ -82,8 +81,9 @@ public class TrajetTrouve extends ARunnableActivity {
 			
 		    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		    	
+		    	listView.setOnItemClickListener(null);
 		    	trajet = (Trajet)parent.getItemAtPosition(position);
-		        Toast.makeText(trajetTrouve,"Gérer un event vers le conducteur",Toast.LENGTH_SHORT).show();
+		        Toast.makeText(trajetTrouve,"Contacter le conducteur", Toast.LENGTH_SHORT).show();
 		        goTrajetDetail();
 		    }
 		};
@@ -268,6 +268,9 @@ public class TrajetTrouve extends ARunnableActivity {
 			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
 			wrapper.getNomConducteur().setText(profil.getPseudo());
 			
+			wrapper.getVisage().setImageResource(Profile.getImageResource(profil.getSexe()));
+			wrapper.getStarsClassement().setImageResource(Profile.getClassementStarImageResource(profil.getClassementMoyen()));
+			
 			return (row);
 		}
 	}
@@ -296,6 +299,9 @@ public class TrajetTrouve extends ARunnableActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+    	listView.setOnItemClickListener(getOnItemClickListener());
+    	stopProgressDialog();
+    	
     	switch (requestCode) {
     	case CODE_TRAJETTROUVE:
     		switch(resultCode) {
@@ -306,7 +312,6 @@ public class TrajetTrouve extends ARunnableActivity {
     			finish();
     		}
     	}
-    	stopProgressDialog();
     }    
     
     

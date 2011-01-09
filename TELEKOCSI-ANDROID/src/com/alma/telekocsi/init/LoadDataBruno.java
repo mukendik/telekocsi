@@ -132,7 +132,7 @@ public class LoadDataBruno {
 		profil.setPathPhoto("");
 		profil.setPointsDispo(10);
 		profil.setPseudo("conducteur1");
-		profil.setSexe("M");
+		profil.setSexe("H");
 		profil.setTelephone("02.51.64.97.97");
 		profil.setTypeProfil("C");
 		profil.setTypeProfilHabituel("C");
@@ -158,7 +158,7 @@ public class LoadDataBruno {
 		profil.setPathPhoto("");
 		profil.setPointsDispo(10);
 		profil.setPseudo("conducteur2");
-		profil.setSexe("M");
+		profil.setSexe("H");
 		profil.setTelephone("02.51.64.97.97");
 		profil.setTypeProfil("C");
 		profil.setTypeProfilHabituel("C");
@@ -210,7 +210,7 @@ public class LoadDataBruno {
 		profil.setPathPhoto("");
 		profil.setPointsDispo(8);
 		profil.setPseudo("passager2");
-		profil.setSexe("M");
+		profil.setSexe("H");
 		profil.setTelephone("02.51.67.87.86");
 		profil.setTypeProfil("P");
 		profil.setTypeProfilHabituel("P");

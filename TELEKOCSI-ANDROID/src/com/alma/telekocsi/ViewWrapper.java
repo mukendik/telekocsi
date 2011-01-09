@@ -1,6 +1,7 @@
 package com.alma.telekocsi;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -12,6 +13,8 @@ public class ViewWrapper {
 	TextView dateHeure = null;
 	TextView nbrePlaceDispo = null;
 	TextView nbrePoint = null;
+	ImageView visage = null;
+	ImageView starsClassement = null;
 	
 	
 	ViewWrapper(View base) {
@@ -62,6 +65,24 @@ public class ViewWrapper {
 			nbrePoint = (TextView)base.findViewById(R.id.tvTTRowNbPoint);
 		}
 		return nbrePoint;
+	}
+
+	
+	ImageView getVisage() {
+		
+		if (visage == null) {
+			visage = (ImageView)base.findViewById(R.id.ivTTVisage);
+		}
+		return visage;
+	}
+
+	
+	ImageView getStarsClassement() {
+		
+		if (starsClassement == null) {
+			starsClassement = (ImageView)base.findViewById(R.id.ivTTStarts);
+		}
+		return starsClassement;
 	}
 	
 }
