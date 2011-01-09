@@ -301,9 +301,14 @@ public class TrajetService {
 					
 					Query query  = em.createQuery("SELECT p FROM Profil p where p.id=:param");
 					query.setParameter("param", itineraire.getIdProfil());
-					Profil profil = (Profil)query.getSingleResult();
 					
-					if (profil.getTypeProfil().equals("C")) {
+					Profil profil = null;
+					try {
+						profil = (Profil)query.getSingleResult();
+					} catch (Exception e) {
+					}
+					
+					if ((profil != null) && profil.getTypeProfil().equals("C")) {
 					
 						Trajet trajet = new Trajet();
 						trajet.setAutoroute(itineraire.isAutoroute());
