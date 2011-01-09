@@ -9,6 +9,7 @@ import com.alma.telekocsi.session.SessionFactory;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,12 +30,17 @@ public class ConnectionParameters extends ARunnableActivity {
 	private TextView emailLabel;
 	private TextView password1Label;
 	private TextView password2Label;
-	
+	private Session session;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 
+		session = SessionFactory.getCurrentSession(this);
+		if(session!=null){Log.d(getClass().getSimpleName(),"Profil connected : "+session.getActiveProfile());
+		}else{Log.d(getClass().getSimpleName(),"Profil disconnected : "+session.getActiveProfile());}
+		
+		
 		setContentView(R.layout.connection_parameters);
         profileSettingsButton = (Button)findViewById(R.id.profile_settings_button);
         profileSettingsButton.setOnClickListener(getOnClickListener());

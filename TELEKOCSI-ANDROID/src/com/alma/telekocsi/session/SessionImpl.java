@@ -185,6 +185,8 @@ public class SessionImpl implements Session {
 		Profil profile = profileDAO.login(name, password);
 		if(profile!=null){
 			this.profile = profile;
+			this.profile.setConnecte(true);
+			saveProfile(profile);
 			Editor edit = settings.edit();
 			edit.putString(KEY_PROFILE_ID, profile.getId());
 			edit.putBoolean(KEY_PROFILE_CONNECTED, true);
@@ -195,7 +197,9 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
-	public boolean logout() {		
+	public boolean logout() {	
+		this.profile.setConnecte(false);
+		this.saveProfile(profile);
 		Editor edit = settings.edit();
 		edit.putBoolean(KEY_PROFILE_CONNECTED, false);
 		edit.commit();
