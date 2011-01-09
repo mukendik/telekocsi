@@ -117,11 +117,42 @@ public class ProfilService {
 		query.setParameter("param1", pseudo);
 		query.setParameter("param2", password);
 		
-		/* Au niveau des tests, il peut y avoir plusieurs profils pour un meme pseudo */
-		List<Profil> profils = query.getResultList();
-		return profils.get(0);
+		Profil profil = null;
+		try {
+			profil = (Profil)query.getSingleResult();	
+		} catch (Exception e) {
+			log.info("Profil inconnu  : " + pseudo + "/" + password);
+		}
+		
+		return profil;
 	}
 
+	/**
+	 * Recupere un profil par son email (on considere que l'email est unique)
+	 * @param Id du profil
+	 * @return Profil trouve
+	 */
+	@GET
+	@Path("/email/{email}")
+	public Profil getProfilByEmail(@PathParam("email") String email) {
+		
+		log.info("Login a partir de l'email : " + email);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT p FROM Profil p where p.email=:param1");
+		query.setParameter("param1", email);
+		
+		Profil profil = null;
+		
+		try {
+			profil = (Profil)query.getSingleResult();	
+		} catch (Exception e) {
+			log.info("Profil inconnu pour l'email : " + email);
+		}
+		
+		return profil;
+	}	
+	
 	
 	/**
 	 * Recuperation de la liste des profils
