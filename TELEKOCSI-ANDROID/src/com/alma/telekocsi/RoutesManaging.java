@@ -2,6 +2,7 @@ package com.alma.telekocsi;
 
 import java.util.List;
 
+import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
@@ -34,6 +35,7 @@ public class RoutesManaging extends ARunnableActivity {
 	Session session;
 	Profil profile;
 	List<Trajet> routes;
+	List<Itineraire> itineraires;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,19 +54,19 @@ public class RoutesManaging extends ARunnableActivity {
         session = SessionFactory.getCurrentSession(this);
 		profile = session.getActiveProfile();
 		
-		printRoutes();
+		printItineraires();
 	}
 	
-	private void printRoutes(){
-		routes = session.getRoutes();
-		if(routes.isEmpty()){
+	private void printItineraires(){
+		itineraires = session.getItineraires();
+		if(itineraires.isEmpty()){
 			Toast.makeText(this, R.string.no_route_registered, Toast.LENGTH_SHORT).show();
 		}
 		else{
-			String[] names = new String[routes.size()];
+			String[] names = new String[itineraires.size()];
 			for(int i=0;i<names.length;++i){
-				Trajet route = routes.get(i);
-				names[i] = String.format("%s -> %s",route.getLieuDepart(),route.getLieuDestination());
+				Itineraire itineraire = itineraires.get(i);
+				names[i] = String.format("%s -> %s",itineraire.getLieuDepart(),itineraire.getLieuDestination());
 			}
 			listView.setAdapter(new ArrayAdapter<String>(this
 														,R.layout.main_menu_tab_list
@@ -102,7 +104,7 @@ public class RoutesManaging extends ARunnableActivity {
 	
 	private void startRouteModification(AdapterContextMenuInfo routeInfos){
 		Intent intent = new Intent(RoutesManaging.this, RouteCreation.class);
-		intent.putExtra(RouteCreation.ROUTE_ARG, routes.get(routeInfos.position).getId());
+		intent.putExtra(RouteCreation.ROUTE_ARG, itineraires.get(routeInfos.position).getId());
 		startActivity(intent);
 	}
 	
@@ -149,7 +151,7 @@ public class RoutesManaging extends ARunnableActivity {
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

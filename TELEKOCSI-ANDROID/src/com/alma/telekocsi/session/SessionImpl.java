@@ -338,9 +338,9 @@ public class SessionImpl implements Session {
 
 	@Override
 	public List<Itineraire> getItineraires() {
-		Profil profil = getActiveProfile();
-		if(profil!=null){
-			List<Itineraire> itineraires = itineraireDAO.getList(profil.getId());
+		//Profil profil = getActiveProfile();
+		if(profile!=null){
+			List<Itineraire> itineraires = itineraireDAO.getList(profile.getId());
 			return itineraires;
 		}
 		return new ArrayList<Itineraire>(0);

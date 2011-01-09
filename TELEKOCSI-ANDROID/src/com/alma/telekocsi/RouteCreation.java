@@ -63,7 +63,7 @@ public class RouteCreation extends ARunnableActivity {
 	private TextView priceLabel;
 	private TextView frequencyLabel;
 	
-	private Trajet trajet;
+	private Itineraire itineraire;
 	
 	private boolean create = false;
 	
@@ -163,14 +163,14 @@ public class RouteCreation extends ARunnableActivity {
         
         //========================================
         //on cree ou on modifie?
-        //Chargement du trajet parametres
-        String trajetId = (String)getIntent().getStringExtra(ROUTE_ARG);
-        if(trajetId==null){
+        //Chargement de l'itineraires parametres
+        String itineraireId = (String)getIntent().getStringExtra(ROUTE_ARG);
+        if(itineraireId==null){
         	create = true;
         }
         else{
-            trajet = session.find(Trajet.class, trajetId);
-            if(trajet==null){
+            itineraire = session.find(Itineraire.class, itineraireId);
+            if(itineraire==null){
             	finish();
             	return;
             }
@@ -182,21 +182,21 @@ public class RouteCreation extends ARunnableActivity {
 	
 	private void initValues(){
         //Chargement du trajet parametres
-		placesCount.setPrompt(""+trajet.getPlaceDispo());
-		timeArrivalButton.setText(trajet.getHoraireArrivee());
-		timeDepartureButton.setText(trajet.getHoraireDepart());
-		arrival.setText(trajet.getLieuDestination());
-		departure.setText(trajet.getLieuDepart());
-		intermedA.setText(trajet.getLieuPassage1());
-		intermedB.setText(trajet.getLieuPassage2());
-		comment.setText(trajet.getCommentaire());
+		placesCount.setPrompt(""+itineraire.getPlaceDispo());
+		timeArrivalButton.setText(itineraire.getHoraireArrivee());
+		timeDepartureButton.setText(itineraire.getHoraireDepart());
+		arrival.setText(itineraire.getLieuDestination());
+		departure.setText(itineraire.getLieuDepart());
+		intermedA.setText(itineraire.getLieuPassage1());
+		intermedB.setText(itineraire.getLieuPassage2());
+		comment.setText(itineraire.getCommentaire());
 		frequencies = new boolean[]{false,false,false,false,false,false,false};
-		String freq = trajet.getFrequenceTrajet();
+		String freq = itineraire.getFrequenceTrajet();
 		if(freq!=null){
 			for(int i=0;i<freq.length() && i<frequencies.length;++i) frequencies[i] = 'O'==freq.charAt(i);
 		}
-		price.setText(""+trajet.getNbrePoint());
-		boolean isAutoroute = trajet.isAutoroute();
+		price.setText(""+itineraire.getNbrePoint());
+		boolean isAutoroute = itineraire.isAutoroute();
 		for(int i=0;i<this.automaticRoute.getChildCount();++i){
 			RadioButton btn = (RadioButton)this.automaticRoute.getChildAt(i);
 			if(isAutoroute){
@@ -393,7 +393,7 @@ public class RouteCreation extends ARunnableActivity {
     }
 	
 	/**
-	 * Cr�ation du trajet
+	 * Cr�ation de l'itineraire
 	 * @return true en cas de succ�s
 	 */
 	protected boolean doCreateRoute(){
@@ -401,34 +401,34 @@ public class RouteCreation extends ARunnableActivity {
 		RadioButton rb = (RadioButton)findViewById(automaticRoute.getCheckedRadioButtonId());
 		boolean autoroute = rb!=null && getString(R.string.yes).equals(rb.getText().toString());
 
-		Itineraire itineraire = null;
+		Itineraire iti = null;
 		if(create){
-			itineraire = new Itineraire();
+			iti = new Itineraire();
 		}else{
-			itineraire = session.find(Itineraire.class, trajet.getId());
+			iti = session.find(Itineraire.class, itineraire.getId());
 		}
-		itineraire.setLieuDepart(departure.getText().toString());
-		itineraire.setLieuPassage1(intermedA.getText().toString());
-		itineraire.setLieuPassage2(intermedB.getText().toString());
-		itineraire.setLieuDestination(arrival.getText().toString());
-		itineraire.setHoraireDepart(timeDepartureButton.getText().toString());
-		itineraire.setHoraireArrivee(timeArrivalButton.getText().toString());
-		itineraire.setCommentaire(comment.getText().toString());
-		itineraire.setIdProfil(profile.getId());
-		itineraire.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
-		itineraire.setAutoroute(autoroute);
-		itineraire.setNbrePoint(Integer.valueOf(price.getText().toString()));
-		itineraire.setVariableDepart("5");
+		iti.setLieuDepart(departure.getText().toString());
+		iti.setLieuPassage1(intermedA.getText().toString());
+		iti.setLieuPassage2(intermedB.getText().toString());
+		iti.setLieuDestination(arrival.getText().toString());
+		iti.setHoraireDepart(timeDepartureButton.getText().toString());
+		iti.setHoraireArrivee(timeArrivalButton.getText().toString());
+		iti.setCommentaire(comment.getText().toString());
+		iti.setIdProfil(profile.getId());
+		iti.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
+		iti.setAutoroute(autoroute);
+		iti.setNbrePoint(Integer.valueOf(price.getText().toString()));
+		iti.setVariableDepart("5");
 		
 		//La fréquence du trajet
 		String freq = "";
 		for(boolean freqBool : frequencies) freq += freqBool?"O":"N";
-		itineraire.setFrequenceTrajet(freq);
+		iti.setFrequenceTrajet(freq);
 		
 		if(create){
-			itineraire = session.save(itineraire);
+			iti = session.save(iti);
 		}else{
-			itineraire = session.update(itineraire);
+			iti = session.update(iti);
 		}
 		
 		return true;
