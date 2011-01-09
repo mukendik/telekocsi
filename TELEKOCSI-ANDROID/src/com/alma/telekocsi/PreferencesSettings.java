@@ -2,6 +2,7 @@ package com.alma.telekocsi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -58,42 +59,48 @@ public class PreferencesSettings extends ARunnableActivity {
 	 */
 	private void initValues(){
 		Profil profile = session.getActiveProfile();
-		if(profile!=null){
+		if(profile!=null && session.isConnected()){
 			
 			//smoker
-			String val  = profile.getFumeur();
+			String val  = Profile.getStringVal(profile.getFumeur());
 			for(int i=0;i<smoker.getChildCount();i++){
 				RadioButton rb = (RadioButton)smoker.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
 			
 			//animals
-			val  = profile.getAnimaux();
+			val  =  Profile.getStringVal(profile.getAnimaux());
 			for(int i=0;i<animals.getChildCount();i++){
 				RadioButton rb = (RadioButton)animals.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
 
 			//detours
-			val  = profile.getDetours();
+			val  =  Profile.getStringVal(profile.getDetours());
 			for(int i=0;i<detours.getChildCount();i++){
 				RadioButton rb = (RadioButton)detours.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
 			
 			//music
-			val  = profile.getMusique();
+			val  =  Profile.getStringVal(profile.getMusique());
 			for(int i=0;i<music.getChildCount();i++){
 				RadioButton rb = (RadioButton)music.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
 
 			//discussion
-			val  = profile.getDiscussion();
+			val  =  Profile.getStringVal(profile.getDiscussion());
 			for(int i=0;i<discussion.getChildCount();i++){
 				RadioButton rb = (RadioButton)discussion.getChildAt(i);
 				rb.setChecked(rb.getText().toString().equals(val));
 			}
+		}else {
+				((RadioButton)smoker.getChildAt(2)).setChecked(true);
+				((RadioButton)animals.getChildAt(2)).setChecked(true);
+				((RadioButton)detours.getChildAt(2)).setChecked(true);
+				((RadioButton)music.getChildAt(2)).setChecked(true);
+				((RadioButton)discussion.getChildAt(2)).setChecked(true);
 		}
 	}
 	
@@ -148,7 +155,23 @@ public class PreferencesSettings extends ARunnableActivity {
 	}
 
 	private void saveSettings(){
-		Profil prof = new Profil();
+		Profil prof = session.getActiveProfile();
+		if(prof==null){
+			//creation profil
+			Log.d(getClass().getSimpleName(), "Création de profil");
+			prof = new Profil();
+			
+			prof.setPointsDispo(20);
+			prof.setClassementMoyen(0);
+			prof.setNombreAvis(0);
+			prof.setClasseVehicule(0);
+			prof.setVehicule("");
+			prof.setTypeProfil("C");
+			prof.setTypeProfilHabituel("C");
+			prof.setPathPhoto("");
+			
+		}
+		
 		Intent intent = getIntent();
 		prof.setNom(intent.getStringExtra("name"));
 		prof.setPrenom(intent.getStringExtra("firstName"));
@@ -158,39 +181,41 @@ public class PreferencesSettings extends ARunnableActivity {
 		if(smoker!=null){
 			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setFumeur(rb.getText().toString());
+				prof.setFumeur(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(animals!=null){
 			RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setAnimaux(rb.getText().toString());
+				prof.setAnimaux(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(detours!=null){
 			RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setDetours(rb.getText().toString());
+				prof.setDetours(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(discussion!=null){
 			RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setDiscussion(rb.getText().toString());
+				prof.setDiscussion(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(music!=null){
 			RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setMusique(rb.getText().toString());
+				prof.setMusique(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
-		prof.setDateNaissance(String.format("%s-%s-%s"
+		prof.setDateNaissance(String.format("%s/%s/%s"
 				, intent.getStringExtra("jj")
 				,intent.getStringExtra("mm")
 				,intent.getStringExtra("aaaa")));
 		prof.setSexe(intent.getStringExtra("sexe"));
 		prof.setTelephone(intent.getStringExtra("phone"));
+		prof.setConnecte(true);
+		
 		System.out.println("SEX = "+prof.getSexe());
 		System.out.println("PHONE = "+prof.getTelephone());
 		session.saveProfile(prof);

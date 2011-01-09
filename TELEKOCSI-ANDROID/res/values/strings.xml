@@ -65,6 +65,7 @@
    	<string name="password2">Ressaisissez le mot de passe</string>
    	<string name="profile_settings_button_text">Etape 2/3</string>
    	<string name="email_syntaxe_error">Format d\'email non reconnu</string>
+   	<string name="email_exist_error">Adresse d\'email existante</string>
    	<string name="passwords_error">Les mots de passe doivent être égaux et non vides</string>
    	
    	<!-- profile_settings -->

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -126,7 +127,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
+		Log.d(getClass().getSimpleName(),"onActivityResult requestCode : " + requestCode);
 		if(requestCode == Preferences.RESULT) {
 			saveProfileAndNotify();
 		}
@@ -139,6 +140,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		//et du profil du user
 		Session session = SessionFactory.getCurrentSession(this);
 		Profil profile = session.getActiveProfile();
+		Log.d(getClass().getSimpleName(), "saveProfilAndNotify : " + profile);
 		//mise a jour
 		profile.setEmail(preferences.getString("email", profile.getEmail()));
 		profile.setPseudo(preferences.getString("email", profile.getPseudo()));

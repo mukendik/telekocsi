@@ -3,6 +3,7 @@ package com.alma.telekocsi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.alma.telekocsi.session.SessionFactory;
 public class ProfileSettings extends ARunnableActivity {
 
 	private static final int CHECKING = 1;
+
 	
 	private OnClickListener onClickListener = null;
 	private Button backButton;
@@ -69,23 +71,27 @@ public class ProfileSettings extends ARunnableActivity {
     
         sexe = (RadioGroup)findViewById(R.id.respsex);
         
-        //Si l'utilisateur avait d�j� les pr�ferences on met ajour ces valeurs
+        //Si l'utilisateur avait deja les preferences on met a jour ces valeurs
         initValues();
     }
 	
 	private void initValues(){
-        if(session!=null){
+
+        if(session!=null && session.isConnected()){
+        	
         	Profil profile = session.getActiveProfile();
         	if(profile!=null){
+        	
         		name.setText(profile.getNom());
         		firstName.setText(profile.getPrenom());
         		phone.setText(profile.getTelephone());
-        		String split[] = profile.getDateNaissance().split("\\-");
+        		String split[] = profile.getDateNaissance().split("\\/");
         		jj.setText(split[0].trim());
         		mm.setText(split[1].trim());
         		aaaa.setText(split[2].trim());
         		//sex
-    			String val  = profile.getSexe();
+    			String val  = Profile.getStringVal(profile.getSexe()); 
+    				
     			for(int i=0;i<sexe.getChildCount();i++){
     				RadioButton rb = (RadioButton)sexe.getChildAt(i);
     				rb.setChecked(rb.getText().toString().equals(val));
@@ -94,6 +100,8 @@ public class ProfileSettings extends ARunnableActivity {
         }
 	}
 	
+
+
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -110,7 +118,7 @@ public class ProfileSettings extends ARunnableActivity {
     	    	intent = intent.putExtra("aaaa", aaaa.getText().toString());
     	    	intent = intent.putExtra("phone", phone.getText().toString());
     	    	RadioButton rb = (RadioButton)findViewById(sexe.getCheckedRadioButtonId());
-    	    	intent = intent.putExtra("sexe",rb==null?R.string.sex:rb.getText().toString());
+    	    	intent = intent.putExtra("sexe",rb==null?R.string.sex:Profile.getBdVal(rb.getText().toString()));
     			startActivity(intent);
     		}break;
     		case ProfileChecking.INVALID_NAME:

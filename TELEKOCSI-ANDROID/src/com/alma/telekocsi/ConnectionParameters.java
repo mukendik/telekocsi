@@ -55,6 +55,7 @@ public class ConnectionParameters extends ARunnableActivity {
     	case CHECKING:
     		switch(resultCode) {
     		case RESULT_OK:{
+    			
     			Intent intent = new Intent(this, ProfileSettings.class);
     			intent = intent.putExtra("email", email.getText().toString());
     			intent = intent.putExtra("password", password1.getText().toString());
@@ -62,6 +63,12 @@ public class ConnectionParameters extends ARunnableActivity {
     		}break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
     			Toast.makeText(this, R.string.email_syntaxe_error, Toast.LENGTH_SHORT).show();
+    			emailLabel.setTextColor(Color.RED);
+    			password1Label.setTextColor(Color.BLACK);
+    			password2Label.setTextColor(Color.BLACK);
+    			break;
+    		case ConnectionParametersChecking.INVALID_EMAIL_ALREADY_EXIST:
+    			Toast.makeText(this, R.string.email_exist_error, Toast.LENGTH_SHORT).show();
     			emailLabel.setTextColor(Color.RED);
     			password1Label.setTextColor(Color.BLACK);
     			password2Label.setTextColor(Color.BLACK);

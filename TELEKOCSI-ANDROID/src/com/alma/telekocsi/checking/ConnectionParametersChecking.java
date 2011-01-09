@@ -3,6 +3,9 @@ package com.alma.telekocsi.checking;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.profil.ProfilDAO;
+
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ public class ConnectionParametersChecking extends Activity {
 	
 	public static final int INVALID_EMAIL = 1;
 	public static final int INVALID_PASSWORD = 2;
+	public static final int INVALID_EMAIL_ALREADY_EXIST = 3;
 	private static final String emailPattern = "^[\\w\\-\\.]+@[a-zA-Z][a-zA-Z\\-]+[a-zA-Z]\\.[a-zA-Z]{2,3}$";
 	
 	 @Override
@@ -31,6 +35,9 @@ public class ConnectionParametersChecking extends Activity {
 	     if(wrongEmail(email)){
 	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL);
 	     }
+	     else if(isEmailAlreadyExist(email)){
+	    	 setResult(ConnectionParametersChecking.INVALID_EMAIL_ALREADY_EXIST);
+	     }
 	     else{
 	    	 if(!samePasswords(password1, password2)){
 	    		 setResult(ConnectionParametersChecking.INVALID_PASSWORD);
@@ -43,7 +50,19 @@ public class ConnectionParametersChecking extends Activity {
 	     finish();
 	 }
 	 
-	 private boolean wrongEmail(String email){
+	 private boolean isEmailAlreadyExist(String email) {
+		ProfilDAO profil = new ProfilDAO();
+		Profil p = profil.getProfilFromEmail(email);
+//		for(Profil p : profil.getList()){
+//			if(email.equals(p.getEmail())){
+//				return true;
+//			}
+//		}
+//		return false;
+		return p!=null;
+	}
+
+	private boolean wrongEmail(String email){
 		 Pattern p = Pattern.compile(ConnectionParametersChecking.emailPattern);
 	     Matcher m = p.matcher(email);
 		 return !m.find();
