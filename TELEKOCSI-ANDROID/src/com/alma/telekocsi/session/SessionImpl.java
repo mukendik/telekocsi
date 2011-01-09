@@ -25,6 +25,8 @@ import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetDAO;
+import com.alma.telekocsi.dao.trajet.TrajetLigne;
+import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.dao.transaction.Transaction;
 import com.alma.telekocsi.dao.transaction.TransactionDAO;
 
@@ -77,6 +79,7 @@ public class SessionImpl implements Session {
     private final TrajetDAO trajetDAO = new TrajetDAO();
     private final TransactionDAO transactionDAO = new TransactionDAO();
     private final LocalisationDAO localisationDAO = new LocalisationDAO();
+    private final TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
     
 	/**
 	 * 
@@ -229,6 +232,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Avis) return (T)avisDAO.insert((Avis)object);
 		else if(object instanceof Localisation) return (T)localisationDAO.insert((Localisation)object);
 		else if(object instanceof Transaction) return (T)transactionDAO.insert((Transaction)object);
+		else if(object instanceof TrajetLigne) return (T)trajetLigneDAO.insert((TrajetLigne)object);
 		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
     }
 
@@ -242,6 +246,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Avis) return (T)avisDAO.update((Avis)object);
 		else if(object instanceof Localisation) return (T)localisationDAO.update((Localisation)object);
 		else if(object instanceof Transaction) return (T)transactionDAO.update((Transaction)object);
+		else if(object instanceof TrajetLigne) return (T)trajetLigneDAO.update((TrajetLigne)object);
 		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
 	}
 	
@@ -254,6 +259,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Avis) avisDAO.delete((Avis)object);
 		else if(object instanceof Localisation) localisationDAO.delete((Localisation)object);
 		else if(object instanceof Transaction) transactionDAO.delete((Transaction)object);
+		else if(object instanceof TrajetLigne) trajetLigneDAO.delete((TrajetLigne)object);
 		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
 	}
 
@@ -265,8 +271,22 @@ public class SessionImpl implements Session {
 		else if(Avis.class==type) avisDAO.clear();
 		else if(Event.class==type) eventDAO.clear();
 		else if(Localisation.class==type) localisationDAO.clear();
+		else if(TrajetLigne.class==type) trajetLigneDAO.clear();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T find(Class<T> type, String id) {
+		if(Profil.class==type) return (T)profileDAO.getProfil(id);
+		else if(Trajet.class==type) return (T)trajetDAO.getTrajet(id);
+		else if(Itineraire.class==type) return (T)itineraireDAO.getItineraire(id);
+		else if(Avis.class==type) return (T)avisDAO.getAvis(id);
+		else if(Event.class==type) return (T)eventDAO.getEvent(id);
+		else if(Localisation.class==type) return (T)localisationDAO.getLocalisation(id);
+		else if(TrajetLigne.class==type) return (T)trajetLigneDAO.getTrajetLigne(id);
+		return null;
+	}
+	
 	@Override
 	public<T> void clear(Class<T> type,String id) {
 		if(Localisation.class==type) localisationDAO.clear(id);
@@ -307,18 +327,6 @@ public class SessionImpl implements Session {
 		if(profile!=null){
 			profile.setTypeProfil("C");
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T find(Class<T> type, String id) {
-		if(Profil.class==type) return (T)profileDAO.getProfil(id);
-		else if(Trajet.class==type) return (T)trajetDAO.getTrajet(id);
-		else if(Itineraire.class==type) return (T)itineraireDAO.getItineraire(id);
-		else if(Avis.class==type) return (T)avisDAO.getAvis(id);
-		else if(Event.class==type) return (T)eventDAO.getEvent(id);
-		else if(Localisation.class==type) return (T)localisationDAO.getLocalisation(id);
-		return null;
 	}
 	
 
