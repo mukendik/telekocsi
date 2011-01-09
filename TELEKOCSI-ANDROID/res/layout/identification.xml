@@ -10,7 +10,7 @@ android:background="@drawable/fd"
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -54,6 +54,7 @@ android:background="@drawable/fd"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
     	android:text="@string/email"
+    	android:background="@color/grisc"
     	/>
     	<EditText
     	android:layout_width="fill_parent"
@@ -69,6 +70,7 @@ android:background="@drawable/fd"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
     	android:text="@string/password1"
+    	android:background="@color/grisc"
     	/>
     	<EditText
     	android:layout_width="fill_parent"
@@ -101,7 +103,7 @@ android:background="@drawable/fd"
     	<TextView
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:textColor="@color/fond"
+    	android:textColor="@color/blue"
     	android:text="@string/identification_error_message"
     	android:id="@+id/identification_error"
     	android:gravity="center"

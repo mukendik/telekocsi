@@ -3,13 +3,14 @@
 android:orientation="vertical"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/fd"
 >
 	<!-- Header -->
 	<LinearLayout
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -35,7 +36,7 @@ android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5px"
-    android:background="@color/fond"
+
     >
     	<!-- Connection parameters title -->
     	<LinearLayout
@@ -53,8 +54,8 @@ android:layout_height="fill_parent"
     		/>
     		<TextView android:gravity="center_vertical" 
     		android:id="@+id/TextView01"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background" 
+    		android:textColor="@color/gris"
+
     		android:text="@string/connection_parameters" 
     		android:layout_height="wrap_content" 
     		android:layout_width="wrap_content" 
@@ -77,6 +78,7 @@ android:layout_height="fill_parent"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
     	android:text="@string/email"
+    	android:background="@color/grisc"
     	/>
     	<EditText
     	android:layout_width="fill_parent"
@@ -93,6 +95,7 @@ android:layout_height="fill_parent"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
     	android:text="@string/password1"
+    	android:background="@color/grisc"
     	/>
     	<EditText
     	android:layout_width="fill_parent"
@@ -109,6 +112,7 @@ android:layout_height="fill_parent"
     	android:layout_height="wrap_content"
     	android:textColor="@color/h2_color"
     	android:text="@string/password2"
+    	android:background="@color/grisc"
     	/>
     	<EditText
     	android:layout_width="fill_parent"

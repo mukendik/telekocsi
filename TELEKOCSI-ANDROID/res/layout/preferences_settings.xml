@@ -11,7 +11,7 @@ android:background="@drawable/fd"
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -57,8 +57,7 @@ android:background="@drawable/fd"
     		android:layout_height="wrap_content"
     		android:gravity="center_vertical"
     		android:text="@string/preferences"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background"
+    		android:textColor="@color/gris"
     		android:textStyle="bold"
     		/>
     		
@@ -87,7 +86,8 @@ android:background="@drawable/fd"
 	    		android:layout_width="wrap_content"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
-	    		android:text="@string/smoker"
+	    		android:text="@string/smoker" 
+	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   	    	android:orientation="horizontal"
@@ -101,18 +101,21 @@ android:background="@drawable/fd"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
 	   				android:id="@+id/smoking_yes"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
 	   				android:id="@+id/smoking_no"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
 	   				android:id="@+id/smoking_any"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
 	    	
@@ -122,6 +125,7 @@ android:background="@drawable/fd"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/animals"
+	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   	    	android:orientation="horizontal"
@@ -135,18 +139,21 @@ android:background="@drawable/fd"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
 	   				android:id="@+id/animals_yes"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
 	   				android:id="@+id/animals_no"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
 	   				android:id="@+id/animals_any"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
 	
@@ -156,6 +163,7 @@ android:background="@drawable/fd"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/detours"
+	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   	    	android:orientation="horizontal"
@@ -169,18 +177,21 @@ android:background="@drawable/fd"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
 	   				android:id="@+id/detours_yes"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
 	   				android:id="@+id/detours_no"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
 	   				android:id="@+id/detours_any"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
 	
@@ -190,6 +201,7 @@ android:background="@drawable/fd"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/music"
+	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   	    	android:orientation="horizontal"
@@ -197,24 +209,28 @@ android:background="@drawable/fd"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/music_radio_group"
 	   			android:checkedButton="@+id/music_any"
+	   			
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
 	   				android:id="@+id/music_yes"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
 	   				android:id="@+id/music_no"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
 	   				android:id="@+id/music_any"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
 	    
@@ -224,6 +240,7 @@ android:background="@drawable/fd"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/discussion"
+	    		android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   	    	android:orientation="horizontal"
@@ -237,18 +254,21 @@ android:background="@drawable/fd"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
 	   				android:id="@+id/discussion_yes"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
 	   				android:id="@+id/discussion_no"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
 	   				android:id="@+id/discussion_any"
+	   					    		android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
     		</LinearLayout>

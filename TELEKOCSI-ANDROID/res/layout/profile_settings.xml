@@ -3,6 +3,7 @@
 android:orientation="vertical"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/fd"
 >
 
 	<!-- Header -->
@@ -10,7 +11,7 @@ android:layout_height="fill_parent"
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -36,7 +37,6 @@ android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5px"
-    android:background="@color/fond"
     >
     	<!-- Profile title -->
     	<LinearLayout
@@ -56,8 +56,7 @@ android:layout_height="fill_parent"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:gravity="center_vertical"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background"
+    		android:textColor="@color/gris"
     		android:text="@string/profile" 
     		android:textStyle="bold"
     
@@ -89,6 +88,7 @@ android:layout_height="fill_parent"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/sex"
+   				android:background="@color/grisc"
 	    		/>
 	   			<RadioGroup
 	   			android:id="@+id/respsex"
@@ -102,11 +102,13 @@ android:layout_height="fill_parent"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/male"
 	   				android:id="@+id/sex_male"
+	    			android:textColor="@color/h2_color"
 	   				/>
 		  	 		<RadioButton 
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/female"
+	   				android:textColor="@color/h2_color"
 	   				/>
 				</RadioGroup>
 	    	
@@ -117,6 +119,7 @@ android:layout_height="fill_parent"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/name"
+	    		android:background="@color/grisc"
 	    		/>
 	    		<EditText
 	    		android:id="@+id/respname"
@@ -132,6 +135,7 @@ android:layout_height="fill_parent"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/first_name"
+	    		android:background="@color/grisc"
 	    		/>
 	    		<EditText
 	    		android:id="@+id/respfirstname"
@@ -146,6 +150,7 @@ android:layout_height="fill_parent"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	   			android:text="@string/date_of_birth"
+	   			android:background="@color/grisc"
 	    		/>
 	    		<LinearLayout
 	    		android:orientation="horizontal"
@@ -200,6 +205,7 @@ android:layout_height="fill_parent"
 	    		android:layout_height="wrap_content"
 	    		android:textColor="@color/h2_color"
 	    		android:text="@string/phone"
+				android:background="@color/grisc"
 	    		/>
 	    		<EditText
 	    		android:id="@+id/respphone"

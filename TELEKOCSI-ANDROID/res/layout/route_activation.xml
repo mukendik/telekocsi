@@ -3,13 +3,14 @@
 android:orientation="vertical"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/fd"
 >
 	<!-- Header -->
 	<LinearLayout
 	android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/entete"
+    android:background="@color/gris"
     android:padding="5px"
     >
     	<ImageView
@@ -35,7 +36,6 @@ android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5px"
-    android:background="@color/fond"
     >
     
     	<LinearLayout
@@ -53,12 +53,11 @@ android:layout_height="fill_parent"
     		-->
     		<TextView
     		android:id="@+id/TextView01"
-    		android:textColor="@color/h1_color"
-    		android:background="@color/h1_background" 
+    		android:textColor="@color/h2_color"
+    		android:background="@color/grisc" 
     		android:text="@string/route_identification_title" 
     		android:layout_height="wrap_content" 
     		android:layout_width="wrap_content" 
-    		android:textStyle="bold"
     		android:gravity="center_vertical"
     		/>
     	
@@ -75,14 +74,12 @@ android:layout_height="fill_parent"
     	android:orientation="horizontal"
    		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/white"
 		android:layout_marginTop="5px"
 		>
 
     		<RadioButton
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:background="@color/white"
     		android:text="@string/my_routes_radio_button"
     		android:paddingLeft="38px"
     		android:paddingRight="5px"
@@ -93,7 +90,6 @@ android:layout_height="fill_parent"
     		<RadioButton
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:background="@color/white"
     		android:text="@string/new_route_radio_button"
     		android:paddingLeft="38px"
     		android:textColor="@color/black"
@@ -119,13 +115,12 @@ android:layout_height="fill_parent"
     	
 
    		<TextView
-		android:textColor="@color/h1_color"
-		android:background="@color/h1_background"
+    	android:textColor="@color/h2_color"
+    	android:background="@color/grisc" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/route_date_title"
 		android:layout_marginTop="5px"
-		android:textStyle="bold"
     	android:gravity="center_vertical"
 		/>
     		
