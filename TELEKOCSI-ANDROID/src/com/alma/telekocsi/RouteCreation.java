@@ -187,6 +187,8 @@ public class RouteCreation extends ARunnableActivity {
 		timeDepartureButton.setText(trajet.getHoraireDepart());
 		arrival.setText(trajet.getLieuDestination());
 		departure.setText(trajet.getLieuDepart());
+		intermedA.setText(trajet.getLieuPassage1());
+		intermedB.setText(trajet.getLieuPassage2());
 		comment.setText(trajet.getCommentaire());
 		frequencies = new boolean[]{false,false,false,false,false,false,false};
 		String freq = trajet.getFrequenceTrajet();
@@ -406,11 +408,17 @@ public class RouteCreation extends ARunnableActivity {
 			itineraire = session.find(Itineraire.class, trajet.getId());
 		}
 		itineraire.setLieuDepart(departure.getText().toString());
+		itineraire.setLieuPassage1(intermedA.getText().toString());
+		itineraire.setLieuPassage2(intermedB.getText().toString());
 		itineraire.setLieuDestination(arrival.getText().toString());
+		itineraire.setHoraireDepart(timeDepartureButton.getText().toString());
+		itineraire.setHoraireArrivee(timeArrivalButton.getText().toString());
 		itineraire.setCommentaire(comment.getText().toString());
 		itineraire.setIdProfil(profile.getId());
 		itineraire.setPlaceDispo(Integer.valueOf(placesCount.getSelectedItem().toString()));
 		itineraire.setAutoroute(autoroute);
+		itineraire.setNbrePoint(Integer.valueOf(price.getText().toString()));
+		itineraire.setVariableDepart("5");
 		
 		//La fréquence du trajet
 		String freq = "";
@@ -422,7 +430,9 @@ public class RouteCreation extends ARunnableActivity {
 		}else{
 			itineraire = session.update(itineraire);
 		}
-
+		
+		return true;
+		/*
 		if(itineraire!=null){
 			if(create){
 				trajet = new Trajet();
@@ -443,7 +453,7 @@ public class RouteCreation extends ARunnableActivity {
 			return trajet!=null;
 		}
 		
-		return false;
+		return false;*/
 	}
 
 	@Override
