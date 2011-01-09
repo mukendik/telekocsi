@@ -194,7 +194,8 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
-	public boolean logout() {
+	public boolean logout() {		
+		this.profile = null;
 		Editor edit = settings.edit();
 		edit.putBoolean(KEY_PROFILE_CONNECTED, false);
 		edit.commit();
