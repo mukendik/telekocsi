@@ -52,7 +52,7 @@ public class TrajetTrouve extends ARunnableActivity {
 	private List<Trajet> trajets = null;
 	private Itineraire itineraire = null;
 	private LocalDate date = null;
-
+	private Trajet trajet = null;
 	
 	private Session session;
 	
@@ -80,8 +80,9 @@ public class TrajetTrouve extends ARunnableActivity {
 		
 		onItemClickListener = new OnItemClickListener() {
 			
-		    public void onItemClick(AdapterView parent, View v, int position, long id) {
+		    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		    	
+		    	trajet = (Trajet)parent.getItemAtPosition(position);
 		        Toast.makeText(trajetTrouve,"Gérer un event vers le conducteur",Toast.LENGTH_SHORT).show();
 		        goTrajetDetail();
 		    }
@@ -299,7 +300,7 @@ public class TrajetTrouve extends ARunnableActivity {
     	case CODE_TRAJETTROUVE:
     		switch(resultCode) {
     		case RESULT_OK:
-    			// Nouvelle recherche
+    			// on continue....
     			break;
     		case RESULT_CANCELED:
     			finish();
@@ -312,8 +313,7 @@ public class TrajetTrouve extends ARunnableActivity {
 	@Override
 	public void run() {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("itineraire", "");
-        bundle.putSerializable("date", "");
+        bundle.putSerializable("trajet", trajet);
         
         Intent intent = new Intent(this, TrajetDetail.class);
         intent.putExtras(bundle);

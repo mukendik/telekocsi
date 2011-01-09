@@ -192,7 +192,7 @@
 	    			android:layout_width="wrap_content" 
 	    			android:layout_height="wrap_content" 
 	    			android:text="non"
-	    			android:id="@+id/tvTRAutoroute"
+	    			android:id="@+id/tvDTAutoroute"
 	    			android:textColor="@color/black"
 	    			android:layout_marginLeft="5px"
 	   				/>
@@ -273,7 +273,6 @@
     				android:layout_marginRight="5px"
     				android:layout_marginTop="5px">
 
-
     				<TextView  
     					android:layout_width="wrap_content" 
     					android:layout_height="wrap_content" 
@@ -305,6 +304,7 @@
     					
    	 						<ImageView
     							android:src="@drawable/visagefemme1"
+    							android:id="@+id/ivDTVisage"
     							android:scaleType="centerInside"
     							android:layout_width="50px"
     							android:layout_height="50px"
@@ -324,13 +324,14 @@
 	   							android:layout_width="wrap_content" 
 	   							android:layout_height="wrap_content" 
 	   							android:text="Julie Les."
-	   							android:id="@+id/tvDTRowNomConducteur"
+	   							android:id="@+id/tvDTNomConducteur"
 	   							android:textColor="@color/black"
 	   							android:layout_marginLeft="10px"
 								/>
 							
 							<ImageView
 								android:src="@drawable/fivestarjaune"
+								android:id="@+id/ivDTStars"
 								android:layout_width="80px"
     							android:layout_height="20px"
    								android:scaleType="centerInside"
@@ -341,7 +342,7 @@
    								android:layout_width="wrap_content" 
    								android:layout_height="wrap_content" 
    								android:text="5 avis"
-   								android:id="@+id/tvDTRowNombreAvis"
+   								android:id="@+id/tvDTNombreAvis"
    								android:textColor="@color/black"
    								android:layout_marginLeft="10px"
 								/>
@@ -397,14 +398,14 @@
 	   	    			android:orientation="horizontal"
 						android:layout_width="fill_parent"
 	   					android:layout_height="wrap_content"
-	   					android:id="@+id/smoker_radio_group"
-	   					android:checkedButton="@+id/smoking_no">
+	   					android:id="@+id/rgDTsmoker"
+	   					android:checkedButton="@+id/rbDTsmoking_no">
 	   					<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/yes"
-	   						android:id="@+id/smoking_yes"
+	   						android:id="@+id/rbDTsmoking_yes"
 	   						android:enabled="false"/>
 	   				
 		  		 		<RadioButton
@@ -412,7 +413,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/no"
-	   						android:id="@+id/smoking_no"
+	   						android:id="@+id/rbDTsmoking_no"
 	   						android:enabled="false"/>
 	   				
 	   					<RadioButton
@@ -420,7 +421,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/any_difference"
-	   						android:id="@+id/smoking_any"
+	   						android:id="@+id/rbDTsmoking_any"
 	   						android:enabled="false"/>
 					</RadioGroup>
 	    	
@@ -436,14 +437,14 @@
 	   	    			android:orientation="horizontal"
 						android:layout_width="fill_parent"
 	   					android:layout_height="wrap_content"
-	   					android:id="@+id/animals_radio_group"
-	   					android:checkedButton="@+id/animals_any">
+	   					android:id="@+id/rgDTanimals"
+	   					android:checkedButton="@+id/rbDTanimals_any">
 	   					<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/yes"
-	   						android:id="@+id/animals_yes"
+	   						android:id="@+id/rbDTanimals_yes"
 	   						android:enabled="false"/>
 	   				
 		  	 			<RadioButton
@@ -451,7 +452,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/no"
-	   						android:id="@+id/animals_no"
+	   						android:id="@+id/rbDTanimals_no"
 	   						android:enabled="false"/>
 	   			
 	   					<RadioButton
@@ -459,7 +460,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/any_difference"
-	   						android:id="@+id/animals_any"
+	   						android:id="@+id/rbDTanimals_any"
 	   						android:enabled="false"/>
 					</RadioGroup>
 	
@@ -475,14 +476,14 @@
 		   	    		android:orientation="horizontal"
 						android:layout_width="fill_parent"
 		   				android:layout_height="wrap_content"
-		   				android:id="@+id/detours_radio_group"
-		   				android:checkedButton="@+id/detours_any">
+		   				android:id="@+id/rgDTdetours"
+		   				android:checkedButton="@+id/rbDTdetours_any">
 		   				<RadioButton
 	   						android:layout_width="wrap_content"
 		   					android:layout_height="wrap_content"
 		   					android:textColor="@color/h2_color"
 	   						android:text="@string/yes"
-	   						android:id="@+id/detours_yes"
+	   						android:id="@+id/rbDTdetours_yes"
 	   						android:enabled="false"/>
 		  	 		
 		  		 		<RadioButton
@@ -490,7 +491,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/no"
-	   						android:id="@+id/detours_no"
+	   						android:id="@+id/rbDTdetours_no"
 	   						android:enabled="false"/>
 	   					
 	   					<RadioButton
@@ -498,7 +499,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/any_difference"
-	   						android:id="@+id/detours_any"
+	   						android:id="@+id/rbDTdetours_any"
 	   						android:enabled="false"/>
 					</RadioGroup>
 	
@@ -513,28 +514,28 @@
 	   	    			android:orientation="horizontal"
 						android:layout_width="fill_parent"
 	   					android:layout_height="wrap_content"
-	   					android:id="@+id/music_radio_group"
-	   					android:checkedButton="@+id/music_any">
+	   					android:id="@+id/rgDTmusic"
+	   					android:checkedButton="@+id/rbDTmusic_any">
 	   					<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/yes"
-	   						android:id="@+id/music_yes"
+	   						android:id="@+id/rbDTmusic_yes"
 	   						android:enabled="false"/>
 		  	 			<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/no"
-	   						android:id="@+id/music_no"
+	   						android:id="@+id/rbDTmusic_no"
 	   						android:enabled="false"/>
 	   					<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/any_difference"
-	   						android:id="@+id/music_any"
+	   						android:id="@+id/rbDTmusic_any"
 	   						android:enabled="false"/>
 					</RadioGroup>
 	    
@@ -550,15 +551,15 @@
 	   	    			android:orientation="horizontal"
 						android:layout_width="fill_parent"
 	   					android:layout_height="wrap_content"
-	   					android:id="@+id/discussion_radio_group"
-	   					android:checkedButton="@+id/discussion_yes"
+	   					android:id="@+id/rgDTdiscussion"
+	   					android:checkedButton="@+id/rbDTdiscussion_yes"
 	   					>
 	   					<RadioButton
 	   						android:layout_width="wrap_content"
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/yes"
-	   						android:id="@+id/discussion_yes"
+	   						android:id="@+id/rbDTdiscussion_yes"
 	   						android:enabled="false"/>
 		  	 		
 		  	 			<RadioButton
@@ -566,7 +567,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/no"
-	   						android:id="@+id/discussion_no"
+	   						android:id="@+id/rbDTdiscussion_no"
 	   						android:enabled="false"/>
 	   				
 	   					<RadioButton
@@ -574,7 +575,7 @@
 	   						android:layout_height="wrap_content"
 	   						android:textColor="@color/h2_color"
 	   						android:text="@string/any_difference"
-	   						android:id="@+id/discussion_any"
+	   						android:id="@+id/rbDTdiscussion_any"
 	   						android:enabled="false"/>
 					</RadioGroup>
     			</LinearLayout>

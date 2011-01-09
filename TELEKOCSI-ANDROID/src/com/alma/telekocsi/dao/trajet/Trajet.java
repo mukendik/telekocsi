@@ -1,5 +1,6 @@
 package com.alma.telekocsi.dao.trajet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * liee a l'itineraire (pour une date precise, ....)
  *
  */
-public class Trajet {
+public class Trajet implements Serializable {
 
 	private String id;
 	
