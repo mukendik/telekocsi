@@ -262,6 +262,7 @@ public class RouteActivation extends ARunnableActivity {
 	public void run() {
 		if(routeActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
 //			startActivity(new Intent(this, GoogleMapActivity.class));
+			stopProgressDialog();
 		}
 		else{
 			Bundle bundle = new Bundle();
