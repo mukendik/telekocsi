@@ -1,6 +1,8 @@
 package com.alma.telekocsi.dao.itineraire;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,6 +21,8 @@ public class Itineraire implements Serializable {
 	private String id;
 	
 	private String lieuDepart;
+	private String lieuPassage1;
+	private String lieuPassage2;
 	private String lieuDestination;
 	private int placeDispo;
 	private String horaireDepart;
@@ -47,6 +51,22 @@ public class Itineraire implements Serializable {
 	public void setLieuDepart(String lieuDepart) {
 		this.lieuDepart = lieuDepart;
 	}
+
+	public String getLieuPassage1() {
+		return lieuPassage1;
+	}
+
+	public void setLieuPassage1(String lieuPassage1) {
+		this.lieuPassage1 = lieuPassage1;
+	}
+
+	public String getLieuPassage2() {
+		return lieuPassage2;
+	}
+
+	public void setLieuPassage2(String lieuPassage2) {
+		this.lieuPassage2 = lieuPassage2;
+	}	
 
 	public String getLieuDestination() {
 		return lieuDestination;
@@ -157,6 +177,8 @@ public class Itineraire implements Serializable {
 		stringBuilder.append("; Horaire arrivée : " + getHoraireArrivee());
 		stringBuilder.append("; Horaire départ : " + getHoraireDepart());
 		stringBuilder.append("; Lieu départ : " + getLieuDepart());
+		stringBuilder.append("; Lieu passage 1 : " + getLieuPassage1());
+		stringBuilder.append("; Lieu passage 2 : " + getLieuPassage2());		
 		stringBuilder.append("; Lieu destination : " + getLieuDestination());
 		stringBuilder.append("; Nombre de points : " + getNbrePoint());
 		stringBuilder.append("; Place disponibles : " + getPlaceDispo());
@@ -165,6 +187,27 @@ public class Itineraire implements Serializable {
 		stringBuilder.append("; Profil : " + getIdProfil());
 		
 		return stringBuilder.toString();
+	}
+	
+	
+	/**
+	 * Lieux de passage - Limites a 2 dans cette version.
+	 * @return list des lieux de passages sur le parcours
+	 * (entre depart et arrivee)
+	 */
+	public List<String> getLieuxPassage() {
+		
+		List<String> lieuxPassage = new ArrayList<String>(2);
+		
+		if ((lieuPassage1 != null) && (lieuPassage1.trim().length() > 0)) {
+			lieuxPassage.add(lieuPassage1);
+		}
+		
+		if ((lieuPassage2 != null) && (lieuPassage2.trim().length() > 0)) {
+			lieuxPassage.add(lieuPassage2);
+		}
+		
+		return lieuxPassage;
 	}
 	
 }
