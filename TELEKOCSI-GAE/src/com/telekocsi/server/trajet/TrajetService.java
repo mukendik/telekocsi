@@ -308,7 +308,7 @@ public class TrajetService {
 					} catch (Exception e) {
 					}
 					
-					if ((profil != null) && profil.getTypeProfil().equals("C")) {
+					if ((profil != null) && (profil.getTypeProfil() != null) && profil.getTypeProfil().equals("C")) {
 					
 						Trajet trajet = new Trajet();
 						trajet.setAutoroute(itineraire.isAutoroute());
