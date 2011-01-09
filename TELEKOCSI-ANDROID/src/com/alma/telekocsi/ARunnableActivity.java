@@ -152,7 +152,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		System.out.println("PROFILE="+profile);
 		Log.i(getClass().getName(), profile.toString());
 		//notification rapide
-		Toast.makeText(this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.profile_creation_ongoing), Toast.LENGTH_SHORT).show();
 	}
 
 }

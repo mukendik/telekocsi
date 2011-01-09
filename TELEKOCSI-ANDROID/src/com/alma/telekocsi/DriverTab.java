@@ -247,6 +247,7 @@ public class DriverTab extends ListActivity {
 		Log.d(getClass().getSimpleName(), "saveProfilAndNotify : " + profile);
 		//mise a jour
 		profile.setEmail(preferences.getString("email", profile.getEmail()));
+		profile.setPseudo(preferences.getString("email", profile.getPseudo()));
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
 		System.out.println("PROFILE="+profile);

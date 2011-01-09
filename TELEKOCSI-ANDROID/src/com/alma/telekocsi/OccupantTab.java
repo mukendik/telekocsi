@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -181,12 +182,16 @@ public class OccupantTab extends ListActivity {
 		//et du profil du user
 		Session session = SessionFactory.getCurrentSession(this);
 		Profil profile = session.getActiveProfile();
+		Log.d(getClass().getSimpleName(), "saveProfilAndNotify : " + profile);
 		//mise a jour
 		profile.setEmail(preferences.getString("email", profile.getEmail()));
+		profile.setPseudo(preferences.getString("email", profile.getPseudo()));
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
+		System.out.println("PROFILE="+profile);
+		Log.i(getClass().getName(), profile.toString());
 		//notification rapide
-		Toast.makeText(this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.profile_creation_ongoing), Toast.LENGTH_SHORT).show();
 	}
 		
 }
