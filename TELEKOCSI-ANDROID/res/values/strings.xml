@@ -129,6 +129,8 @@
     <string name="time_departure_button_text">Sélectionner..</string>
     <string name="time_arrival_button_text">Sélectionner..</string>
     <string name="route_creation_departure">Lieu de départ</string>
+    <string name="route_creation_intermedA">1er Lieu intermédiaire (facultatif)</string>
+    <string name="route_creation_intermedB">2nd Lieu intermédiaire (facultatif)</string>
     <string name="route_creation_arrival">Lieu de destination</string>
     <string name="route_creation_frequence">Fréquence du trajet</string>
     <string name="route_creation_places_count">Places disponibles</string>
@@ -200,6 +202,6 @@
 <string name="route_modification_failed">Echec de la création du trajet</string>
 <string name="route_modification_successed">Trajet enregistré</string>
 <string name="new_profile_button_text">Nouveau Profil</string>
-<string name="activated_route_map_text">Mes trajets actifs</string>
+<string name="activated_route_map_text">Voir trajet actif</string>
 
 </resources>

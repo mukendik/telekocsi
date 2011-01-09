@@ -48,6 +48,8 @@ public class RouteCreation extends ARunnableActivity {
 	private Spinner placesCount;
 	private RadioGroup automaticRoute;
 	private EditText departure;
+	private EditText intermedA;
+	private EditText intermedB;
 	private EditText arrival;
 	private EditText price;
 	private EditText comment;
@@ -87,6 +89,8 @@ public class RouteCreation extends ARunnableActivity {
         placesCount = (Spinner)findViewById(R.id.route_creation_places_count_value);
         automaticRoute = (RadioGroup)findViewById(R.id.automatic_route_radio_group);
         departure = (EditText)findViewById(R.id.route_creation_departure_user);
+        intermedA = (EditText)findViewById(R.id.route_creation_intermedA_user);
+        intermedB = (EditText)findViewById(R.id.route_creation_intermedB_user);
         arrival = (EditText)findViewById(R.id.route_creation_arrival_user);
         price = (EditText)findViewById(R.id.route_creation_price_user);
         comment = (EditText)findViewById(R.id.route_creation_comment_user);
