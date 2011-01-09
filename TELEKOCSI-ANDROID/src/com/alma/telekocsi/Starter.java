@@ -3,6 +3,7 @@ package com.alma.telekocsi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.session.Session;
@@ -15,7 +16,7 @@ public class Starter extends Activity {
     	
         super.onCreate(savedInstanceState);
         
-        System.out.println("nawak-starter");
+        Log.i(getClass().getSimpleName(),"nawak-starter");
         
         //Initialization de la session
         Session session = SessionFactory.getCurrentSession(this);
@@ -26,14 +27,17 @@ public class Starter extends Activity {
         
         //le compte de la personne n'est pas enregistre
         if(!exist){
-        	startActivity(new Intent(this, ConnectionParameters.class));
+        	Log.d(getClass().getSimpleName(),"le compte de la personne n'est pas enregistre");
+        	startActivity(new Intent(this, Identification.class));
         }
         //sinon savoir s'il s'etait deconnecte ou non
         else if(disconnected){
+        	Log.d(getClass().getSimpleName(),"La session est deconnecte : Identification");
         	startActivity(new Intent(this, Identification.class));
         }
         else{
         	//sinon on affiche l'ecran principal
+        	Log.d(getClass().getSimpleName(),"La session est deja connecté : Ecran principal");
         	startActivity(new Intent(this, MainMenu.class));
         }
         
