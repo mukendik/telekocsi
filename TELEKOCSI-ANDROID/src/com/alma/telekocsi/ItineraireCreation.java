@@ -24,11 +24,10 @@ import android.widget.Toast;
 import com.alma.telekocsi.checking.RouteCreationChecking;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
-import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
-public class RouteCreation extends ARunnableActivity {
+public class ItineraireCreation extends ARunnableActivity {
 	
 	private static final int CHECKING = 1;
 	public static final String ROUTE_ARG = "routeToEdit";
@@ -137,7 +136,7 @@ public class RouteCreation extends ARunnableActivity {
 				if(frequencies==null){
 					frequencies = new boolean[]{false,false,false,false,false,false,false};
 				}
-				AlertDialog.Builder builder = new AlertDialog.Builder(RouteCreation.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(ItineraireCreation.this);
 				builder.setTitle(R.string.route_creation_frequence);
 				builder.setMultiChoiceItems(R.array.weekday_list, frequencies,new DialogInterface.OnMultiChoiceClickListener() {
 					
@@ -304,7 +303,7 @@ public class RouteCreation extends ARunnableActivity {
     		switch(resultCode) {
     		case RESULT_OK:{
     			
-    			RouteCreation self = this;
+    			ItineraireCreation self = this;
     			if(doCreateRoute()){
     				goBack();
     				if(create){

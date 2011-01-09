@@ -138,7 +138,7 @@ public class OccupantTab extends ListActivity {
 	}
 	
 	private void showRoutesManaging(){
-		Intent intent = new Intent(this, RoutesManaging.class);
+		Intent intent = new Intent(this, ItinerairesManaging.class);
 		startActivity(intent);
 	}
 	

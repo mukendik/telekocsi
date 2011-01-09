@@ -117,7 +117,7 @@ public class DriverTab extends ListActivity {
 	}
 	
 	private void startRouteCreation(){
-		Intent intent = new Intent(this, RouteCreation.class);
+		Intent intent = new Intent(this, ItineraireCreation.class);
 		startActivity(intent);
 	}
 
@@ -141,8 +141,8 @@ public class DriverTab extends ListActivity {
 				dialog.dismiss();
 				//on affiche la l'ecran de creation
 				//au lieu de repeter le code dans modification
-				Intent intent = new Intent(DriverTab.this, RouteCreation.class);
-				intent.putExtra(RouteCreation.ROUTE_ARG, routes.get(which).getId());
+				Intent intent = new Intent(DriverTab.this, ItineraireCreation.class);
+				intent.putExtra(ItineraireCreation.ROUTE_ARG, routes.get(which).getId());
 				startActivity(intent);
 			}
 			
@@ -197,7 +197,7 @@ public class DriverTab extends ListActivity {
 	}
 	
 	private void showRoutesManaging(){
-		Intent intent = new Intent(this, RoutesManaging.class);
+		Intent intent = new Intent(this, ItinerairesManaging.class);
 		startActivity(intent);
 	}
 	

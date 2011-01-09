@@ -121,7 +121,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	}
 	
 	private void showRoutesManaging(){
-		Intent intent = new Intent(this, RoutesManaging.class);
+		Intent intent = new Intent(this, ItinerairesManaging.class);
 		startActivity(intent);
 	}
 	

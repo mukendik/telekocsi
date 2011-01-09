@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class RoutesManaging extends ARunnableActivity {
+public class ItinerairesManaging extends ARunnableActivity {
 	
 	private static final int MODIFY = 1;
 	private static final int ACTIVATE = 2;
@@ -103,8 +103,8 @@ public class RoutesManaging extends ARunnableActivity {
 	}
 	
 	private void startRouteModification(AdapterContextMenuInfo routeInfos){
-		Intent intent = new Intent(RoutesManaging.this, RouteCreation.class);
-		intent.putExtra(RouteCreation.ROUTE_ARG, itineraires.get(routeInfos.position).getId());
+		Intent intent = new Intent(ItinerairesManaging.this, ItineraireCreation.class);
+		intent.putExtra(ItineraireCreation.ROUTE_ARG, itineraires.get(routeInfos.position).getId());
 		startActivity(intent);
 	}
 	
@@ -145,7 +145,7 @@ public class RoutesManaging extends ARunnableActivity {
 	}
 	
 	private void startRouteCreation(){
-		Intent intent = new Intent(this, RouteCreation.class);
+		Intent intent = new Intent(this, ItineraireCreation.class);
 		startActivity(intent);
 	}
 	
