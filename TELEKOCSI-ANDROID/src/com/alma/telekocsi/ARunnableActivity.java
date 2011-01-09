@@ -129,7 +129,10 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d(getClass().getSimpleName(),"onActivityResult requestCode : " + requestCode);
 		if(requestCode == Preferences.RESULT) {
+			System.out.println("RESULT");
 			saveProfileAndNotify();
+		}else{
+			System.out.println("RESULT NO");
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -146,6 +149,8 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		profile.setPseudo(preferences.getString("email", profile.getPseudo()));
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
+		System.out.println("PROFILE="+profile);
+		Log.i(getClass().getName(), profile.toString());
 		//notification rapide
 		Toast.makeText(this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
 	}
