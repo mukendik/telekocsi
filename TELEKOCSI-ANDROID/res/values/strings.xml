@@ -15,7 +15,7 @@
 	<string name="le">Le :</string>
 	<string name="pour">Pour :</string>
 	<string name="place">place</string>
-	<string name="validerTransaction">Valider la transaction</string>
+	<string name="validerTransaction">Valider une transaction</string>
 	<string name="avis">Laisser une appréciation :</string>
 	<string name="commentaire">Commentaire :</string>
 	<string name="rechTrajet">Recherche trajet</string>
@@ -64,13 +64,15 @@
     <string name="password1">Mot de passe</string>
    	<string name="password2">Ressaisissez le mot de passe</string>
    	<string name="profile_settings_button_text">Etape 2/3</string>
+   	<string name="email_syntaxe_error">Format d\'email non reconnu</string>
+   	<string name="passwords_error">Les mots de passe doivent être égaux et non vides</string>
    	
    	<!-- profile_settings -->
     <string name="registering2">Enregistrement (2/3)</string>
    	<string name="profile">Données personnelles </string>
    	<string name="sex">Sexe</string>
-   	<string name="male">M</string>
-   	<string name="female">F</string>
+   	<string name="male">Homme</string>
+   	<string name="female">Femme</string>
     <string name="name">Nom</string>
    	<string name="first_name">Prénom</string>
    	<string name="phone">Téléphone</string>
@@ -80,6 +82,12 @@
    	<string name="date_of_birth">Date de naissance</string>
    	<string name="profile_settings_back_button_text">Retour</string>
    	<string name="preferences_settings_button_text">Etape 3/3</string>
+   	<string name="name_syntaxe_error">Nom non renseigné</string>
+   	<string name="first_name_syntaxe_error">Prénom non renseigné</string>
+   	<string name="jj_syntaxe_error">Jour de naissance invalide</string>
+   	<string name="mm_syntaxe_error">Mois de naissance invalide</string>
+   	<string name="aaaa_syntaxe_error">Année de naissance invalide</string>
+   	<string name="phone_syntaxe_error">Le téléphone doit comporter 10 chiffres</string>
    	
    	<!-- preferences_settings -->
     <string name="registering3">Enregistrement (3/3)</string>
@@ -111,7 +119,7 @@
     <string name="cancel_route_creation">Annuler</string>
     <string name="non_automatic_route_radio">Non</string>
     <string name="automatic_route_radio">Oui</string>
-    <string name="route_creation_type_title">Saisie automatique</string>
+    <string name="route_creation_type_title">Avec autoroutes</string>
     <string name="route_creation_arrival_time">Horaire de destination</string>
     <string name="route_creation_departure_time">Horaire de départ</string>
     <string name="time_departure_button_text">Sélectionner..</string>
@@ -123,6 +131,13 @@
     <string name="route_creation_frequence_button_text">Choisissez la fréquence</string>
     <string name="route_creation_price">Prix (nombre de points)</string>
     <string name="route_creation_comment">Commentaire</string>
+    <string name="departure_error">Commentaire</string>
+    <string name="arrival_error">Commentaire</string>
+    <string name="departure_time_error">Commentaire</string>
+    <string name="arrival_time_error">Commentaire</string>
+    <string name="frequency_error">Aucune fréquence n\'a été sélectionné</string>
+    <string name="price_error">Prix non renseigné ou négatif</string>
+    <string name="times_error">L\'heure de départ ne peut être supérieure à l\'heure d\'arrivée</string>
 
 	<!-- routes_managing -->
 	<string name="routes_managing_title">Gérer mes trajets</string>
@@ -179,6 +194,6 @@
 <string name="route_modification_failed">Echec de la création du trajet</string>
 <string name="route_modification_successed">Trajet enregistré</string>
 <string name="new_profile_button_text">Nouveau Profil</string>
-<string name="activated_route_map_text">Trajet actif</string>
+<string name="activated_route_map_text">Mes trajets actifs</string>
 
 </resources>

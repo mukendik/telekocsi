@@ -9,12 +9,11 @@ public class RouteCreationChecking extends Activity {
 	public static final int INVALID_DEPARTURE_TIME = 2;
 	public static final int INVALID_ARRIVAL_PLACE = 3;
 	public static final int INVALID_ARRIVAL_TIME = 4;
-	public static final int INVALID_ARRIVAL_TIMES = 5;
+	public static final int INVALID_TIMES = 5;
 	public static final int INVALID_FREQUENCY = 6;
 	public static final int INVALID_PRICE = 7;
 	
 	private static final String DEFAULT_TIME = "Sélectionner..";
-	private static final int MAX_PRICE_AVAILABLE = 50;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,7 @@ public class RouteCreationChecking extends Activity {
 			setResult(INVALID_ARRIVAL_TIME);
 		}
 		else if(wrongArrivalTimes(departureTime, arrivalTime)){
-			setResult(INVALID_ARRIVAL_TIMES);
+			setResult(INVALID_TIMES);
 		}
 		else if(!frequency){
 			setResult(INVALID_FREQUENCY);
@@ -79,7 +78,7 @@ public class RouteCreationChecking extends Activity {
 	}
 
 	private boolean wrongPrice(String price){
-		return price.equals("") || Integer.valueOf(price)>MAX_PRICE_AVAILABLE;
+		return price.equals("");
 	}
 
 }

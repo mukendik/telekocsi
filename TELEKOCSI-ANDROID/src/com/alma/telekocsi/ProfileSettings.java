@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alma.telekocsi.checking.ProfileChecking;
 import com.alma.telekocsi.dao.profil.Profil;
@@ -83,6 +84,12 @@ public class ProfileSettings extends ARunnableActivity {
         		jj.setText(split[0].trim());
         		mm.setText(split[1].trim());
         		aaaa.setText(split[2].trim());
+        		//sex
+    			String val  = profile.getSexe();
+    			for(int i=0;i<sexe.getChildCount();i++){
+    				RadioButton rb = (RadioButton)sexe.getChildAt(i);
+    				rb.setChecked(rb.getText().toString().equals(val));
+    			}
         	}
         }
 	}
@@ -103,10 +110,11 @@ public class ProfileSettings extends ARunnableActivity {
     	    	intent = intent.putExtra("aaaa", aaaa.getText().toString());
     	    	intent = intent.putExtra("phone", phone.getText().toString());
     	    	RadioButton rb = (RadioButton)findViewById(sexe.getCheckedRadioButtonId());
-    	    	intent = intent.putExtra("sexe",rb==null?"M":rb.getText().toString());
+    	    	intent = intent.putExtra("sexe",rb==null?R.string.sex:rb.getText().toString());
     			startActivity(intent);
     		}break;
     		case ProfileChecking.INVALID_NAME:
+    			Toast.makeText(this, R.string.name_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.RED);
     			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.BLACK);
@@ -115,6 +123,7 @@ public class ProfileSettings extends ARunnableActivity {
     			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_FIRST_NAME:
+    			Toast.makeText(this, R.string.first_name_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.RED);
     			jjLabel.setTextColor(Color.BLACK);
@@ -123,6 +132,7 @@ public class ProfileSettings extends ARunnableActivity {
     			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_JJ:
+    			Toast.makeText(this, R.string.jj_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.RED);
@@ -131,6 +141,7 @@ public class ProfileSettings extends ARunnableActivity {
     			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_MM:
+    			Toast.makeText(this, R.string.mm_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.BLACK);
@@ -139,6 +150,7 @@ public class ProfileSettings extends ARunnableActivity {
     			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_AAAA:
+    			Toast.makeText(this, R.string.aaaa_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.BLACK);
@@ -147,6 +159,7 @@ public class ProfileSettings extends ARunnableActivity {
     			phoneLabel.setTextColor(Color.BLACK);
     			break;
     		case ProfileChecking.INVALID_PHONE:
+    			Toast.makeText(this, R.string.phone_syntaxe_error, Toast.LENGTH_SHORT).show();
     			nameLabel.setTextColor(Color.BLACK);
     			firstNameLabel.setTextColor(Color.BLACK);
     			jjLabel.setTextColor(Color.BLACK);

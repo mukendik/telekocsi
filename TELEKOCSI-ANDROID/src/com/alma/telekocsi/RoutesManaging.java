@@ -58,7 +58,7 @@ public class RoutesManaging extends ARunnableActivity {
 	private void printRoutes(){
 		routes = session.getRoutes();
 		if(routes.isEmpty()){
-			Toast.makeText(this, R.string.no_route_registered, Toast.LENGTH_SHORT);
+			Toast.makeText(this, R.string.no_route_registered, Toast.LENGTH_SHORT).show();
 		}
 		else{
 			String[] names = new String[routes.size()];

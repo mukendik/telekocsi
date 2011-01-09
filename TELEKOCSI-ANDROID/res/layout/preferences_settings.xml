@@ -94,21 +94,25 @@ android:layout_height="fill_parent"
 				android:layout_width="fill_parent"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/smoker_radio_group"
+	   			android:checkedButton="@+id/smoking_no"
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:id="@+id/smoking_yes"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:id="@+id/smoking_no"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:id="@+id/smoking_any"
 	   				/>
 				</RadioGroup>
 	    	
@@ -124,21 +128,25 @@ android:layout_height="fill_parent"
 				android:layout_width="fill_parent"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/animals_radio_group"
+	   			android:checkedButton="@+id/animals_any"
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:id="@+id/animals_yes"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:id="@+id/animals_no"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:id="@+id/animals_any"
 	   				/>
 				</RadioGroup>
 	
@@ -154,21 +162,25 @@ android:layout_height="fill_parent"
 				android:layout_width="fill_parent"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/detours_radio_group"
+	   			android:checkedButton="@+id/detours_any"
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:id="@+id/detours_yes"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:id="@+id/detours_no"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:id="@+id/detours_any"
 	   				/>
 				</RadioGroup>
 	
@@ -184,21 +196,25 @@ android:layout_height="fill_parent"
 				android:layout_width="fill_parent"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/music_radio_group"
+	   			android:checkedButton="@+id/music_any"
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:id="@+id/music_yes"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:id="@+id/music_no"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:id="@+id/music_any"
 	   				/>
 				</RadioGroup>
 	    
@@ -214,21 +230,25 @@ android:layout_height="fill_parent"
 				android:layout_width="fill_parent"
 	   			android:layout_height="wrap_content"
 	   			android:id="@+id/discussion_radio_group"
+	   			android:checkedButton="@+id/discussion_yes"
 	   			>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/yes"
+	   				android:id="@+id/discussion_yes"
 	   				/>
 		  	 		<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/no"
+	   				android:id="@+id/discussion_no"
 	   				/>
 	   				<RadioButton
 	   				android:layout_width="wrap_content"
 	   				android:layout_height="wrap_content"
 	   				android:text="@string/any_difference"
+	   				android:id="@+id/discussion_any"
 	   				/>
 				</RadioGroup>
     		</LinearLayout>

@@ -306,6 +306,7 @@ public class RouteCreation extends ARunnableActivity {
     			}
     		}break;
     		case RouteCreationChecking.INVALID_DEPARTURE_PLACE:
+    			Toast.makeText(this, R.string.departure_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.RED);
     			departureTimeLabel.setTextColor(Color.BLACK);
     			arrivalPlaceLabel.setTextColor(Color.BLACK);
@@ -314,6 +315,7 @@ public class RouteCreation extends ARunnableActivity {
     			priceLabel.setTextColor(Color.BLACK);
     			break;
     		case RouteCreationChecking.INVALID_ARRIVAL_PLACE:
+    			Toast.makeText(this, R.string.arrival_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.BLACK);
     			departureTimeLabel.setTextColor(Color.BLACK);
     			arrivalPlaceLabel.setTextColor(Color.RED);
@@ -322,6 +324,7 @@ public class RouteCreation extends ARunnableActivity {
     			priceLabel.setTextColor(Color.BLACK);
     			break;
     		case RouteCreationChecking.INVALID_DEPARTURE_TIME:
+    			Toast.makeText(this, R.string.departure_time_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.BLACK);
     			departureTimeLabel.setTextColor(Color.RED);
     			arrivalPlaceLabel.setTextColor(Color.BLACK);
@@ -330,6 +333,7 @@ public class RouteCreation extends ARunnableActivity {
     			priceLabel.setTextColor(Color.BLACK);
     			break;
     		case RouteCreationChecking.INVALID_ARRIVAL_TIME:
+    			Toast.makeText(this, R.string.arrival_time_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.BLACK);
     			departureTimeLabel.setTextColor(Color.BLACK);
     			arrivalPlaceLabel.setTextColor(Color.BLACK);
@@ -337,7 +341,17 @@ public class RouteCreation extends ARunnableActivity {
     			frequencyLabel.setTextColor(Color.BLACK);
     			priceLabel.setTextColor(Color.BLACK);
     			break;
+    		case RouteCreationChecking.INVALID_TIMES:
+    			Toast.makeText(this, R.string.times_error, Toast.LENGTH_SHORT).show();
+    			departurePlaceLabel.setTextColor(Color.BLACK);
+    			departureTimeLabel.setTextColor(Color.RED);
+    			arrivalPlaceLabel.setTextColor(Color.BLACK);
+    			arrivalTimeLabel.setTextColor(Color.BLACK);
+    			frequencyLabel.setTextColor(Color.BLACK);
+    			priceLabel.setTextColor(Color.BLACK);
+    			break;
     		case RouteCreationChecking.INVALID_FREQUENCY:
+    			Toast.makeText(this, R.string.frequency_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.BLACK);
     			departureTimeLabel.setTextColor(Color.BLACK);
     			arrivalPlaceLabel.setTextColor(Color.BLACK);
@@ -346,6 +360,7 @@ public class RouteCreation extends ARunnableActivity {
     			priceLabel.setTextColor(Color.BLACK);
     			break;
     		case RouteCreationChecking.INVALID_PRICE:
+    			Toast.makeText(this, R.string.price_error, Toast.LENGTH_SHORT).show();
     			departurePlaceLabel.setTextColor(Color.BLACK);
     			departureTimeLabel.setTextColor(Color.BLACK);
     			arrivalPlaceLabel.setTextColor(Color.BLACK);

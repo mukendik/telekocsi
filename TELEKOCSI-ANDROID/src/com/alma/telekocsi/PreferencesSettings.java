@@ -158,7 +158,7 @@ public class PreferencesSettings extends ARunnableActivity {
 		if(smoker!=null){
 			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setDetours(rb.getText().toString());
+				prof.setFumeur(rb.getText().toString());
 			}
 		}
 		if(animals!=null){
@@ -190,6 +190,9 @@ public class PreferencesSettings extends ARunnableActivity {
 				,intent.getStringExtra("mm")
 				,intent.getStringExtra("aaaa")));
 		prof.setSexe(intent.getStringExtra("sexe"));
+		prof.setTelephone(intent.getStringExtra("phone"));
+		System.out.println("SEX = "+prof.getSexe());
+		System.out.println("PHONE = "+prof.getTelephone());
 		session.saveProfile(prof);
 	}
 	

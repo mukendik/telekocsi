@@ -141,6 +141,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 		Profil profile = session.getActiveProfile();
 		//mise a jour
 		profile.setEmail(preferences.getString("email", profile.getEmail()));
+		profile.setPseudo(preferences.getString("email", profile.getPseudo()));
 		profile.setMotDePasse(preferences.getString("password", profile.getMotDePasse()));
 		session.saveProfile(profile);
 		//notification rapide

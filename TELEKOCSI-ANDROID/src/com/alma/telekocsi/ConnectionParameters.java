@@ -2,6 +2,9 @@ package com.alma.telekocsi;
 
 
 import com.alma.telekocsi.checking.ConnectionParametersChecking;
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ConnectionParameters extends ARunnableActivity {
 	
@@ -57,11 +61,13 @@ public class ConnectionParameters extends ARunnableActivity {
     			startActivity(intent);
     		}break;
     		case ConnectionParametersChecking.INVALID_EMAIL:
+    			Toast.makeText(this, R.string.email_syntaxe_error, Toast.LENGTH_SHORT).show();
     			emailLabel.setTextColor(Color.RED);
     			password1Label.setTextColor(Color.BLACK);
     			password2Label.setTextColor(Color.BLACK);
     			break;
     		case ConnectionParametersChecking.INVALID_PASSWORD:
+    			Toast.makeText(this, R.string.passwords_error, Toast.LENGTH_SHORT).show();
     			emailLabel.setTextColor(Color.BLACK);
     			password1Label.setTextColor(Color.RED);
     			password2Label.setTextColor(Color.RED);

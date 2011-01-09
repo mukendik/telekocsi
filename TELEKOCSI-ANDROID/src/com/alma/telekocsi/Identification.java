@@ -101,7 +101,8 @@ public class Identification extends ARunnableActivity {
     }
     
     private void startProfileCreation(){    
-    	startActivity(new Intent(this, ConnectionParameters.class));
+    	Intent intent = new Intent(this, ConnectionParameters.class);
+    	startActivity(intent);
     }
     
     private void startIdentificationChecking(){

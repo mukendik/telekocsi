@@ -75,6 +75,7 @@ android:layout_height="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5px"
 				android:id="@+id/automatic_route_radio_group"
+				android:checkedButton="@+id/automatic_no"
 				>
 
 					<!--  automatic route  -->
@@ -85,6 +86,7 @@ android:layout_height="fill_parent"
 	    			android:paddingLeft="38px"
 	    			android:paddingRight="5px"
 	    			android:textColor="@color/black"
+	    			android:id="@+id/automatic_yes"
     				/>
 
 					<!-- non automatic route -->
@@ -94,6 +96,7 @@ android:layout_height="fill_parent"
 	    			android:text="@string/no"
 	    			android:paddingLeft="38px"
 	    			android:textColor="@color/black"
+	    			android:id="@+id/automatic_no"
     				/>
 	
     			</RadioGroup> 

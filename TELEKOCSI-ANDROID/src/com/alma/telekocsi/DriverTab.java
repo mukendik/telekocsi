@@ -45,11 +45,12 @@ public class DriverTab extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		//Penser a l'internationalisation 
-		ACTIVATE = getString(R.string.start_route_activation);
+		ACTIVATE = getString(R.string.route_activation_title);
 		CREATE = getString(R.string.route_creation);
 		MODIFY = getString(R.string.route_modification);
 		ACTIVATED = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
+
 		DRIVER_FUNCTIONS = new String[] {
 				ACTIVATED, TRANSACTION
 		};
