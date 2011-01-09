@@ -260,12 +260,17 @@ public class RouteActivation extends ARunnableActivity {
 
 	@Override
 	public void run() {
-		Bundle bundle = new Bundle();
-        bundle.putSerializable("itineraire", itineraire);
-        bundle.putSerializable("date", date);
-        Intent intent = new Intent(this, RouteActivator.class);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, ACTIVATION);
+		if(routeActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
+			startActivity(new Intent(this, GoogleMapActivity.class));
+		}
+		else{
+			Bundle bundle = new Bundle();
+	        bundle.putSerializable("itineraire", itineraire);
+	        bundle.putSerializable("date", date);
+	        Intent intent = new Intent(this, RouteActivator.class);
+	        intent.putExtras(bundle);
+	        startActivityForResult(intent, ACTIVATION);
+		}
 	}
 	
 
