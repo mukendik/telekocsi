@@ -57,6 +57,8 @@ public class ItineraireService {
 		persistedItineraire.setHoraireDepart(itineraire.getHoraireDepart());
 		persistedItineraire.setVariableDepart(itineraire.getVariableDepart());
 		persistedItineraire.setLieuDepart(itineraire.getLieuDepart());
+		persistedItineraire.setLieuPassage1(itineraire.getLieuPassage1());
+		persistedItineraire.setLieuPassage2(itineraire.getLieuPassage2());
 		persistedItineraire.setLieuDestination(itineraire.getLieuDestination());
 		persistedItineraire.setNbrePoint(itineraire.getNbrePoint());
 		persistedItineraire.setPlaceDispo(itineraire.getNbrePoint());

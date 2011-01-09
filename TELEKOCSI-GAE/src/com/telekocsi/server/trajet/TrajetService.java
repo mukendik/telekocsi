@@ -63,6 +63,8 @@ public class TrajetService {
 		persistedTrajet.setHoraireDepart(trajet.getHoraireDepart());
 		persistedTrajet.setVariableDepart(trajet.getVariableDepart());
 		persistedTrajet.setLieuDepart(trajet.getLieuDepart());
+		persistedTrajet.setLieuPassage1(trajet.getLieuPassage1());
+		persistedTrajet.setLieuPassage2(trajet.getLieuPassage2());
 		persistedTrajet.setLieuDestination(trajet.getLieuDestination());
 		persistedTrajet.setNbrePoint(trajet.getNbrePoint());
 		persistedTrajet.setPlaceDispo(trajet.getNbrePoint());
@@ -317,6 +319,8 @@ public class TrajetService {
 						trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
 						trajet.setHoraireDepart(itineraire.getHoraireDepart());
 						trajet.setLieuDepart(itineraire.getLieuDepart());
+						trajet.setLieuPassage1(itineraire.getLieuPassage1());
+						trajet.setLieuPassage2(itineraire.getLieuPassage2());
 						trajet.setLieuDestination(itineraire.getLieuDestination());
 						trajet.setNbrePoint(itineraire.getNbrePoint());
 						trajet.setPlaceDispo(itineraire.getPlaceDispo());

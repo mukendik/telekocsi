@@ -26,6 +26,8 @@ public class Itineraire implements Serializable {
 	private String id;
 	
 	private String lieuDepart;
+	private String lieuPassage1;
+	private String lieuPassage2;
 	private String lieuDestination;
 	private int placeDispo;
 	private String horaireDepart;
@@ -54,6 +56,22 @@ public class Itineraire implements Serializable {
 	public void setLieuDepart(String lieuDepart) {
 		this.lieuDepart = lieuDepart;
 	}
+	
+	public String getLieuPassage1() {
+		return lieuPassage1;
+	}
+
+	public void setLieuPassage1(String lieuPassage1) {
+		this.lieuPassage1 = lieuPassage1;
+	}
+
+	public String getLieuPassage2() {
+		return lieuPassage2;
+	}
+
+	public void setLieuPassage2(String lieuPassage2) {
+		this.lieuPassage2 = lieuPassage2;
+	}	
 
 	public String getLieuDestination() {
 		return lieuDestination;
@@ -147,6 +165,8 @@ public class Itineraire implements Serializable {
 		stringBuilder.append("; Horaire arrivée : " + getHoraireArrivee());
 		stringBuilder.append("; Horaire départ : " + getHoraireDepart());
 		stringBuilder.append("; Lieu départ : " + getLieuDepart());
+		stringBuilder.append("; Lieu passage 1 : " + getLieuPassage1());
+		stringBuilder.append("; Lieu passage 2 : " + getLieuPassage2());
 		stringBuilder.append("; Lieu destination : " + getLieuDestination());
 		stringBuilder.append("; Nombre de points : " + getNbrePoint());
 		stringBuilder.append("; Place disponibles : " + getPlaceDispo());
