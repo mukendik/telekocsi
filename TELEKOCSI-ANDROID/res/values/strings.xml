@@ -116,7 +116,7 @@
     <string name="back_button">Retour</string>
     <string name="start_route_activation">Activer le trajet</string>
     <string name="route_activation_title">Activer un trajet</string>
-    <string name="route_activation_button_after_activation">Voir trajet actif</string>
+    <string name="route_activation_button_after_activation">Voir les passagers trouvés</string>
     <string name="activation_successed">Activation du trajet effectuée</string>
 
     <!-- route_creation -->
