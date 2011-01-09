@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/fd"
     >
 
     <LinearLayout
@@ -38,7 +39,7 @@
         android:orientation="vertical"
    		android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:background="@color/fond"
+
     	>
     	
     	<TextView  
@@ -55,14 +56,16 @@
     	    android:orientation="horizontal"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
+    		android:background="@color/fondPanel"
+    		android:layout_marginLeft="5px"
+    		android:layout_marginRight="5px"
     		>
 
     		<ImageButton
     			android:src="@drawable/minus"
     			android:layout_width="24px"
     			android:layout_height="24px"
-    			android:background="@color/fond"
+   		android:background="@color/fondPanel"
     			android:layout_marginLeft="5px"
     			android:layout_marginTop="5px"
     			/>
@@ -72,7 +75,7 @@
     			android:layout_height="wrap_content" 
     			android:text="@string/nbPoints"
     			android:textColor="@color/black"
-    			android:background="@color/fond"
+   				android:background="@color/fondPanel"
     			android:textStyle="bold"
     			android:layout_marginLeft="8px"
     			android:layout_marginTop="8px"
@@ -83,7 +86,7 @@
     			android:src="@drawable/plus"
     			android:layout_width="24px"
     			android:layout_height="24px"
-    			android:background="@color/fond"
+   				android:background="@color/fondPanel"
     			android:layout_marginLeft="5px"
     			android:layout_marginTop="5px"
     			/>
@@ -246,7 +249,7 @@
    		    android:orientation="vertical"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
+
     		android:layout_marginLeft="5px"
     		android:layout_marginRight="5px"
     		android:layout_marginTop="5px">
@@ -274,7 +277,7 @@
    		    android:orientation="vertical"
    			android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:background="@color/fond"
+
     		android:layout_marginLeft="5px"
     		android:layout_marginRight="5px"
     		android:layout_marginTop="5px">
