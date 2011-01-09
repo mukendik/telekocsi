@@ -4,6 +4,7 @@ import com.alma.telekocsi.dao.GAE;
 import com.alma.telekocsi.dao.localisation.LocalisationTestDAO;
 import com.alma.telekocsi.init.DataContext;
 import com.alma.telekocsi.init.LoadData;
+import com.alma.telekocsi.init.LoadDataBruno;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.Button;
 public class MainUI extends Activity {
     
 	OnClickListener onClickListener = null;
+	Button btLoadDataBruno;
 	Button btLoadData;
 	Button btRechTrajet;
 	Button btTransaction;
@@ -31,6 +33,9 @@ public class MainUI extends Activity {
         
         setContentView(R.layout.main);
 
+        btLoadDataBruno = (Button)findViewById(R.id.btMainLoadDataBruno);
+        btLoadDataBruno.setOnClickListener(getOnClickListener());
+        
         btLoadData = (Button)findViewById(R.id.btMainLoadData);
         btLoadData.setOnClickListener(getOnClickListener());
         
@@ -90,6 +95,8 @@ public class MainUI extends Activity {
 						goMap();
 					} else if (v == btLoadData) {
 						loadData();
+					} else if (v == btLoadDataBruno) {
+						loadDataBruno();
 					}
 				}
 			};
@@ -119,4 +126,9 @@ public class MainUI extends Activity {
     	LoadData loadData = new LoadData();
     	loadData.load();
     }
+    
+    public void loadDataBruno() {
+    	LoadDataBruno loadDataBruno = new LoadDataBruno();
+    	loadDataBruno.load();
+    }    
 }
