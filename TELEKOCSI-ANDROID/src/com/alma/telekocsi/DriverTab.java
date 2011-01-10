@@ -136,7 +136,7 @@ public class DriverTab extends ListActivity {
 	
 	
 	private void startDriverTransaction(){
-		final Profil[] passengers = {null,null,null};
+		final Profil[] passengers = session.getActivePassengersProfiles();
 		final Profil[] selected = { null };
 		
 		//On doit choisir le passager destinataire des points de la transaction
@@ -168,6 +168,10 @@ public class DriverTab extends ListActivity {
 			});
 			dialog = builder.create();
 			dialog.show();
+		}
+		
+		if(selected[0]==null){ //Aucun passager selectionné
+			return;
 		}
 		
 		Bundle bundle = new Bundle();		

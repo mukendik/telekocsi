@@ -91,6 +91,12 @@ public interface Session {
 	public abstract int deactivateRouteLineFor(String idPassenger);
 	
 	/**
+	 * Retourner les profils de tous les passagers des trajetLignes actifs
+	 * @return
+	 */
+	public abstract Profil[] getActivePassengersProfiles();
+	
+	/**
 	 * Change le type du profil courant comme passager.
 	 * A noter que le type du profil n'est pas sauvé en base.
 	 */

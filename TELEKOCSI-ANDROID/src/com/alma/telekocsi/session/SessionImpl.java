@@ -73,6 +73,7 @@ public class SessionImpl implements Session {
 	 */
 	private Trajet activeRoute = null;
 	private Map<String,TrajetLigne> activeLines = Collections.synchronizedMap(new HashMap<String,TrajetLigne>());
+	private Profil[] activePassengers = null;
 	
 	//DAO
 	private final ProfilDAO profileDAO = new ProfilDAO();
@@ -447,6 +448,23 @@ public class SessionImpl implements Session {
 			return null;
 		}
 		return activeLines.get(idPassenger);
+	}
+
+	@Override
+	public synchronized Profil[] getActivePassengersProfiles() {		
+		if(!isConnected()){
+			activePassengers = new Profil[]{};
+		}
+		else{
+			synchronized(activeLines){
+				activePassengers = new Profil[activeLines.size()];
+				int index = 0;
+				for(String id : activeLines.keySet()){
+					activePassengers[index++] = profileDAO.getProfil(id);
+				}
+			}
+		}
+		return activePassengers;
 	}
 	
 }
