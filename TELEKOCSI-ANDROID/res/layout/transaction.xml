@@ -6,26 +6,27 @@
     android:background="@drawable/fd"
     >
 
+	<!-- Header -->
     <LinearLayout
         android:orientation="horizontal"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    android:background="@color/gris"
+    	android:background="@color/gris"
     	>
 
     	<ImageButton
     		android:src="@drawable/payment"
     		android:layout_width="24px"
     		android:layout_height="24px"
-    		android:layout_marginLeft="5px"
-    		android:layout_marginTop="5px"
+    		android:layout_marginLeft="4px"
+    		android:layout_marginTop="4px"
     		/>
 
     	<TextView
     		android:text="@string/paiement"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
-    		android:layout_marginLeft="5px"
+    		android:layout_marginLeft="4px"
     		android:textColor="@color/txtEntete"
     		android:textSize="24px"
     		android:textStyle="bold"
@@ -33,286 +34,192 @@
 
     </LinearLayout>
 
-	<!-- nombre de points a echanger -->
+	<!-- Main:Scroll bar -->
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<!-- Child of the scroll bar -->
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+			<!-- nombre de points a echanger -->
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/nbPointEchange"
+				android:textColor="@color/h2_color" android:background="@color/grisc"
+				android:layout_marginLeft="4px" android:layout_marginTop="4px" />
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@color/fondPanel" android:layout_marginLeft="4px"
+				android:layout_marginRight="4px">
+
+				<!-- Diminuer le nombre de point -->
+				<ImageButton android:src="@drawable/minus"
+					android:layout_width="24px" android:layout_height="24px"
+					android:background="@color/fondPanel" android:layout_marginLeft="4px"
+					android:layout_marginTop="4px"
+					android:id="@+id/transaction_point_down_button" />
+				
+				<!-- Le nombre de point -->
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="@string/nbPoints"
+					android:textColor="@color/black" android:background="@color/fondPanel"
+					android:textStyle="bold" android:layout_marginLeft="8px"
+					android:layout_marginTop="8px" android:layout_marginRight="4px"
+					android:id="@+id/transaction_point_text" />
+				
+				<!-- Augmenter le nombre de point -->
+				<ImageButton android:src="@drawable/plus"
+					android:layout_width="24px" android:layout_height="24px"
+					android:background="@color/fondPanel" android:layout_marginLeft="4px"
+					android:layout_marginTop="4px"
+					android:id="@+id/transaction_point_up_button" />
+
+			</LinearLayout>
+
+
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@color/fondPanel" android:layout_margin="4px">
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/passager"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="4px" android:layout_marginTop="1px" 
+						android:id="@+id/transaction_originator_title_text"/>
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Jean Pierre R."
+						android:textColor="@color/black" android:layout_marginLeft="4px"
+						android:layout_marginTop="1px" 
+						android:id="@+id/transaction_originator_name_text"/>
+				</LinearLayout>
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/conducteur"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="4px" 
+						android:id="@+id/transaction_destinator_title_text"/>
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Patrick Tr."
+						android:textColor="@color/black" android:layout_marginLeft="4px" 
+						android:id="@+id/transaction_destinator_name_text"/>
+
+				</LinearLayout>
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/depart"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="4px" />
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Cholet"
+						android:textColor="@color/black" android:layout_marginLeft="4px" 
+						android:id="@+id/transaction_origin_point_text"/>
+
+				</LinearLayout>
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/arrivee"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="4px" />
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="Nantes"
+						android:textColor="@color/black" android:layout_marginLeft="4px" 
+						android:id="@+id/transaction_destination_point_text"/>
+
+				</LinearLayout>
+
+				<LinearLayout android:orientation="horizontal"
+					android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/le"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="4px" />
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="15/11/2010"
+						android:textColor="@color/black" android:layout_marginLeft="4px" 
+						android:id="@+id/transaction_travel_date_text"/>
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="@string/pour"
+						android:textColor="@color/black" android:textStyle="bold"
+						android:layout_marginLeft="14px"/>
+
+					<TextView android:layout_width="wrap_content"
+						android:layout_height="wrap_content" android:text="1 place"
+						android:textColor="@color/black" android:layout_marginLeft="4px"  
+						android:id="@+id/transaction_places_count_text"/>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_marginLeft="4px" android:layout_marginRight="4px"
+				android:layout_marginTop="4px">
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="@string/avis"
+					android:textColor="@color/h2_color" android:background="@color/grisc" />
+
+				<RatingBar android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_marginTop="4px"
+					android:numStars="5" android:stepSize="1" android:rating="3" />
+
+			</LinearLayout>
+
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+
+				android:layout_marginLeft="4px" android:layout_marginRight="4px"
+				android:layout_marginTop="4px">
+
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="@string/commentaire"
+					android:textColor="@color/h2_color" android:background="@color/grisc"/>
+
+				<EditText android:layout_width="fill_parent"
+					android:layout_height="70px" android:layout_marginTop="4px" 
+					android:id="@+id/transaction_comment_editText"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+	</ScrollView>
+   
+    <!-- Footer -->
     <LinearLayout
-        android:orientation="vertical"
-   		android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-
-    	>
-    	
-    	<TextView  
-    		android:layout_width="wrap_content" 
-    		android:layout_height="wrap_content" 
-    		android:text="@string/nbPointEchange"
-	    	android:textColor="@color/h2_color"
-   			android:background="@color/grisc"
-    		android:layout_marginLeft="5px"
-    		android:layout_marginTop="5px"
-   		/>
-
-   		<LinearLayout
-    	    android:orientation="horizontal"
-   			android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:background="@color/fondPanel"
-    		android:layout_marginLeft="5px"
-    		android:layout_marginRight="5px"
-    		>
-
-    		<ImageButton
-    			android:src="@drawable/minus"
-    			android:layout_width="24px"
-    			android:layout_height="24px"
-   		android:background="@color/fondPanel"
-    			android:layout_marginLeft="5px"
-    			android:layout_marginTop="5px"
-    			/>
-
-    		<TextView  
-    			android:layout_width="wrap_content" 
-    			android:layout_height="wrap_content" 
-    			android:text="@string/nbPoints"
-    			android:textColor="@color/black"
-   				android:background="@color/fondPanel"
-    			android:textStyle="bold"
-    			android:layout_marginLeft="8px"
-    			android:layout_marginTop="8px"
-    			android:layout_marginRight="5px"
-   				/>
-   				
-   			<ImageButton
-    			android:src="@drawable/plus"
-    			android:layout_width="24px"
-    			android:layout_height="24px"
-   				android:background="@color/fondPanel"
-    			android:layout_marginLeft="5px"
-    			android:layout_marginTop="5px"
-    			/>
-	
-    	</LinearLayout>  
-    	
-    	
-    	<LinearLayout
-    	    android:orientation="vertical"
-   			android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-    		android:background="@color/fondPanel"
-    		android:layout_marginLeft="5px"
-    		android:layout_marginRight="5px"
-    		android:layout_marginTop="5px"
-    		android:layout_marginBottom="5px"
-    		>
-    		
-   			<LinearLayout
-    	 	   	android:orientation="horizontal"
-   				android:layout_width="wrap_content"
-    			android:layout_height="wrap_content">
-    		
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/passager"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="5px"
-    				android:layout_marginTop="1px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="Jean Pierre R."
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	    			android:layout_marginTop="1px"
-	   				/>									
-   			</LinearLayout>
-
-   			<LinearLayout
-    	 	   	android:orientation="horizontal"
-   				android:layout_width="wrap_content"
-    			android:layout_height="wrap_content">
-    		
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/conducteur"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="5px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="Patrick Tr."
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	   				/>
-	   						 							
-   			</LinearLayout>
-
-   			<LinearLayout
-    	 	   	android:orientation="horizontal"
-   				android:layout_width="wrap_content"
-    			android:layout_height="wrap_content">
-    		
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/depart"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="5px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="Cholet"
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	   				/>
-	   							
-   			</LinearLayout>  
-
-   			<LinearLayout
-    	 	   	android:orientation="horizontal"
-   				android:layout_width="wrap_content"
-    			android:layout_height="wrap_content">
-    		
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/arrivee"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="5px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="Nantes"
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	   				/>
-	   							
-   			</LinearLayout>  
-
-   			<LinearLayout
-    	 	   	android:orientation="horizontal"
-   				android:layout_width="wrap_content"
-    			android:layout_height="wrap_content">
-    		
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/le"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="5px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="15/11/2010"
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	   				/>
-
-    			<TextView  
-    				android:layout_width="wrap_content" 
-    				android:layout_height="wrap_content" 
-    				android:text="@string/pour"
-    				android:textColor="@color/black"
-    				android:textStyle="bold"
-    				android:layout_marginLeft="15px"
-   					/>   
-
-	    		<TextView  
-	    			android:layout_width="wrap_content" 
-	    			android:layout_height="wrap_content" 
-	    			android:text="1 place"
-	    			android:textColor="@color/black"
-	    			android:layout_marginLeft="5px"
-	   				/>
-	   							
-   			</LinearLayout>
-   			 			
-   		</LinearLayout>
-
-   		<LinearLayout
-   		    android:orientation="vertical"
-   			android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-
-    		android:layout_marginLeft="5px"
-    		android:layout_marginRight="5px"
-    		android:layout_marginTop="5px">
-    		
-    		<TextView  
-    			android:layout_width="wrap_content" 
-    			android:layout_height="wrap_content" 
-    			android:text="@string/avis"
-		    	android:textColor="@color/h2_color"
-	   			android:background="@color/grisc"
-   				/> 
-    		
-    		<RatingBar
-    			android:layout_width="wrap_content" 
-    			android:layout_height="wrap_content"
-    			android:layout_marginTop="5px"
-    			android:numStars="5"
-    			android:stepSize="1"
-    			android:rating="3"
-   				/>
-	   							
-   		</LinearLayout> 
-
-   		<LinearLayout
-   		    android:orientation="vertical"
-   			android:layout_width="fill_parent"
-    		android:layout_height="wrap_content"
-
-    		android:layout_marginLeft="5px"
-    		android:layout_marginRight="5px"
-    		android:layout_marginTop="5px">
-    		
-    		<TextView  
-    			android:layout_width="wrap_content" 
-    			android:layout_height="wrap_content" 
-    			android:text="@string/commentaire"
-		    	android:textColor="@color/h2_color"
-	   			android:background="@color/grisc"
-   				/> 
-    		
-    		<EditText
-    			android:layout_width="fill_parent" 
-    			android:layout_height="70px"
-    			android:layout_marginTop="5px"
-   				/>
-	   							
-   		</LinearLayout> 
-   		
-   		
-   		<LinearLayout
-    	   	android:orientation="horizontal"
-    	   	android:background="@color/panelAction"
-   			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_marginTop="5px">
-    		
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/panelAction"
+    android:padding="4px">
     		<Button
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content"
     			android:text="@string/validerTransaction"
     			android:id="@+id/btTransactionValider"
     			android:textColor="@color/black"
-    			android:layout_marginLeft="5px"
-    			android:layout_marginTop="5px"
+    			android:layout_marginLeft="4px"
+    			android:layout_marginTop="4px"
    				/>
    					
    			<Button
@@ -321,13 +228,10 @@
 				android:text="@string/annuler"
 				android:id="@+id/btTransactionAnnuler"
     			android:textColor="@color/black"
-    			android:layout_marginLeft="5px"
-    			android:layout_marginTop="5px"
+    			android:layout_marginLeft="4px"
+    			android:layout_marginTop="4px"
     			/>
-	   							
-   		</LinearLayout>  		
-   		
-    </LinearLayout> 
+    </LinearLayout>
    
 </LinearLayout>
 

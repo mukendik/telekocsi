@@ -47,7 +47,7 @@ public abstract class ARunnableActivity extends Activity implements Runnable {
 	}
 	
 	protected void startProgressDialogInNewThread(Context context){
-		startProgressDialogInNewThread(context, "Chargement...", "", true, false);
+		startProgressDialogInNewThread(context, getString(R.string.loading), "", true, false);
 	}
 	
 	protected void stopProgressDialog(){

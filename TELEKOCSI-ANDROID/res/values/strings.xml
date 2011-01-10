@@ -218,4 +218,6 @@
 <string name="route_activation_button_after_desactivation">Réactiver ce trajet</string>
 
 
+<string name="loading">Opération en cours ...</string>
+    <string name="point">Point</string>
 </resources>
