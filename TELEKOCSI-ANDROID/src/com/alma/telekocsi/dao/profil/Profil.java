@@ -1,7 +1,10 @@
 package com.alma.telekocsi.dao.profil;
 
+import java.io.Serializable;
 
-public class Profil {
+
+@SuppressWarnings("serial")
+public class Profil implements Serializable {
 
 	private String id;
 	

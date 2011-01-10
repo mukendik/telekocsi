@@ -1,7 +1,5 @@
 package com.alma.telekocsi;
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alma.telekocsi.dao.profil.Profil;
-import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
@@ -36,7 +33,7 @@ public class DriverTab extends ListActivity {
 	private String ACTIVATE;
 	private String CREATE;
 	private String DESACTIVATE;
-	private String MODIFY;
+//	private String MODIFY;
 	private String ACTIVATED;
 	private String TRANSACTION;
 	
@@ -49,7 +46,7 @@ public class DriverTab extends ListActivity {
 		//Penser a l'internationalisation 
 		ACTIVATE = getString(R.string.route_activation_title);
 		CREATE = getString(R.string.route_creation);
-		MODIFY = getString(R.string.route_modification);
+//		MODIFY = getString(R.string.route_modification);
 		DESACTIVATE = getString(R.string.route_desactivation);
 		ACTIVATED = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
@@ -139,7 +136,47 @@ public class DriverTab extends ListActivity {
 	
 	
 	private void startDriverTransaction(){
+		final Profil[] passengers = {null,null,null};
+		final Profil[] selected = { null };
+		
+		//On doit choisir le passager destinataire des points de la transaction
+		if(passengers.length<1){
+			return;
+		}
+		else if(passengers.length==1){
+			selected[0] = passengers[0];
+		}
+		else{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog dialog;
+			builder.setTitle(getString(R.string.passager));
+			
+			String[] names = new String[passengers.length];
+			for(int i=0;i<passengers.length;++i){
+				names[i] = passengers[i].getPrenom()+passengers[i].getNom().substring(0, 1).toUpperCase()+".";
+			}
+			builder.setSingleChoiceItems(names, 0, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					selected[0] = passengers[which];
+					if(dialog!=null){
+						dialog.dismiss();
+					}
+				}
+				
+			});
+			dialog = builder.create();
+			dialog.show();
+		}
+		
+		Bundle bundle = new Bundle();		
+		bundle.putSerializable(Transaction.ORIGINATOR, profile);
+		bundle.putSerializable(Transaction.DESTINATOR, selected[0]);
+		
 		Intent intent = new Intent(this, Transaction.class);
+		intent.putExtras(bundle);
+		
 		startActivity(intent);
 	}
 	
@@ -149,43 +186,43 @@ public class DriverTab extends ListActivity {
 	}
 
 
-	private void startRouteModification(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getString(R.string.route_modification));
-		
-		final List<Trajet> routes = session.getRoutes();
-		String[] names = new String[routes.size()];
-		for(int i=0;i<names.length;++i){
-			Trajet route = routes.get(i);
-			names[i] = String.format("%s -> %s",route.getLieuDepart(),route.getLieuDestination());
-		}
-		final AlertDialog dialog;
-		
-		builder.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				//on affiche la l'ecran de creation
-				//au lieu de repeter le code dans modification
-				Intent intent = new Intent(DriverTab.this, ItineraireCreation.class);
-				intent.putExtra(ItineraireCreation.ROUTE_ARG, routes.get(which).getId());
-				startActivity(intent);
-			}
-			
-		});
-		
-		builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		
-		dialog = builder.create();
-		dialog.show();
-	}	
+//	private void startRouteModification(){
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		builder.setTitle(getString(R.string.route_modification));
+//		
+//		final List<Trajet> routes = session.getRoutes();
+//		String[] names = new String[routes.size()];
+//		for(int i=0;i<names.length;++i){
+//			Trajet route = routes.get(i);
+//			names[i] = String.format("%s -> %s",route.getLieuDepart(),route.getLieuDestination());
+//		}
+//		final AlertDialog dialog;
+//		
+//		builder.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//				//on affiche la l'ecran de creation
+//				//au lieu de repeter le code dans modification
+//				Intent intent = new Intent(DriverTab.this, ItineraireCreation.class);
+//				intent.putExtra(ItineraireCreation.ROUTE_ARG, routes.get(which).getId());
+//				startActivity(intent);
+//			}
+//			
+//		});
+//		
+//		builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//			}
+//		});
+//		
+//		dialog = builder.create();
+//		dialog.show();
+//	}	
  	
 	private void showActiveRoute(){
 		startActivity(new Intent(this, GoogleMapActivity.class));

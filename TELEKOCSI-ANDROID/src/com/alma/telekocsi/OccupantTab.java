@@ -1,9 +1,5 @@
 package com.alma.telekocsi;
 
-import com.alma.telekocsi.dao.profil.Profil;
-import com.alma.telekocsi.session.Session;
-import com.alma.telekocsi.session.SessionFactory;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +11,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
 
 public class OccupantTab extends ListActivity {
 
@@ -109,7 +110,23 @@ public class OccupantTab extends ListActivity {
 	}
 	
 	private void startTransaction(){
+		Trajet route = session.getActiveRoute();
+		if(route==null){
+			return;
+		}
+		
+		Profil driver = session.find(Profil.class, route.getIdProfilConducteur());
+		if(driver==null){
+			return;
+		}
+		
+		Bundle bundle = new Bundle();		
+		bundle.putSerializable(Transaction.ORIGINATOR, profile);
+		bundle.putSerializable(Transaction.DESTINATOR, driver);
+		
 		Intent intent = new Intent(this, Transaction.class);
+		intent.putExtras(bundle);
+		
 		startActivity(intent);
 	}
 
