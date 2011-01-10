@@ -63,7 +63,7 @@ public interface Session {
 	public abstract void deactivateRoute();
 	
 	/**
-	 * Activer un trajetLigne pour le trajet actif et le passager considéré
+	 * Activé une ligne pour le trajet actif et le passager considéré
 	 * Si le profil courant est un conducteur un nouveau trajetLigne est crée.
 	 * Sinon le trajetLigne est rechercher dans la base à partir du trajet actif et de l'Id du passager
 	 * @param idPassenger L'Id du passager
@@ -82,8 +82,13 @@ public interface Session {
 	 * Si le profil courant est un conducteur le trajetLigne est retiré de la base
 	 * Sinon le trajetLigne est simplement retiré du cache local
 	 * @param idPassender
+	 * @return <ul>
+	 *  <li><code>Session.NO_ACTIVE_PROFILE</code>: Si pas de trajet activé</li>
+	 *  <li><code>Session.OK</code>: En cas désactivation réussie</li>
+	 *  <li><code>Session.ERROR</code>: En cas d'échec d'activation</li>
+	 * </ul>
 	 */
-	public abstract void deactivateRouteLineFor(String idPassenger);
+	public abstract int deactivateRouteLineFor(String idPassenger);
 	
 	/**
 	 * Change le type du profil courant comme passager.

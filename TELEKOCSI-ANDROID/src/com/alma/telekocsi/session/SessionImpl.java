@@ -338,10 +338,16 @@ public class SessionImpl implements Session {
 	@Override
 	public void activateRoute(Trajet route) {
 		this.activeRoute = route;
+		if(this.activeRoute!=null && route.getId()==null){
+			trajetDAO.insert(this.activeRoute);
+		}
 	}
 
 	@Override
 	public void deactivateRoute() {
+		if(activeRoute!=null){
+			trajetDAO.delete(activeRoute);
+		}
 		activeRoute = null;
 	}
 
@@ -412,20 +418,27 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
-	public synchronized void deactivateRouteLineFor(String idPassenger) {
+	public synchronized int deactivateRouteLineFor(String idPassenger) {
 		Profil profile = getActiveProfile();
-		if(profile!=null){
-			TrajetLigne tl = activeLines.get(idPassenger);
-			if(tl!=null){
-				//On l'enleve du cache
-				activeLines.remove(idPassenger);
-				
-				//On l'enleve de la base
-				if("P".equals(profile.getId())){
-					trajetLigneDAO.delete(tl);
-				}
+		if(profile==null){
+			return NO_ACTIVE_PROFILE;
+		}
+
+		TrajetLigne tl = activeLines.get(idPassenger);
+		if(tl!=null){
+			//On l'enleve du cache
+			activeLines.remove(idPassenger);
+
+			//On l'enleve de la base
+			if("P".equals(profile.getId())){
+				trajetLigneDAO.delete(tl);
 			}
 		}
+		else{
+			return ERROR;
+		}
+		
+		return OK;
 	}
 
 	@Override
