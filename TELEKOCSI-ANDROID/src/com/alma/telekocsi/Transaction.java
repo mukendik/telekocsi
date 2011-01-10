@@ -33,7 +33,7 @@ public class Transaction extends ARunnableActivity {
 	private TextView originText;
 	private TextView destinatorTitleText;
 	private TextView originatorNameText;
-	private TextView originatorTitleTex;
+	private TextView originatorTitleText;
 	private TextView placesCountText;
 	private Button pointDownButton;
 	private TextView pointText;
@@ -59,9 +59,12 @@ public class Transaction extends ARunnableActivity {
     	
         super.onCreate(savedInstanceState);
         
-        route = (Trajet)getIntent().getExtras().get(ACTIVE_ROUTE);
-        originator = (Profil)getIntent().getExtras().get(ORIGINATOR);
-        destinator = (Profil)getIntent().getExtras().get(DESTINATOR);
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null){
+        	route = (Trajet)extras.get(ACTIVE_ROUTE);
+        	originator = (Profil)extras.get(ORIGINATOR);
+        	destinator = (Profil)extras.get(DESTINATOR);
+        }
         
         /*
          * Partie paiement et evaluation
@@ -81,7 +84,7 @@ public class Transaction extends ARunnableActivity {
          destinatorTitleText = (TextView)findViewById(R.id.transaction_destinator_title_text);
          originText = (TextView)findViewById(R.id.transaction_origin_point_text);
          originatorNameText = (TextView)findViewById(R.id.transaction_originator_name_text);
-         originatorTitleTex = (TextView)findViewById(R.id.transaction_originator_title_text);
+         originatorTitleText = (TextView)findViewById(R.id.transaction_originator_title_text);
          placesCountText = (TextView)findViewById(R.id.transaction_places_count_text);
          pointDownButton = (Button)findViewById(R.id.transaction_point_down_button);
          pointText = (TextView)findViewById(R.id.transaction_point_text);
