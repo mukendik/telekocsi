@@ -1,16 +1,28 @@
 package com.alma.telekocsi;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 
 
 public class Transaction extends ARunnableActivity {
+	/**
+	 * Le parametre a fournir pour la transaction
+	 */
+	public final static String ACTIVE_ROUTE = "transaction.active.route";
+	public final static String ORIGINATOR = "transaction.profile.originator";
+	public final static String DESTINATOR = "transaction.profile.destinator";
 	
 	OnClickListener onClickListener = null;
 	Button btValider;
@@ -32,12 +44,24 @@ public class Transaction extends ARunnableActivity {
 	 * Trajet concerner par la validation
 	 */
 	private Trajet route;
+	/**
+	 * Le profil de celui qui note
+	 */
+	private Profil originator;
+	/**
+	 * Le profil de celui qui est noté
+	 */
+	private Profil destinator;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
+        
+        route = (Trajet)getIntent().getExtras().get(ACTIVE_ROUTE);
+        originator = (Profil)getIntent().getExtras().get(ORIGINATOR);
+        destinator = (Profil)getIntent().getExtras().get(DESTINATOR);
         
         /*
          * Partie paiement et evaluation
@@ -63,8 +87,78 @@ public class Transaction extends ARunnableActivity {
          pointText = (TextView)findViewById(R.id.transaction_point_text);
          pointUpButton = (Button)findViewById(R.id.transaction_point_up_button);
          travelDateText = (TextView)findViewById(R.id.transaction_travel_date_text);
+         
+         pointDownButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				pointDown();
+			}
+			
+		});
+         
+         pointUpButton.setOnClickListener(new OnClickListener() {
+			
+			@Override  
+			public void onClick(View v) {
+				pointUp();
+			}
+			
+		});
+    }
+  
+    
+    @Override
+	protected void onStart() {
+		super.onStart();
+		
+		if(route==null || originator==null || destinator==null){
+			finish();
+			Toast.makeText(getApplicationContext(), getString(R.string.no_route_registered), Toast.LENGTH_SHORT).show();
+		}
+		
+		initValues();
+	}
+
+    /**
+     * Peupler la vue
+     */
+    private void initValues(){    
     }
     
+	/**
+     * 
+     * @return Le nombre de points
+     */
+    private int getPoints(){    	
+    	Pattern p = Pattern.compile("\\s*(\\d+).*");
+    	String txt = pointText.getText().toString();
+    	Matcher m = p.matcher(txt);
+    	if(m.matches()){
+    		try{
+    			return Integer.valueOf(txt);    		
+    		} catch(Throwable e) {
+    			Log.d(getClass().getName(),e.getMessage());
+    		}
+    	}
+    	return 0;
+    }
+    
+    /**
+     * Augmenter le nombre de point
+     */
+    private void pointUp(){
+    	int point = getPoints()+1;
+    	pointText.setText(String.format("%d %s%s",point,getString(R.string.point),Math.abs(point)>1?"s":""));
+    }
+    
+    /**
+     * Diminuer le nombre the point
+     */
+    private void pointDown(){
+    	int point = getPoints()-1;
+    	pointText.setText(String.format("%d %s%s",point,getString(R.string.point),Math.abs(point)>1?"s":""));
+    }
     
     public OnClickListener getOnClickListener() {
     	
