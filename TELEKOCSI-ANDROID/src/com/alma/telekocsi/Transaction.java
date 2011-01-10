@@ -1,5 +1,7 @@
 package com.alma.telekocsi;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alma.telekocsi.dao.avis.Avis;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
@@ -249,7 +252,6 @@ public class Transaction extends ARunnableActivity {
 		}
 		t.setPointEchange(getPoints());
 		t.setHeureTransaction(route.getHoraireDepart());
-		t.setCommentaire(commentText.getText().toString());
 		
 		if(tl!=null){
 			t.setIdTrajetLigne(tl.getId());
@@ -258,6 +260,14 @@ public class Transaction extends ARunnableActivity {
 			Toast.makeText(getApplicationContext(), R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
 			return;
 		}
+		
+		Avis avis = new Avis();
+//		avis.setClassement(Profile.getClassementStarImageResource(classement));
+		avis.setCommentaire(commentText.getText().toString());
+		avis.setDateAvis(new SimpleDateFormat("d-M-y").format(new Date()));
+		avis.setHeureAvis(new SimpleDateFormat("HH:mm").format(new Date()));
+		//TODO remplir dans l'avis les 
+		avis = session.save(avis);
 		
 		if(session.save(t)!=null){
 			finish();
