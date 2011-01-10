@@ -187,7 +187,17 @@ public class TrajetLigneDAO {
     	
 		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/" + idTrajetLigne));
     }
-    
+
+    /**
+     * Rechercher une ligne pour un passager et un trajet donnée
+     * @param idTrajet
+     * @param idPassager
+     * @return
+     */
+    public TrajetLigne rechercheTrajetLigne(String idTrajet,String idPassager) {
+    	
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/" + idTrajet + "/" +idPassager));
+    }
     
     /**
      * Recuperation des lignes associees a un trajet

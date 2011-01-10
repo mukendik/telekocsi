@@ -5,7 +5,9 @@ package com.alma.telekocsi.session;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -70,7 +72,8 @@ public class SessionImpl implements Session {
 	 * The active route
 	 */
 	private Trajet activeRoute = null;
-
+	private Map<String,TrajetLigne> activeLines = Collections.synchronizedMap(new HashMap<String,TrajetLigne>());
+	
 	//DAO
 	private final ProfilDAO profileDAO = new ProfilDAO();
 	private final AvisDAO avisDAO = new AvisDAO();
@@ -351,6 +354,57 @@ public class SessionImpl implements Session {
 	public List<Trajet> getTrajets(Trajet trajetModel) {
 		List<Trajet> trajets = trajetDAO.getTrajetDispo(trajetModel);		
 		return trajets;
+	}
+
+	@Override
+	public synchronized int activeRouteLineFor(String idPassenger,int places) {
+		Profil profile = getActiveProfile();
+		if(profile==null){
+			return NO_ACTIVE_PROFILE;
+		}
+		
+		Trajet route = getActiveRoute();
+		if(route==null){
+			return NO_ACTIVE_ROUTE; 
+		}
+		
+		TrajetLigne tl = null;
+		if("P".equals(profile.getId())){
+			//On le crée
+			tl = new TrajetLigne();
+			tl.setIdProfilPassager(idPassenger);
+			tl.setNbrePoint(route.getNbrePoint());
+			tl.setPlaceOccupee(places);
+			tl = trajetLigneDAO.insert(tl);
+		}
+		else{
+			tl = trajetLigneDAO.rechercheTrajetLigne(route.getId(), idPassenger);
+		}
+		
+		if(tl==null){
+			return ERROR;
+		}
+		
+		activeLines.put(idPassenger,tl);
+		
+		return OK;
+	}
+
+	@Override
+	public synchronized void deactivateRouteLineFor(String idPassenger) {
+		Profil profile = getActiveProfile();
+		if(profile!=null){
+			TrajetLigne tl = activeLines.get(idPassenger);
+			if(tl!=null){
+				//On l'enleve du cache
+				activeLines.remove(idPassenger);
+				
+				//On l'enleve de la base
+				if("P".equals(profile.getId())){
+					trajetLigneDAO.delete(tl);
+				}
+			}
+		}
 	}
 	
 }

@@ -220,4 +220,6 @@
 
 <string name="loading">Opération en cours ...</string>
     <string name="point">Point</string>
+    <string name="transaction_validation_success">Transaction validée</string>
+    <string name="transaction_validation_failure">Impossible de valider la transaction</string>
 </resources>
