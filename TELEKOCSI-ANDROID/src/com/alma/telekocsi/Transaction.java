@@ -269,7 +269,8 @@ public class Transaction extends ARunnableActivity {
 		avis.setCommentaire(commentText.getText().toString());
 		avis.setDateAvis(new SimpleDateFormat("d-M-y").format(new Date()));
 		avis.setHeureAvis(new SimpleDateFormat("HH:mm").format(new Date()));
-		//TODO remplir dans l'avis: checked,Etat
+		avis.setChecked(false);
+		//TODO remplir dans l'avis: Etat
 		avis = session.save(avis);
 		
 		if(session.save(t)!=null){
