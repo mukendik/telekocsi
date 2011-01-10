@@ -396,7 +396,7 @@ public class SessionImpl implements Session {
 		}
 		
 		TrajetLigne tl = null;
-		if("P".equals(profile.getId())){
+		if("C".equals(profile.getId())){
 			//On le crée
 			tl = new TrajetLigne();
 			tl.setIdProfilPassager(idPassenger);
