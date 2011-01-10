@@ -213,5 +213,15 @@ public class TrajetDAO {
     	String dateRef = date.replaceAll("/", "-"); // Non supporte sinon change le chemin http !
 		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/generate/" + dateRef));
     }
+
     
+    /**
+     * Desactivation d'un trajet
+     * @param String idTrajet 
+     * @return 1 si trajet desactive sinon 0
+     */
+    public int desactivate(String idTrajet) {
+
+		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/desactivate/" + idTrajet));
+    }
 }
