@@ -109,7 +109,8 @@ public class ItinerairesManaging extends ARunnableActivity {
 	}
 	
 	private void startRouteDeletation(AdapterContextMenuInfo routeInfos){
-		
+		Itineraire i = itineraires.get(routeInfos.position);
+		session.delete(i);
 	}
 	
 	private void startRouteActivation(AdapterContextMenuInfo routeInfos){

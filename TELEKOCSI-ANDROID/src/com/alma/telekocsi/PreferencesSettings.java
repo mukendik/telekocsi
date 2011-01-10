@@ -29,6 +29,7 @@ public class PreferencesSettings extends ARunnableActivity {
 	private RadioGroup discussion;
 	private RadioGroup detours;
 	private Session session;
+	private Profil profile;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -154,70 +155,75 @@ public class PreferencesSettings extends ARunnableActivity {
 	}
 
 	private void saveSettings(){
-		Profil prof = session.getActiveProfile();
+		profile = session.getActiveProfile();
 		Intent intent = getIntent();
-		if(prof==null && !session.isConnected()){
+		if(profile==null){
 			//creation profil
 			Log.d(getClass().getSimpleName(), "Création de profil");
-			prof = new Profil();
+			profile = new Profil();
 			
-			prof.setPointsDispo(20);
-			prof.setClassementMoyen(0);
-			prof.setNombreAvis(0);
-			prof.setClasseVehicule(0);
-			prof.setVehicule("");
-			prof.setTypeProfil("C");
-			prof.setTypeProfilHabituel("C");
-			prof.setPathPhoto("");
-			prof.setEmail(intent.getStringExtra("email"));
-			prof.setPseudo(intent.getStringExtra("email"));
-			prof.setMotDePasse(intent.getStringExtra("password"));
-			prof.setConnecte(true);
+			profile.setPointsDispo(20);
+			profile.setClassementMoyen(0);
+			profile.setNombreAvis(0);
+			profile.setClasseVehicule(0);
+			profile.setVehicule("");
+			profile.setTypeProfil("C");
+			profile.setTypeProfilHabituel("C");
+			profile.setPathPhoto("");
+			profile.setEmail(intent.getStringExtra("email"));
+			profile.setPseudo(intent.getStringExtra("email"));
+			profile.setMotDePasse(intent.getStringExtra("password"));
 		}
 		
-		prof.setSexe(intent.getStringExtra("sexe"));
-		prof.setNom(intent.getStringExtra("name"));
-		prof.setPrenom(intent.getStringExtra("firstName"));
+		if(!session.isConnected()){
+			profile.setConnecte(true);
+		}
+		
+		profile.setSexe(intent.getStringExtra("sexe"));
+		profile.setNom(intent.getStringExtra("name"));
+		profile.setPrenom(intent.getStringExtra("firstName"));
 		
 		if(smoker!=null){
 			RadioButton rb = (RadioButton)findViewById(smoker.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setFumeur(Profile.getBdVal(rb.getText().toString()));
+				profile.setFumeur(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(animals!=null){
 			RadioButton rb = (RadioButton)findViewById(animals.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setAnimaux(Profile.getBdVal(rb.getText().toString()));
+				profile.setAnimaux(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(detours!=null){
 			RadioButton rb = (RadioButton)findViewById(detours.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setDetours(Profile.getBdVal(rb.getText().toString()));
+				profile.setDetours(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(discussion!=null){
 			RadioButton rb = (RadioButton)findViewById(discussion.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setDiscussion(Profile.getBdVal(rb.getText().toString()));
+				profile.setDiscussion(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
 		if(music!=null){
 			RadioButton rb = (RadioButton)findViewById(music.getCheckedRadioButtonId());
 			if(rb!=null){
-				prof.setMusique(Profile.getBdVal(rb.getText().toString()));
+				profile.setMusique(Profile.getBdVal(rb.getText().toString()));
 			}
 		}
-		prof.setDateNaissance(String.format("%s/%s/%s"
+		profile.setDateNaissance(String.format("%s/%s/%s"
 				, intent.getStringExtra("jj")
 				,intent.getStringExtra("mm")
 				,intent.getStringExtra("aaaa")));
 		
-		prof.setTelephone(intent.getStringExtra("phone"));
+		profile.setTelephone(intent.getStringExtra("phone"));
 	
+		System.out.println(profile);
+		Log.i(getClass().getName(), profile.toString());
 		
-		session.saveProfile(prof);
+		session.saveProfile(profile);
 	}
 	
 	@Override

@@ -180,6 +180,7 @@ public class ItineraireCreation extends ARunnableActivity {
 	}//onCreate()
 	
 	private void initValues(){
+		System.out.println("RECUP ==>"+itineraire.getPlaceDispo());
         //Chargement du trajet parametres
 		placesCount.setPrompt(""+itineraire.getPlaceDispo());
 		timeArrivalButton.setText(itineraire.getHoraireArrivee());
@@ -426,8 +427,10 @@ public class ItineraireCreation extends ARunnableActivity {
 		
 		if(create){
 			iti = session.save(iti);
+			System.out.println("CREATE ==> "+iti.getPlaceDispo());
 		}else{
 			iti = session.update(iti);
+			System.out.println("UPDATE ==> "+iti.getPlaceDispo());
 		}
 		
 		return true;

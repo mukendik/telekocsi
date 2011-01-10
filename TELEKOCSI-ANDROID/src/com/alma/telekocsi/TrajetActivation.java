@@ -244,7 +244,7 @@ public class TrajetActivation extends ARunnableActivity {
     	case ACTIVATION:
     		switch(resultCode) {
     		case RESULT_OK:
-    			createTrajet();    			
+    			activeTrajet();    			
     			Toast.makeText(this, R.string.activation_successed, Toast.LENGTH_SHORT).show();
     			trajetActivationButton.setText(getText(R.string.route_activation_button_after_activation));
     			break;
@@ -255,6 +255,7 @@ public class TrajetActivation extends ARunnableActivity {
     	case DESACTIVATION:
     		switch(resultCode) {
     		case RESULT_OK:
+    			desactiveTrajet();
     			Toast.makeText(this, R.string.desactivation_successed, Toast.LENGTH_SHORT).show();
     			trajetActivationButton.setText(getText(R.string.route_activation_button_after_desactivation));
     			break;
@@ -265,9 +266,7 @@ public class TrajetActivation extends ARunnableActivity {
     	stopProgressDialog();
     }
 	
-	private void createTrajet() {
-		
-		
+	private void activeTrajet() {
 		Trajet trajet = new Trajet();
 		trajet.setAutoroute(itineraire.isAutoroute());
 		trajet.setCommentaire(itineraire.getCommentaire());
@@ -285,10 +284,11 @@ public class TrajetActivation extends ARunnableActivity {
 		trajet.setPlaceDispo(itineraire.getPlaceDispo());
 		trajet.setSoldePlaceDispo(itineraire.getPlaceDispo());
 		trajet.setVariableDepart(itineraire.getVariableDepart());
-		
+		session.activateRoute(trajet);
+	}
 	
-	
-			session.save(trajet);	
+	private void desactiveTrajet(){
+		session.deactivateRoute();
 	}
 
 	public void initDates() {

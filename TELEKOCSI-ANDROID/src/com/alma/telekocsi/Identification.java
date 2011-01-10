@@ -113,10 +113,12 @@ public class Identification extends ARunnableActivity {
     	Session session = SessionFactory.getCurrentSession(this);
 		Profil profile = session.getActiveProfile();
     	Intent sendIntent = new Intent(Intent.ACTION_SEND);
-    	sendIntent.putExtra(Intent.EXTRA_EMAIL, profile.getEmail().toString());
-    	sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Android Telekocsi Application. Mot de passe.");
-    	sendIntent.putExtra(Intent.EXTRA_TEXT,"Votre mot de passe : "+profile.getMotDePasse().toString());
-    	sendIntent.setType("text/plain");
+    	if(profile!=null){
+        	sendIntent.putExtra(Intent.EXTRA_EMAIL, profile.getEmail().toString());
+        	sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Android Telekocsi Application. Mot de passe.");
+        	sendIntent.putExtra(Intent.EXTRA_TEXT,"Votre mot de passe : "+profile.getMotDePasse().toString());
+        	sendIntent.setType("text/plain");
+    	}
     	startActivity(Intent.createChooser(sendIntent, "MySendMail"));
 //		EMailSender sender = new EMailSender(); // SUBSTITUTE HERE                    
 //		try {
