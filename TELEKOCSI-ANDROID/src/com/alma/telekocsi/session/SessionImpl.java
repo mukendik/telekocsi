@@ -3,6 +3,9 @@
  */
 package com.alma.telekocsi.session;
 
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +46,10 @@ public class SessionImpl implements Session {
 	public static final String KEY_PROFILE_CONNECTED = "profile_connected";
 	public static final String KEY_PROFILE_PASS = "profile_secret";
 	public static final String KEY_PROFILE_PSEUDO = "profile_pseudo";
+	public static final String KEY_ACTIVE_ROUTE_ID = "active_route_id";
 	private static final String PREFERENCES_STORE = "TELEKOCSI_PREFERENCES";
+	private static final String PROFILE_CACHE = "telekocsi_profile.alma";
+	private static final String ACTIVE_ROUTE_CACHE = "telekocsi_active_route.alma";
 	
 	/**
 	 * 
@@ -112,10 +118,13 @@ public class SessionImpl implements Session {
 	public synchronized Profil getActiveProfile(){
 		if(!isConnected()) return null;
 		if(profile==null){
-			//On charge le profil
-			String id = settings.getString(KEY_PROFILE_ID, null);
-			if(id!=null){
-				profile = profileDAO.getProfil(id);
+			//On essaie de charger en cache
+			if(loadProfileFromCache()==ERROR || profile==null){
+				//On charge le profil
+				String id = settings.getString(KEY_PROFILE_ID, null);
+				if(id!=null){
+					profile = profileDAO.getProfil(id);
+				}
 			}
 		}
 		return profile;
@@ -140,6 +149,9 @@ public class SessionImpl implements Session {
 			editor.putBoolean(KEY_PROFILE_CONNECTED, true);
 			editor.commit();
 			Log.i(getClass().getName(),this.profile.toString());
+			
+			//On cache en locale
+			cacheProfile();
 		}
 	}
 
@@ -195,6 +207,10 @@ public class SessionImpl implements Session {
 			edit.putString(KEY_PROFILE_ID, profile.getId());
 			edit.putBoolean(KEY_PROFILE_CONNECTED, true);
 			edit.commit();
+			
+			//on sauve en cache
+			cacheProfile();
+			
 			return true;
 		}
 		return false;
@@ -333,6 +349,14 @@ public class SessionImpl implements Session {
 
 	@Override
 	public Trajet getActiveRoute() {
+		if(activeRoute==null && isConnected()){
+			if(loadActiveRouteFromCache()==ERROR || activeRoute==null){
+				String id = settings.getString(KEY_ACTIVE_ROUTE_ID, null);
+				if(id!=null){
+					activeRoute = trajetDAO.getTrajet(id);
+				}
+			}
+		}
 		return activeRoute;
 	}
 
@@ -342,14 +366,26 @@ public class SessionImpl implements Session {
 		if(this.activeRoute!=null && route.getId()==null){
 			trajetDAO.insert(this.activeRoute);
 		}
+		if(this.activeRoute!=null){
+			Editor edit = settings.edit();
+			edit.putString(KEY_ACTIVE_ROUTE_ID, activeRoute.getId());
+			edit.commit();
+			
+			//on met en cache
+			cacheActiveRoute();
+		}
 	}
 
 	@Override
 	public void deactivateRoute() {
 		if(activeRoute!=null){
 			trajetDAO.delete(activeRoute);
+			Editor edit = settings.edit();
+			edit.remove(KEY_ACTIVE_ROUTE_ID);			
+			edit.commit();
 		}
 		activeRoute = null;
+		clearActiveRouteCache();
 	}
 
 	@Override
@@ -415,6 +451,9 @@ public class SessionImpl implements Session {
 		
 		activeLines.put(idPassenger,tl);
 		
+		//On met a jour le cache
+		cacheActiveRoute();
+		
 		return OK;
 	}
 
@@ -430,6 +469,9 @@ public class SessionImpl implements Session {
 			//On l'enleve du cache
 			activeLines.remove(idPassenger);
 
+			//On met a jour le cache
+			cacheActiveRoute();
+			
 			//On l'enleve de la base
 			if("P".equals(profile.getId())){
 				trajetLigneDAO.delete(tl);
@@ -467,4 +509,110 @@ public class SessionImpl implements Session {
 		return activePassengers;
 	}
 	
+	/**
+	 * 
+	 * @return OK en cas de succès, ERROR sinon
+	 */
+	protected int cacheProfile(){
+		if(profile!=null){
+			try{
+				FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
+				ObjectOutputStream oos = new ObjectOutputStream(out);
+				oos.writeObject(profile);
+				out.flush();
+				out.close();
+			} catch(Throwable e){
+				Log.d(getClass().getSimpleName(),e.getMessage());
+				return ERROR;
+			}
+		}
+		return OK;
+	}
+	
+	/**
+	 * 
+	 * @return OK en cas de succès, ERROR sinon
+	 */
+	protected int loadProfileFromCache(){
+		try {
+			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(PROFILE_CACHE));
+			try{
+				profile = (Profil)ois.readObject();
+			} finally{
+				try{ ois.close(); } catch(Throwable e){}
+			}
+		} catch(Throwable e){
+			Log.d(getClass().getSimpleName(),e.getMessage());
+			return ERROR;
+		}
+		return OK;
+	}
+	
+	/**
+	 * 
+	 * @return OK en cas de succès, ERROR sinon
+	 */
+	protected int cacheActiveRoute(){		
+		if(activeRoute!=null){
+			try{
+				FileOutputStream out = context.openFileOutput(ACTIVE_ROUTE_CACHE, Context.MODE_PRIVATE);
+				ObjectOutputStream oos = new ObjectOutputStream(out);
+				oos.writeObject(activeRoute);
+				oos.writeObject(activeLines);
+				out.flush();
+				out.close();
+			} catch(Throwable e){
+				Log.d(getClass().getName(), e.getMessage(), e);
+				return ERROR;
+			}
+		}
+		return OK;
+	}
+	
+	/**
+	 * 
+	 * @return OK en cas de succès, ERROR sinon
+	 */
+	@SuppressWarnings("unchecked")
+	protected int loadActiveRouteFromCache(){		
+		try {
+			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(ACTIVE_ROUTE_CACHE));
+			try{
+				activeRoute = (Trajet)ois.readObject();
+				activeLines = (Map<String,TrajetLigne>)ois.readObject();
+			} finally{
+				try{ ois.close(); } catch(Throwable e){}
+			}
+		} catch(Throwable e){
+			Log.d(getClass().getName(), e.getMessage(), e);
+			return ERROR;
+		}
+		return OK;
+	}
+	
+	/**
+	 * Vider le cache
+	 */
+	protected void clearProfileCache(){
+		try{
+			FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
+			out.flush();
+			out.close();
+		} catch(Throwable e){
+			Log.d(getClass().getName(), e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * Vider le cache
+	 */
+	protected void clearActiveRouteCache(){
+		try{
+			FileOutputStream out = context.openFileOutput(ACTIVE_ROUTE_CACHE, Context.MODE_PRIVATE);
+			out.flush();
+			out.close();
+		} catch(Throwable e){
+			Log.d(getClass().getName(), e.getMessage(), e);
+		}
+	}
 }

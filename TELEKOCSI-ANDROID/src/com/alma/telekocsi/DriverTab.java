@@ -141,6 +141,7 @@ public class DriverTab extends ListActivity {
 		
 		//On doit choisir le passager destinataire des points de la transaction
 		if(passengers.length<1){
+			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		else if(passengers.length==1){
@@ -171,6 +172,7 @@ public class DriverTab extends ListActivity {
 		}
 		
 		if(selected[0]==null){ //Aucun passager selectionné
+			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		

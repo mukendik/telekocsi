@@ -133,7 +133,7 @@ public class Transaction extends ARunnableActivity {
 				|| (iti = session.find(Itineraire.class,route.getIdItineraire()))==null)
 		{
 			finish();
-			Toast.makeText(getApplicationContext(), getString(R.string.no_route_registered), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getString(R.string.no_route_registered), Toast.LENGTH_SHORT).show();
 		}
 		
 		initValues();

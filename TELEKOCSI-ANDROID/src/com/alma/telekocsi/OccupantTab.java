@@ -112,11 +112,13 @@ public class OccupantTab extends ListActivity {
 	private void startTransaction(){
 		Trajet route = session.getActiveRoute();
 		if(route==null){
+			Toast.makeText(this, R.string.no_active_route, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		Profil driver = session.find(Profil.class, route.getIdProfilConducteur());
 		if(driver==null){
+			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
