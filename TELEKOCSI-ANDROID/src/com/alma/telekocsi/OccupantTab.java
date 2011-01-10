@@ -64,14 +64,14 @@ public class OccupantTab extends ListActivity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		session.switchToDriverType();
+		session.switchToPassengerType();
 	}
 
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		session.switchToDriverType();
+		session.switchToPassengerType();
 	}
 
 
