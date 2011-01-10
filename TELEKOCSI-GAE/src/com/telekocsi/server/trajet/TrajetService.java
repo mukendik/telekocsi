@@ -72,6 +72,7 @@ public class TrajetService {
 		persistedTrajet.setDateTrajet(trajet.getDateTrajet());
 		persistedTrajet.setIdProfilConducteur(trajet.getIdProfilConducteur());
 		persistedTrajet.setSoldePlaceDispo(trajet.getSoldePlaceDispo());
+		persistedTrajet.setActif(trajet.isActif());
 		
 		em.getTransaction().begin();
 		em.merge(persistedTrajet);
@@ -117,7 +118,7 @@ public class TrajetService {
 	}
 	
 	/**
-	 * Recuperation de la liste des Trajets pour un profil
+	 * Recuperation de la liste des Trajets actifs pour un profil
 	 * @return liste des itineraires
 	 */
 	@GET
@@ -128,7 +129,7 @@ public class TrajetService {
 		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil);
 		
 		EntityManager em = Tools.getEntityManager();
-		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param");
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param and t.actif = true");
 		query.setParameter("param", idProfil);
 		List<Trajet> trajets = query.getResultList();
 		return trajets;
@@ -137,10 +138,12 @@ public class TrajetService {
 	
 	/**
 	 * Recuperation de la liste des Trajets disponibles
+	 * Préférable d'utiliser la methode de recherche a partir d'un modele
 	 * @param Lieu de depart
 	 * @param Lieu d'arrivee
 	 * @param Date depart
 	 * @return liste des itineraires
+	 * @deprecated
 	 */
 	@GET
 	@Path("/trajetDispo/{lieuDepart}/{lieuArrivee}/{date}")
@@ -161,6 +164,7 @@ public class TrajetService {
 		sb.append(" and t.lieuDestination=:param2");
 		sb.append(" and t.dateTrajet=:param3");
 		sb.append(" and t.soldePlaceDispo > 0");
+		sb.append(" and t.actif = true");
 		
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", lieuDepart);
@@ -185,7 +189,7 @@ public class TrajetService {
 	@SuppressWarnings("unchecked")
 	public List<Trajet> getTrajetDispo(Trajet trajetModel) {
 		
-		log.info("Recuperation des trajets correspondants");
+		log.info("Recuperation des trajets correspondants au model ");
 		
 		EntityManager em = Tools.getEntityManager();
 		
@@ -193,12 +197,14 @@ public class TrajetService {
 		sb.append(" where t.lieuDepart=:param1");
 		sb.append(" and t.lieuDestination=:param2");
 		sb.append(" and t.dateTrajet=:param3");
-		sb.append(" and t.soldePlaceDispo > 0");
+		sb.append(" and t.actif=:param4");
+		sb.append(" and t.soldePlaceDispo > 0");	
 		
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", trajetModel.getLieuDepart());
 		query.setParameter("param2", trajetModel.getLieuDestination());
 		query.setParameter("param3", trajetModel.getDateTrajet());
+		query.setParameter("param4", trajetModel.isActif());
 		
 		List<Trajet> trajets = query.getResultList();
 		
@@ -255,6 +261,9 @@ public class TrajetService {
 	public Trajet add(Trajet trajet) {
 		log.info("Ajout d'un trajet");
 		
+		/* La creation d'un trajet : obligatoirement actif */
+		trajet.setActif(true);
+		
 		EntityManager em = Tools.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(trajet);
@@ -262,7 +271,31 @@ public class TrajetService {
 		
 		return trajet;
 	}
+
 	
+	/**
+	 * Desactivation d'un trajet
+	 * @return true si operation reussie
+	 */
+	@GET
+	@Path("/desactivate/{idProfil}")
+	public Boolean desactivate(@PathParam("idProfil") String idProfil) {
+		
+		EntityManager em = Tools.getEntityManager();
+		Trajet persistedTrajet = em.getReference(Trajet.class, idProfil);
+		
+		if (persistedTrajet == null) {
+			return false;
+		}
+		
+		persistedTrajet.setActif(false);
+		
+		em.getTransaction().begin();
+		em.merge(persistedTrajet);
+		em.getTransaction().commit();		
+		
+		return true;
+	}
 	
 	/**
 	 * Generation automatique des trajets habituels des conducteurs pour une date
@@ -329,6 +362,7 @@ public class TrajetService {
 						trajet.setVariableDepart(itineraire.getVariableDepart());
 						trajet.setDateTrajet(dateTrav);
 						trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
+						trajet.setActif(true);
 						add(trajet);
 						cpt++;
 					}

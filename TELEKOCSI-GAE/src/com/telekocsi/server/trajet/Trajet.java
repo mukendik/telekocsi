@@ -42,6 +42,7 @@ public class Trajet implements Serializable {
 	private String idProfilConducteur;
 	private String dateTrajet;
 	private int soldePlaceDispo;
+	private boolean actif;
 	
 	
 	public String getId() {
@@ -182,6 +183,15 @@ public class Trajet implements Serializable {
 		this.soldePlaceDispo = soldePlaceDispo;
 	}
 	
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}	
+	
 	@Override
 	public String toString() {
 		
@@ -203,6 +213,7 @@ public class Trajet implements Serializable {
 		stringBuilder.append("; Id Itinéraire : " + getIdItineraire());
 		stringBuilder.append("; Date trajet : " + getDateTrajet());
 		stringBuilder.append("; Place restantes : " + getSoldePlaceDispo());
+		stringBuilder.append("; actif : " + isActif());
 		
 		return stringBuilder.toString();
 	}	
