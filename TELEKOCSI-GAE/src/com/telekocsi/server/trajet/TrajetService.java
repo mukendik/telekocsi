@@ -278,23 +278,29 @@ public class TrajetService {
 	 * @return true si operation reussie
 	 */
 	@GET
-	@Path("/desactivate/{idProfil}")
-	public Boolean desactivate(@PathParam("idProfil") String idProfil) {
+	@Path("/desactivate/{idTrajet}")
+	public Integer desactivate(@PathParam("idTrajet") String idTrajet) {
+		
+		log.info("Desactivation du trajet d'id : " + idTrajet);
+		
+		if (idTrajet == null) {
+			return 0;
+		}
 		
 		EntityManager em = Tools.getEntityManager();
-		Trajet persistedTrajet = em.getReference(Trajet.class, idProfil);
+		Trajet persistedTrajet = em.getReference(Trajet.class, idTrajet);
 		
 		if (persistedTrajet == null) {
-			return false;
+			return 0;
 		}
 		
 		persistedTrajet.setActif(false);
 		
 		em.getTransaction().begin();
 		em.merge(persistedTrajet);
-		em.getTransaction().commit();		
+		em.getTransaction().commit();
 		
-		return true;
+		return 1;
 	}
 	
 	/**
