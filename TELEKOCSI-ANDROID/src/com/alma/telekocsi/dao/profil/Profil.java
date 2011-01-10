@@ -75,7 +75,6 @@ public class Profil {
 
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
-		this.email = pseudo;
 	}
 
 	public String getSexe() {
@@ -108,7 +107,6 @@ public class Profil {
 
 	public void setEmail(String email) {
 		this.email = email;
-		this.pseudo = email;
 	}
 
 	public String getTelephone() {
