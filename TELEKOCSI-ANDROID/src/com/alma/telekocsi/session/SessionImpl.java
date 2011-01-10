@@ -208,9 +208,30 @@ public class SessionImpl implements Session {
 		edit.commit();
 		dispatchEvent(makeEvent(SessionEvent.LOGOUT, this, null));
 		this.profile = null;
+		this.activeLines.clear();
 		return true;
 	}
 
+	/**
+	 * A appeler au cas ou l'application quitte brusquement et ne pas laisser
+	 * Des valeurs perdues en base
+	 */
+	protected final void clean(){
+		//on efface tous les trajet ligne
+		synchronized(activeLines){
+			for(TrajetLigne tl : activeLines.values()){
+				trajetLigneDAO.delete(tl);
+			}
+			activeLines.clear();
+		}
+		
+		//On efface le trajet actif si il existe
+		if(this.activeRoute!=null){
+			trajetDAO.delete(this.activeRoute);
+			this.activeRoute = null;
+		}
+	}
+	
 	private SessionEvent makeEvent(final int type,final Object source,final Object data){
 		return new SessionEvent() {
 			
@@ -405,6 +426,14 @@ public class SessionImpl implements Session {
 				}
 			}
 		}
+	}
+
+	@Override
+	public TrajetLigne getActiveRouteLineFor(String idPassenger) {
+		if(idPassenger==null){
+			return null;
+		}
+		return activeLines.get(idPassenger);
 	}
 	
 }

@@ -58,9 +58,22 @@ public class OccupantTab extends ListActivity {
 
 		session = SessionFactory.getCurrentSession(this);
 		profile = session.getActiveProfile();
-
-		session.switchToPassengerType();
 	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		session.switchToDriverType();
+	}
+
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		session.switchToDriverType();
+	}
+
+
 	
 	private OnItemClickListener getOnItemClickListener(){
 		if(onItemClickListener==null){

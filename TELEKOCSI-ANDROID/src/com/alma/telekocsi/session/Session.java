@@ -8,6 +8,7 @@ import java.util.List;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.dao.trajet.TrajetLigne;
 
 /**
  * @author Rv
@@ -56,7 +57,8 @@ public interface Session {
 	
 	/**
 	 * Désactive la route actite
-	 * Une fois appeler la méthode <code>getActiveRoute()</code> retourne <code>null</code>
+	 * Une fois appeler la méthode <code>getActiveRoute()</code> retourne <code>null</code>,
+	 * le trajet qui était temporaire est effacé de la base.
 	 */
 	public abstract void deactivateRoute();
 	
@@ -88,6 +90,13 @@ public interface Session {
 	 * A noter que le type du profil n'est pas sauvé en base.
 	 */
 	public abstract void switchToPassengerType();
+	
+	/**
+	 * Rechercher une ligne active pour le passager 
+	 * @param idPassenger
+	 * @return
+	 */
+	public abstract TrajetLigne getActiveRouteLineFor(String idPassenger);
 	
 	/**
 	 * Change le type du profil courant comme conducteur.

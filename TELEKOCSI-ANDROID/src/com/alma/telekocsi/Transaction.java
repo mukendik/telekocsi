@@ -16,15 +16,12 @@ import android.widget.Toast;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.dao.trajet.TrajetLigne;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
 
 public class Transaction extends ARunnableActivity {
-	/**
-	 * Le parametre a fournir pour la transaction
-	 */
-	public final static String ACTIVE_ROUTE = "transaction.active.route";
 	public final static String ORIGINATOR = "transaction.profile.originator";
 	public final static String DESTINATOR = "transaction.profile.destinator";
 	
@@ -64,10 +61,12 @@ public class Transaction extends ARunnableActivity {
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
+        session = SessionFactory.getCurrentSession(this);
+        
+        route = session.getActiveRoute();
         
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
-        	route = (Trajet)extras.get(ACTIVE_ROUTE);
         	originator = (Profil)extras.get(ORIGINATOR);
         	destinator = (Profil)extras.get(DESTINATOR);
         }
@@ -115,7 +114,6 @@ public class Transaction extends ARunnableActivity {
 			
 		});
          
-         session = SessionFactory.getCurrentSession(this);
     }
   
     
@@ -238,11 +236,28 @@ public class Transaction extends ARunnableActivity {
 		//Validation de la transaction		
 		com.alma.telekocsi.dao.transaction.Transaction t = new com.alma.telekocsi.dao.transaction.Transaction();
 		
+		TrajetLigne tl = null;
 		String idDriver = route.getIdProfilConducteur(); 
 		t.setIdProfilConducteur(idDriver);
-		t.setIdProfilPassager(!idDriver.equals(originator.getId())?originator.getId():destinator.getId());
+		if(idDriver.equals(originator.getId())){
+			t.setIdProfilPassager(destinator.getId());			
+			tl = session.getActiveRouteLineFor(destinator.getId());
+		}
+		else{
+			t.setIdProfilPassager(originator.getId());
+			tl = session.getActiveRouteLineFor(originator.getId());
+		}
 		t.setPointEchange(getPoints());
 		t.setHeureTransaction(route.getHoraireDepart());
+		t.setCommentaire(commentText.getText().toString());
+		
+		if(tl!=null){
+			t.setIdTrajetLigne(tl.getId());
+		}
+		else{
+			Toast.makeText(getApplicationContext(), R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
+			return;
+		}
 		
 		if(session.save(t)!=null){
 			finish();
