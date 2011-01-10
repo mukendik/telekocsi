@@ -14,6 +14,7 @@ public class TrajetActivator extends Activity {
 
 	private Itineraire itineraire = null;
 	private LocalDate date = null;
+	private String from;
 	
 	Session session;
 	
@@ -27,26 +28,34 @@ public class TrajetActivator extends Activity {
 		Bundle bundle = this.getIntent().getExtras();
         itineraire = (Itineraire)bundle.getSerializable("itineraire");
         date = (LocalDate)bundle.getSerializable("date");
+        from = getIntent().getExtras().getString("from");
         
-        Trajet trajet = new Trajet();
-        trajet.setAutoroute(itineraire.isAutoroute());
-        trajet.setCommentaire(itineraire.getCommentaire());
-        trajet.setDateTrajet(date.getDateFomatHeure());
-        trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
-        trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
-        trajet.setHoraireDepart(itineraire.getHoraireDepart());
-        trajet.setId(itineraire.getId());
-        trajet.setIdProfilConducteur(itineraire.getIdProfil());
-        trajet.setLieuDepart(itineraire.getLieuDepart());
-        trajet.setLieuDestination(itineraire.getLieuDestination());
-        trajet.setNbrePoint(itineraire.getNbrePoint());
-        trajet.setPlaceDispo(itineraire.getPlaceDispo());
+        if(from.equals("activation")){
+            Trajet trajet = new Trajet();
+            trajet.setAutoroute(itineraire.isAutoroute());
+            trajet.setCommentaire(itineraire.getCommentaire());
+            trajet.setDateTrajet(date.getDateFomatHeure());
+            trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
+            trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
+            trajet.setHoraireDepart(itineraire.getHoraireDepart());
+            trajet.setId(itineraire.getId());
+            trajet.setIdProfilConducteur(itineraire.getIdProfil());
+            trajet.setLieuDepart(itineraire.getLieuDepart());
+            trajet.setLieuDestination(itineraire.getLieuDestination());
+            trajet.setNbrePoint(itineraire.getNbrePoint());
+            trajet.setPlaceDispo(itineraire.getPlaceDispo());
+            
+            Log.i(RouteActivator.class.getSimpleName(), " Itineraire : " + itineraire);
+            Log.i(RouteActivator.class.getSimpleName(), " Date : " + date);
+        }
+        else{
+        	
+        }
         
         Log.i(TrajetActivator.class.getSimpleName(), " Itineraire : " + itineraire);
         Log.i(TrajetActivator.class.getSimpleName(), " Date : " + date);
         */
         setResult(RESULT_OK);
-        
         finish();
 	}
 	

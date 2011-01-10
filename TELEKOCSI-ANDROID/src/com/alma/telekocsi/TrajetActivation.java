@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class TrajetActivation extends ARunnableActivity {
 	
 	private static final int ACTIVATION = 1;
+	private static final int DESACTIVATION = 2;
 	
 	private Button trajetActivationButton;
 	private Button cancelButton;
@@ -39,6 +40,8 @@ public class TrajetActivation extends ARunnableActivity {
 	private TextView variableTimeText;
 	private TextView frequencyText;
 	private TextView autorouteText;
+	
+	private String from;
 	
 	private LocalDate[] dates = new LocalDate[10];
 	private LocalDate date;
@@ -92,6 +95,13 @@ public class TrajetActivation extends ARunnableActivity {
         
         routesSpin = (Spinner)findViewById(R.id.routes_spin);
         datesSpin = (Spinner)findViewById(R.id.dates_spin);
+        
+        from = getIntent().getExtras().getString("from");
+        if(from.equals("activation")){
+        	trajetActivationButton.setText(getString(R.string.start_route_activation));
+        }else{
+        	trajetActivationButton.setText(getString(R.string.start_route_desactivation));
+        }
 	}
 	
 	@Override
@@ -241,6 +251,16 @@ public class TrajetActivation extends ARunnableActivity {
     		case RESULT_CANCELED:
     			finish();
     		}
+    		break;
+    	case DESACTIVATION:
+    		switch(resultCode) {
+    		case RESULT_OK:
+    			Toast.makeText(this, R.string.desactivation_successed, Toast.LENGTH_SHORT).show();
+    			trajetActivationButton.setText(getText(R.string.route_activation_button_after_desactivation));
+    			break;
+    		case RESULT_CANCELED:
+    			finish();
+    		}
     	}
     	stopProgressDialog();
     }
@@ -287,19 +307,38 @@ public class TrajetActivation extends ARunnableActivity {
 
 	@Override
 	public void run() {
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("itineraire", itineraire);
+		bundle.putSerializable("date", date);
+		//si c'est le bouton pour voir les resultats
 		if(trajetActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
-//			startActivity(new Intent(this, GoogleMapActivity.class));
+			Intent intent = new Intent(this, DriverResults.class);
+			intent.putExtras(bundle);
+			startActivity(intent);
 			stopProgressDialog();
 		}
-		else{
-			Bundle bundle = new Bundle();
-	        bundle.putSerializable("itineraire", itineraire);
-	        bundle.putSerializable("date", date);
-	        Intent intent = new Intent(this, TrajetActivator.class);
+		//sinon si cest pour reactiver le trajet
+		else if(trajetActivationButton.getText().equals(getString(R.string.route_activation_button_after_desactivation))){
+			Intent intent = new Intent(this, TrajetActivator.class);
 	        intent.putExtras(bundle);
 	        startActivityForResult(intent, ACTIVATION);
 		}
+		else{
+			//sinon on active ou on desactive selon l'appel
+			if(from.equals("activation")){
+		        Intent intent = new Intent(this, TrajetActivator.class);
+		        intent = intent.putExtras(bundle);
+		        intent = intent.putExtra("from", "activation");
+		        startActivityForResult(intent, ACTIVATION);
+			}
+			else{
+		        Intent intent = new Intent(this, TrajetActivator.class);
+		        intent = intent.putExtras(bundle);
+		        intent = intent.putExtra("from", "desactivation");
+		        startActivityForResult(intent, DESACTIVATION);
+			}
+		}
 	}
-	
 
+	
 }

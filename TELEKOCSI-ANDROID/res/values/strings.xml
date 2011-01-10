@@ -117,6 +117,7 @@
     <string name="new_route_radio_button">Nouveau trajet</string>
     <string name="back_button">Retour</string>
     <string name="start_route_activation">Activer le trajet</string>
+    <string name="start_route_desactivation">Desactiver le trajet</string>
     <string name="route_activation_title">Activer un trajet</string>
     <string name="route_activation_button_after_activation">Voir les passagers trouvés</string>
     <string name="activation_successed">Activation du trajet effectuée</string>
@@ -160,6 +161,7 @@
 	
 	<!-- results_for_driver -->
 	<string name="results_for_driver">Passagers trouvés</string>
+	<string name="no_results_for_driver">Aucun passager n\'a été trouvé pour ce trajet</string>
 
 	<!-- Google Map API Key -->
 	<string name="mapskey">0Smo2Z3QoD8BZPmpNAoJ2SB6C9RfexOkvSBc8qQ</string>
@@ -209,7 +211,11 @@
 <string name="route_creation_successed">Itinéraire enregistré</string>
 <string name="route_modification_failed">Echec de la création de l\'itinéraire</string>
 <string name="route_modification_successed">Itinéraire enregistré</string>
+<string name="route_desactivation">Désactiver un trajet</string>
 <string name="new_profile_button_text">Nouveau Profil</string>
 <string name="activated_route_map_text">Voir trajet actif</string>
+<string name="desactivation_successed">Le trajet est maintenant désactivé</string>
+<string name="route_activation_button_after_desactivation">Réactiver ce trajet</string>
+
 
 </resources>

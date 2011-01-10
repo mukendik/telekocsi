@@ -35,6 +35,7 @@ public class DriverTab extends ListActivity {
 	
 	private String ACTIVATE;
 	private String CREATE;
+	private String DESACTIVATE;
 	private String MODIFY;
 	private String ACTIVATED;
 	private String TRANSACTION;
@@ -49,11 +50,12 @@ public class DriverTab extends ListActivity {
 		ACTIVATE = getString(R.string.route_activation_title);
 		CREATE = getString(R.string.route_creation);
 		MODIFY = getString(R.string.route_modification);
+		DESACTIVATE = getString(R.string.route_desactivation);
 		ACTIVATED = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
 
 		DRIVER_FUNCTIONS = new String[] {
-				ACTIVATE, CREATE, ACTIVATED, TRANSACTION
+				ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
 		};
 		
 		setListAdapter(new ArrayAdapter<String>(this
@@ -96,6 +98,9 @@ public class DriverTab extends ListActivity {
 //		    	else if(((TextView) view).getText().equals(MODIFY)){
 //		    		startRouteModification();
 //		    	}
+		    	else if(((TextView) view).getText().equals(DESACTIVATE)){
+		    		startRouteDesactivation();
+		    	}
 		    	else if(((TextView) view).getText().equals(ACTIVATED)){
 		    		showActiveRoute();
 		    	}
@@ -108,8 +113,16 @@ public class DriverTab extends ListActivity {
 	
 	private void startRouteActivation(){
 		Intent intent = new Intent(this, TrajetActivation.class);
+		intent = intent.putExtra("from", "activation");
 		startActivity(intent);
 	}
+	
+	private void startRouteDesactivation(){
+		Intent intent = new Intent(this, TrajetActivation.class);
+		intent = intent.putExtra("from", "desactivation");
+		startActivity(intent);
+	}
+	
 	
 	private void startDriverTransaction(){
 		Intent intent = new Intent(this, Transaction.class);
