@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +36,9 @@ public class Transaction extends ARunnableActivity {
 	private TextView originatorNameText;
 	private TextView originatorTitleText;
 	private TextView placesCountText;
-	private Button pointDownButton;
+	private ImageButton pointDownButton;
 	private TextView pointText;
-	private Button pointUpButton;
+	private ImageButton pointUpButton;
 	private TextView travelDateText;
 	
 	/**
@@ -86,9 +87,9 @@ public class Transaction extends ARunnableActivity {
          originatorNameText = (TextView)findViewById(R.id.transaction_originator_name_text);
          originatorTitleText = (TextView)findViewById(R.id.transaction_originator_title_text);
          placesCountText = (TextView)findViewById(R.id.transaction_places_count_text);
-         pointDownButton = (Button)findViewById(R.id.transaction_point_down_button);
+         pointDownButton = (ImageButton)findViewById(R.id.transaction_point_down_button);
          pointText = (TextView)findViewById(R.id.transaction_point_text);
-         pointUpButton = (Button)findViewById(R.id.transaction_point_up_button);
+         pointUpButton = (ImageButton)findViewById(R.id.transaction_point_up_button);
          travelDateText = (TextView)findViewById(R.id.transaction_travel_date_text);
          
          pointDownButton.setOnClickListener(new OnClickListener() {
