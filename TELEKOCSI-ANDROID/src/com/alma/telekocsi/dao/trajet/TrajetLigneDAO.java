@@ -196,7 +196,7 @@ public class TrajetLigneDAO {
      */
     public TrajetLigne rechercheTrajetLigne(String idTrajet,String idPassager) {
     	
-		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/" + idTrajet + "/" +idPassager));
+		return (new GetFicheTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/passagers/" + idTrajet + "/" +idPassager));
     }
     
     /**
