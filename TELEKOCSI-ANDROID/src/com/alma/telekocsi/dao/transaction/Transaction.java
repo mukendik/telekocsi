@@ -11,6 +11,7 @@ public class Transaction  {
 	private String dateTransaction;
 	private String heureTransaction;
 	private int pointEchange;
+	private String commentaire;
 	
 	
 	public String getId() {
@@ -68,7 +69,16 @@ public class Transaction  {
 	public void setIdTrajetLigne(String idTrajetLigne) {
 		this.idTrajetLigne = idTrajetLigne;
 	}
+
 	
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		return o != null 

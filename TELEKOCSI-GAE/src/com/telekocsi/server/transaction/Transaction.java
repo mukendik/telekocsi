@@ -31,7 +31,7 @@ public class Transaction implements Serializable {
 	private String dateTransaction;
 	private String heureTransaction;
 	private int pointEchange;
-	
+	private String commentaire;
 	
 	public String getId() {
 		return id;
@@ -89,6 +89,15 @@ public class Transaction implements Serializable {
 		this.idTrajetLigne = idTrajetLigne;
 	}
 	
+	
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+
 	@Override
 	public String toString() {
 		
