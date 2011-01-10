@@ -129,7 +129,7 @@ public class TrajetService {
 		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil);
 		
 		EntityManager em = Tools.getEntityManager();
-		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param and t.actif = true");
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param and t.actif=TRUE");
 		query.setParameter("param", idProfil);
 		List<Trajet> trajets = query.getResultList();
 		return trajets;
@@ -164,7 +164,7 @@ public class TrajetService {
 		sb.append(" and t.lieuDestination=:param2");
 		sb.append(" and t.dateTrajet=:param3");
 		sb.append(" and t.soldePlaceDispo > 0");
-		sb.append(" and t.actif = true");
+		sb.append(" and t.actif=TRUE");
 		
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", lieuDepart);
