@@ -200,13 +200,14 @@ public class TrajetLigneService {
 	 */
 	@GET
 	@Path("/passagers/{idTrajet}/{idPassager}")
-	public TrajetLigne getTrajetLigne(@PathParam("idTrajet") String idTrajet,@PathParam("idPassager") String idPassager){
+	public TrajetLigne getTrajetLigne(@PathParam("idTrajet") String idTrajet, @PathParam("idPassager") String idPassager) {
+		
 		TrajetLigne tl = null;
-		log.info("Recuperation d'un trajet ligne pour le trajet : " + idTrajet+" et le passager "+idPassager);
+		log.info("Recuperation d'un trajet ligne pour le trajet : " + idTrajet + " et le passager " + idPassager);
 		
 		EntityManager em = Tools.getEntityManager();
-		Query query = em.createQuery("SELECT tl FROM TrajetLigne tl where tl.idTrajet=:param and tl.idPassager=:param2");
-		query.setParameter("param", idTrajet);
+		Query query = em.createQuery("SELECT tl FROM TrajetLigne tl where tl.idTrajet=:param1 and idProfilPassager=:param2");
+		query.setParameter("param1", idTrajet);
 		query.setParameter("param2", idPassager);
 		tl = (TrajetLigne) query.getSingleResult();
 

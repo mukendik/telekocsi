@@ -18,6 +18,9 @@ public class TestTrajetLigneService {
 	private TrajetLigne trajetLigne;
 	private TestTrajetService testTrajetService;
 	private TestProfilService testProfilService;
+	Profil profilPassager;
+	Trajet trajet;
+	
 	
 	public TestTrajetLigneService() {
 
@@ -52,8 +55,8 @@ public class TestTrajetLigneService {
 	public void insert() {
 		
 		/* Recuperation d'un itineraire */
-		Trajet trajet = testTrajetService.getTrajet();
-		Profil profilPassager = testProfilService.getProfil();
+		trajet = testTrajetService.getTrajet();
+		profilPassager = testProfilService.getProfil();
 		
 		/* Test d'insertion d'une ligne trajet */
 		webResource = client.resource(URL);
@@ -91,8 +94,19 @@ public class TestTrajetLigneService {
 				.get(TrajetLigne.class);
 		
 		System.out.println("Ligne de Trajet récupérée : " + trajetLigne);
+		
+		
+		webResource = client.resource(URL + "/passagers/" + trajet.getId() + "/" + profilPassager.getId());
+		trajetLigne = webResource.type(MediaType.APPLICATION_JSON_TYPE)
+				.accept(MediaType.APPLICATION_JSON_TYPE)
+				.get(TrajetLigne.class);
+		
+		System.out.println("Ligne de Trajet récupérée : " + trajetLigne);
 	}
 	
+	
+	
+	// passagers
 	
 	public void delete() {
 		/* Test de suppression d'une ligne de trajet */
