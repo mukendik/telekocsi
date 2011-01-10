@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class Transaction extends ARunnableActivity {
 	private TextView pointText;
 	private ImageButton pointUpButton;
 	private TextView travelDateText;
+	private RatingBar ratingBar;
 	
 	/**
 	 * Trajet concerner par la validation
@@ -98,6 +100,7 @@ public class Transaction extends ARunnableActivity {
          pointText = (TextView)findViewById(R.id.transaction_point_text);
          pointUpButton = (ImageButton)findViewById(R.id.transaction_point_up_button);
          travelDateText = (TextView)findViewById(R.id.transaction_travel_date_text);
+         ratingBar = (RatingBar)findViewById(R.id.transaction_rating_bar);
          
          pointDownButton.setOnClickListener(new OnClickListener() {
 			
@@ -262,11 +265,11 @@ public class Transaction extends ARunnableActivity {
 		}
 		
 		Avis avis = new Avis();
-//		avis.setClassement(Profile.getClassementStarImageResource(classement));
+		avis.setClassement(Math.round(ratingBar.getRating()));
 		avis.setCommentaire(commentText.getText().toString());
 		avis.setDateAvis(new SimpleDateFormat("d-M-y").format(new Date()));
 		avis.setHeureAvis(new SimpleDateFormat("HH:mm").format(new Date()));
-		//TODO remplir dans l'avis les 
+		//TODO remplir dans l'avis: checked,Etat
 		avis = session.save(avis);
 		
 		if(session.save(t)!=null){

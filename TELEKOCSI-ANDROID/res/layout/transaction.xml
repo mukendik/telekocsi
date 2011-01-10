@@ -182,7 +182,8 @@
 
 				<RatingBar android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:layout_marginTop="4px"
-					android:numStars="5" android:stepSize="1" android:rating="3" />
+					android:numStars="5" android:stepSize="1" android:rating="3" 
+					android:id="@+id/transaction_rating_bar"/>
 
 			</LinearLayout>
 
