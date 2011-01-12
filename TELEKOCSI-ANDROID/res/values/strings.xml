@@ -224,4 +224,6 @@
     <string name="transaction_validation_failure">Impossible de valider la transaction</string>
 <string name="no_transaction_to_validate">Aucune transaction à valider</string>
     <string name="no_active_route">Vous n\'avez pas de trajet actif</string>
+    <string name="deletion_seccessful">Suppression effectuée</string>
+    
 </resources>

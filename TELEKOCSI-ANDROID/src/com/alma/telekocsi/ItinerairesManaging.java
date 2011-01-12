@@ -95,7 +95,7 @@ public class ItinerairesManaging extends ARunnableActivity {
 			startRouteActivation(infos);
 			return true;
 		case DELETE:
-			startRouteDeletation(infos);
+			startRouteDeletion(infos);
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -108,9 +108,12 @@ public class ItinerairesManaging extends ARunnableActivity {
 		startActivity(intent);
 	}
 	
-	private void startRouteDeletation(AdapterContextMenuInfo routeInfos){
+	private void startRouteDeletion(AdapterContextMenuInfo routeInfos){
 		Itineraire i = itineraires.get(routeInfos.position);
 		session.delete(i);
+		ItinerairesManaging old = this;
+		startActivity(new Intent(this, ItinerairesManaging.class));
+		Toast.makeText(old, getString(R.string.deletion_seccessful), Toast.LENGTH_SHORT).show();
 	}
 	
 	private void startRouteActivation(AdapterContextMenuInfo routeInfos){

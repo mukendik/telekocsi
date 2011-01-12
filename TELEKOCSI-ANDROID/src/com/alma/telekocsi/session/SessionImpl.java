@@ -280,7 +280,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Localisation) return (T)localisationDAO.insert((Localisation)object);
 		else if(object instanceof Transaction) return (T)transactionDAO.insert((Transaction)object);
 		else if(object instanceof TrajetLigne) return (T)trajetLigneDAO.insert((TrajetLigne)object);
-		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+		else throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
     }
 
 	@SuppressWarnings("unchecked")
@@ -294,7 +294,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Localisation) return (T)localisationDAO.update((Localisation)object);
 		else if(object instanceof Transaction) return (T)transactionDAO.update((Transaction)object);
 		else if(object instanceof TrajetLigne) return (T)trajetLigneDAO.update((TrajetLigne)object);
-		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+		else throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
 	}
 	
 	@Override
@@ -307,7 +307,7 @@ public class SessionImpl implements Session {
 		else if(object instanceof Localisation) localisationDAO.delete((Localisation)object);
 		else if(object instanceof Transaction) transactionDAO.delete((Transaction)object);
 		else if(object instanceof TrajetLigne) trajetLigneDAO.delete((TrajetLigne)object);
-		throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
+		else throw new IllegalArgumentException("Unsupported parameter type : "+object.getClass().getName());
 	}
 
 	@Override

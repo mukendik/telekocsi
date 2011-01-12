@@ -306,7 +306,8 @@ public class ItineraireCreation extends ARunnableActivity {
     			
     			ItineraireCreation self = this;
     			if(doCreateRoute()){
-    				goBack();
+//    				goBack();
+					startActivity(new Intent(this, ItinerairesManaging.class));
     				if(create){
         				Toast.makeText(self, getString(R.string.route_creation_successed), Toast.LENGTH_SHORT).show();
     				}else{
