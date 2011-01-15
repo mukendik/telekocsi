@@ -6,6 +6,7 @@ import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
+import com.alma.telekocsi.util.Tools;
 
 import android.util.Log;
 

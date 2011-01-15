@@ -174,7 +174,6 @@ private static final int CODE_TRAJETTROUVE = 20;
 		trajetModel.setLieuDepart(itineraire.getLieuDepart());
 		trajetModel.setLieuDestination(itineraire.getLieuDestination());
 		trajetModel.setDateTrajet(date.getDateFormatCalendar());
-		trajetModel.setActif(true);
 		
 		routes = session.getTrajets(trajetModel);
 		

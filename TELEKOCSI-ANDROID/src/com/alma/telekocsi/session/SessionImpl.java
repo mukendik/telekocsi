@@ -46,23 +46,26 @@ public class SessionImpl implements Session {
 	public static final String KEY_PROFILE_CONNECTED = "profile_connected";
 	public static final String KEY_PROFILE_PASS = "profile_secret";
 	public static final String KEY_PROFILE_PSEUDO = "profile_pseudo";
-	public static final String KEY_ACTIVE_ROUTE_ID = "active_route_id";
+	public static final String KEY_ACTIVE_TRAJET_ID = "active_trajet_id";
 	private static final String PREFERENCES_STORE = "TELEKOCSI_PREFERENCES";
 	private static final String PROFILE_CACHE = "telekocsi_profile.alma";
-	private static final String ACTIVE_ROUTE_CACHE = "telekocsi_active_route.alma";
+	private static final String ACTIVE_TRAJET_CACHE = "telekocsi_active_trajet.alma";
 	
 	/**
 	 * 
 	 */
 	private Context context;
+	
 	/**
 	 * settings
 	 */
 	private SharedPreferences settings;
+	
 	/**
 	 * The notification manager
 	 */
 	protected NotificationManager notificationMgr;
+	
 	/**
 	 * Liste avec gestion des acces concurrents
 	 */
@@ -75,10 +78,10 @@ public class SessionImpl implements Session {
 	private Profil profile = null;
 	
 	/**
-	 * The active route
+	 * The active trajet et elements associes
 	 */
-	private Trajet activeRoute = null;
-	private Map<String,TrajetLigne> activeLines = Collections.synchronizedMap(new HashMap<String,TrajetLigne>());
+	private Trajet activeTrajet = null;
+	private Map<String,TrajetLigne> activeTrajetLines = Collections.synchronizedMap(new HashMap<String,TrajetLigne>());
 	private Profil[] activePassengers = null;
 	
 	//DAO
@@ -91,13 +94,15 @@ public class SessionImpl implements Session {
     private final LocalisationDAO localisationDAO = new LocalisationDAO();
     private final TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
     
+    
 	/**
 	 * 
 	 * @param context
 	 */
-	public SessionImpl(Context context){
+	public SessionImpl(Context context) {
 		init(context);
 	}
+	
 	
 	/**
 	 * 
@@ -108,40 +113,47 @@ public class SessionImpl implements Session {
 		notificationMgr = (NotificationManager)this.context.getSystemService(Context.NOTIFICATION_SERVICE);		
 		settings = context.getSharedPreferences(PREFERENCES_STORE, Context.MODE_PRIVATE);
 		
-		Log.i(getClass().getName(), "Current Profile = "+settings.getString(KEY_PROFILE_ID, "null"));
+		Log.i(getClass().getName(), "Current Profile = " + settings.getString(KEY_PROFILE_ID, "null"));
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see com.alma.telekocsi.session.Session#getActiveProfile()
 	 */
 	@Override
-	public synchronized Profil getActiveProfile(){
-		if(!isConnected()) return null;
-		if(profile==null){
+	public synchronized Profil getActiveProfile() {
+		
+		if (! isConnected()) return null;
+		
+		if (profile == null) {
 			//On essaie de charger en cache
-			if(loadProfileFromCache()==ERROR || profile==null){
+			if (loadProfileFromCache() == ERROR || profile == null) {
 				//On charge le profil
 				String id = settings.getString(KEY_PROFILE_ID, null);
-				if(id!=null){
+				if (id != null) {
 					profile = profileDAO.getProfil(id);
+					if (profile != null) {
+						//On cache en locale
+						cacheProfile();
+					}
 				}
 			}
 		}
 		return profile;
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.alma.telekocsi.session.Session#saveProfile(com.alma.telekocsi.dao.profil.Profil)
 	 */
 	@Override
 	public synchronized void saveProfile(Profil profile) {
-		if(profile!=null){
-			Log.i(getClass().getName(),"Saving profile '"+profile.getEmail()+"'");
-			String id = profile.getId();
-			if(id==null){				
+		if (profile != null) {
+			Log.i(getClass().getName(),"Saving profile '" + profile.getEmail() + "'");
+			if (profile.getId() == null) {
 				this.profile = profileDAO.insert(profile);
 			}
-			else{
+			else {
 				this.profile = profileDAO.update(profile);
 			}
 			Editor editor = settings.edit();
@@ -155,60 +167,67 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see com.alma.telekocsi.session.Session#addSessionListener(com.alma.telekocsi.session.SessionListener)
 	 */
 	@Override
 	public void addSessionListener(SessionListener listener) {
-		if(listener!=null){
+		if (listener != null) {
 			listeners.add(listener);
 		}
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.alma.telekocsi.session.Session#removeSessionListener(com.alma.telekocsi.session.SessionListener)
 	 */
 	@Override
 	public void removeSessionListener(SessionListener listener) {
-		if(listener!=null){
+		if (listener != null) {
 			listeners.remove(listener);
 		}
 	}
 
+	
 	/**
 	 * Notifie tous les listeners
 	 * @param event
 	 */
 	public synchronized void dispatchEvent(SessionEvent event){
-		synchronized(listeners){
-			for(SessionListener l : listeners){
-				try{
+		synchronized(listeners) {
+			for (SessionListener l : listeners){
+				try {
 					l.onEvent(event);
-				}catch(Throwable e){
+				} catch(Throwable e) {
 					Log.e(getClass().getName(),e.getMessage());
 				}
 			}
 		}
 	}
+	
 
 	@Override
 	public boolean isConnected() {
-		return settings.getBoolean(KEY_PROFILE_CONNECTED,false);
+		return settings.getBoolean(KEY_PROFILE_CONNECTED, false);
 	}
 
+	
 	@Override
 	public boolean login(String name, String password) {
+		
+		/* La methode login actualise l'attribut connected cote serveur */
 		Profil profile = profileDAO.login(name, password);
-		if(profile!=null){
+		
+		if (profile != null) {
 			this.profile = profile;
-			this.profile.setConnecte(true);
-			saveProfile(profile);
+			
 			Editor edit = settings.edit();
 			edit.putString(KEY_PROFILE_ID, profile.getId());
 			edit.putBoolean(KEY_PROFILE_CONNECTED, true);
 			edit.commit();
 			
-			//on sauve en cache
+			// Mise en cache du profil courant
 			cacheProfile();
 			
 			return true;
@@ -216,40 +235,52 @@ public class SessionImpl implements Session {
 		return false;
 	}
 
+	
 	@Override
-	public boolean logout() {	
-		this.profile.setConnecte(false);
-		this.saveProfile(profile);
+	public boolean logout() {
+		
+		profile.setConnecte(false);
+		profileDAO.update(profile);
+		
 		Editor edit = settings.edit();
 		edit.putBoolean(KEY_PROFILE_CONNECTED, false);
 		edit.commit();
+		
 		dispatchEvent(makeEvent(SessionEvent.LOGOUT, this, null));
+		
 		this.profile = null;
-		this.activeLines.clear();
+		this.activeTrajet = null;
+		this.activeTrajetLines.clear();
+		this.activePassengers = null;
+		
 		return true;
 	}
 
 	/**
+	 * Bruno : Dangereux car supprime des elements dans la BDD a partir du cache
+	 * Le trajet actif + ses lignes !
+	 * 
 	 * A appeler au cas ou l'application quitte brusquement et ne pas laisser
 	 * Des valeurs perdues en base
 	 */
-	protected final void clean(){
+	protected final void clean() {
 		//on efface tous les trajet ligne
-		synchronized(activeLines){
-			for(TrajetLigne tl : activeLines.values()){
+		synchronized(activeTrajetLines) {
+			for (TrajetLigne tl : activeTrajetLines.values()) {
 				trajetLigneDAO.delete(tl);
 			}
-			activeLines.clear();
+			activeTrajetLines.clear();
 		}
 		
 		//On efface le trajet actif si il existe
-		if(this.activeRoute!=null){
-			trajetDAO.delete(this.activeRoute);
-			this.activeRoute = null;
+		if (this.activeTrajet != null) {
+			trajetDAO.delete(this.activeTrajet);
+			this.activeTrajet = null;
 		}
 	}
 	
-	private SessionEvent makeEvent(final int type,final Object source,final Object data){
+	
+	private SessionEvent makeEvent(final int type,final Object source,final Object data) {
 		return new SessionEvent() {
 			
 			@Override
@@ -272,7 +303,7 @@ public class SessionImpl implements Session {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T save(T object) {
-		if(object instanceof Trajet) return (T)trajetDAO.insert((Trajet)object);
+		if (object instanceof Trajet) return (T)trajetDAO.insert((Trajet)object);
 		else if(object instanceof Itineraire) return (T)itineraireDAO.insert((Itineraire)object);
 		else if(object instanceof Event) return (T)eventDAO.insert((Event)object);
 		else if(object instanceof Profil) return (T)profileDAO.insert((Profil)object);
@@ -286,7 +317,7 @@ public class SessionImpl implements Session {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T update(T object) {
-		if(object instanceof Trajet) return (T)trajetDAO.update((Trajet)object);
+		if (object instanceof Trajet) return (T)trajetDAO.update((Trajet)object);
 		else if(object instanceof Itineraire) return (T)itineraireDAO.update((Itineraire)object);
 		else if(object instanceof Event) return (T)eventDAO.update((Event)object);
 		else if(object instanceof Profil) return (T)profileDAO.update((Profil)object);
@@ -299,7 +330,7 @@ public class SessionImpl implements Session {
 	
 	@Override
 	public <T> void delete(T object) {
-		if(object instanceof Trajet) trajetDAO.delete((Trajet)object);
+		if (object instanceof Trajet) trajetDAO.delete((Trajet)object);
 		else if(object instanceof Itineraire) itineraireDAO.delete((Itineraire)object);
 		else if(object instanceof Event) eventDAO.delete((Event)object);
 		else if(object instanceof Profil) profileDAO.delete((Profil)object);
@@ -312,7 +343,7 @@ public class SessionImpl implements Session {
 
 	@Override
 	public<T> void clear(Class<T> type) {
-		if(Profil.class==type) profileDAO.clear();
+		if (Profil.class==type) profileDAO.clear();
 		else if(Trajet.class==type) trajetDAO.clear();
 		else if(Itineraire.class==type) itineraireDAO.clear();
 		else if(Avis.class==type) avisDAO.clear();
@@ -324,7 +355,7 @@ public class SessionImpl implements Session {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T find(Class<T> type, String id) {
-		if(Profil.class==type) return (T)profileDAO.getProfil(id);
+		if (Profil.class==type) return (T)profileDAO.getProfil(id);
 		else if(Trajet.class==type) return (T)trajetDAO.getTrajet(id);
 		else if(Itineraire.class==type) return (T)itineraireDAO.getItineraire(id);
 		else if(Avis.class==type) return (T)avisDAO.getAvis(id);
@@ -334,70 +365,93 @@ public class SessionImpl implements Session {
 		return null;
 	}
 	
-	@Override
-	public<T> void clear(Class<T> type,String id) {
-		if(Localisation.class==type) localisationDAO.clear(id);
-	}
 	
 	@Override
-	public List<Trajet> getRoutes() {
-		if(profile!=null){
+	public<T> void clear(Class<T> type, String id) {
+		if (Localisation.class == type) localisationDAO.clear(id);
+	}
+	
+	
+	@Override
+	public List<Trajet> getTrajets() {
+		if (profile != null) {
 			return trajetDAO.getList(profile.getId());
 		}
 		return new ArrayList<Trajet>(0);
 	}
 
+	
 	@Override
-	public Trajet getActiveRoute() {
-		if(activeRoute==null && isConnected()){
-			if(loadActiveRouteFromCache()==ERROR || activeRoute==null){
-				String id = settings.getString(KEY_ACTIVE_ROUTE_ID, null);
-				if(id!=null){
-					activeRoute = trajetDAO.getTrajet(id);
+	public Trajet getActiveTrajet() {
+		if (activeTrajet == null && isConnected()) {
+			if (loadActiveTrajetFromCache() == ERROR || activeTrajet == null) {
+				String id = settings.getString(KEY_ACTIVE_TRAJET_ID, null);
+				if (id != null) {
+					activeTrajet = trajetDAO.getTrajet(id);
+				} else {
+					if (profile != null) {
+						List<Trajet> list = trajetDAO.getList(profile.getId(), Trajet.ETAT_ACTIF);
+						if ((list != null) && (list.size() > 0)) {
+							activeTrajet = list.get(0);
+						}
+					}
 				}
 			}
 		}
-		return activeRoute;
+		return activeTrajet;
 	}
+	
 
 	@Override
-	public void activateRoute(Trajet route) {
-		this.activeRoute = route;
-		if(this.activeRoute!=null && route.getId()==null){
-			trajetDAO.insert(this.activeRoute);
+	public void activateTrajet(Trajet trajet) {
+		
+		activeTrajet = trajet;
+		activeTrajetLines.clear();
+		activePassengers = null;
+		
+		if (activeTrajet != null) {
+			if (activeTrajet.getId() == null) {
+				activeTrajet.setEtat(Trajet.ETAT_ACTIF);
+				activeTrajet = trajetDAO.insert(activeTrajet);
+			} else if (activeTrajet.getEtat() != Trajet.ETAT_ACTIF) {
+				trajetDAO.activate(activeTrajet.getId());	
+			}
 		}
-		if(this.activeRoute!=null){
+		
+		if (this.activeTrajet != null) {
 			Editor edit = settings.edit();
-			edit.putString(KEY_ACTIVE_ROUTE_ID, activeRoute.getId());
+			edit.putString(KEY_ACTIVE_TRAJET_ID, activeTrajet.getId());
 			edit.commit();
 			
 			//on met en cache
-			cacheActiveRoute();
+			activeTrajetLines.clear();
+			cacheActiveTrajet();
 		}
 	}
 
 	@Override
-	public void deactivateRoute() {
-		if(activeRoute!=null){
-			trajetDAO.delete(activeRoute);
+	public void deactivateTrajet() {
+		if (activeTrajet != null) {
+			trajetDAO.desactivate(activeTrajet.getId());
 			Editor edit = settings.edit();
-			edit.remove(KEY_ACTIVE_ROUTE_ID);			
+			edit.remove(KEY_ACTIVE_TRAJET_ID);			
 			edit.commit();
 		}
-		activeRoute = null;
-		clearActiveRouteCache();
+		activeTrajet = null;
+		activeTrajetLines.clear();
+		clearActiveTrajetCache();
 	}
 
 	@Override
 	public void switchToPassengerType() {
-		if(profile!=null){
+		if (profile != null) {
 			profile.setTypeProfil("P");
 		}
 	}
 
 	@Override
 	public void switchToDriverType() {
-		if(profile!=null){
+		if (profile != null) {
 			profile.setTypeProfil("C");
 		}
 	}
@@ -405,8 +459,7 @@ public class SessionImpl implements Session {
 
 	@Override
 	public List<Itineraire> getItineraires() {
-		//Profil profil = getActiveProfile();
-		if(profile!=null){
+		if (profile != null) {
 			List<Itineraire> itineraires = itineraireDAO.getList(profile.getId());
 			return itineraires;
 		}
@@ -416,92 +469,97 @@ public class SessionImpl implements Session {
 	
 	@Override
 	public List<Trajet> getTrajets(Trajet trajetModel) {
-		List<Trajet> trajets = trajetDAO.getTrajetDispo(trajetModel);		
+		List<Trajet> trajets = trajetDAO.getTrajetDispo(trajetModel);
 		return trajets;
 	}
 
+	
 	@Override
-	public synchronized int activeRouteLineFor(String idPassenger,int places) {
+	public synchronized int activeTrajetLineFor(String idPassenger, int places, int points) {
 		Profil profile = getActiveProfile();
-		if(profile==null){
+		if (profile == null) {
 			return NO_ACTIVE_PROFILE;
 		}
 		
-		Trajet route = getActiveRoute();
-		if(route==null){
-			return NO_ACTIVE_ROUTE; 
+		Trajet trajet = getActiveTrajet();
+		if (trajet == null) {
+			return NO_ACTIVE_TRAJET; 
 		}
 		
-		TrajetLigne tl = null;
-		if("C".equals(profile.getId())){
-			//On le crée
+		TrajetLigne tl = activeTrajetLines.get(idPassenger);
+		
+		if (tl == null) {
+			tl = trajetLigneDAO.rechercheTrajetLigne(trajet.getId(), idPassenger);
+		}
+		
+		if (tl == null) {
 			tl = new TrajetLigne();
-			tl.setIdProfilPassager(idPassenger);
-			tl.setNbrePoint(route.getNbrePoint());
-			tl.setPlaceOccupee(places);
+		}
+		
+		tl.setIdProfilPassager(idPassenger);
+		tl.setNbrePoint(trajet.getNbrePoint());
+		tl.setPlaceOccupee(places);
+		
+		if (tl.getId() == null) {
 			tl = trajetLigneDAO.insert(tl);
-		}
-		else{
-			tl = trajetLigneDAO.rechercheTrajetLigne(route.getId(), idPassenger);
-		}
-		
-		if(tl==null){
-			return ERROR;
+		} else {
+			tl = trajetLigneDAO.update(tl);
 		}
 		
-		activeLines.put(idPassenger,tl);
+		activeTrajetLines.put(idPassenger, tl);
 		
 		//On met a jour le cache
-		cacheActiveRoute();
+		cacheActiveTrajet();
 		
 		return OK;
 	}
 
+	
 	@Override
-	public synchronized int deactivateRouteLineFor(String idPassenger) {
+	public synchronized int deactivateTrajetLineFor(String idPassenger) {
+		
 		Profil profile = getActiveProfile();
-		if(profile==null){
+		if (profile == null){
 			return NO_ACTIVE_PROFILE;
 		}
 
-		TrajetLigne tl = activeLines.get(idPassenger);
-		if(tl!=null){
+		TrajetLigne tl = activeTrajetLines.get(idPassenger);
+		
+		if (tl != null) {
 			//On l'enleve du cache
-			activeLines.remove(idPassenger);
+			activeTrajetLines.remove(idPassenger);
 
 			//On met a jour le cache
-			cacheActiveRoute();
-			
-			//On l'enleve de la base
-			if("P".equals(profile.getId())){
-				trajetLigneDAO.delete(tl);
-			}
+			cacheActiveTrajet();
+			trajetLigneDAO.delete(tl);
 		}
-		else{
+		else {
 			return ERROR;
 		}
 		
 		return OK;
 	}
 
+	
 	@Override
-	public TrajetLigne getActiveRouteLineFor(String idPassenger) {
-		if(idPassenger==null){
+	public TrajetLigne getActiveTrajetLineFor(String idPassenger) {
+		if (idPassenger == null) {
 			return null;
 		}
-		return activeLines.get(idPassenger);
+		return activeTrajetLines.get(idPassenger);
 	}
 
+	
 	@Override
-	public synchronized Profil[] getActivePassengersProfiles() {		
-		if(!isConnected()){
+	public synchronized Profil[] getActivePassengersProfiles() {
+		if (! isConnected()) {
 			activePassengers = new Profil[]{};
 		}
-		else{
-			synchronized(activeLines){
-				activePassengers = new Profil[activeLines.size()];
+		else {
+			synchronized (activeTrajetLines) {
+				activePassengers = new Profil[activeTrajetLines.size()];
 				int index = 0;
-				for(String id : activeLines.keySet()){
+				for (String id : activeTrajetLines.keySet()) {
 					activePassengers[index++] = profileDAO.getProfil(id);
 				}
 			}
@@ -509,19 +567,20 @@ public class SessionImpl implements Session {
 		return activePassengers;
 	}
 	
+	
 	/**
 	 * 
 	 * @return OK en cas de succès, ERROR sinon
 	 */
-	protected int cacheProfile(){
-		if(profile!=null){
-			try{
+	private int cacheProfile() {
+		if (profile != null) {
+			try {
 				FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
 				ObjectOutputStream oos = new ObjectOutputStream(out);
 				oos.writeObject(profile);
 				out.flush();
 				out.close();
-			} catch(Throwable e){
+			} catch(Throwable e) {
 				Log.d(getClass().getSimpleName(),e.getMessage());
 				return ERROR;
 			}
@@ -529,17 +588,18 @@ public class SessionImpl implements Session {
 		return OK;
 	}
 	
+	
 	/**
 	 * 
 	 * @return OK en cas de succès, ERROR sinon
 	 */
-	protected int loadProfileFromCache(){
+	private int loadProfileFromCache() {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(PROFILE_CACHE));
-			try{
+			try {
 				profile = (Profil)ois.readObject();
-			} finally{
-				try{ ois.close(); } catch(Throwable e){}
+			} finally {
+				try { ois.close(); } catch(Throwable e){}
 			}
 		} catch(Throwable e){
 			Log.d(getClass().getSimpleName(),e.getMessage());
@@ -548,20 +608,21 @@ public class SessionImpl implements Session {
 		return OK;
 	}
 	
+	
 	/**
 	 * 
 	 * @return OK en cas de succès, ERROR sinon
 	 */
-	protected int cacheActiveRoute(){		
-		if(activeRoute!=null){
-			try{
-				FileOutputStream out = context.openFileOutput(ACTIVE_ROUTE_CACHE, Context.MODE_PRIVATE);
+	private int cacheActiveTrajet() {
+		if (activeTrajet != null) {
+			try {
+				FileOutputStream out = context.openFileOutput(ACTIVE_TRAJET_CACHE, Context.MODE_PRIVATE);
 				ObjectOutputStream oos = new ObjectOutputStream(out);
-				oos.writeObject(activeRoute);
-				oos.writeObject(activeLines);
+				oos.writeObject(activeTrajet);
+				oos.writeObject(activeTrajetLines);
 				out.flush();
 				out.close();
-			} catch(Throwable e){
+			} catch(Throwable e) {
 				Log.d(getClass().getName(), e.getMessage(), e);
 				return ERROR;
 			}
@@ -569,32 +630,12 @@ public class SessionImpl implements Session {
 		return OK;
 	}
 	
-	/**
-	 * 
-	 * @return OK en cas de succès, ERROR sinon
-	 */
-	@SuppressWarnings("unchecked")
-	protected int loadActiveRouteFromCache(){		
-		try {
-			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(ACTIVE_ROUTE_CACHE));
-			try{
-				activeRoute = (Trajet)ois.readObject();
-				activeLines = (Map<String,TrajetLigne>)ois.readObject();
-			} finally{
-				try{ ois.close(); } catch(Throwable e){}
-			}
-		} catch(Throwable e){
-			Log.d(getClass().getName(), e.getMessage(), e);
-			return ERROR;
-		}
-		return OK;
-	}
 	
 	/**
 	 * Vider le cache
 	 */
-	protected void clearProfileCache(){
-		try{
+	private void clearProfileCache() {
+		try {
 			FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
 			out.flush();
 			out.close();
@@ -603,12 +644,35 @@ public class SessionImpl implements Session {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @return OK en cas de succès, ERROR sinon
+	 */
+	@SuppressWarnings("unchecked")
+	private int loadActiveTrajetFromCache() {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(ACTIVE_TRAJET_CACHE));
+			try {
+				activeTrajet = (Trajet)ois.readObject();
+				activeTrajetLines = (Map<String,TrajetLigne>)ois.readObject();
+			} finally {
+				try { ois.close(); } catch(Throwable e){}
+			}
+		} catch(Throwable e) {
+			Log.d(getClass().getName(), e.getMessage(), e);
+			return ERROR;
+		}
+		return OK;
+	}
+	
+	
 	/**
 	 * Vider le cache
 	 */
-	protected void clearActiveRouteCache(){
-		try{
-			FileOutputStream out = context.openFileOutput(ACTIVE_ROUTE_CACHE, Context.MODE_PRIVATE);
+	private void clearActiveTrajetCache() {
+		try {
+			FileOutputStream out = context.openFileOutput(ACTIVE_TRAJET_CACHE, Context.MODE_PRIVATE);
 			out.flush();
 			out.close();
 		} catch(Throwable e){

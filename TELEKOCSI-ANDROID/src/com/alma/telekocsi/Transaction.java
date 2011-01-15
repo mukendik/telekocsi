@@ -23,6 +23,7 @@ import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetLigne;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
+import com.alma.telekocsi.util.Tools;
 
 
 public class Transaction extends ARunnableActivity {
@@ -68,7 +69,7 @@ public class Transaction extends ARunnableActivity {
         super.onCreate(savedInstanceState);
         session = SessionFactory.getCurrentSession(this);
         
-        route = session.getActiveRoute();
+        route = session.getActiveTrajet();
         
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
@@ -247,11 +248,11 @@ public class Transaction extends ARunnableActivity {
 		t.setIdProfilConducteur(idDriver);
 		if(idDriver.equals(originator.getId())){
 			t.setIdProfilPassager(destinator.getId());			
-			tl = session.getActiveRouteLineFor(destinator.getId());
+			tl = session.getActiveTrajetLineFor(destinator.getId());
 		}
 		else{
 			t.setIdProfilPassager(originator.getId());
-			tl = session.getActiveRouteLineFor(originator.getId());
+			tl = session.getActiveTrajetLineFor(originator.getId());
 		}
 		t.setPointEchange(getPoints());
 		t.setHeureTransaction(route.getHoraireDepart());

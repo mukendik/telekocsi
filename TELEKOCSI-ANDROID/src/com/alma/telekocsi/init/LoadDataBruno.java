@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.itineraire.ItineraireDAO;
+import com.alma.telekocsi.dao.localisation.Localisation;
+import com.alma.telekocsi.dao.localisation.LocalisationDAO;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
@@ -13,6 +15,7 @@ import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.dao.trajet.TrajetLigne;
 import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.dao.trajet.TrajetTestDAO;
+import com.alma.telekocsi.util.LocalDate;
 
 
 public class LoadDataBruno {
@@ -21,6 +24,7 @@ public class LoadDataBruno {
 	ItineraireDAO itineraireDAO;
 	TrajetDAO trajetDAO;
 	TrajetLigneDAO trajetLigneDAO;
+	LocalisationDAO localisationDAO;
 	
 	
 	public LoadDataBruno() {
@@ -28,16 +32,20 @@ public class LoadDataBruno {
 		itineraireDAO = new ItineraireDAO();
 		trajetDAO = new TrajetDAO();
 		trajetLigneDAO = new TrajetLigneDAO();
+		localisationDAO = new LocalisationDAO();
 	}
 	
 	
 	public void load() {
 		
-		clearMyProfils();
+		/*clearMyProfils();
 		
 		insertMyProfils();
 		insertMyItineraires();
-		generateTrajet();
+		generateTrajet();*/
+		
+		initTrajetLigne();
+		//insertLocalisation();
 	}
 	
 	
@@ -314,19 +322,69 @@ public class LoadDataBruno {
 	
 	
 	private void generateTrajet() {
-		int nb = trajetDAO.generate("09/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 09/01/2010 : " + nb);
+		int nb = trajetDAO.generate("13/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 13/01/2010 : " + nb);
 		
-		nb = trajetDAO.generate("10/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 10/01/2010 : " + nb);
+		nb = trajetDAO.generate("14/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 14/01/2010 : " + nb);
 		
-		nb = trajetDAO.generate("11/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 11/01/2010 : " + nb);
+		nb = trajetDAO.generate("17/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 17/01/2010 : " + nb);
 		
-		nb = trajetDAO.generate("12/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 12/01/2010 : " + nb);
+		nb = trajetDAO.generate("18/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 18/01/2010 : " + nb);
 		
 
+	}
+	
+	
+	private void initTrajetLigne() {
+		
+		String idConducteur = profilDAO.login("rgournay@gmail.com", "azeaze").getId();
+		List<Trajet> trajets = trajetDAO.getList(idConducteur);
+		
+		TrajetLigne trajetLigne1 = new TrajetLigne();
+		trajetLigne1.setIdProfilPassager(profilDAO.login("brunobelin@free.fr", "alma").getId());
+		trajetLigne1.setIdTrajet(trajets.get(0).getId());
+		trajetLigne1.setNbrePoint(4);
+		trajetLigne1.setPlaceOccupee(1);
+		trajetLigneDAO.insert(trajetLigne1);
+		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne1);
+		
+		TrajetLigne trajetLigne2 = new TrajetLigne();
+		trajetLigne2.setIdProfilPassager(profilDAO.login("passager2", "alma").getId());
+		trajetLigne2.setIdTrajet(trajets.get(0).getId());
+		trajetLigne2.setNbrePoint(3);
+		trajetLigne2.setPlaceOccupee(1);
+		trajetLigneDAO.insert(trajetLigne2);
+		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne2);	
+	}
+	
+	
+	private void insertLocalisation() {
+		
+		LocalDate currentDate = new LocalDate();
+		
+		Localisation localisation1 = new Localisation();
+		localisation1.setDateLocalisation(currentDate.getDateFormatCalendar());
+		localisation1.setHeureLocalisation(currentDate.getDateFomatHeure());
+		localisation1.setIdProfil(profilDAO.login("brunobelin@free.fr", "alma").getId());
+		localisation1.setLatitude(47.092566);
+		localisation1.setLongitude(-0.98156);
+		localisation1.setPointGPS("47.092566,-0.98156");
+		localisationDAO.insert(localisation1);
+		Log.i(LoadData.class.getSimpleName(), "insert localisation : " + localisation1);
+		
+		
+		Localisation localisation2 = new Localisation();
+		localisation2.setDateLocalisation(currentDate.getDateFormatCalendar());
+		localisation2.setHeureLocalisation(currentDate.getDateFomatHeure());
+		localisation2.setIdProfil(profilDAO.login("passager2", "alma").getId());
+		localisation2.setLatitude(47.148356);
+		localisation2.setLongitude(-1.193669);
+		localisation2.setPointGPS("47.148356,-1.193669");
+		localisationDAO.insert(localisation2);
+		Log.i(LoadData.class.getSimpleName(), "insert localisation : " + localisation2);
 	}
 	
 }

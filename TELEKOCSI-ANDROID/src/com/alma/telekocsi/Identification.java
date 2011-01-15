@@ -52,7 +52,7 @@ public class Identification extends ARunnableActivity {
 		sendEmailButton = (Button)findViewById(R.id.send_email_button);
 		sendEmailButton.setOnClickListener(getOnClickListener());
 
-		if(profile!=null){
+		if (profile != null) {
         	email.setText(profile.getEmail());
         }
 	}

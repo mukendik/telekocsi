@@ -63,7 +63,7 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 			currentProfil = session.getActiveProfile(); // n'est jamais null normalement
 			Log.i(GoogleMapActivity.class.getSimpleName(), "profil de la session courante \n==> "+currentProfil);
 
-			trajetActif = session.getActiveRoute();
+			trajetActif = session.getActiveTrajet();
 			//Pour l'instant trajetActif est toujours null 
 			if(trajetActif==null) {	
 

@@ -22,27 +22,25 @@ public class Starter extends Activity {
         Session session = SessionFactory.getCurrentSession(this);
         Profil profile = session.getActiveProfile();
         
-        boolean exist = profile!=null;
-        boolean disconnected = !session.isConnected();
+        boolean exist = (profile != null);
+        boolean disconnected = (! session.isConnected());
         
         //le compte de la personne n'est pas enregistre
-        if(!exist){
+        if (! exist) {
         	Log.d(getClass().getSimpleName(),"le compte de la personne n'est pas enregistre");
         	startActivity(new Intent(this, Identification.class));
         }
         //sinon savoir s'il s'etait deconnecte ou non
-        else if(disconnected){
+        else if (disconnected) {
         	Log.d(getClass().getSimpleName(),"La session est deconnecte : Identification");
         	startActivity(new Intent(this, Identification.class));
         }
-        else{
+        else {
         	//sinon on affiche l'ecran principal
         	Log.d(getClass().getSimpleName(),"La session est deja connecté : Ecran principal");
         	startActivity(new Intent(this, MainMenu.class));
         }
         
         finish();
-    }
-    
-    
+    }   
 }

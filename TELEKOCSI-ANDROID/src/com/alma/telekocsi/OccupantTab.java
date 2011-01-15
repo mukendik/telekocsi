@@ -110,7 +110,7 @@ public class OccupantTab extends ListActivity {
 	}
 	
 	private void startTransaction(){
-		Trajet route = session.getActiveRoute();
+		Trajet route = session.getActiveTrajet();
 		if(route==null){
 			Toast.makeText(this, R.string.no_active_route, Toast.LENGTH_SHORT).show();
 			return;

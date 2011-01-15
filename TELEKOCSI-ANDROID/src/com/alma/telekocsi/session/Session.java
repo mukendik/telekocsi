@@ -16,15 +16,19 @@ import com.alma.telekocsi.dao.trajet.TrajetLigne;
  * d'utilisation et fournir un point d'entrer pour la notification.
  */
 public interface Session {
+	
 	public final int OK = 0;
+	
 	/**
-	 * Message d'erreur si pas de route activé
+	 * Message d'erreur si pas de trajet activé
 	 */
-	public final int NO_ACTIVE_ROUTE = 1;
+	public final int NO_ACTIVE_TRAJET = 1;
+	
 	/**
 	 * Message d'erreur si pas de profil activé
 	 */
 	public final int NO_ACTIVE_PROFILE = 2;
+	
 	/**
 	 * Message d'erreur inattendue
 	 */
@@ -47,35 +51,37 @@ public interface Session {
 	 * 
 	 * @return Le traject actif ou null si pas de trajet
 	 */
-	public abstract Trajet getActiveRoute();
+	public abstract Trajet getActiveTrajet();
 	
 	/**
 	 * Active un trajet
-	 * @param route
+	 * @param trajet
 	 */
-	public abstract void activateRoute(Trajet route);
+	public abstract void activateTrajet(Trajet trajet);
 	
 	/**
-	 * Désactive la route actite
-	 * Une fois appeler la méthode <code>getActiveRoute()</code> retourne <code>null</code>,
-	 * le trajet qui était temporaire est effacé de la base.
+	 * Désactive le trajet actif
+	 * Une fois appeler la méthode <code>getActiveTrajet()</code> retourne <code>null</code>,
+	 * le trajet qui était actif passe dans l'etat termine (Trajet.ETAT_FIN) .
 	 */
-	public abstract void deactivateRoute();
+	public abstract void deactivateTrajet();
 	
 	/**
-	 * Activé une ligne pour le trajet actif et le passager considéré
-	 * Si le profil courant est un conducteur un nouveau trajetLigne est crée.
-	 * Sinon le trajetLigne est rechercher dans la base à partir du trajet actif et de l'Id du passager
+	 * Activer une ligne pour le trajet actif et le passager considéré
+	 * Le profil courant doit etre de type conducteur.
+	 * Le trajetLigne est rechercher dans la base à partir du trajet actif et de l'Id du passager
+	 * Si trouve => Modification sinon creation
 	 * @param idPassenger L'Id du passager
 	 * @param placesCount Nombre de places
+	 * @param nombre de points negocies
 	 * @return <ul>
-	 * 	<li><code>Session.NO_ACTIVE_ROUTE</code>: Si pas de profil actif</li>
-	 *  <li><code>Session.NO_ACTIVE_PROFILE</code>: Si pas de trajet activé</li>
+	 * 	<li><code>Session.NO_ACTIVE_TRAJET</code>: Si pas de trajet actif</li>
+	 *  <li><code>Session.NO_ACTIVE_PROFILE</code>: Si pas de profil actif</li>
 	 *  <li><code>Session.OK</code>: En cas d'activation réussie</li>
 	 *  <li><code>Session.ERROR</code>: En cas d'échec d'activation</li>
 	 * </ul>
 	 */
-	public abstract int activeRouteLineFor(String idPassenger,int placesCount);
+	public abstract int activeTrajetLineFor(String idPassenger, int placesCount, int point);
 	
 	/**
 	 * Déactiver le trajetLigne pur le passager actif
@@ -88,7 +94,7 @@ public interface Session {
 	 *  <li><code>Session.ERROR</code>: En cas d'échec d'activation</li>
 	 * </ul>
 	 */
-	public abstract int deactivateRouteLineFor(String idPassenger);
+	public abstract int deactivateTrajetLineFor(String idPassenger);
 	
 	/**
 	 * Retourner les profils de tous les passagers des trajetLignes actifs
@@ -107,7 +113,7 @@ public interface Session {
 	 * @param idPassenger
 	 * @return
 	 */
-	public abstract TrajetLigne getActiveRouteLineFor(String idPassenger);
+	public abstract TrajetLigne getActiveTrajetLineFor(String idPassenger);
 	
 	/**
 	 * Change le type du profil courant comme conducteur.
@@ -193,9 +199,9 @@ public interface Session {
     
     /**
      * 
-     * @return Les trajets du profil actif
+     * @return Tous les trajets du profil actif
      */
-    public abstract List<Trajet> getRoutes();
+    public abstract List<Trajet> getTrajets();
     
     /**
      * 
@@ -205,7 +211,7 @@ public interface Session {
     
     
     /**
-     * Recherche les trajets actifs correspondants au modele transmis.
+     * Recherche les trajets actifs ou disponibles correspondants au modele transmis.
      * Les trajets selectionnes doivent avoir des places disponibles.
      * 
      * Elements devant etre renseignes dans le modele :

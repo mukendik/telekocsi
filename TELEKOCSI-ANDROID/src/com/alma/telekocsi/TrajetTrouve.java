@@ -284,7 +284,6 @@ public class TrajetTrouve extends ARunnableActivity {
 		trajetModel.setLieuDepart(itineraire.getLieuDepart());
 		trajetModel.setLieuDestination(itineraire.getLieuDestination());
 		trajetModel.setDateTrajet(date.getDateFormatCalendar());
-		trajetModel.setActif(true);
 		
 		trajets = session.getTrajets(trajetModel);
 		

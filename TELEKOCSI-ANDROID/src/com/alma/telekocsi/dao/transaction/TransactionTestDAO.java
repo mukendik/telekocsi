@@ -10,6 +10,7 @@ import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.dao.trajet.TrajetLigne;
 import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
+import com.alma.telekocsi.util.Tools;
 
 import android.util.Log;
 

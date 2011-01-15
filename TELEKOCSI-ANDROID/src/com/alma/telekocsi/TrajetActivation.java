@@ -270,7 +270,7 @@ public class TrajetActivation extends ARunnableActivity {
 		Trajet trajet = new Trajet();
 		trajet.setAutoroute(itineraire.isAutoroute());
 		trajet.setCommentaire(itineraire.getCommentaire());
-		trajet.setDateTrajet(date.toString());
+		trajet.setDateTrajet(date.getDateFormatCalendar());
 		trajet.setFrequenceTrajet(itineraire.getFrequenceTrajet());
 		trajet.setHoraireDepart(itineraire.getHoraireDepart());
 		trajet.setHoraireArrivee(itineraire.getHoraireArrivee());
@@ -284,11 +284,11 @@ public class TrajetActivation extends ARunnableActivity {
 		trajet.setPlaceDispo(itineraire.getPlaceDispo());
 		trajet.setSoldePlaceDispo(itineraire.getPlaceDispo());
 		trajet.setVariableDepart(itineraire.getVariableDepart());
-		session.activateRoute(trajet);
+		session.activateTrajet(trajet);
 	}
 	
 	private void desactiveTrajet(){
-		session.deactivateRoute();
+		session.deactivateTrajet();
 	}
 
 	public void initDates() {

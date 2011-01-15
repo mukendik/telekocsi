@@ -180,13 +180,28 @@ public class TrajetDAO {
 
     	return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil));
     }
+
+    
+    /**
+     * Recupere la liste des trajets dans un etat particulier associes a un profil.
+     * Concernant l'etat Actif, il ne doit y avoir qu'un seul trajet au maximum.
+     * @param idProfil
+     * @param etat
+     * @return liste des trajets dans l'etat specifie appartenant au profil
+     */
+    public List<Trajet> getList(String idProfil, int etat) {
+
+    	return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil + "/etat/" + etat));
+    }
     
     
     /**
-     * Recupere la liste des trajets disponibles
+     * Recupere la liste des trajets disponibles ou actifs ayant des places disponibles
+     * et compatible avec les elements du modele transmis.
+     * 
      * @param Trajet de reference (lieu depart, lieu arrivee et date)
      * 
-     * @return liste des trajets disponibles
+     * @return liste des trajets actifs ou disponibles avec des places disponibles
      */
     public List<Trajet> getTrajetDispo(Trajet trajetModel) {
     	
@@ -214,9 +229,19 @@ public class TrajetDAO {
 		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/generate/" + dateRef));
     }
 
+    /**
+     * Activation d'un trajet disponible
+     * @param String idTrajet 
+     * @return 1 si trajet active sinon 0
+     */
+    public int activate(String idTrajet) {
+
+		return (new GetNbFicheTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/activate/" + idTrajet));
+    }    
+    
     
     /**
-     * Desactivation d'un trajet
+     * Desactivation d'un trajet disponible ou actif
      * @param String idTrajet 
      * @return 1 si trajet desactive sinon 0
      */

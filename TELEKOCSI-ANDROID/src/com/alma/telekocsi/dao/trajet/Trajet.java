@@ -12,8 +12,14 @@ import java.util.List;
  * liee a l'itineraire (pour une date precise, ....)
  *
  */
+@SuppressWarnings("serial")
 public class Trajet implements Serializable {
 
+	
+	public static final int ETAT_DISPO = 0;
+	public static final int ETAT_ACTIF = 1;
+	public static final int ETAT_FIN = 2;	
+	
 	private String id;
 	
 	private String lieuDepart;
@@ -33,7 +39,7 @@ public class Trajet implements Serializable {
 	private String idProfilConducteur;
 	private String dateTrajet;
 	private int soldePlaceDispo;
-	private boolean actif;
+	private int etat;
 	
 	
 	public String getId() {
@@ -174,12 +180,12 @@ public class Trajet implements Serializable {
 		this.soldePlaceDispo = soldePlaceDispo;
 	}
 	
-	public boolean isActif() {
-		return actif;
+	public int getEtat() {
+		return etat;
 	}
 
-	public void setActif(boolean actif) {
-		this.actif = actif;
+	public void setEtat(int etat) {
+		this.etat = etat;
 	}	
 	
 	@Override
@@ -222,7 +228,7 @@ public class Trajet implements Serializable {
 		stringBuilder.append("; Id Itinéraire : " + getIdItineraire());
 		stringBuilder.append("; Date trajet : " + getDateTrajet());
 		stringBuilder.append("; Place restantes : " + getSoldePlaceDispo());
-		stringBuilder.append("; actif : " + isActif());
+		stringBuilder.append("; etat : " + getEtat());
 		
 		return stringBuilder.toString();
 	}	
