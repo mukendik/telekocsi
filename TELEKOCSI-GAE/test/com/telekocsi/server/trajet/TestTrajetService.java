@@ -67,7 +67,7 @@ public class TestTrajetService {
 		trajet.setVariableDepart(itineraire.getVariableDepart());
 		trajet.setDateTrajet("26/12/2010");
 		trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
-		trajet.setActif(true);
+		trajet.setEtat(Trajet.ETAT_DISPO);
 		
 		trajet = webResource.type(MediaType.APPLICATION_JSON_TYPE)
 				.accept(MediaType.APPLICATION_JSON_TYPE)

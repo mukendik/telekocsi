@@ -19,6 +19,11 @@ public class Trajet implements Serializable {
 	 * 1 : Version initiale
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	public static final int ETAT_DISPO = 0;
+	public static final int ETAT_ACTIF = 1;
+	public static final int ETAT_FIN = 2;
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +47,7 @@ public class Trajet implements Serializable {
 	private String idProfilConducteur;
 	private String dateTrajet;
 	private int soldePlaceDispo;
-	private boolean actif;
+	private int etat;
 	
 	
 	public String getId() {
@@ -183,13 +188,12 @@ public class Trajet implements Serializable {
 		this.soldePlaceDispo = soldePlaceDispo;
 	}
 	
-
-	public boolean isActif() {
-		return actif;
+	public int getEtat() {
+		return etat;
 	}
 
-	public void setActif(boolean actif) {
-		this.actif = actif;
+	public void setEtat(int etat) {
+		this.etat = etat;
 	}	
 	
 	@Override
@@ -213,7 +217,7 @@ public class Trajet implements Serializable {
 		stringBuilder.append("; Id Itinéraire : " + getIdItineraire());
 		stringBuilder.append("; Date trajet : " + getDateTrajet());
 		stringBuilder.append("; Place restantes : " + getSoldePlaceDispo());
-		stringBuilder.append("; actif : " + isActif());
+		stringBuilder.append("; etat : " + getEtat());
 		
 		return stringBuilder.toString();
 	}	

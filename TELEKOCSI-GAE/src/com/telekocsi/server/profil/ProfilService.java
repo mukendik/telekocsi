@@ -102,7 +102,7 @@ public class ProfilService {
 	
 	
 	/**
-	 * Recupere un profil par le pseudo
+	 * Recupere un profil par le pseudo et actualise l'etat connecte
 	 * @param Id du profil
 	 * @return Profil trouve
 	 */
@@ -119,9 +119,16 @@ public class ProfilService {
 		
 		Profil profil = null;
 		try {
-			profil = (Profil)query.getSingleResult();	
+			profil = (Profil)query.getSingleResult();
 		} catch (Exception e) {
 			log.info("Profil inconnu  : " + pseudo + "/" + password);
+		}
+		
+		if (profil != null) {
+			profil.setConnecte(true);
+			em.getTransaction().begin();
+			profil = em.merge(profil);
+			em.getTransaction().commit();
 		}
 		
 		return profil;

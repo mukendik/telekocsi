@@ -29,7 +29,6 @@ import com.telekocsi.server.util.Tools;
 public class TrajetService {
 	
 	private static final Logger log = Logger.getLogger(TrajetService.class.getName());
-	
 
 	/**
 	 * Mise a jour d'un trajet par son id
@@ -72,7 +71,7 @@ public class TrajetService {
 		persistedTrajet.setDateTrajet(trajet.getDateTrajet());
 		persistedTrajet.setIdProfilConducteur(trajet.getIdProfilConducteur());
 		persistedTrajet.setSoldePlaceDispo(trajet.getSoldePlaceDispo());
-		persistedTrajet.setActif(trajet.isActif());
+		persistedTrajet.setEtat(trajet.getEtat());
 		
 		em.getTransaction().begin();
 		em.merge(persistedTrajet);
@@ -109,7 +108,7 @@ public class TrajetService {
 	@SuppressWarnings("unchecked")
 	public List<Trajet> list() {
 		
-		log.info("Recuperation des trajets");
+		log.info("Recuperation de tous les trajets");
 		
 		EntityManager em = Tools.getEntityManager();
 		List<Trajet> trajets = em.createQuery("SELECT i FROM Trajet i").getResultList();
@@ -118,7 +117,7 @@ public class TrajetService {
 	}
 	
 	/**
-	 * Recuperation de la liste des Trajets actifs pour un profil
+	 * Recuperation de la liste de tous les trajets pour un profil
 	 * @return liste des itineraires
 	 */
 	@GET
@@ -129,12 +128,31 @@ public class TrajetService {
 		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil);
 		
 		EntityManager em = Tools.getEntityManager();
-		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param and t.actif=TRUE");
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param");
 		query.setParameter("param", idProfil);
 		List<Trajet> trajets = query.getResultList();
 		return trajets;
 	}
 
+	/**
+	 * Recuperation de la liste des Trajets pour un profil et pour un etat particulier
+	 * @return liste des itineraires
+	 */
+	@GET
+	@Path("/profil/{idProfil}/{etat}")
+	@SuppressWarnings("unchecked")
+	public List<Trajet> list(@PathParam("idProfil") String idProfil, @PathParam("etat") int etat) {
+		
+		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil + " avec etat : " + etat);
+		
+		EntityManager em = Tools.getEntityManager();
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param1 and t.etat=:param2");
+		query.setParameter("param1", idProfil);
+		query.setParameter("param2", etat);
+		List<Trajet> trajets = query.getResultList();
+		return trajets;
+	}
+	
 	
 	/**
 	 * Recuperation de la liste des Trajets disponibles
@@ -164,7 +182,7 @@ public class TrajetService {
 		sb.append(" and t.lieuDestination=:param2");
 		sb.append(" and t.dateTrajet=:param3");
 		sb.append(" and t.soldePlaceDispo > 0");
-		sb.append(" and t.actif=TRUE");
+		sb.append(" and t.etat=" + Trajet.ETAT_DISPO);
 		
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", lieuDepart);
@@ -178,16 +196,15 @@ public class TrajetService {
 
 	
 	/**
-	 * Recuperation de la liste des Trajets disponibles
-	 * @param Lieu de depart
-	 * @param Lieu d'arrivee
-	 * @param Date depart
-	 * @return liste des itineraires
+	 * Recuperation de la liste des Trajets disponibles ou actifs
+	 * ayant encore des places disponibles
+	 * @param Trajet Model
+	 * @return liste des itineraires correspondant au modele avec places disponibles
 	 */
 	@PUT
 	@Path("/trajetDispo")
 	@SuppressWarnings("unchecked")
-	public List<Trajet> getTrajetDispo(Trajet trajetModel) {
+	public List<Trajet> getTrajets(Trajet trajetModel) {
 		
 		log.info("Recuperation des trajets correspondants au model ");
 		
@@ -197,14 +214,13 @@ public class TrajetService {
 		sb.append(" where t.lieuDepart=:param1");
 		sb.append(" and t.lieuDestination=:param2");
 		sb.append(" and t.dateTrajet=:param3");
-		sb.append(" and t.actif=:param4");
+		sb.append(" and ((t.etat=" + Trajet.ETAT_DISPO + ") OR (t.etat=" + Trajet.ETAT_ACTIF + "))");
 		sb.append(" and t.soldePlaceDispo > 0");	
 		
 		Query query = em.createQuery(sb.toString());
 		query.setParameter("param1", trajetModel.getLieuDepart());
 		query.setParameter("param2", trajetModel.getLieuDestination());
 		query.setParameter("param3", trajetModel.getDateTrajet());
-		query.setParameter("param4", trajetModel.isActif());
 		
 		List<Trajet> trajets = query.getResultList();
 		
@@ -261,9 +277,6 @@ public class TrajetService {
 	public Trajet add(Trajet trajet) {
 		log.info("Ajout d'un trajet");
 		
-		/* La creation d'un trajet : obligatoirement actif */
-		trajet.setActif(true);
-		
 		EntityManager em = Tools.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(trajet);
@@ -274,7 +287,42 @@ public class TrajetService {
 
 	
 	/**
-	 * Desactivation d'un trajet
+	 * Activation d'un trajet
+	 * @return true si operation reussie
+	 */
+	@GET
+	@Path("/activate/{idTrajet}")
+	public Integer activate(@PathParam("idTrajet") String idTrajet) {
+		
+		log.info("Activation du trajet d'id : " + idTrajet);
+		
+		if (idTrajet == null) {
+			return 0;
+		}
+		
+		EntityManager em = Tools.getEntityManager();
+		Trajet persistedTrajet = em.getReference(Trajet.class, idTrajet);
+		
+		if (persistedTrajet == null) {
+			return 0;
+		}
+		
+		if (persistedTrajet.getEtat() != Trajet.ETAT_DISPO) {
+			return 0;
+		}
+		
+		persistedTrajet.setEtat(Trajet.ETAT_ACTIF);
+		
+		em.getTransaction().begin();
+		em.merge(persistedTrajet);
+		em.getTransaction().commit();
+		
+		return 1;
+	}
+	
+	
+	/**
+	 * Desactivation d'un trajet (actif ou disponible)
 	 * @return true si operation reussie
 	 */
 	@GET
@@ -294,7 +342,11 @@ public class TrajetService {
 			return 0;
 		}
 		
-		persistedTrajet.setActif(false);
+		if (persistedTrajet.getEtat() == Trajet.ETAT_FIN) {
+			return 0;
+		}
+		
+		persistedTrajet.setEtat(Trajet.ETAT_FIN);
 		
 		em.getTransaction().begin();
 		em.merge(persistedTrajet);
@@ -368,7 +420,7 @@ public class TrajetService {
 						trajet.setVariableDepart(itineraire.getVariableDepart());
 						trajet.setDateTrajet(dateTrav);
 						trajet.setSoldePlaceDispo(trajet.getPlaceDispo());
-						trajet.setActif(true);
+						trajet.setEtat(Trajet.ETAT_DISPO);
 						add(trajet);
 						cpt++;
 					}
