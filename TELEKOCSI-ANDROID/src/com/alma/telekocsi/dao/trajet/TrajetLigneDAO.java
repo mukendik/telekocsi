@@ -209,6 +209,17 @@ public class TrajetLigneDAO {
 		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/trajet/" + idTrajet));
     }
 
+    
+    /**
+     * Recuperation des lignes actives associees a un passager
+     * @param idPassager identifiant du passager
+     * @return Liste des lignes actives (normalement une seule)
+     */
+    public List<TrajetLigne> getListFromPassager(String idPassager) {
+    	
+		return (new GetListTask()).execute(new HttpGet(GAE.getTrajetLigneEndPoint() + "/passager/" + idPassager));
+    }
+    
     /**
      * Recuperation la liste des passagers (id) integres au trajet
      * @param idTrajet identifiant du trajet

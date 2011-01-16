@@ -38,14 +38,16 @@ public class LoadDataBruno {
 	
 	public void load() {
 		
-		/*clearMyProfils();
+		clearMyProfils();
 		
 		insertMyProfils();
 		insertMyItineraires();
-		generateTrajet();*/
+		generateTrajet();
 		
 		initTrajetLigne();
-		//insertLocalisation();
+		insertLocalisation();
+		
+		showInfos();
 	}
 	
 	
@@ -322,11 +324,8 @@ public class LoadDataBruno {
 	
 	
 	private void generateTrajet() {
-		int nb = trajetDAO.generate("13/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 13/01/2010 : " + nb);
-		
-		nb = trajetDAO.generate("14/01/2011");
-		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 14/01/2010 : " + nb);
+		int nb = trajetDAO.generate("16/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 16/01/2010 : " + nb);
 		
 		nb = trajetDAO.generate("17/01/2011");
 		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 17/01/2010 : " + nb);
@@ -334,30 +333,40 @@ public class LoadDataBruno {
 		nb = trajetDAO.generate("18/01/2011");
 		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 18/01/2010 : " + nb);
 		
+		nb = trajetDAO.generate("19/01/2011");
+		Log.i(LoadDataBruno.class.getSimpleName(), "generate trajet 19/01/2010 : " + nb);
+		
 
 	}
 	
 	
 	private void initTrajetLigne() {
 		
-		String idConducteur = profilDAO.login("rgournay@gmail.com", "azeaze").getId();
+		String idConducteur = profilDAO.login("conducteur1", "alma").getId();
 		List<Trajet> trajets = trajetDAO.getList(idConducteur);
 		
-		TrajetLigne trajetLigne1 = new TrajetLigne();
-		trajetLigne1.setIdProfilPassager(profilDAO.login("brunobelin@free.fr", "alma").getId());
-		trajetLigne1.setIdTrajet(trajets.get(0).getId());
-		trajetLigne1.setNbrePoint(4);
-		trajetLigne1.setPlaceOccupee(1);
-		trajetLigneDAO.insert(trajetLigne1);
-		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne1);
+		if (trajets.size() > 0) {
+			Trajet trajet1 = trajets.get(0);
+			
+			TrajetLigne trajetLigne1 = new TrajetLigne();
+			trajetLigne1.setIdProfilPassager(profilDAO.login("passager1", "alma").getId());
+			trajetLigne1.setIdTrajet(trajet1.getId());
+			trajetLigne1.setNbrePoint(4);
+			trajetLigne1.setPlaceOccupee(1);
+			trajetLigneDAO.insert(trajetLigne1);
+			Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne1);
+		}
 		
-		TrajetLigne trajetLigne2 = new TrajetLigne();
-		trajetLigne2.setIdProfilPassager(profilDAO.login("passager2", "alma").getId());
-		trajetLigne2.setIdTrajet(trajets.get(0).getId());
-		trajetLigne2.setNbrePoint(3);
-		trajetLigne2.setPlaceOccupee(1);
-		trajetLigneDAO.insert(trajetLigne2);
-		Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne2);	
+		if (trajets.size() > 1) {
+			Trajet trajet2 = trajets.get(1);
+			TrajetLigne trajetLigne2 = new TrajetLigne();
+			trajetLigne2.setIdProfilPassager(profilDAO.login("passager2", "alma").getId());
+			trajetLigne2.setIdTrajet(trajet2.getId());
+			trajetLigne2.setNbrePoint(3);
+			trajetLigne2.setPlaceOccupee(1);
+			trajetLigneDAO.insert(trajetLigne2);
+			Log.i(LoadData.class.getSimpleName(), "insert trajetLigne : " + trajetLigne2);
+		}
 	}
 	
 	
@@ -385,6 +394,44 @@ public class LoadDataBruno {
 		localisation2.setPointGPS("47.148356,-1.193669");
 		localisationDAO.insert(localisation2);
 		Log.i(LoadData.class.getSimpleName(), "insert localisation : " + localisation2);
+	}
+	
+	
+	private void showInfos() {
+		
+		Log.i(LoadDataBruno.class.getSimpleName(), "Trajets pour le conducteur1");
+		List<Trajet> listT = trajetDAO.getList(profilDAO.login("conducteur1", "alma").getId());
+		if (listT != null) {
+			for (Trajet t : listT) {
+				Log.i(LoadDataBruno.class.getSimpleName(), "Trajet : " + t);
+			}
+		}
+
+		Log.i(LoadDataBruno.class.getSimpleName(), "Trajets pour le conducteur2");
+		listT = trajetDAO.getList(profilDAO.login("conducteur2", "alma").getId());
+		if (listT != null) {
+			for (Trajet t : listT) {
+				Log.i(LoadDataBruno.class.getSimpleName(), "Trajet : " + t);
+			}
+		}
+		
+		Log.i(LoadDataBruno.class.getSimpleName(), "Lignes de trajet pour le passager1");
+		
+		List<TrajetLigne> listTl = trajetLigneDAO.getListFromPassager(profilDAO.login("passager1", "alma").getId());
+		if (listTl != null) {
+			for (TrajetLigne tl : listTl) {
+				Log.i(LoadDataBruno.class.getSimpleName(), "ligne trajet : " + tl);
+			}
+		}
+		
+		Log.i(LoadDataBruno.class.getSimpleName(), "Lignes de trajet pour le passager2");
+		
+		listTl = trajetLigneDAO.getListFromPassager(profilDAO.login("passager2", "alma").getId());
+		if (listTl != null) {
+			for (TrajetLigne tl : listTl) {
+				Log.i(LoadDataBruno.class.getSimpleName(), "ligne trajet : " + tl);
+			}
+		}
 	}
 	
 }

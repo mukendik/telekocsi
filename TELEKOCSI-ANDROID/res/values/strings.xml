@@ -109,6 +109,10 @@
     <string name="preferences_settings_back_button_text">Retour</string>
     <string name="registering_submit_button_text">Terminer</string>
 
+    <!-- trajet_managing -->
+	<string name="trajetManaging">Vos trajets</string>
+	<string name="btNewTrajet">Nouveau trajet</string>
+
     <!-- trajet_creation -->
     <string name="trajet_identification_title">Identification du trajet</string>
     <string name="trajet_date_title">Date du trajet</string>

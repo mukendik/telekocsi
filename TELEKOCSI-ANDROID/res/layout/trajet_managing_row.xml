@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+   	android:layout_height="fill_parent"
+   	>
+   				
+   	<TableRow 
+   		android:background="@color/white"
+   		android:layout_marginLeft="5px"
+   		android:layout_marginRight="5px"
+   		android:layout_marginTop="5px"
+   		android:layout_marginBottom="5px">
+   					
+   		<LinearLayout
+    		android:orientation="horizontal"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    					
+	   		<TextView
+	   			android:layout_width="wrap_content" 
+	   			android:layout_height="wrap_content" 
+	   			android:text="Le 15/01/2011"
+	   			android:id="@+id/tvTMRowDate"
+	   			android:textColor="@color/black"
+	   			android:layout_marginLeft="10px"
+				/>
+				    					 
+		</LinearLayout>
+   					
+		<LinearLayout
+   			android:orientation="horizontal"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    					
+	   		<TextView
+	   			android:layout_width="wrap_content" 
+	   			android:layout_height="wrap_content" 
+	   			android:text="Départ : "
+	   			android:id="@+id/tvTMRowDepart"
+	   			android:textColor="@color/black"
+	   			android:layout_marginLeft="10px"
+				/>
+											 
+  		</LinearLayout>
+
+		<LinearLayout
+   			android:orientation="horizontal"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    					
+	   		<TextView
+	   			android:layout_width="wrap_content" 
+	   			android:layout_height="wrap_content" 
+	   			android:text="Arrivée : "
+	   			android:id="@+id/tvTMRowArrivee"
+	   			android:textColor="@color/black"
+	   			android:layout_marginLeft="10px"
+				/>
+											 
+  		</LinearLayout>
+
+		<LinearLayout
+   			android:orientation="horizontal"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    					
+	   		<TextView
+	   			android:layout_width="wrap_content" 
+	   			android:layout_height="wrap_content" 
+	   			android:text="Infos : "
+	   			android:id="@+id/tvTMRowInfo"
+	   			android:textColor="@color/black"
+	   			android:layout_marginLeft="10px"
+				/>
+											 
+  		</LinearLayout> 
+  		  					
+   		<LinearLayout
+    		android:orientation="vertical"
+   			android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:layout_marginTop="5px">
+    					
+    		<ImageView
+    			android:src="@drawable/next1"
+    			android:scaleType="centerInside"
+    			android:layout_width="fill_parent"
+    			android:layout_height="fill_parent"
+    			android:layout_marginLeft="2px"
+   				android:layout_marginBottom="5px"
+    		/>
+    					 
+   		</LinearLayout>
+   					
+	</TableRow>
+   				
+</TableLayout>   					
