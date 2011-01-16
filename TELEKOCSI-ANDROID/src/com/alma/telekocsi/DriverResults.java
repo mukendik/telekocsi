@@ -199,16 +199,16 @@ private static final int CODE_TRAJETTROUVE = 20;
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
 			View row = convertView;
-			ViewWrapper wrapper;
+			TrajetTrouveViewWrapper wrapper;
 													
 			if (row == null) {
 				
 				LayoutInflater inflater = context.getLayoutInflater();
 				row = inflater.inflate(R.layout.trajettrouverow, null);
-				wrapper = new ViewWrapper(row);
+				wrapper = new TrajetTrouveViewWrapper(row);
 				row.setTag(wrapper);
 			} else {
-				wrapper = (ViewWrapper)row.getTag();
+				wrapper = (TrajetTrouveViewWrapper)row.getTag();
 			}
 
 			Trajet trajet = getModel(position);

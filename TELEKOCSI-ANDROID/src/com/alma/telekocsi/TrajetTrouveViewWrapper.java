@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class ViewWrapper {
+public class TrajetTrouveViewWrapper {
 
 	View base;
 	TextView nomConducteur = null;
@@ -17,7 +17,7 @@ public class ViewWrapper {
 	ImageView starsClassement = null;
 	
 	
-	ViewWrapper(View base) {
+	TrajetTrouveViewWrapper(View base) {
 		
 		this.base = base;
 	}

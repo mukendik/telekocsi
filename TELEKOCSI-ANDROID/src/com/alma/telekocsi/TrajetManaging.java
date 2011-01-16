@@ -20,25 +20,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 
 public class TrajetManaging extends ARunnableActivity {
 	
 	private static final int CODE_TRAJETMANAGING = 40;
 	
-	private static final int MODIFY = 1;
-	private static final int ACTIVATE = 2;
-	private static final int DELETE = 3;
+	private static final int ACTION_ACTIVATE = 1;
+	private static final int ACTION_DESACTIVATE = 2;
+	private static final int ACTION_DELETE = 3;
+	private static final int ACTION_MAP = 4;
+	private static final int ACTION_CREATE = 5;
+	
+	private int currentAction = 0;
 	
 	private OnClickListener onClickListener = null;
+	private OnItemLongClickListener onItemLongClickListener;
 	private Button btNew;
 	private Button btQuit;
+	
+	private MenuItem menuActivate;
+	private MenuItem menuDesactivate;
+	private MenuItem menuDelete;
+	private MenuItem menuMap;
 
 	private TextView tvResultat;
 	private TextView tvPage;
@@ -61,6 +73,7 @@ public class TrajetManaging extends ARunnableActivity {
 			tvPage.setText("Page : 1/1");
 			
 			listView.setAdapter(detailTrajetsAdapter);
+			listView.setOnItemLongClickListener(getOnItemLongClickListener());
 			registerForContextMenu(listView);
 			
 			if (trajets.size() == 0) {
@@ -87,7 +100,7 @@ public class TrajetManaging extends ARunnableActivity {
         tvResultat = (TextView)findViewById(R.id.tvTMResultat);
         tvPage = (TextView)findViewById(R.id.tvTMPage);
         
-		// Liste des trajets du conducteur
+		/* Liste des trajets du conducteur */
         listView = (ListView)findViewById(R.id.lvTMListTrajet);
     }
     
@@ -101,10 +114,7 @@ public class TrajetManaging extends ARunnableActivity {
 			
 			@Override
 			public void run() {
-		
-				detailTrajetsAdapter = new TrajetAdapter(trajetManaging, getTrajets());
-		        Message msg = handler.obtainMessage();
-		        handler.sendMessage(msg);
+				loadTrajets();
 			}
 		});
         
@@ -112,18 +122,29 @@ public class TrajetManaging extends ARunnableActivity {
     }
        
     
+    private void loadTrajets() {
+    	
+		detailTrajetsAdapter = new TrajetAdapter(trajetManaging, getTrajets());
+        Message msg = handler.obtainMessage();
+        handler.sendMessage(msg);
+    }
+    
+    
     @Override
     protected void onRestart() {
     	super.onRestart();
-
     }
+    
     
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, MODIFY, 0, R.string.routes_managing_modify);
-		menu.add(0, ACTIVATE, 0,  R.string.routes_managing_activate);
-		menu.add(0, DELETE, 0,  R.string.routes_managing_delete);
+		menuActivate = menu.add(0, ACTION_ACTIVATE, 0,  R.string.tm_item_activation);
+		menuDesactivate = menu.add(0, ACTION_DESACTIVATE, 0,  R.string.tm_item_desactivation);
+		menuDelete = menu.add(0, ACTION_DELETE, 0,  R.string.tm_item_suppression);
+		menuMap = menu.add(0, ACTION_MAP, 0,  R.string.tm_item_map);
+		
+		refreshMenuItem();
 	}
 
 	
@@ -134,20 +155,57 @@ public class TrajetManaging extends ARunnableActivity {
 		trajet = detailTrajetsAdapter.getItem(infos.position);
 				
 		switch (item.getItemId()) {
-		case MODIFY:
-			Log.i(getClass().getSimpleName(), "modify : " + trajet);
+		case ACTION_ACTIVATE:
+			Log.i(getClass().getSimpleName(), "activate : " + trajet);
+			goTrajetActivation();
 			return true;
-		case ACTIVATE:
-			Log.i(getClass().getSimpleName(), "activate : " + trajet );
+		case ACTION_DESACTIVATE:
+			Log.i(getClass().getSimpleName(), "desactivate : " + trajet );
+			goTrajetDesactivation();
 			return true;
-		case DELETE:
+		case ACTION_DELETE:
 			Log.i(getClass().getSimpleName(), "delete : " + trajet);
+			goTrajetDelete();
+			return true;
+		case ACTION_MAP:
+			Log.i(getClass().getSimpleName(), "map : " + trajet);
+			goTrajetMap();
 			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
 	}    
-    
+	
+	private OnItemLongClickListener getOnItemLongClickListener() {
+		
+		onItemLongClickListener = new OnItemLongClickListener() {
+
+		    public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+		    	
+		    	trajet = (Trajet)parent.getItemAtPosition(position);
+		    	refreshMenuItem();
+		    	return false;
+		    }
+		};		
+		return onItemLongClickListener;
+	}	
+	
+	
+	private void refreshMenuItem() {
+
+		if (menuActivate != null) {
+			
+			Trajet activeTrajet = session.getActiveTrajet();
+			boolean activable = (activeTrajet == null);
+			
+			Log.i(trajetManaging.getClass().getSimpleName(), "Trajet " + trajet + (activable ? " activable" : " non activable"));
+			menuActivate.setEnabled(activable && (trajet.getEtat() == Trajet.ETAT_DISPO));
+			menuDesactivate.setEnabled(trajet.getEtat() == Trajet.ETAT_ACTIF);
+			menuMap.setEnabled(trajet.getEtat() == Trajet.ETAT_ACTIF);
+		}
+	}
+	    
+	
     public OnClickListener getOnClickListener() {
     	
     	if (onClickListener == null) {
@@ -164,7 +222,6 @@ public class TrajetManaging extends ARunnableActivity {
 				}
 			};
     	}
-    	
     	return onClickListener;
     }
     
@@ -215,18 +272,28 @@ public class TrajetManaging extends ARunnableActivity {
 				dateAff.append(trajet.getDateTrajet());
 			}
 			
-			wrapper.getDate().setText("Date : " + dateAff.toString());
+			String state = "";
+			switch (trajet.getEtat()) {
+				case Trajet.ETAT_DISPO:
+					state = "Disponible";
+					break;
+				case Trajet.ETAT_ACTIF:
+					state = "Actif";
+					break;
+			};
+			
+			wrapper.getDate().setText("Date : " + dateAff.toString() + "            " + state);
 			wrapper.getDepart().setText( "Départ  : " + trajet.getLieuDepart() + " à " + trajet.getHoraireDepart());
 			wrapper.getArrivee().setText("Arrivée : " + trajet.getLieuDestination() + " à " + trajet.getHoraireArrivee());
 			wrapper.getInfo().setText("Places dispo : " + trajet.getPlaceDispo()
-					+ "; Points : " + trajet.getNbrePoint());
+					+ "; Points demandés : " + trajet.getNbrePoint());
 						
 			return (row);
 		}
 	}
 	
 	
-	public List<Trajet> getTrajets() {
+	private List<Trajet> getTrajets() {
 		
 		Log.i(TrajetRecherche.class.getSimpleName(), "Debut recherche des trajets");
 		
@@ -237,13 +304,33 @@ public class TrajetManaging extends ARunnableActivity {
 	}
 
 	
-    public void goTrajetCreation() {
+    private void goTrajetCreation() {
+    	currentAction = ACTION_CREATE;
     	startProgressDialogInNewThread(this);
     }
 
     
-    public void goTrajetAction() {
-    	//
+    private void goTrajetActivation() {
+    	currentAction = ACTION_ACTIVATE;
+    	startProgressDialogInNewThread(this);
+    }
+
+    
+    private void goTrajetDesactivation() {
+    	currentAction = ACTION_DESACTIVATE;
+    	startProgressDialogInNewThread(this);
+    }
+
+    
+    private void goTrajetDelete() {
+    	currentAction = ACTION_DELETE;
+    	startProgressDialogInNewThread(this);
+    }
+
+    
+    private void goTrajetMap() {
+    	currentAction = ACTION_MAP;
+    	startProgressDialogInNewThread(this);
     }
     
     @Override
@@ -268,8 +355,37 @@ public class TrajetManaging extends ARunnableActivity {
     
 	@Override
 	public void run() {
-        
-        Intent intent = new Intent(this, TrajetCreation.class);
-        startActivityForResult(intent, CODE_TRAJETMANAGING);
+		
+		Intent intent;
+		
+		switch (currentAction) {
+		case ACTION_CREATE:
+			intent = new Intent(this, TrajetCreation.class);
+			startActivityForResult(intent, CODE_TRAJETMANAGING);
+			break;
+			
+		case ACTION_ACTIVATE:
+			session.activateTrajet(trajet);
+			loadTrajets();
+			stopProgressDialog();
+			break;
+			
+		case ACTION_DESACTIVATE:
+			session.deactivateTrajet();
+			loadTrajets();
+			stopProgressDialog();
+			break;
+
+		case ACTION_DELETE:
+			session.delete(trajet);
+			loadTrajets();
+			stopProgressDialog();
+			break;
+			
+		case ACTION_MAP:
+			startActivity(new Intent(this, GoogleMapActivity.class));
+			stopProgressDialog();
+			break;
+		}
 	}
 }

@@ -22,7 +22,7 @@
     		/>
 
     	<TextView
-    		android:text="@string/trajetManaging"
+    		android:text="@string/tm_titre_trajetManaging"
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
     		android:layout_marginLeft="5px"
@@ -105,7 +105,7 @@
     		<Button
     			android:layout_width="wrap_content" 
     			android:layout_height="wrap_content"
-    			android:text="@string/btNewTrajet"
+    			android:text="@string/tm_bt_NewTrajet"
     			android:id="@+id/btTMNewTrajet"
     			android:textColor="@color/black"
     			android:layout_marginTop="5px"

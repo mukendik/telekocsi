@@ -249,13 +249,26 @@ public class SessionImpl implements Session {
 		dispatchEvent(makeEvent(SessionEvent.LOGOUT, this, null));
 		
 		this.profile = null;
+		clearAllInfoActiveTrajet();
+		
+		return true;
+	}
+	
+	
+	private void clearAllInfoActiveTrajet() {
+
+		Editor edit = settings.edit();
+		edit.remove(KEY_ACTIVE_TRAJET_ID);
+		edit.commit();
+		
 		this.activeTrajet = null;
 		this.activeTrajetLines.clear();
 		this.activePassengers = null;
 		
-		return true;
+		clearActiveTrajetCache();
 	}
 
+	
 	/**
 	 * Bruno : Dangereux car supprime des elements dans la BDD a partir du cache
 	 * Le trajet actif + ses lignes !
@@ -330,7 +343,14 @@ public class SessionImpl implements Session {
 	
 	@Override
 	public <T> void delete(T object) {
-		if (object instanceof Trajet) trajetDAO.delete((Trajet)object);
+		
+		if (object instanceof Trajet) {
+			
+			trajetDAO.delete((Trajet)object);
+			
+			if (((Trajet)object).getEtat() == Trajet.ETAT_ACTIF)
+				clearAllInfoActiveTrajet();
+		}
 		else if(object instanceof Itineraire) itineraireDAO.delete((Itineraire)object);
 		else if(object instanceof Event) eventDAO.delete((Event)object);
 		else if(object instanceof Profil) profileDAO.delete((Profil)object);
@@ -431,15 +451,10 @@ public class SessionImpl implements Session {
 
 	@Override
 	public void deactivateTrajet() {
-		if (activeTrajet != null) {
+		if (getActiveTrajet() != null) {
 			trajetDAO.desactivate(activeTrajet.getId());
-			Editor edit = settings.edit();
-			edit.remove(KEY_ACTIVE_TRAJET_ID);			
-			edit.commit();
 		}
-		activeTrajet = null;
-		activeTrajetLines.clear();
-		clearActiveTrajetCache();
+		clearAllInfoActiveTrajet();
 	}
 
 	@Override

@@ -31,10 +31,8 @@ public class DriverTab extends ListActivity {
 	Profil profile = null;
 	
 	private String TRAJET_MANAGING;
-	private String ACTIVATE;
-	private String CREATE;
-	private String DESACTIVATE;
-	private String ACTIVATED;
+	private String CREATE_ITINERAIRE;
+	private String VIEW_TRAJET_MAP;
 	private String TRANSACTION;
 	
 	private String[] DRIVER_FUNCTIONS;
@@ -43,15 +41,13 @@ public class DriverTab extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 				
-		TRAJET_MANAGING = getString(R.string.trajetManaging);
-		ACTIVATE = getString(R.string.route_activation_title);
-		CREATE = getString(R.string.route_creation);
-		DESACTIVATE = getString(R.string.route_desactivation);
-		ACTIVATED = getString(R.string.activated_route_map_text);
+		TRAJET_MANAGING = getString(R.string.tm_titre_trajetManaging);
+		CREATE_ITINERAIRE = getString(R.string.route_creation);
+		VIEW_TRAJET_MAP = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
 
 		DRIVER_FUNCTIONS = new String[] {
-				TRAJET_MANAGING, ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
+				TRAJET_MANAGING, CREATE_ITINERAIRE, VIEW_TRAJET_MAP, TRANSACTION
 		};
 		
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.main_menu_tab_list,
@@ -99,17 +95,11 @@ public class DriverTab extends ListActivity {
 		    	if (((TextView) view).getText().equals(TRAJET_MANAGING)) {
 		    		startTrajetManaging();
 		    	}
-		    	else if (((TextView) view).getText().equals(ACTIVATE)) {
-		    		startRouteActivation();
-		    	}
-		    	else if(((TextView) view).getText().equals(CREATE)) {
+		    	else if(((TextView) view).getText().equals(CREATE_ITINERAIRE)) {
 		    		startRouteCreation();
 		    	}
-		    	else if(((TextView) view).getText().equals(DESACTIVATE)) {
-		    		startRouteDesactivation();
-		    	}
-		    	else if(((TextView) view).getText().equals(ACTIVATED)) {
-		    		showActiveRoute();
+		    	else if(((TextView) view).getText().equals(VIEW_TRAJET_MAP)) {
+		    		showActiveRouteOnMap();
 		    	}
 		    	else if(((TextView) view).getText().equals(TRANSACTION)) {
 		    		startDriverTransaction();
@@ -118,25 +108,14 @@ public class DriverTab extends ListActivity {
 		};
 	}
 
+	
 	private void startTrajetManaging(){
 		Intent intent = new Intent(this, TrajetManaging.class);
 		startActivity(intent);
 	}
 	
-	private void startRouteActivation(){
-		Intent intent = new Intent(this, TrajetActivation.class);
-		intent = intent.putExtra("from", "activation");
-		startActivity(intent);
-	}
 	
-	private void startRouteDesactivation(){
-		Intent intent = new Intent(this, TrajetActivation.class);
-		intent = intent.putExtra("from", "desactivation");
-		startActivity(intent);
-	}
-	
-	
-	private void startDriverTransaction(){
+	private void startDriverTransaction() {
 		final Profil[] passengers = session.getActivePassengersProfiles();
 		final Profil[] selected = { null };
 		
@@ -192,7 +171,7 @@ public class DriverTab extends ListActivity {
 		startActivity(intent);
 	}	
  	
-	private void showActiveRoute(){
+	private void showActiveRouteOnMap(){
 		startActivity(new Intent(this, GoogleMapActivity.class));
 	}
 	
@@ -287,6 +266,5 @@ public class DriverTab extends ListActivity {
 		//notification rapide
 		Toast.makeText(this, getString(R.string.profile_creation_ongoing), Toast.LENGTH_SHORT).show();
 	}
-	
 
 }
