@@ -117,7 +117,7 @@ public class TrajetService {
 	}
 	
 	/**
-	 * Recuperation de la liste de tous les trajets pour un profil
+	 * Recuperation de la liste de tous les trajets actifs et dispo pour un profil
 	 * @return liste des itineraires
 	 */
 	@GET
