@@ -116,6 +116,11 @@
     <string name="tm_item_desactivation">Desactiver le trajet</string>
 	<string name="tm_item_suppression">Supprimer le trajet</string>
 	<string name="tm_item_map">Google Map</string>
+	<string name="tm_row_date">Date :</string>
+	<string name="tm_row_depart">Départ :</string>
+	<string name="tm_row_arrivee">Arrivée :</string>
+	<string name="tm_row_place">place(s) dispo</string>
+	<string name="tm_row_point">point(s)</string>
 
     <!-- trajet_creation -->
     <string name="trajet_identification_title">Identification du trajet</string>

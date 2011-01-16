@@ -282,11 +282,12 @@ public class TrajetManaging extends ARunnableActivity {
 					break;
 			};
 			
-			wrapper.getDate().setText("Date : " + dateAff.toString() + "            " + state);
-			wrapper.getDepart().setText( "Départ  : " + trajet.getLieuDepart() + " à " + trajet.getHoraireDepart());
-			wrapper.getArrivee().setText("Arrivée : " + trajet.getLieuDestination() + " à " + trajet.getHoraireArrivee());
-			wrapper.getInfo().setText("Places dispo : " + trajet.getPlaceDispo()
-					+ "; Points demandés : " + trajet.getNbrePoint());
+			wrapper.getDate().setText(dateAff.toString());
+			wrapper.getState().setText("[" + state + "]");
+			wrapper.getDepart().setText(trajet.getLieuDepart() + " à " + trajet.getHoraireDepart());
+			wrapper.getArrivee().setText(trajet.getLieuDestination() + " à " + trajet.getHoraireArrivee());
+			wrapper.getPlace().setText(trajet.getPlaceDispo() + "");
+			wrapper.getPoint().setText(trajet.getNbrePoint() + ""); 
 						
 			return (row);
 		}
