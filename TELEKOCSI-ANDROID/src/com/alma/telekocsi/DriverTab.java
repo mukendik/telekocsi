@@ -30,10 +30,10 @@ public class DriverTab extends ListActivity {
 	private Session session = null;
 	Profil profile = null;
 	
+	private String TRAJET_CREATION;
 	private String ACTIVATE;
 	private String CREATE;
 	private String DESACTIVATE;
-//	private String MODIFY;
 	private String ACTIVATED;
 	private String TRANSACTION;
 	
@@ -42,23 +42,20 @@ public class DriverTab extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//Penser a l'internationalisation 
+				
+		TRAJET_CREATION = getString(R.string.trajet_creation_title);
 		ACTIVATE = getString(R.string.route_activation_title);
 		CREATE = getString(R.string.route_creation);
-//		MODIFY = getString(R.string.route_modification);
 		DESACTIVATE = getString(R.string.route_desactivation);
 		ACTIVATED = getString(R.string.activated_route_map_text);
 		TRANSACTION = getString(R.string.validerTransaction);
 
 		DRIVER_FUNCTIONS = new String[] {
-				ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
+				TRAJET_CREATION, ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
 		};
 		
-		setListAdapter(new ArrayAdapter<String>(this
-												,R.layout.main_menu_tab_list
-												,DRIVER_FUNCTIONS)
-		);
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.main_menu_tab_list,
+				DRIVER_FUNCTIONS));
 
 		listView = getListView();
 		listView.setTextFilterEnabled(true);
@@ -86,7 +83,7 @@ public class DriverTab extends ListActivity {
 
 
 	private OnItemClickListener getOnItemClickListener(){
-		if(onItemClickListener==null){
+		if (onItemClickListener == null) {
 			onItemClickListener = makeOnItemClickListener();
 		}
 		return onItemClickListener;
@@ -97,29 +94,33 @@ public class DriverTab extends ListActivity {
 		return new OnItemClickListener() {
 			
 		    public void onItemClick(AdapterView<?> parent
-		    						,View view
-		    						,int position
-		    						,long id) {
-		    	if(((TextView) view).getText().equals(ACTIVATE)){
+		    		, View view, int position, long id) {
+
+		    	if (((TextView) view).getText().equals(TRAJET_CREATION)) {
+		    		startTrajetCreation();
+		    	}
+		    	else if (((TextView) view).getText().equals(ACTIVATE)) {
 		    		startRouteActivation();
 		    	}
-		    	else if(((TextView) view).getText().equals(CREATE)){
+		    	else if(((TextView) view).getText().equals(CREATE)) {
 		    		startRouteCreation();
 		    	}
-//		    	else if(((TextView) view).getText().equals(MODIFY)){
-//		    		startRouteModification();
-//		    	}
-		    	else if(((TextView) view).getText().equals(DESACTIVATE)){
+		    	else if(((TextView) view).getText().equals(DESACTIVATE)) {
 		    		startRouteDesactivation();
 		    	}
-		    	else if(((TextView) view).getText().equals(ACTIVATED)){
+		    	else if(((TextView) view).getText().equals(ACTIVATED)) {
 		    		showActiveRoute();
 		    	}
-		    	else if(((TextView) view).getText().equals(TRANSACTION)){
+		    	else if(((TextView) view).getText().equals(TRANSACTION)) {
 		    		startDriverTransaction();
 		    	}
 		    }
 		};
+	}
+
+	private void startTrajetCreation(){
+		Intent intent = new Intent(this, TrajetCreation.class);
+		startActivity(intent);
 	}
 	
 	private void startRouteActivation(){
@@ -189,46 +190,7 @@ public class DriverTab extends ListActivity {
 	private void startRouteCreation(){
 		Intent intent = new Intent(this, ItineraireCreation.class);
 		startActivity(intent);
-	}
-
-
-//	private void startRouteModification(){
-//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setTitle(getString(R.string.route_modification));
-//		
-//		final List<Trajet> routes = session.getRoutes();
-//		String[] names = new String[routes.size()];
-//		for(int i=0;i<names.length;++i){
-//			Trajet route = routes.get(i);
-//			names[i] = String.format("%s -> %s",route.getLieuDepart(),route.getLieuDestination());
-//		}
-//		final AlertDialog dialog;
-//		
-//		builder.setSingleChoiceItems(names, -1, new DialogInterface.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.dismiss();
-//				//on affiche la l'ecran de creation
-//				//au lieu de repeter le code dans modification
-//				Intent intent = new Intent(DriverTab.this, ItineraireCreation.class);
-//				intent.putExtra(ItineraireCreation.ROUTE_ARG, routes.get(which).getId());
-//				startActivity(intent);
-//			}
-//			
-//		});
-//		
-//		builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.dismiss();
-//			}
-//		});
-//		
-//		dialog = builder.create();
-//		dialog.show();
-//	}	
+	}	
  	
 	private void showActiveRoute(){
 		startActivity(new Intent(this, GoogleMapActivity.class));
@@ -267,7 +229,7 @@ public class DriverTab extends ListActivity {
 	}
 	
 	private void showRoutesManaging(){
-		Intent intent = new Intent(this, ItinerairesManaging.class);
+		Intent intent = new Intent(this, ItineraireManaging.class);
 		startActivity(intent);
 	}
 	

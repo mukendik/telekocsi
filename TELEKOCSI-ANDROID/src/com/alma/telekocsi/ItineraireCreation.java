@@ -77,7 +77,7 @@ public class ItineraireCreation extends ARunnableActivity {
     public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.route_creation);
+        setContentView(R.layout.itineraire_creation);
         
         startRouteCreationButton = (Button)findViewById(R.id.start_route_creation_button);
         startRouteCreationButton.setOnClickListener(getOnClickListener());
@@ -307,7 +307,7 @@ public class ItineraireCreation extends ARunnableActivity {
     			ItineraireCreation self = this;
     			if(doCreateRoute()){
 //    				goBack();
-					startActivity(new Intent(this, ItinerairesManaging.class));
+					startActivity(new Intent(this, ItineraireManaging.class));
     				if(create){
         				Toast.makeText(self, getString(R.string.route_creation_successed), Toast.LENGTH_SHORT).show();
     				}else{

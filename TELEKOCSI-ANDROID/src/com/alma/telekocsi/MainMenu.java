@@ -31,11 +31,11 @@ public class MainMenu extends TabActivity {
         
         tabHost = getTabHost();
         Intent intent = new Intent().setClass(this, DriverTab.class);
-        tabSpec = tabHost.newTabSpec("buildings").setIndicator("Conducteur",getResources().getDrawable(R.drawable.volant)).setContent(intent);
+        tabSpec = tabHost.newTabSpec("buildings").setIndicator("Conducteur", getResources().getDrawable(R.drawable.volant)).setContent(intent);
         tabHost.addTab(tabSpec);
      
         intent = new Intent().setClass(this, OccupantTab.class);
-        tabSpec = tabHost.newTabSpec("research").setIndicator("Passager",getResources().getDrawable(R.drawable.autostop)).setContent(intent);
+        tabSpec = tabHost.newTabSpec("research").setIndicator("Passager", getResources().getDrawable(R.drawable.autostop)).setContent(intent);
         tabHost.addTab(tabSpec);
         
 //		addRafaNotification = (Button)findViewById(R.id.add_notification_test);
@@ -45,22 +45,23 @@ public class MainMenu extends TabActivity {
 //		removeRafaNotification.setOnClickListener(getOnClickListener());
     }
 	
-	private OnClickListener getOnClickListener(){
-		if(onClickListener==null){
+	private OnClickListener getOnClickListener() {
+		if (onClickListener == null){
 			onClickListener = makeOnClickListener();
 		}
 		return onClickListener;
 	}
 	
-	private OnClickListener makeOnClickListener(){
-		return new OnClickListener(){
+	
+	private OnClickListener makeOnClickListener() {
+		return new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(v==addRafaNotification){
+				if(v == addRafaNotification){
 					createNotify();
 				}
-				else if(v==removeRafaNotification){
+				else if(v == removeRafaNotification){
 					cancelNotify();
 				}
 			}

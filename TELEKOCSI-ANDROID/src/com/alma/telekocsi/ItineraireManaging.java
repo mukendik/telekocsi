@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ItinerairesManaging extends ARunnableActivity {
+public class ItineraireManaging extends ARunnableActivity {
 	
 	private static final int MODIFY = 1;
 	private static final int ACTIVATE = 2;
@@ -41,7 +41,7 @@ public class ItinerairesManaging extends ARunnableActivity {
     public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.routes_managing);
+        setContentView(R.layout.itineraire_managing);
         
         backButton = (Button)findViewById(R.id.routes_managing_back_id);
         backButton.setOnClickListener(getOnClickListener());
@@ -103,7 +103,7 @@ public class ItinerairesManaging extends ARunnableActivity {
 	}
 	
 	private void startRouteModification(AdapterContextMenuInfo routeInfos){
-		Intent intent = new Intent(ItinerairesManaging.this, ItineraireCreation.class);
+		Intent intent = new Intent(ItineraireManaging.this, ItineraireCreation.class);
 		intent.putExtra(ItineraireCreation.ROUTE_ARG, itineraires.get(routeInfos.position).getId());
 		startActivity(intent);
 	}
@@ -111,8 +111,8 @@ public class ItinerairesManaging extends ARunnableActivity {
 	private void startRouteDeletion(AdapterContextMenuInfo routeInfos){
 		Itineraire i = itineraires.get(routeInfos.position);
 		session.delete(i);
-		ItinerairesManaging old = this;
-		startActivity(new Intent(this, ItinerairesManaging.class));
+		ItineraireManaging old = this;
+		startActivity(new Intent(this, ItineraireManaging.class));
 		Toast.makeText(old, getString(R.string.deletion_seccessful), Toast.LENGTH_SHORT).show();
 	}
 	

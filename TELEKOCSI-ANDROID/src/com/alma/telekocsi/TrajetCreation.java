@@ -10,7 +10,6 @@ import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,15 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class TrajetActivation extends ARunnableActivity {
-	
-	private static final int ACTIVATION = 1;
-	private static final int DESACTIVATION = 2;
-	
-	private Button trajetActivationButton;
+
+public class TrajetCreation extends ARunnableActivity {
+		
+	private Button trajetCreationButton;
 	private Button cancelButton;
 	private OnClickListener onClickListener = null;
-	private Spinner routesSpin;
+	private Spinner itinerairesSpin;
 	private Spinner datesSpin;
 	private TextView departureText;
 	private TextView arrivalText;
@@ -40,8 +37,6 @@ public class TrajetActivation extends ARunnableActivity {
 	private TextView variableTimeText;
 	private TextView frequencyText;
 	private TextView autorouteText;
-	
-	private String from;
 	
 	private LocalDate[] dates = new LocalDate[10];
 	private LocalDate date;
@@ -51,57 +46,62 @@ public class TrajetActivation extends ARunnableActivity {
 	private ArrayAdapter<Itineraire> adapterItineraire;
 	private ArrayAdapter<LocalDate> adapterDate;
 	
-	private OnItemSelectedListener onRouteSelectedListener;
+	private OnItemSelectedListener onItineraireSelectedListener;
 	private OnItemSelectedListener onDateSelectedListener;
 	
-	private TrajetActivation routeActivation = this;
+	private TrajetCreation trajetActivation = this;
 	
 	final Handler handler = new Handler() {
 		
 		@Override
 		public void handleMessage(android.os.Message msg) {
-			routesSpin.setAdapter(adapterItineraire);
+			itinerairesSpin.setAdapter(adapterItineraire);
 			datesSpin.setAdapter(adapterDate);
 			
-			routesSpin.setEnabled(true);
+			itinerairesSpin.setEnabled(true);
 			datesSpin.setEnabled(true);
 	        
-	        routesSpin.setOnItemSelectedListener(getOnTrajetSelectedListener());
+	        itinerairesSpin.setOnItemSelectedListener(getOnTrajetSelectedListener());
 	        datesSpin.setOnItemSelectedListener(getOnDateSelectedListener());
 		};
 	};
 
+	
+	final Handler handlerMsgCreate = new Handler() {
+		
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			Toast.makeText(trajetActivation, R.string.trajet_creation_successed, Toast.LENGTH_SHORT).show();
+			refreshBtn();
+		};
+	};
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.trajet_activation);
+        setContentView(R.layout.trajet_creation);
         
         session = SessionFactory.getCurrentSession(this);
         
-        trajetActivationButton = (Button)findViewById(R.id.start_route_activation);
-        trajetActivationButton.setOnClickListener(getOnClickListener());
-        trajetActivationButton.setEnabled(false);
+        trajetCreationButton = (Button)findViewById(R.id.start_trajet_creation);
+        trajetCreationButton.setOnClickListener(getOnClickListener());
+        trajetCreationButton.setEnabled(false);
         
-        cancelButton = (Button)findViewById(R.id.cancel_route_activation);
+        cancelButton = (Button)findViewById(R.id.cancel_trajet_creation);
         cancelButton.setOnClickListener(getOnClickListener());
         
-        departureText = (TextView)findViewById(R.id.activation_departure);
-        arrivalText = (TextView)findViewById(R.id.activation_arrival);
-    	departureTimeText = (TextView)findViewById(R.id.activation_departure_time);
-    	variableTimeText = (TextView)findViewById(R.id.activation_variable_time);
-    	frequencyText = (TextView)findViewById(R.id.activation_frequency);
-    	autorouteText = (TextView)findViewById(R.id.activation_autoroute);
+        departureText = (TextView)findViewById(R.id.creation_departure);
+        arrivalText = (TextView)findViewById(R.id.creation_arrival);
+    	departureTimeText = (TextView)findViewById(R.id.creation_departure_time);
+    	variableTimeText = (TextView)findViewById(R.id.creation_variable_time);
+    	frequencyText = (TextView)findViewById(R.id.creation_frequency);
+    	autorouteText = (TextView)findViewById(R.id.creation_autoroute);
         
-        routesSpin = (Spinner)findViewById(R.id.routes_spin);
+        itinerairesSpin = (Spinner)findViewById(R.id.itineraires_spin);
         datesSpin = (Spinner)findViewById(R.id.dates_spin);
         
-        from = getIntent().getExtras().getString("from");
-        if(from.equals("activation")){
-        	trajetActivationButton.setText(getString(R.string.start_route_activation));
-        }else{
-        	trajetActivationButton.setText(getString(R.string.start_route_desactivation));
-        }
+        trajetCreationButton.setText(getString(R.string.trajet_start_creation));
 	}
 	
 	@Override
@@ -109,8 +109,8 @@ public class TrajetActivation extends ARunnableActivity {
     	
     	super.onStart();
         
-    	routesSpin.setEnabled(false);
-    	routesSpin.setEnabled(false);
+    	itinerairesSpin.setEnabled(false);
+    	itinerairesSpin.setEnabled(false);
         
         Thread thread = new Thread(new Runnable() {
 			
@@ -118,11 +118,11 @@ public class TrajetActivation extends ARunnableActivity {
 			public void run() {
 				
 				List<Itineraire> itineraires = session.getItineraires();
-		        adapterItineraire = new ArrayAdapter<Itineraire>(routeActivation, android.R.layout.simple_spinner_item, itineraires);
+		        adapterItineraire = new ArrayAdapter<Itineraire>(trajetActivation, android.R.layout.simple_spinner_item, itineraires);
 		        adapterItineraire.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);				
 
 		        initDates();
-		        adapterDate = new ArrayAdapter<LocalDate>(routeActivation, android.R.layout.simple_spinner_item, dates);
+		        adapterDate = new ArrayAdapter<LocalDate>(trajetActivation, android.R.layout.simple_spinner_item, dates);
 		        adapterDate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		        
 		        Message msg = handler.obtainMessage();
@@ -133,11 +133,12 @@ public class TrajetActivation extends ARunnableActivity {
         thread.start();
     }
 	
+	
 	private OnItemSelectedListener getOnTrajetSelectedListener() {
 		
-		if (onRouteSelectedListener == null) {
+		if (onItineraireSelectedListener == null) {
 		
-			onRouteSelectedListener = new OnItemSelectedListener() {
+			onItineraireSelectedListener = new OnItemSelectedListener() {
 				
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
@@ -174,8 +175,9 @@ public class TrajetActivation extends ARunnableActivity {
 			};
 		}
 		
-		return onRouteSelectedListener;
+		return onItineraireSelectedListener;
 	}
+	
 	
 	private OnItemSelectedListener getOnDateSelectedListener() {
 		
@@ -203,16 +205,19 @@ public class TrajetActivation extends ARunnableActivity {
 		return onDateSelectedListener;
 	}
 	
+	
 	private void refreshBtn() {
-		trajetActivationButton.setEnabled((date != null) && (itineraire != null));
+		trajetCreationButton.setEnabled((date != null) && (itineraire != null));
 	}
 
+	
 	private OnClickListener getOnClickListener(){
-		if(onClickListener==null){
+		if (onClickListener == null) {
 			onClickListener = makeOnClickListener();
 		}
 		return onClickListener;
 	}
+	
 	
 	private OnClickListener makeOnClickListener() {
     	
@@ -220,53 +225,28 @@ public class TrajetActivation extends ARunnableActivity {
 				
 			@Override
 			public void onClick(View v) {
-				if (v==cancelButton) {
+				if (v == cancelButton) {
 					goBack();
-				}else if (v==trajetActivationButton) {
-					startRouteActivation();
+				} else if (v == trajetCreationButton) {
+					startTrajetCreation();
 				}
 			}
 		};
     } 
 	
-	private void startRouteActivation(){
+	
+	private void startTrajetCreation() {
+		trajetCreationButton.setEnabled(false);
 		startProgressDialogInNewThread(this);
 	}
+	
 	
 	private void goBack(){
 		finish();
 	}
 	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    	switch (requestCode) {
-    	case ACTIVATION:
-    		switch(resultCode) {
-    		case RESULT_OK:
-    			activeTrajet();    			
-    			Toast.makeText(this, R.string.activation_successed, Toast.LENGTH_SHORT).show();
-    			trajetActivationButton.setText(getText(R.string.route_activation_button_after_activation));
-    			break;
-    		case RESULT_CANCELED:
-    			finish();
-    		}
-    		break;
-    	case DESACTIVATION:
-    		switch(resultCode) {
-    		case RESULT_OK:
-    			desactiveTrajet();
-    			Toast.makeText(this, R.string.desactivation_successed, Toast.LENGTH_SHORT).show();
-    			trajetActivationButton.setText(getText(R.string.route_activation_button_after_desactivation));
-    			break;
-    		case RESULT_CANCELED:
-    			finish();
-    		}
-    	}
-    	stopProgressDialog();
-    }
 	
-	private void activeTrajet() {
+	private void creationTrajet() {
 		Trajet trajet = new Trajet();
 		trajet.setAutoroute(itineraire.isAutoroute());
 		trajet.setCommentaire(itineraire.getCommentaire());
@@ -284,13 +264,11 @@ public class TrajetActivation extends ARunnableActivity {
 		trajet.setPlaceDispo(itineraire.getPlaceDispo());
 		trajet.setSoldePlaceDispo(itineraire.getPlaceDispo());
 		trajet.setVariableDepart(itineraire.getVariableDepart());
-		session.activateTrajet(trajet);
-	}
-	
-	private void desactiveTrajet(){
-		session.deactivateTrajet();
+		trajet.setEtat(Trajet.ETAT_DISPO);
+		session.save(trajet);
 	}
 
+	
 	public void initDates() {
 		
 		Calendar cal = new GregorianCalendar();		
@@ -305,40 +283,13 @@ public class TrajetActivation extends ARunnableActivity {
 		}
 	}
 
+	
 	@Override
 	public void run() {
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("itineraire", itineraire);
-		bundle.putSerializable("date", date);
-		//si c'est le bouton pour voir les resultats
-		if(trajetActivationButton.getText().equals(getString(R.string.route_activation_button_after_activation))){
-			Intent intent = new Intent(this, DriverResults.class);
-			intent.putExtras(bundle);
-			startActivity(intent);
-			stopProgressDialog();
-		}
-		//sinon si cest pour reactiver le trajet
-		else if(trajetActivationButton.getText().equals(getString(R.string.route_activation_button_after_desactivation))){
-			Intent intent = new Intent(this, TrajetActivator.class);
-	        intent.putExtras(bundle);
-	        startActivityForResult(intent, ACTIVATION);
-		}
-		else{
-			//sinon on active ou on desactive selon l'appel
-			if(from.equals("activation")){
-		        Intent intent = new Intent(this, TrajetActivator.class);
-		        intent = intent.putExtras(bundle);
-		        intent = intent.putExtra("from", "activation");
-		        startActivityForResult(intent, ACTIVATION);
-			}
-			else{
-		        Intent intent = new Intent(this, TrajetActivator.class);
-		        intent = intent.putExtras(bundle);
-		        intent = intent.putExtra("from", "desactivation");
-		        startActivityForResult(intent, DESACTIVATION);
-			}
-		}
+		creationTrajet();    			
+		stopProgressDialog();
+        Message msg = handlerMsgCreate.obtainMessage();
+        handlerMsgCreate.sendMessage(msg);		
 	}
 
-	
 }

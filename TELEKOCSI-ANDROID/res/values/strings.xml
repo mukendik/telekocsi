@@ -108,8 +108,20 @@
     <string name="music">Musique</string>
     <string name="preferences_settings_back_button_text">Retour</string>
     <string name="registering_submit_button_text">Terminer</string>
+
+    <!-- trajet_creation -->
+    <string name="trajet_identification_title">Identification du trajet</string>
+    <string name="trajet_date_title">Date du trajet</string>
+    <string name="trajet_negociations_checkbox">Je reste ouvert à toute négociation</string>
+    <string name="trajet_my_itineraires_radio_button">Mes itinéraires</string>
+    <string name="trajet_new_itineraire_radio_button">Nouveau trajet</string>
+    <string name="trajet_back_button">Retour</string>
+    <string name="trajet_start_creation">Creer le trajet</string>
+    <string name="trajet_creation_title">Créer un trajet</string>
+    <string name="trajet_creation_button_after_creation">Voir les passagers trouvés</string>
+    <string name="trajet_creation_successed">Création du trajet effectuée</string>
     
-    <!-- route_activation -->
+    <!-- trajet_activation -->
     <string name="route_identification_title">Identification du trajet</string>
     <string name="route_date_title">Date du trajet</string>
     <string name="negociations_checkbox">Je reste ouvert à toute négociation</string>
@@ -122,7 +134,7 @@
     <string name="route_activation_button_after_activation">Voir les passagers trouvés</string>
     <string name="activation_successed">Activation du trajet effectuée</string>
 
-    <!-- route_creation -->
+    <!-- itineraire_creation -->
     <string name="route_creation_title">Créer un itinéraire</string>
     <string name="start_route_creation">Enregistrer</string>
     <string name="cancel_route_creation">Annuler</string>
@@ -150,7 +162,7 @@
     <string name="price_error">Prix non renseigné ou négatif</string>
     <string name="times_error">L\'heure de départ ne peut être supérieure à l\'heure d\'arrivée</string>
 
-	<!-- routes_managing -->
+	<!-- itineraire_managing -->
 	<string name="routes_managing_title">Gérer mes itinéraires</string>
 	<string name="no_route_registered">Vous n\'avez aucun itinéraire</string>
 	<string name="routes_managing_delete">Supprimer</string>
