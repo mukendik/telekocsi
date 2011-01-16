@@ -152,7 +152,7 @@ public class MapUserLocalization {
 			TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
 		
 			Localisation localisation = null;
-			Log.i(MapUserLocalization.class.getSimpleName(), "Et les passagers ?");
+			Log.i(MapUserLocalization.class.getSimpleName(), "Et les passagers pour le trajet : "+ trajet.getId());
 			for(String idPassager : trajetLigneDAO.getListPassagers(trajet.getId())) {
 				Log.i(MapUserLocalization.class.getSimpleName(), "Liste de passager --> passager : " + idPassager);
 				localisation = localisationDAO.getList(idPassager).size() > 0 ? localisationDAO.getList(idPassager).get(0) : null;
