@@ -191,7 +191,7 @@ public class TrajetDAO {
      */
     public List<Trajet> getList(String idProfil, int etat) {
 
-    	return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/profil/" + idProfil + "/etat/" + etat));
+    	return (new GetListTask()).execute(new HttpGet(GAE.getTrajetEndPoint() + "/trajetsForEtat/" + idProfil + "/" + etat));
     }
     
     
