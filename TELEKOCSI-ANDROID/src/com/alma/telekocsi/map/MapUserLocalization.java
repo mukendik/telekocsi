@@ -143,8 +143,8 @@ public class MapUserLocalization {
 				//on recupere la derniere position enregistré
 				if(localisationDAO.getList(profil.getId()).size()>0){
 					Log.i(MapUserLocalization.class.getSimpleName(), "localisation conducteur existante");
-					new GeoPoint((int)(localisationDAO.getList(profil.getId()).get(0).getLatitude() * 1000000),
-					(int)(localisationDAO.getList(profil.getId()).get(0).getLongitude() * 1000000));
+					overlays.add(new MapOverlay(new GeoPoint((int)(localisationDAO.getList(profil.getId()).get(0).getLatitude() * 1000000),
+					(int)(localisationDAO.getList(profil.getId()).get(0).getLongitude() * 1000000)), R.drawable.pin_conducteur));
 				}
 				
 			}
@@ -174,6 +174,15 @@ public class MapUserLocalization {
 			if(passager!=null){
 				pointsPassager.add(passager);
 				overlays.add(new MapOverlay(passager, R.drawable.pin_passager));
+			}else {
+				Log.i(MapUserLocalization.class.getSimpleName(), "impossible de récupérer la position du mobile, on prend la derniere enregistré si elle existe");
+				//on recupere la derniere position enregistré
+				if(localisationDAO.getList(profil.getId()).size()>0){
+					Log.i(MapUserLocalization.class.getSimpleName(), "localisation conducteur existante");
+					overlays.add(new MapOverlay(new GeoPoint((int)(localisationDAO.getList(profil.getId()).get(0).getLatitude() * 1000000),
+					(int)(localisationDAO.getList(profil.getId()).get(0).getLongitude() * 1000000)),R.drawable.pin_passager));
+				}
+				
 			}
 			
 			

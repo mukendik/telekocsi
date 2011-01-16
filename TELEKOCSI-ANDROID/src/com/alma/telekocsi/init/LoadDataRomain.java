@@ -359,6 +359,8 @@ public class LoadDataRomain {
 	private void insertLocalisation() {
 
 		LocalDate currentDate = new LocalDate();
+		
+		
 
 		Localisation localisation1 = new Localisation();
 		localisation1.setDateLocalisation(currentDate.getDateFormatCalendar());
@@ -380,6 +382,17 @@ public class LoadDataRomain {
 		localisation2.setPointGPS("47.148356,-1.193669");
 		localisationDAO.insert(localisation2);
 		Log.i(LoadDataRomain.class.getSimpleName(), "insert localisation : " + localisation2);
+		
+		
+		Localisation localisation3 = new Localisation();
+		localisation3.setDateLocalisation(currentDate.getDateFormatCalendar());
+		localisation3.setHeureLocalisation(currentDate.getDateFomatHeure());
+		localisation3.setIdProfil(profilDAO.login("rgournay@gmail.com", "aze").getId());
+		localisation3.setLatitude(46.962213);
+		localisation3.setLongitude(-0.973663);
+		localisation3.setPointGPS("46.962213,-0.973663");
+		localisationDAO.insert(localisation3);
+		Log.i(LoadDataRomain.class.getSimpleName(), "insert localisation : " + localisation3);
 	}
 
 }
