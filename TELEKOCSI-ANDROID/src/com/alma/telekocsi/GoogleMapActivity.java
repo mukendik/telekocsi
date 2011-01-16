@@ -6,6 +6,8 @@ import java.util.List;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.dao.trajet.TrajetDAO;
+import com.alma.telekocsi.dao.trajet.TrajetLigne;
+import com.alma.telekocsi.dao.trajet.TrajetLigneDAO;
 import com.alma.telekocsi.map.IMapInfoItiniraire;
 import com.alma.telekocsi.map.IMapUserLocalization;
 import com.alma.telekocsi.map.MapInfoItiniraire;
@@ -63,29 +65,57 @@ public class GoogleMapActivity extends MapActivity implements IMapInfoItiniraire
 			currentProfil = session.getActiveProfile(); // n'est jamais null normalement
 			Log.i(GoogleMapActivity.class.getSimpleName(), "profil de la session courante \n==> "+currentProfil);
 
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			TrajetDAO trajetDao = new TrajetDAO();
-			try{
-				Trajet t = null;
-				if(trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF)!=null && trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF).size()>0){
-					t = trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF).get(0);
-				}else{
-					Log.e(GoogleMapActivity.class.getSimpleName(), "aucun trajet Actif");
-				}
-				session.activateTrajet(t);
-			}catch(Exception e){
-				Log.e(GoogleMapActivity.class.getSimpleName(), "erreur \n==> "+e);
-			}
+			//==> recherche du trajet actif
+			//cas conducteur
 			
-			//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		
-			trajetActif = session.getActiveTrajet();
+			Log.i(GoogleMapActivity.class.getSimpleName(), "type profil \n==> "+currentProfil.getTypeProfil());
+			if(currentProfil.getTypeProfil().equals("C")){
+				Log.i(GoogleMapActivity.class.getSimpleName(), "type profil de la session : CONDUCTEUR");
+				
+				//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+				TrajetDAO trajetDao = new TrajetDAO();
+				try{
+					Trajet t = null;
+					if(trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF)!=null && trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF).size()>0){
+						t = trajetDao.getList(currentProfil.getId(), Trajet.ETAT_ACTIF).get(0);
+						session.activateTrajet(t);
+						trajetActif = session.getActiveTrajet();
+					}else{
+						Log.e(GoogleMapActivity.class.getSimpleName(), "aucun trajet Actif");
+					}
+					
+				}catch(Exception e){
+					Log.e(GoogleMapActivity.class.getSimpleName(), "erreur \n==> "+e);
+				}
+				
+				//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+				
+			}else{
+				//cas passager
+				Log.i(GoogleMapActivity.class.getSimpleName(), "type profil de la session : PASSAGER");
+				
+				TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
+				TrajetDAO trajetDAO = new TrajetDAO();
+				boolean bool=true;
+				for(TrajetLigne t : trajetLigneDAO.getListFromPassager(currentProfil.getId())){
+					if(bool && trajetDAO.getTrajet(t.getIdTrajet()).getEtat()==Trajet.ETAT_ACTIF){
+						session.activateTrajet(trajetDAO.getTrajet(t.getIdTrajet()));
+						trajetActif = session.getActiveTrajet();
+						bool=false;
+					}
+				}
+				
+				
+				
+			}
+
 			
 			//Pour l'instant trajetActif est toujours null 
 			if(trajetActif==null) {	
 					Log.i(GoogleMapActivity.class.getSimpleName(), "Aucun Trajet Activé");
 					Toast.makeText(context, "Pas de Trajet Activé", Toast.LENGTH_SHORT).show();
 					finish();
+					return;
 			}
 		}
 
