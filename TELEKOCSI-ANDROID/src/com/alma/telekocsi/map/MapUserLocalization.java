@@ -76,7 +76,7 @@ public class MapUserLocalization {
 		String locationContext = Context.LOCATION_SERVICE;
 		Log.i(MapUserLocalization.class.getSimpleName(), "LOCATION_SERVICE : " + locationContext);
 		locationManager = (LocationManager) context.getSystemService(locationContext);
-		Log.i(MapUserLocalization.class.getSimpleName(), "locationManager : " + locationManager.toString());
+		
 		Location location;
 		location = getLastKnownLocation();
 
@@ -138,13 +138,23 @@ public class MapUserLocalization {
 			pointConducteur = getPositionMobile(context);
 			if(pointConducteur!=null){
 				overlays.add(new MapOverlay(pointConducteur, R.drawable.pin_conducteur));
+			}else {
+				Log.i(MapUserLocalization.class.getSimpleName(), "impossible de récupérer la position du mobile, on prend la derniere enregistré si elle existe");
+				//on recupere la derniere position enregistré
+				if(localisationDAO.getList(profil.getId()).size()>0){
+					Log.i(MapUserLocalization.class.getSimpleName(), "localisation conducteur existante");
+					new GeoPoint((int)(localisationDAO.getList(profil.getId()).get(0).getLatitude() * 1000000),
+					(int)(localisationDAO.getList(profil.getId()).get(0).getLongitude() * 1000000));
+				}
+				
 			}
 			//coordonnée des passagers = derniere localisation GAE 
 			TrajetLigneDAO trajetLigneDAO = new TrajetLigneDAO();
 		
 			Localisation localisation = null;
-
+			Log.i(MapUserLocalization.class.getSimpleName(), "Et les passagers ?");
 			for(String idPassager : trajetLigneDAO.getListPassagers(trajet.getId())) {
+				Log.i(MapUserLocalization.class.getSimpleName(), "Liste de passager --> passager : " + idPassager);
 				localisation = localisationDAO.getList(idPassager).size() > 0 ? localisationDAO.getList(idPassager).get(0) : null;
 				if(localisation!=null) {
 					GeoPoint pointPassager = new GeoPoint((int)(localisation.getLatitude()*1000000),(int)(localisation.getLongitude()*1000000));
@@ -154,7 +164,8 @@ public class MapUserLocalization {
 					Log.i(MapUserLocalization.class.getSimpleName(), "Passager position : " + localisation.getLatitude() +" , " +localisation.getLongitude());
 				}
 			}
-
+			
+			Log.i(MapUserLocalization.class.getSimpleName(), "Fin Conducteur");
 		}else {
 			Log.i(MapUserLocalization.class.getSimpleName(), "Type du Profil : PASSAGER");
 			
