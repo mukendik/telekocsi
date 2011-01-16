@@ -128,8 +128,10 @@ public class TrajetService {
 		log.info("Recuperation des trajets pour le profil conducteur : " + idProfil);
 		
 		EntityManager em = Tools.getEntityManager();
-		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param");
-		query.setParameter("param", idProfil);
+		Query query = em.createQuery("SELECT t FROM Trajet t where t.idProfilConducteur=:param1 and ((t.etat=:param2) or (t.etat=:param3))");
+		query.setParameter("param1", idProfil);
+		query.setParameter("param2", Trajet.ETAT_DISPO);
+		query.setParameter("param3", Trajet.ETAT_ACTIF);
 		List<Trajet> trajets = query.getResultList();
 		return trajets;
 	}

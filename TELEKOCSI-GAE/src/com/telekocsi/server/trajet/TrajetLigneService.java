@@ -195,6 +195,7 @@ public class TrajetLigneService {
 		return idProfils;
 	}
 	
+	
 	/**
 	 * Recuperation d'un TrajetLigne pour un trajet donné et un passagé donné
 	 */
@@ -213,5 +214,26 @@ public class TrajetLigneService {
 
 		return tl;
 	}
+
 	
+	/**
+	 * Recuperation liste des TrajetLignes pour un passagé donné
+	 */
+	@GET
+	@Path("/passager/{idPassager}")
+	public List<TrajetLigne> getTrajetLigneFromPassager(@PathParam("idPassager") String idPassager) {
+		
+		log.info("Recuperation des lignes de trajet actives pour le passager : " + idPassager);
+		
+		EntityManager em = Tools.getEntityManager();
+		
+		StringBuilder sql = new StringBuilder("SELECT tl from TrajetLigne tl");
+		sql.append(" where tl.idProfilPassager = :param1");
+		
+		Query query = em.createQuery(sql.toString());
+		query.setParameter("param1", idPassager);
+		List<TrajetLigne> tl = query.getResultList();
+
+		return tl;
+	}
 }
