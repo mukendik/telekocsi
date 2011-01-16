@@ -139,7 +139,7 @@ public class TrajetService {
 	 * @return liste des itineraires
 	 */
 	@GET
-	@Path("/profil/{idProfil}/{etat}")
+	@Path("/trajetsForEtat/{idProfil}/{etat}")
 	@SuppressWarnings("unchecked")
 	public List<Trajet> list(@PathParam("idProfil") String idProfil, @PathParam("etat") int etat) {
 		
