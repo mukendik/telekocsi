@@ -22,12 +22,11 @@
 		<activity android:name=".OccupantTab" android:label="@string/app_name"/>
 		<activity android:name=".ConnectionParameters" android:label="@string/app_name"/>
 		<activity android:name=".ProfileSettings" android:label="@string/app_name"/>
-		<activity android:name=".RouteModification" android:label="@string/app_name"/>
 		<activity android:name=".TrajetActivator" android:label="@string/app_name"/>
-		<activity android:name=".ItinerairesManaging" android:label="@string/app_name"/>
+		<activity android:name=".ItineraireManaging" android:label="@string/app_name"/>
+		<activity android:name=".ItineraireCreation" android:label="@string/app_name"/>
 		<activity android:name=".TrajetCreation" android:label="@string/app_name"/>
 		<activity android:name=".TrajetActivation" android:label="@string/app_name"/>
-		<activity android:name=".ItineraireCreation" android:label="@string/app_name"/>
 		<activity android:name=".PreferencesSettings" android:label="@string/app_name"/>
 		<activity android:name=".MainMenuOld" android:label="@string/app_name"/>
 		<activity android:name=".Identification" android:label="@string/app_name"/>
