@@ -12,9 +12,9 @@
    		android:layout_marginBottom="5px">
    					
    		<LinearLayout
-    		android:orientation="horizontal"
+    		android:orientation="vertical"
    			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
+    		android:layout_height="wrap_content"
     		android:layout_marginTop="5px">
     					
 	   		<TextView
@@ -25,16 +25,8 @@
 	   			android:textColor="@color/black"
 	   			android:layout_marginLeft="10px"
 				/>
-				    					 
-		</LinearLayout>
-   					
-		<LinearLayout
-   			android:orientation="horizontal"
-   			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_marginTop="5px">
-    					
-	   		<TextView
+			
+			<TextView
 	   			android:layout_width="wrap_content" 
 	   			android:layout_height="wrap_content" 
 	   			android:text="Départ : "
@@ -42,33 +34,17 @@
 	   			android:textColor="@color/black"
 	   			android:layout_marginLeft="10px"
 				/>
-											 
-  		</LinearLayout>
-
-		<LinearLayout
-   			android:orientation="horizontal"
-   			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_marginTop="5px">
-    					
-	   		<TextView
+				
+			<TextView
 	   			android:layout_width="wrap_content" 
 	   			android:layout_height="wrap_content" 
 	   			android:text="Arrivée : "
 	   			android:id="@+id/tvTMRowArrivee"
 	   			android:textColor="@color/black"
 	   			android:layout_marginLeft="10px"
-				/>
-											 
-  		</LinearLayout>
-
-		<LinearLayout
-   			android:orientation="horizontal"
-   			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_marginTop="5px">
-    					
-	   		<TextView
+				/>	
+				
+			<TextView
 	   			android:layout_width="wrap_content" 
 	   			android:layout_height="wrap_content" 
 	   			android:text="Infos : "
@@ -76,26 +52,9 @@
 	   			android:textColor="@color/black"
 	   			android:layout_marginLeft="10px"
 				/>
-											 
-  		</LinearLayout> 
-  		  					
-   		<LinearLayout
-    		android:orientation="vertical"
-   			android:layout_width="fill_parent"
-    		android:layout_height="fill_parent"
-    		android:layout_marginTop="5px">
-    					
-    		<ImageView
-    			android:src="@drawable/next1"
-    			android:scaleType="centerInside"
-    			android:layout_width="fill_parent"
-    			android:layout_height="fill_parent"
-    			android:layout_marginLeft="2px"
-   				android:layout_marginBottom="5px"
-    		/>
-    					 
-   		</LinearLayout>
-   					
+				
+		</LinearLayout>
+
 	</TableRow>
-   				
+
 </TableLayout>   					

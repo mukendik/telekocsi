@@ -199,7 +199,7 @@ public interface Session {
     
     /**
      * 
-     * @return Tous les trajets du profil actif
+     * @return Tous les trajets (actif + dispo) du profil actif
      */
     public abstract List<Trajet> getTrajets();
     

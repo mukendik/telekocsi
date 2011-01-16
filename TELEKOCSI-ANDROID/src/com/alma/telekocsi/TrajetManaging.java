@@ -2,8 +2,6 @@ package com.alma.telekocsi;
 
 import java.util.List;
 
-import com.alma.telekocsi.dao.itineraire.Itineraire;
-import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
@@ -15,23 +13,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 
 public class TrajetManaging extends ARunnableActivity {
 	
-	private static final int CODE_TRAJETTROUVE = 30;
+	private static final int CODE_TRAJETMANAGING = 40;
+	
+	private static final int MODIFY = 1;
+	private static final int ACTIVATE = 2;
+	private static final int DELETE = 3;
 	
 	private OnClickListener onClickListener = null;
 	private Button btNew;
@@ -42,8 +45,6 @@ public class TrajetManaging extends ARunnableActivity {
 	
 	private ListView listView;
 	private ArrayAdapter<Trajet> detailTrajetsAdapter;
-	private OnItemSelectedListener onTrajetSelectedListener;
-	private OnItemClickListener onItemClickListener;
 	private TrajetManaging trajetManaging = this;
 	
 	private List<Trajet> trajets = null;
@@ -60,31 +61,13 @@ public class TrajetManaging extends ARunnableActivity {
 			tvPage.setText("Page : 1/1");
 			
 			listView.setAdapter(detailTrajetsAdapter);
-			listView.setOnItemSelectedListener(getOnTrajetSelectedListener());
-			listView.setOnItemClickListener(getOnItemClickListener());
+			registerForContextMenu(listView);
 			
 			if (trajets.size() == 0) {
 				Toast.makeText(trajetManaging, "Aucun trajet disponibles", Toast.LENGTH_SHORT).show();
 			}
 		};
 	};
-	
-	
-	private OnItemClickListener getOnItemClickListener() {
-		
-		onItemClickListener = new OnItemClickListener() {
-			
-		    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		    	
-		    	listView.setOnItemClickListener(null);
-		    	trajet = (Trajet)parent.getItemAtPosition(position);
-		        Toast.makeText(trajetManaging,"click trajet !", Toast.LENGTH_SHORT).show();
-		        //goTrajetDetail();
-		    }
-		};
-		
-		return onItemClickListener;
-	}
 	
 	
     @Override
@@ -135,6 +118,36 @@ public class TrajetManaging extends ARunnableActivity {
 
     }
     
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, MODIFY, 0, R.string.routes_managing_modify);
+		menu.add(0, ACTIVATE, 0,  R.string.routes_managing_activate);
+		menu.add(0, DELETE, 0,  R.string.routes_managing_delete);
+	}
+
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo infos = (AdapterContextMenuInfo) item.getMenuInfo();
+	
+		trajet = detailTrajetsAdapter.getItem(infos.position);
+				
+		switch (item.getItemId()) {
+		case MODIFY:
+			Log.i(getClass().getSimpleName(), "modify : " + trajet);
+			return true;
+		case ACTIVATE:
+			Log.i(getClass().getSimpleName(), "activate : " + trajet );
+			return true;
+		case DELETE:
+			Log.i(getClass().getSimpleName(), "delete : " + trajet);
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}    
+    
     public OnClickListener getOnClickListener() {
     	
     	if (onClickListener == null) {
@@ -144,11 +157,9 @@ public class TrajetManaging extends ARunnableActivity {
 				public void onClick(View v) {
 					
 					if (v == btQuit) {
-						setResult(RESULT_CANCELED);
 						finish();
 					} else if (v == btNew) {
-						setResult(RESULT_OK);
-						finish();			
+						goTrajetCreation();
 					}
 				}
 			};
@@ -156,31 +167,6 @@ public class TrajetManaging extends ARunnableActivity {
     	
     	return onClickListener;
     }
-    
-    
-	private OnItemSelectedListener getOnTrajetSelectedListener() {
-		
-		if (onTrajetSelectedListener == null) {
-		
-			onTrajetSelectedListener = new OnItemSelectedListener() {
-				
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-					
-					Trajet model = (Trajet)parent.getItemAtPosition(position);
-					Log.i(TrajetManaging.class.getSimpleName(), "onItemSelected -> " + model);
-				}
-				
-				
-				@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
-
-				}
-			};
-		}
-		
-		return onTrajetSelectedListener;
-	}
     
 
     private Trajet getModel(int position) {
@@ -228,13 +214,12 @@ public class TrajetManaging extends ARunnableActivity {
 			} else {
 				dateAff.append(trajet.getDateTrajet());
 			}
-			dateAff.append(" à " + trajet.getHoraireDepart());
 			
-			wrapper.getDate().setText("Date départ : " + dateAff.toString());
-			wrapper.getDepart().setText( "De : " + trajet.getLieuDepart());
-			wrapper.getArrivee().setText(" A : " + trajet.getLieuDestination());
-			wrapper.getInfo().setText("Nbre places : " + trajet.getPlaceDispo()
-					+ " Points : " + trajet.getNbrePoint());
+			wrapper.getDate().setText("Date : " + dateAff.toString());
+			wrapper.getDepart().setText( "Départ  : " + trajet.getLieuDepart() + " à " + trajet.getHoraireDepart());
+			wrapper.getArrivee().setText("Arrivée : " + trajet.getLieuDestination() + " à " + trajet.getHoraireArrivee());
+			wrapper.getInfo().setText("Places dispo : " + trajet.getPlaceDispo()
+					+ "; Points : " + trajet.getNbrePoint());
 						
 			return (row);
 		}
@@ -252,37 +237,39 @@ public class TrajetManaging extends ARunnableActivity {
 	}
 
 	
-    public void goTrajetDetail() {
+    public void goTrajetCreation() {
     	startProgressDialogInNewThread(this);
     }
-	
+
+    
+    public void goTrajetAction() {
+    	//
+    }
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    	listView.setOnItemClickListener(getOnItemClickListener());
-    	stopProgressDialog();
-    	
     	switch (requestCode) {
-    	case CODE_TRAJETTROUVE:
+    	case CODE_TRAJETMANAGING:
     		switch(resultCode) {
     		case RESULT_OK:
-    			// on continue....
+				detailTrajetsAdapter = new TrajetAdapter(trajetManaging, getTrajets());
+				stopProgressDialog();
+		        Message msg = handler.obtainMessage();
+		        handler.sendMessage(msg);
     			break;
     		case RESULT_CANCELED:
-    			finish();
+    			stopProgressDialog();
+    			break;
     		}
     	}
-    }    
+    }
     
     
 	@Override
 	public void run() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("trajet", trajet);
         
-        Intent intent = new Intent(this, TrajetDetail.class);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, CODE_TRAJETTROUVE);
+        Intent intent = new Intent(this, TrajetCreation.class);
+        startActivityForResult(intent, CODE_TRAJETMANAGING);
 	}
-	
 }

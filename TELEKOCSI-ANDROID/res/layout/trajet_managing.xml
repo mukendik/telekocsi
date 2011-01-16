@@ -91,7 +91,7 @@
    		<ListView
    			android:id="@+id/lvTMListTrajet"
 			android:layout_width="fill_parent" 
-			android:layout_height="210px"
+			android:layout_height="300px"
 			android:drawSelectorOnTop="false"	
    		/>
    		

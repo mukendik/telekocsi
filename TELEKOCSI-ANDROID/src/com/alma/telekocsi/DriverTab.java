@@ -30,7 +30,7 @@ public class DriverTab extends ListActivity {
 	private Session session = null;
 	Profil profile = null;
 	
-	private String TRAJET_CREATION;
+	private String TRAJET_MANAGING;
 	private String ACTIVATE;
 	private String CREATE;
 	private String DESACTIVATE;
@@ -43,7 +43,7 @@ public class DriverTab extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 				
-		TRAJET_CREATION = getString(R.string.trajet_creation_title);
+		TRAJET_MANAGING = getString(R.string.trajetManaging);
 		ACTIVATE = getString(R.string.route_activation_title);
 		CREATE = getString(R.string.route_creation);
 		DESACTIVATE = getString(R.string.route_desactivation);
@@ -51,7 +51,7 @@ public class DriverTab extends ListActivity {
 		TRANSACTION = getString(R.string.validerTransaction);
 
 		DRIVER_FUNCTIONS = new String[] {
-				TRAJET_CREATION, ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
+				TRAJET_MANAGING, ACTIVATE, CREATE, DESACTIVATE, ACTIVATED, TRANSACTION
 		};
 		
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.main_menu_tab_list,
@@ -96,8 +96,8 @@ public class DriverTab extends ListActivity {
 		    public void onItemClick(AdapterView<?> parent
 		    		, View view, int position, long id) {
 
-		    	if (((TextView) view).getText().equals(TRAJET_CREATION)) {
-		    		startTrajetCreation();
+		    	if (((TextView) view).getText().equals(TRAJET_MANAGING)) {
+		    		startTrajetManaging();
 		    	}
 		    	else if (((TextView) view).getText().equals(ACTIVATE)) {
 		    		startRouteActivation();
@@ -118,8 +118,8 @@ public class DriverTab extends ListActivity {
 		};
 	}
 
-	private void startTrajetCreation(){
-		Intent intent = new Intent(this, TrajetCreation.class);
+	private void startTrajetManaging(){
+		Intent intent = new Intent(this, TrajetManaging.class);
 		startActivity(intent);
 	}
 	

@@ -172,9 +172,9 @@ public class TrajetDAO {
     
     
     /**
-     * Recupere la liste des trajets associes a un profil
+     * Recupere la liste des trajets actifs et dispo associes a un profil
      * @param idProfil
-     * @return
+     * @return liste des trajets : dispo et actif
      */
     public List<Trajet> getList(String idProfil) {
 

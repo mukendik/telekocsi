@@ -73,8 +73,11 @@ public class TrajetCreation extends ARunnableActivity {
 		public void handleMessage(android.os.Message msg) {
 			Toast.makeText(trajetActivation, R.string.trajet_creation_successed, Toast.LENGTH_SHORT).show();
 			refreshBtn();
+			setResult(RESULT_OK);
+			finish();
 		};
 	};
+	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -241,7 +244,8 @@ public class TrajetCreation extends ARunnableActivity {
 	}
 	
 	
-	private void goBack(){
+	private void goBack() {
+		setResult(RESULT_CANCELED);
 		finish();
 	}
 	
