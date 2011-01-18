@@ -113,7 +113,7 @@ public class SessionImpl implements Session {
 		notificationMgr = (NotificationManager)this.context.getSystemService(Context.NOTIFICATION_SERVICE);		
 		settings = context.getSharedPreferences(PREFERENCES_STORE, Context.MODE_PRIVATE);
 		
-		Log.i(getClass().getName(), "Current Profile = " + settings.getString(KEY_PROFILE_ID, "null"));
+		Log.i(getClass().getName(), "Current Profile = " + settings.getString(KEY_PROFILE_ID, ""));
 	}
 
 	
@@ -590,7 +590,7 @@ public class SessionImpl implements Session {
 	private int cacheProfile() {
 		if (profile != null) {
 			try {
-				FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
+				FileOutputStream out = context.openFileOutput(String.format("%s_%s", profile.getId(),PROFILE_CACHE), Context.MODE_PRIVATE);
 				ObjectOutputStream oos = new ObjectOutputStream(out);
 				oos.writeObject(profile);
 				out.flush();
@@ -610,7 +610,7 @@ public class SessionImpl implements Session {
 	 */
 	private int loadProfileFromCache() {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(PROFILE_CACHE));
+			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(String.format("%s_%s", settings.getString(KEY_PROFILE_ID, ""),PROFILE_CACHE)));
 			try {
 				profile = (Profil)ois.readObject();
 			} finally {
@@ -631,7 +631,7 @@ public class SessionImpl implements Session {
 	private int cacheActiveTrajet() {
 		if (activeTrajet != null) {
 			try {
-				FileOutputStream out = context.openFileOutput(ACTIVE_TRAJET_CACHE, Context.MODE_PRIVATE);
+				FileOutputStream out = context.openFileOutput(String.format("%s_%s", profile.getId(),ACTIVE_TRAJET_CACHE), Context.MODE_PRIVATE);
 				ObjectOutputStream oos = new ObjectOutputStream(out);
 				oos.writeObject(activeTrajet);
 				oos.writeObject(activeTrajetLines);
@@ -651,7 +651,7 @@ public class SessionImpl implements Session {
 	 */
 	private void clearProfileCache() {
 		try {
-			FileOutputStream out = context.openFileOutput(PROFILE_CACHE, Context.MODE_PRIVATE);
+			FileOutputStream out = context.openFileOutput(String.format("%s_%s", settings.getString(KEY_PROFILE_ID, ""),PROFILE_CACHE), Context.MODE_PRIVATE);
 			out.flush();
 			out.close();
 		} catch(Throwable e){
@@ -667,7 +667,7 @@ public class SessionImpl implements Session {
 	@SuppressWarnings("unchecked")
 	private int loadActiveTrajetFromCache() {
 		try {
-			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(ACTIVE_TRAJET_CACHE));
+			ObjectInputStream ois = new ObjectInputStream(context.openFileInput(String.format("%s_%s", settings.getString(KEY_PROFILE_ID, ""),ACTIVE_TRAJET_CACHE)));
 			try {
 				activeTrajet = (Trajet)ois.readObject();
 				activeTrajetLines = (Map<String,TrajetLigne>)ois.readObject();
@@ -687,11 +687,12 @@ public class SessionImpl implements Session {
 	 */
 	private void clearActiveTrajetCache() {
 		try {
-			FileOutputStream out = context.openFileOutput(ACTIVE_TRAJET_CACHE, Context.MODE_PRIVATE);
+			FileOutputStream out = context.openFileOutput(String.format("%s_%s", settings.getString(KEY_PROFILE_ID, ""),ACTIVE_TRAJET_CACHE), Context.MODE_PRIVATE);
 			out.flush();
 			out.close();
 		} catch(Throwable e){
 			Log.d(getClass().getName(), e.getMessage(), e);
 		}
 	}
+	
 }
