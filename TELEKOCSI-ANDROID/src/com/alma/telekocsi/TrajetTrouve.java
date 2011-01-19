@@ -8,6 +8,7 @@ import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
+import com.alma.telekocsi.util.Tools;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -266,7 +267,7 @@ public class TrajetTrouve extends ARunnableActivity {
 			Profil profil = session.find(Profil.class, trajet.getIdProfilConducteur());
 			
 			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
-			wrapper.getNomConducteur().setText(profil.getPseudo());
+			wrapper.getNomConducteur().setText(Tools.getName(profil));
 			
 			wrapper.getVisage().setImageResource(Profile.getImageResource(profil.getSexe()));
 			wrapper.getStarsClassement().setImageResource(Profile.getClassementStarImageResource(profil.getClassementMoyen()));

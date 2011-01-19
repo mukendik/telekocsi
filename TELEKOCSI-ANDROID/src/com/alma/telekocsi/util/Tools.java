@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.alma.telekocsi.dao.profil.Profil;
+
 
 public class Tools {
 
@@ -35,5 +37,22 @@ public class Tools {
 	 */
 	public static String getFormattedDate(Date date){
 		return sdf.format(date);
-	}	
+	}
+	
+	
+	public static String getName(Profil profil) {
+		
+		String name;
+		StringBuffer result = new StringBuffer();
+		if (profil.getPrenom() != null) {
+			result.append((profil.getPrenom() + " ").substring(0,1));
+		}
+		result.append(". " + profil.getNom());
+		if (result.length() > 10) {
+			name = result.substring(0, 10);
+		} else {
+			name = result.toString();
+		}
+		return name;
+	}
 }

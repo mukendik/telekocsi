@@ -2,13 +2,13 @@ package com.alma.telekocsi;
 
 import java.util.List;
 
-import com.alma.telekocsi.TrajetTrouve.CheckAdapter;
 import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.trajet.Trajet;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 import com.alma.telekocsi.util.LocalDate;
+import com.alma.telekocsi.util.Tools;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -229,11 +229,13 @@ private static final int CODE_TRAJETTROUVE = 20;
 			Profil profil = session.find(Profil.class, trajet.getIdProfilConducteur());
 			
 			wrapper.getNombreAvis().setText(profil.getNombreAvis() + " avis");
-			wrapper.getNomConducteur().setText(profil.getPseudo());
+			
+			wrapper.getNomConducteur().setText(Tools.getName(profil));
 			
 			return (row);
 		}
 	}
+	
 	
 	private Trajet getModel(int position) {
 		return routesDetailsAdapter.getItem(position);

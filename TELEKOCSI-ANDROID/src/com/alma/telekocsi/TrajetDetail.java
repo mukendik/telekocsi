@@ -4,6 +4,7 @@ package com.alma.telekocsi;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.util.Tools;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,7 +67,7 @@ public class TrajetDetail extends ARunnableActivity {
 			ivDTVisage.setImageResource(Profile.getImageResource(conducteur.getSexe()));
 			ivDTStars.setImageResource(Profile.getClassementStarImageResource(conducteur.getClassementMoyen()));
 			
-			tvDTNomConducteur.setText(conducteur.getPrenom() + " " + (conducteur.getNom() + "     ").substring(0, 4) + ".");
+			tvDTNomConducteur.setText(Tools.getName(conducteur));
 			tvDTNombreAvis.setText(conducteur.getNombreAvis() + " avis");
 			tvDTTelephone.setText(conducteur.getTelephone());
 			
