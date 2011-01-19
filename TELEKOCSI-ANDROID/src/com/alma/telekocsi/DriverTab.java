@@ -102,7 +102,8 @@ public class DriverTab extends ListActivity {
 		    		showActiveRouteOnMap();
 		    	}
 		    	else if(((TextView) view).getText().equals(TRANSACTION)) {
-		    		startDriverTransaction();
+		    		//startDriverTransaction();
+		    		startTransactionForDemo();
 		    	}
 		    }
 		};
@@ -125,7 +126,7 @@ public class DriverTab extends ListActivity {
 			return;
 		}
 		else if(passengers.length==1){
-			selected[0] = passengers[0];
+			doValidateTransaction(profile, passengers[0]);
 		}
 		else{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -140,30 +141,16 @@ public class DriverTab extends ListActivity {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					selected[0] = passengers[which];
 					if(dialog!=null){
 						dialog.dismiss();
 					}
+					doValidateTransaction(profile, passengers[which]);
 				}
 				
 			});
 			dialog = builder.create();
 			dialog.show();
 		}
-		
-		if(selected[0]==null){ //Aucun passager selectionné
-			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		Bundle bundle = new Bundle();		
-		bundle.putSerializable(Transaction.ORIGINATOR, profile);
-		bundle.putSerializable(Transaction.DESTINATOR, selected[0]);
-		
-		Intent intent = new Intent(this, Transaction.class);
-		intent.putExtras(bundle);
-		
-		startActivity(intent);
 	}
 	
 	private void startRouteCreation(){
@@ -267,4 +254,57 @@ public class DriverTab extends ListActivity {
 		Toast.makeText(this, getString(R.string.profile_creation_ongoing), Toast.LENGTH_SHORT).show();
 	}
 
+	private void startTransactionForDemo(){
+		final String marcChristieID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOXTEww";
+		final String rgID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGPfpFgw";
+		final Profil marcChristie = session.find(Profil.class, marcChristieID);
+		final Profil rg = session.find(Profil.class,rgID);
+		
+		final Profil[] passengers = marcChristie==null?new Profil[]{}:new Profil[]{marcChristie,rg};
+		
+		//On doit choisir le passager destinataire des points de la transaction
+		if(passengers.length<1 || marcChristieID.equals(profile.getId()) || rgID.equals(profile.getId())){
+			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		else if(passengers.length==1){
+			doValidateTransaction(profile, passengers[0]);
+		}
+		else{
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog dialog;
+			builder.setTitle(getString(R.string.passager));
+			
+			String[] names = new String[passengers.length];
+			for(int i=0;i<passengers.length;++i){
+				names[i] = passengers[i].getPrenom()+" "+passengers[i].getNom().substring(0, 1).toUpperCase()+".";
+			}
+			builder.setSingleChoiceItems(names, 0, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if(dialog!=null){
+						dialog.dismiss();
+					}
+					doValidateTransaction(profile, passengers[which]);
+				}
+				
+			});
+			dialog = builder.create();
+			dialog.show();
+		}
+		
+	}
+	
+	private void doValidateTransaction(Profil originator,Profil destinator){
+		Bundle bundle = new Bundle();		
+		bundle.putSerializable(Transaction.ORIGINATOR, originator);
+		bundle.putSerializable(Transaction.DESTINATOR, destinator);
+		
+		Intent intent = new Intent(this, Transaction.class);
+		intent.putExtras(bundle);
+		
+		startActivity(intent);
+	}
+	
 }

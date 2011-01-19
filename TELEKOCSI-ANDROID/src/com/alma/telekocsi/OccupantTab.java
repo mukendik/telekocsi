@@ -1,5 +1,7 @@
 package com.alma.telekocsi;
 
+import java.util.Arrays;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -98,7 +100,8 @@ public class OccupantTab extends ListActivity {
 		    		showActiveRoute();
 		    	}
 		    	else if(((TextView) view).getText().equals(TRANSACTION)){
-		    		startTransaction();
+		    		//startTransaction();
+		    		startTransactionForDemo();
 		    	}
 		    }
 		};
@@ -132,6 +135,37 @@ public class OccupantTab extends ListActivity {
 		startActivity(intent);
 	}
 
+	private void startTransactionForDemo(){
+		final String marcChristieID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOXTEww";
+		final String rgID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGPfpFgw";
+
+		String lewisHamiltonID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOaeFQw";
+		Profil lewisHamilton = session.find(Profil.class,lewisHamiltonID);
+		
+		String trajetId = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGVHJhamV0GO_XDww";
+		Trajet route = session.find(Trajet.class, trajetId);
+		if(route==null || !Arrays.asList(marcChristieID,rgID).contains(profile.getId())){
+			Toast.makeText(this, R.string.no_active_route, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		session.activateTrajet(route);
+		
+		Profil driver = lewisHamilton;
+		if(driver==null){
+			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		
+		Bundle bundle = new Bundle();		
+		bundle.putSerializable(Transaction.ORIGINATOR, profile);
+		bundle.putSerializable(Transaction.DESTINATOR, driver);
+		
+		Intent intent = new Intent(this, Transaction.class);
+		intent.putExtras(bundle);
+		
+		startActivity(intent);
+	}
+	
 	private void showActiveRoute(){
 		startActivity(new Intent(this, GoogleMapActivity.class));
 	}

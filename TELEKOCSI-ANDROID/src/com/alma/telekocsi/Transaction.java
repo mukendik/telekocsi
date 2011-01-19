@@ -128,7 +128,7 @@ public class Transaction extends ARunnableActivity {
 	protected void onStart() {
 		super.onStart();
 		
-		if(route==null 
+		if((route=session.getActiveTrajet())==null 
 				|| originator==null 
 				|| destinator==null 
 				|| (iti = session.find(Itineraire.class,route.getIdItineraire()))==null)
@@ -234,7 +234,7 @@ public class Transaction extends ARunnableActivity {
  
     
     private void actionValider() {
-    	startProgressDialogInNewThread(this);
+    	run();
     }
 
 
@@ -260,10 +260,10 @@ public class Transaction extends ARunnableActivity {
 		if(tl!=null){
 			t.setIdTrajetLigne(tl.getId());
 		}
-		else{
-			Toast.makeText(getApplicationContext(), R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
-			return;
-		}
+//		else{
+//			Toast.makeText(this, R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
+//			return;
+//		}
 		
 		Avis avis = new Avis();
 		avis.setClassement(Math.round(ratingBar.getRating()));
@@ -273,13 +273,23 @@ public class Transaction extends ARunnableActivity {
 		avis.setChecked(false);
 		//TODO remplir dans l'avis: Etat
 		avis = session.save(avis);
+//		session.save(t);
+//		Toast.makeText(this, R.string.transaction_validation_success, Toast.LENGTH_SHORT).show();
 		
 		if(session.save(t)!=null){
+			try{
+				Toast.makeText(this, R.string.transaction_validation_success, Toast.LENGTH_SHORT).show();
+			} catch (Exception ex){
+				Log.d(getClass().getName(), ex.getMessage(), ex);
+			}
 			finish();
-			Toast.makeText(getApplicationContext(), R.string.transaction_validation_success, Toast.LENGTH_SHORT).show();
 		}
 		else{
-			Toast.makeText(getApplicationContext(), R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
+			try{
+				Toast.makeText(this, R.string.transaction_validation_failure, Toast.LENGTH_SHORT).show();
+			} catch (Exception ex){
+				Log.d(getClass().getName(), ex.getMessage(), ex);
+			}
 		}
 	}
 	
