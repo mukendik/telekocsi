@@ -30,8 +30,8 @@
 	<string name="dateTrajet">Date du trajet :</string>
 	<string name="rechercher">Rechercher</string>
 	<string name="trajetfind">Trajets trouvés</string>
-	<string name="resultats">10 résultats</string>
-	<string name="page">Page : 1/5</string>
+	<string name="resultats">.. résultats</string>
+	<string name="page">Page : 1/1</string>
 	<string name="newsearch">Nouvelle recherche</string>
 	<string name="quit">Quitter</string>
 	<string name="tel">Téléphone</string>
