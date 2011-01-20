@@ -170,8 +170,22 @@ public class TrajetLigneService {
 	public TrajetLigne add(TrajetLigne trajetLigne) {
 		log.info("Ajout d'un trajetLigne");
 		
+		try {
+			TrajetService trajetService = new TrajetService();
+			Trajet trajet = trajetService.get(trajetLigne.getIdTrajet());
+			if (trajet != null) {
+				int soldePlaceDispo = trajet.getSoldePlaceDispo() - trajetLigne.getPlaceOccupee();
+				if (soldePlaceDispo < 0) {
+					soldePlaceDispo = 0;
+				}
+				trajet.setSoldePlaceDispo(soldePlaceDispo);
+				trajetService.update(trajet.getId(), trajet);
+			}			
+		} catch (Exception e) {
+		}
+		
 		EntityManager em = Tools.getEntityManager();
-		em.getTransaction().begin();
+		em.getTransaction().begin();		
 		em.persist(trajetLigne);
 		em.getTransaction().commit();
 		
