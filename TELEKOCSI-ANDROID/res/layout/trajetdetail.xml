@@ -598,7 +598,16 @@
     			android:layout_marginLeft="5px"
     			android:layout_marginTop="5px"
    				/>
-	   							
+
+    		<Button
+    			android:layout_width="wrap_content" 
+    			android:layout_height="wrap_content"
+    			android:text="@string/proposer"
+    			android:id="@+id/btDTProposer"
+    			android:textColor="@color/black"
+    			android:layout_marginLeft="5px"
+    			android:layout_marginTop="5px"
+   				/>	   							
    		</LinearLayout>
    		
     </LinearLayout> 

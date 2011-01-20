@@ -84,7 +84,6 @@ public class TrajetTrouve extends ARunnableActivity {
 		    	
 		    	listView.setOnItemClickListener(null);
 		    	trajet = (Trajet)parent.getItemAtPosition(position);
-		        Toast.makeText(trajetTrouve,"Contacter le conducteur", Toast.LENGTH_SHORT).show();
 		        goTrajetDetail();
 		    }
 		};
@@ -203,10 +202,6 @@ public class TrajetTrouve extends ARunnableActivity {
         tvVilleArrivee.setText(itineraire.getLieuDestination());
         tvDate.setText(date.toString());
         
-        /*
-        tvResultat.setText("12 résultats");
-        tvPage.setText("Page : 2/5");*/
-        
         Log.i(TrajetTrouve.class.getSimpleName(), " Itineraire : " + itineraire);
         Log.i(TrajetTrouve.class.getSimpleName(), " Date : " + date);
         
@@ -261,7 +256,7 @@ public class TrajetTrouve extends ARunnableActivity {
 			dateAff.append(" à " + trajet.getHoraireDepart());
 			
 			wrapper.getDateHeure().setText(dateAff.toString());
-			wrapper.getNbrePlaceDispo().setText(trajet.getPlaceDispo() + " places dispo");
+			wrapper.getNbrePlaceDispo().setText(trajet.getSoldePlaceDispo() + " places dispo");
 			wrapper.getNbrePoint().setText(trajet.getNbrePoint() + " points");
 			
 			Profil profil = session.find(Profil.class, trajet.getIdProfilConducteur());
@@ -320,6 +315,7 @@ public class TrajetTrouve extends ARunnableActivity {
 	public void run() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("trajet", trajet);
+        bundle.putSerializable("itineraire", itineraire);
         
         Intent intent = new Intent(this, TrajetDetail.class);
         intent.putExtras(bundle);

@@ -1,9 +1,15 @@
 package com.alma.telekocsi;
 
 
+import com.alma.telekocsi.dao.event.Event;
+import com.alma.telekocsi.dao.event.EventDAO;
+import com.alma.telekocsi.dao.itineraire.Itineraire;
 import com.alma.telekocsi.dao.profil.Profil;
 import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.session.Session;
+import com.alma.telekocsi.session.SessionFactory;
+import com.alma.telekocsi.util.LocalDate;
 import com.alma.telekocsi.util.Tools;
 
 import android.os.Bundle;
@@ -17,12 +23,17 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class TrajetDetail extends ARunnableActivity {
 
+	private TrajetDetail trajetDetail = this;
 	private OnClickListener onClickListener = null;
 	private Trajet trajet;
+	private Itineraire itineraire;
+	private Session session;
+	private EventDAO eventDAO;
 	
 	private TextView tvDepartArrivee;
 	private TextView tvVilleDepart;
@@ -44,6 +55,7 @@ public class TrajetDetail extends ARunnableActivity {
 	private RadioGroup rgDTmusic;
 	private RadioGroup rgDTdiscussion;
 	private Button btRetour;
+	private Button btProposer;
 	
 	
 	final Handler handler = new Handler() {
@@ -59,7 +71,7 @@ public class TrajetDetail extends ARunnableActivity {
 			tvDTHeureArrivee.setText(trajet.getHoraireArrivee());
 			tvDTAutoroute.setText(trajet.isAutoroute() ? "oui" : "non");
 			tvDTPrix.setText(trajet.getNbrePoint() + (trajet.getNbrePoint() > 1 ? " points" : " point"));
-			tvDTPlaceDispo.setText(trajet.getPlaceDispo() + (trajet.getPlaceDispo() > 1 ? " places" : " place"));
+			tvDTPlaceDispo.setText(trajet.getSoldePlaceDispo() + (trajet.getSoldePlaceDispo() > 1 ? " places" : " place"));
 			
 			ProfilDAO profilDAO = new ProfilDAO();
 			Profil conducteur = profilDAO.getProfil(trajet.getIdProfilConducteur());
@@ -135,6 +147,9 @@ public class TrajetDetail extends ARunnableActivity {
         
         btRetour = (Button)findViewById(R.id.btDTRestour);
         btRetour.setOnClickListener(getOnClickListener());
+
+        btProposer = (Button)findViewById(R.id.btDTProposer);
+        btProposer.setOnClickListener(getOnClickListener());
     } 
     
     
@@ -169,25 +184,61 @@ public class TrajetDetail extends ARunnableActivity {
 					if (v == btRetour) {
 						setResult(RESULT_OK);
 						finish();
+					} else if (v == btProposer) {
+						Toast.makeText(trajetDetail,"Proposition au conducteur", Toast.LENGTH_SHORT).show();
+						startProgressDialogInNewThread(trajetDetail);
 					}
 				}
 			};
     	}
     	
     	return onClickListener;
-    }    
+    }
     
 
     public void chargeInfoIntent() {
         
         Bundle bundle = this.getIntent().getExtras();
         trajet = (Trajet)bundle.getSerializable("trajet");
+        itineraire = (Itineraire)bundle.getSerializable("itineraire");
         Log.i(TrajetTrouve.class.getSimpleName(), " Trajet : " + trajet);        
     }
 
+    
 	@Override
 	public void run() {
+		
+		Event event = new Event();
+		LocalDate currentDate = new LocalDate();
+		event.setDateEvent(currentDate.getDateFormatCalendar());
+		event.setHeureEvent(currentDate.getDateFomatHeure());
+		event.setEtat("NP");
+		event.setIdProfilFrom(getSession().getActiveProfile().getId());
+		event.setIdProfilTo(trajet.getIdProfilConducteur());
+		/* Revoir ce principe */
+		event.setDescription(trajet.getId() + ";" + itineraire.getNbrePoint() + ";" + itineraire.getPlaceDispo());
+		event.setTypeEvent(110); // Proposition passager
+		
+		getEventDAO().insert(event);
+		stopProgressDialog();
+		setResult(RESULT_OK);
+		finish();
+	}
 
+	
+	private EventDAO getEventDAO() {
+		if (eventDAO == null) {
+			eventDAO = new EventDAO(); 
+		}
+		return eventDAO;
+	}
+	
+	
+	private Session getSession() {
+		if (session == null) {
+			session = SessionFactory.getCurrentSession(this);
+		}
+		return session;
 	}
 
 }

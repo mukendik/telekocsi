@@ -39,6 +39,7 @@ public class TrajetManaging extends ARunnableActivity {
 	private static final int ACTION_DELETE = 3;
 	private static final int ACTION_MAP = 4;
 	private static final int ACTION_CREATE = 5;
+	private static final int ACTION_PASSAGER = 6;
 	
 	private int currentAction = 0;
 	
@@ -51,6 +52,7 @@ public class TrajetManaging extends ARunnableActivity {
 	private MenuItem menuDesactivate;
 	private MenuItem menuDelete;
 	private MenuItem menuMap;
+	private MenuItem menuPassager;
 
 	private TextView tvResultat;
 	private TextView tvPage;
@@ -143,6 +145,7 @@ public class TrajetManaging extends ARunnableActivity {
 		menuDesactivate = menu.add(0, ACTION_DESACTIVATE, 0,  R.string.tm_item_desactivation);
 		menuDelete = menu.add(0, ACTION_DELETE, 0,  R.string.tm_item_suppression);
 		menuMap = menu.add(0, ACTION_MAP, 0,  R.string.tm_item_map);
+		menuPassager = menu.add(0, ACTION_PASSAGER, 0,  R.string.tm_item_passager);
 		
 		refreshMenuItem();
 	}
@@ -171,6 +174,10 @@ public class TrajetManaging extends ARunnableActivity {
 			Log.i(getClass().getSimpleName(), "map : " + trajet);
 			goTrajetMap();
 			return true;
+		case ACTION_PASSAGER:
+			Log.i(getClass().getSimpleName(), "passager : " + trajet);
+			goTrajetPassager();
+			return true;	
 		default:
 			return super.onContextItemSelected(item);
 		}
@@ -286,7 +293,7 @@ public class TrajetManaging extends ARunnableActivity {
 			wrapper.getState().setText("[" + state + "]");
 			wrapper.getDepart().setText(trajet.getLieuDepart() + " à " + trajet.getHoraireDepart());
 			wrapper.getArrivee().setText(trajet.getLieuDestination() + " à " + trajet.getHoraireArrivee());
-			wrapper.getPlace().setText(trajet.getPlaceDispo() + "");
+			wrapper.getPlace().setText(trajet.getSoldePlaceDispo() + "");
 			wrapper.getPoint().setText(trajet.getNbrePoint() + ""); 
 						
 			return (row);
@@ -333,6 +340,11 @@ public class TrajetManaging extends ARunnableActivity {
     	currentAction = ACTION_MAP;
     	startProgressDialogInNewThread(this);
     }
+    
+    private void goTrajetPassager() {
+    	currentAction = ACTION_PASSAGER;
+    	startProgressDialogInNewThread(this);
+    }    
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -387,6 +399,14 @@ public class TrajetManaging extends ARunnableActivity {
 			startActivity(new Intent(this, GoogleMapActivity.class));
 			stopProgressDialog();
 			break;
+			
+		case ACTION_PASSAGER:
+			intent = new Intent(this, PassagerTrouve.class);
+	        Bundle bundle = new Bundle();
+	        bundle.putSerializable("trajet", trajet);
+	        intent.putExtras(bundle);
+			startActivityForResult(intent, CODE_TRAJETMANAGING);
+			break;	
 		}
 	}
 }

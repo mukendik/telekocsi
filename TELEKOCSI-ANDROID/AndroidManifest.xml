@@ -26,6 +26,7 @@
 		<activity android:name=".ItineraireManaging" android:label="@string/app_name"/>
 		<activity android:name=".ItineraireCreation" android:label="@string/app_name"/>
 		<activity android:name=".TrajetManaging" android:label="@string/app_name"/>
+		<activity android:name=".PassagerTrouve" android:label="@string/app_name"/>
 		<activity android:name=".TrajetCreation" android:label="@string/app_name"/>
 		<activity android:name=".TrajetActivation" android:label="@string/app_name"/>
 		<activity android:name=".PreferencesSettings" android:label="@string/app_name"/>

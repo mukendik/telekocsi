@@ -5,6 +5,7 @@
 
 	<string name="paiement">Paiement et évaluation</string>
 	<string name="retour">Retour</string>
+	<string name="proposer">Proposer</string>
 	<string name="annuler">Annuler</string>
 	<string name="nbPointEchange">Nombre de points à échanger :</string>
 	<string name="nbPoints">3 points</string>
@@ -30,7 +31,8 @@
 	<string name="dateTrajet">Date du trajet :</string>
 	<string name="rechercher">Rechercher</string>
 	<string name="trajetfind">Trajets trouvés</string>
-	<string name="resultats">.. résultats</string>
+	<string name="passagerfind">Passagers trouvés</string>
+	<string name="resultats">Recherche...</string>
 	<string name="page">Page : 1/1</string>
 	<string name="newsearch">Nouvelle recherche</string>
 	<string name="quit">Quitter</string>
@@ -116,11 +118,17 @@
     <string name="tm_item_desactivation">Desactiver le trajet</string>
 	<string name="tm_item_suppression">Supprimer le trajet</string>
 	<string name="tm_item_map">Google Map</string>
+	<string name="tm_item_passager">Accepter un passager</string>
 	<string name="tm_row_date">Date :</string>
 	<string name="tm_row_depart">Départ :</string>
 	<string name="tm_row_arrivee">Arrivée :</string>
 	<string name="tm_row_place">place(s) dispo</string>
 	<string name="tm_row_point">point(s)</string>
+
+    <!-- passager_trouve -->
+	<string name="pt_titre_passagerTrouve">Passagers Trouvés</string>
+	<string name="pt_item_acccept">Intégrer</string>
+	<string name="pt_item_reject">Refuser</string>
 
     <!-- trajet_creation -->
     <string name="trajet_identification_title">Identification du trajet</string>
