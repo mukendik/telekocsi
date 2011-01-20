@@ -416,7 +416,10 @@ public class SessionImpl implements Session {
 						}
 					}
 				}
-			}
+			}			
+		}
+		if(activeTrajet!=null){
+			Log.i(getClass().getName(), "Active trajet = "+activeTrajet.getId());
 		}
 		return activeTrajet;
 	}

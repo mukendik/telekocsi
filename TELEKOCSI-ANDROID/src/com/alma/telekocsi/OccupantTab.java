@@ -142,21 +142,27 @@ public class OccupantTab extends ListActivity {
 		String lewisHamiltonID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOaeFQw";
 		Profil lewisHamilton = session.find(Profil.class,lewisHamiltonID);
 		
-		String trajetId = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGVHJhamV0GO_XDww";
+		Log.i(getClass().getName(),"Fetching active route");
+
+		String trajetId = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGVHJhamV0GM2LEQw";
 		Trajet route = session.find(Trajet.class, trajetId);
 		if(route==null || !Arrays.asList(marcChristieID,rgID).contains(profile.getId())){
 			Toast.makeText(this, R.string.no_active_route, Toast.LENGTH_SHORT).show();
 			return;
 		}
-		session.activateTrajet(route);
+
+		Log.i(getClass().getName(),"Fetching driver profile");
 		
 		Profil driver = lewisHamilton;
 		if(driver==null){
 			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
 			return;
 		}
+
+		Log.i(getClass().getName(),"Starting intent");
 		
 		Bundle bundle = new Bundle();		
+		bundle.putSerializable("DEMO_ROUTE",route);
 		bundle.putSerializable(Transaction.ORIGINATOR, profile);
 		bundle.putSerializable(Transaction.DESTINATOR, driver);
 		

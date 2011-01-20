@@ -51,6 +51,7 @@ public class Transaction extends ARunnableActivity {
 	 * Trajet concerner par la validation
 	 */
 	private Trajet route;
+	private Trajet demoRoute;
 	/**
 	 * Le profil de celui qui note
 	 */
@@ -75,6 +76,7 @@ public class Transaction extends ARunnableActivity {
         if(extras!=null){
         	originator = (Profil)extras.get(ORIGINATOR);
         	destinator = (Profil)extras.get(DESTINATOR);
+        	demoRoute = (Trajet)extras.get("DEMO_ROUTE");
         }
         
         /*
@@ -128,7 +130,8 @@ public class Transaction extends ARunnableActivity {
 	protected void onStart() {
 		super.onStart();
 		
-		if((route=session.getActiveTrajet())==null 
+		
+		if((route=demoRoute!=null?demoRoute:session.getActiveTrajet())==null 
 				|| originator==null 
 				|| destinator==null 
 				|| (iti = session.find(Itineraire.class,route.getIdItineraire()))==null)
@@ -208,7 +211,7 @@ public class Transaction extends ARunnableActivity {
      * @param places
      */
     private void setPlacesCountText(int places){
-    	placesCountText.setText(String.format("%d %s%s",places,getString(R.string.point),Math.abs(places)>1?"s":""));
+    	placesCountText.setText(String.format("%d %s%s",places,getString(R.string.place),Math.abs(places)>1?"s":""));
     }
     
     public OnClickListener getOnClickListener() {
