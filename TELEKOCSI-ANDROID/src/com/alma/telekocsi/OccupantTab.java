@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.dao.trajet.Trajet;
+import com.alma.telekocsi.dao.trajet.TrajetDAO;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
@@ -136,16 +138,18 @@ public class OccupantTab extends ListActivity {
 	}
 
 	private void startTransactionForDemo(){
-		final String marcChristieID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOXTEww";
-		final String rgID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGPfpFgw";
+		ProfilDAO profilDAO = new ProfilDAO();
+		
+		final String marcChristieID = profilDAO.login("passager@mail.com", "aze").getId();
+		final String rgID = profilDAO.login("rg@passager.fr", "aze").getId();
 
-		String lewisHamiltonID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOaeFQw";
-		Profil lewisHamilton = session.find(Profil.class,lewisHamiltonID);
+		Profil lewisHamilton = profilDAO.login("conducteur@mail.com","aze");
 		
 		Log.i(getClass().getName(),"Fetching active route");
 
-		String trajetId = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGVHJhamV0GM2LEQw";
-		Trajet route = session.find(Trajet.class, trajetId);
+//		String trajetId = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGVHJhamV0GM2LEQw";	
+//		session.find(Trajet.class, trajetId);
+		Trajet route = new TrajetDAO().getList(lewisHamilton.getId()).get(0); 
 		if(route==null || !Arrays.asList(marcChristieID,rgID).contains(profile.getId())){
 			Toast.makeText(this, R.string.no_active_route, Toast.LENGTH_SHORT).show();
 			return;

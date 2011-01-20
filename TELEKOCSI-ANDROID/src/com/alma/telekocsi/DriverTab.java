@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alma.telekocsi.dao.profil.Profil;
+import com.alma.telekocsi.dao.profil.ProfilDAO;
 import com.alma.telekocsi.session.Session;
 import com.alma.telekocsi.session.SessionFactory;
 
@@ -255,15 +256,15 @@ public class DriverTab extends ListActivity {
 	}
 
 	private void startTransactionForDemo(){
-		final String marcChristieID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGOXTEww";
-		final String rgID = "ag5hbG1hLXRlbGVrb2NzaXIOCxIGUHJvZmlsGPfpFgw";
-		final Profil marcChristie = session.find(Profil.class, marcChristieID);
-		final Profil rg = session.find(Profil.class,rgID);
+		ProfilDAO profilDAO = new ProfilDAO();
+		
+		final Profil marcChristie = profilDAO.login("passager@mail.com", "aze");
+		final Profil rg = profilDAO.login("rg@passager.fr", "aze");
 		
 		final Profil[] passengers = marcChristie==null?new Profil[]{}:new Profil[]{marcChristie,rg};
 		
 		//On doit choisir le passager destinataire des points de la transaction
-		if(passengers.length<1 || marcChristieID.equals(profile.getId()) || rgID.equals(profile.getId())){
+		if(passengers.length<1 || marcChristie.getId().equals(profile.getId()) || rg.getId().equals(profile.getId())){
 			Toast.makeText(this, R.string.no_transaction_to_validate, Toast.LENGTH_SHORT).show();
 			return;
 		}

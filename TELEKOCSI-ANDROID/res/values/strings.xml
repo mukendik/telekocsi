@@ -9,8 +9,8 @@
 	<string name="nbPointEchange">Nombre de points à échanger :</string>
 	<string name="nbPoints">3 points</string>
 	<string name="prix">Prix :</string>
-	<string name="passager">Du passager :</string>
-	<string name="conducteur">Au conducteur :</string>
+	<string name="passager"> passager :</string>
+	<string name="conducteur"> conducteur :</string>
 	<string name="conducteur2">Conducteur</string>
 	<string name="depart">Départ :</string>
 	<string name="arrivee">Arrivée :</string>
@@ -251,4 +251,6 @@
     <string name="no_active_route">Vous n\'avez pas de trajet actif</string>
     <string name="deletion_seccessful">Suppression effectuée</string>
     
+<string name="from">Du</string>
+    <string name="to">Au</string>
 </resources>
